@@ -1,0 +1,165 @@
+#Models: 18
+ID 0
+FILE "Models/Bila.nfg"
+ID 1
+FILE "Models/bus.nfg"
+ID 2
+FILE "Models/Croco.nfg"
+ID 3
+FILE "Models/cube.nfg"
+ID 4
+FILE "Models/fire.nfg"
+ID 5
+FILE "Models/Goliath.nfg"
+ID 6
+FILE "Models/House.nfg"
+ID 7
+FILE "Models/Marine.nfg"
+ID 8
+FILE "Models/Radar.nfg"
+ID 9
+FILE "Models/SCV.nfg"
+ID 10
+FILE "Models/SkyBox.nfg"
+ID 11
+FILE "Models/Teran_Command_Center.nfg"
+ID 12
+FILE "Models/Terrain.nfg"
+ID 13
+FILE "Models/train.nfg"
+ID 14
+FILE "Models/witch.nfg"
+ID 15
+FILE "Models/Woman1.nfg"
+ID 16
+FILE "Models/Woman2.nfg"
+ID 17
+FILE "Textures/heightmap.raw"
+SIZE 128 128
+SCALE 20
+
+#2D Textures: 22
+ID 0
+FILE "Textures/Bus.tga"
+TILING CLAMP
+ID 1
+FILE "Textures/Croco.tga"
+TILING CLAMP
+ID 2
+FILE "Textures/Dirt.tga"
+TILING CLAMP
+ID 3
+FILE "Textures/DisplacementMap.tga"
+TILING REPEAT
+ID 4
+FILE "Textures/envMap.tga"
+TILING CLAMP
+ID 5
+FILE "Textures/fire3.tga"
+TILING MIRROR
+ID 6
+FILE "Textures/fire_mask.tga"
+TILING REPEAT
+ID 7
+FILE "Textures/Golitah.tga"
+TILING CLAMP
+ID 8
+FILE "Textures/Grass.tga"
+TILING REPEAT
+ID 10
+FILE "Textures/heightmap.tga"
+TILING CLAMP
+ID 11
+FILE "Textures/House.tga"
+TILING CLAMP
+ID 12
+FILE "Textures/Marine.tga"
+TILING CLAMP
+ID 13
+FILE "Textures/NormalMap.tga"
+TILING CLAMP
+ID 14
+FILE "Textures/radar.tga"
+TILING CLAMP
+ID 15
+FILE "Textures/Rock.tga"
+TILING CLAMP
+ID 16
+FILE "Textures/SCV.tga"
+TILING CLAMP
+ID 17
+FILE "Textures/Terrain_blendmap_1.tga"
+TILING MIRROR
+ID 18
+FILE "Textures/Terrain_blendmap_2.tga"
+TILING MIRROR
+ID 19
+FILE "Textures/Train.tga"
+TILING CLAMP
+ID 20
+FILE "Textures/Witch.tga"
+TILING CLAMP
+ID 21
+FILE "Textures/Woman1.tga"
+TILING CLAMP
+ID 22
+FILE "Textures/Woman2.tga"
+TILING CLAMP
+
+#Cube Textures: 2
+ID 23 SPLITTED
+FILE 0 "Textures/Skybox Textures/right.tga"
+FILE 1 "Textures/Skybox Textures/left.tga"
+FILE 2 "Textures/Skybox Textures/top.tga"
+FILE 3 "Textures/Skybox Textures/bottom.tga"
+FILE 4 "Textures/Skybox Textures/back.tga"
+FILE 5 "Textures/Skybox Textures/front.tga"
+TILING CLAMP
+ID 24 ONE
+FILE "Textures/envMap.tga"
+TILING CLAMP
+
+#Shaders: 4
+ID 0
+VS: "Shaders/TriangleShaderVS.vs"
+FS: "Shaders/TriangleShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+ID 1
+VS: "Shaders/CubeShaderVS.vs"
+FS: "Shaders/CubeShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+ID 2
+VS: "Shaders/TerrainShaderVS.vs"
+FS: "Shaders/TerrainShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+ID 3
+VS: "Shaders/FireShaderVS.vs"
+FS: "Shaders/FireShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+
+#Materials: 4
+ID 0 DEFAULT
+SHADER 0
+
+ID 1 DEFAULT
+SHADER 1
+
+ID 2 TERRAIN
+SHADER 2
+BLENDTEX 18
+TEXTURES 2 15 8
+
+ID 3 FIRE
+SHADER 3
+DISPLTEX 3
+ALPHAMASK 6
+DISPLMAX 0.1
+TIMESCALE 1
