@@ -48,6 +48,7 @@ public:
    void (ESCALLBACK *drawFunc) ( ESContext * );
    void (ESCALLBACK *keyFunc) ( ESContext *, unsigned char, bool );
    void (ESCALLBACK *updateFunc) ( ESContext *, float deltaTime );
+   void (ESCALLBACK* mouseFunc) (ESContext*, int, int, int, int);
 };
 
 
@@ -125,7 +126,8 @@ GLuint ESUTIL_API esLoadShader ( GLenum type, char * filename);
 /// \return A new program object linked with the vertex/fragment shader pair, 0 on failure
 //
 GLuint ESUTIL_API esLoadProgram ( GLuint vertexShader, GLuint fragmentShader );
-
+void ESUTIL_API esRegisterMouseFunc(ESContext* esContext,
+    void (ESCALLBACK* drawFunc) (ESContext*, int, int, int, int));
 
 
 

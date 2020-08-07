@@ -45,9 +45,6 @@
     <ClCompile Include="MaterialFire.cpp">
       <Filter>Source Files\materials</Filter>
     </ClCompile>
-    <ClCompile Include="TrainingFramework.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

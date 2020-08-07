@@ -1,5 +1,12 @@
 //TrainingFramework.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
+#endif
+#endif  // _DEBUG
+// ---
 #include "../Utilities/utilities.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "Box2D/Box2D.h"
@@ -11,21 +18,19 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
-#ifdef _DEBUG
-#ifndef DBG_NEW
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#define new DBG_NEW
-#endif
-#endif  // _DEBUG
-// ---
+#define MOUSE_CLICK     1
+#define MOUSE_RELEASE   2
+#define MOUSE_MOVE    3
 
 
 int Init(ESContext* esContext)
 {
+	char sceneFile[50] = "../Framework3D/Resources/Datas/scene.txt";
+	char resourcesFile[50] = "../Framework3D/Resources/Datas/resources.txt";
 	ResourceManager::CreateInstance();
-	//ResourceManager::GetInstance()->LoadResources("Datas/resources.txt");
+	ResourceManager::GetInstance()->LoadResources(resourcesFile);
 	SceneManager::CreateInstance();
-	//SceneManager::GetInstance()->Init("Datas/scene.txt");
+	SceneManager::GetInstance()->Init(sceneFile);
 	InputManager::CreateInstance();
 
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
@@ -56,7 +61,10 @@ void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 {
 	InputManager::GetInstance()->KeyPressed(key, bIsPressed);
 }
+void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
+	printf("% d %d %d %d \n", typeOfService, button, x, y);
 
+}
 void CleanUp()
 {
 
@@ -64,40 +72,40 @@ void CleanUp()
 
 int _tmain(int argc, _TCHAR * argv[])
 {
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	//ESContext esContext;
+	ESContext esContext;
 
-	//esInitContext(&esContext);
+	esInitContext(&esContext);
 
-	//esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
+	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
-	//int iInitResult;
-	//if ((iInitResult = Init(&esContext)) != 0) {
-	//	printf("Oop! Error happen\n");
-	//}
-	//else {
-	//	esRegisterDrawFunc(&esContext, Draw);
-	//	esRegisterUpdateFunc(&esContext, Update);
+	int iInitResult;
+	if ((iInitResult = Init(&esContext)) != 0) {
+		printf("Oop! Error happen\n");
+	}
+	else {
+		esRegisterDrawFunc(&esContext, Draw);
+		esRegisterUpdateFunc(&esContext, Update);
 
-	//	esRegisterKeyFunc(&esContext, Key);
+		esRegisterKeyFunc(&esContext, Key);
+		esRegisterMouseFunc(&esContext, Mouse);
+		esMainLoop(&esContext);
+	}
 
-	//	esMainLoop(&esContext);
-	//}
+	//releasing OpenGL resources
+	CleanUp();
 
-	////releasing OpenGL resources
-	//CleanUp();
+	ResourceManager::DestroyInstance();
+	SceneManager::DestroyInstance();
+	InputManager::DestroyInstance();
 
-	//ResourceManager::DestroyInstance();
-	//SceneManager::DestroyInstance();
-	//InputManager::DestroyInstance();
+	//identifying memory leaks
+	MemoryDump();
+	printf("Press any key...\n");
+	_getch();
 
-	////identifying memory leaks
-	//MemoryDump();
-	//printf("Press any key...\n");
-	//_getch();
-
-	//_CrtDumpMemoryLeaks();
+	_CrtDumpMemoryLeaks();
 
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
