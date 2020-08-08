@@ -46,8 +46,7 @@ public:
 	void Render();
 	void AddObject(GameObject *object);
 	GameObject& GetObject(int id);
-	void RemoveObject(GameObject *object);
-	void Init(char * dataSceneFile);
+	bool LoadScene(char * dataSceneFile);
 	void SetMainCamera(Camera * camera);
 	Camera& GetMainCamera();
 	std::vector<GameObject*>& GetListObject();

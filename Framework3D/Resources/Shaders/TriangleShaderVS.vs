@@ -1,5 +1,3 @@
-precision highp float;
-
 uniform mat4 u_wvp;
 
 uniform float u_fogStart;

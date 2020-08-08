@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "AnimationFunction.h"
+#include "CurveFunction.h"
 
-float AnimationFunction::EaseInOut(float start, float end, float value) {
+float CurveFunction::EaseInOut(float start, float end, float value) {
 	float t = (value < 0.5) ? (8 * value * value * value * value) : (1 - pow(-2 * value + 2, 4) / 2);
 	return (t*(end - start) + start);
 }
-float AnimationFunction::Linear(float start, float end, float value) {
+float CurveFunction::Linear(float start, float end, float value) {
 	return (start + value*(end - start));
 }
-float AnimationFunction::EaseOutCirc(float start, float end, float value) {
+float CurveFunction::EaseOutCirc(float start, float end, float value) {
 	float t = sqrt(1 - pow(value - 1, 2));
 	return (t*(end - start) + start);
 }
 
-float AnimationFunction::GetColorFromGradient(unsigned int v1, unsigned int v2, float value) {
+float CurveFunction::GetColorFromGradient(unsigned int v1, unsigned int v2, float value) {
 	unsigned int RedV1 = (v1 & 0xFFFFFF) >> 4,
 		GreenV1 = (v1 & 0x00FFFF) >> 2,
 		BlueV1 = v1 & 0x0000FF;
@@ -26,7 +26,7 @@ float AnimationFunction::GetColorFromGradient(unsigned int v1, unsigned int v2, 
 	return ((RedP << 4) & 0xFF0000) | ((GreenP << 2) & 0x00FF00) | (BlueP & 0x0000FF);
 }
 
-float AnimationFunction::EaseOutQuint(float start, float end, float value) {
+float CurveFunction::EaseOutQuint(float start, float end, float value) {
 	float t = 1 - pow(1 - value, 5);
 	return (t*(end - start) + start);
 }

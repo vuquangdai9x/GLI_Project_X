@@ -1,15 +1,16 @@
  //TrainingFramework.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
 #include "../Utilities/utilities.h" // if you use STL, please include this line AFTER all other include
-#include "Vertex.h"
-#include "Shaders.h"
-#include "Globals.h"
-#include "Model3D.h"
 #include <conio.h>
 #include <stddef.h>
-#include "SceneManager.h"
-#include "ResourceManager.h"
+#include "Globals.h"
 #include "InputManager.h"
+
+#include "ResourceManager.h"
+#include "SceneManager.h"
+
+#include "ResourcesManager2D.h"
+#include "SceneManager2D.h"
 
 // detect memory leak
 #define _CRTDBG_MAP_ALLOC
@@ -27,11 +28,25 @@
 
 int Init ( ESContext *esContext )
 {
-	ResourceManager::CreateInstance();
-	ResourceManager::GetInstance()->LoadResources("Datas/resources.txt");
-	SceneManager::CreateInstance();
-	SceneManager::GetInstance()->Init("Datas/scene.txt");
 	InputManager::CreateInstance();
+	
+	// 2D
+	ResourceManager2D::CreateInstance();
+	ResourceManager2D::GetInstance()->LoadResources("Datas/resources2d.txt");
+	SceneManager2D::CreateInstance();
+	if (!SceneManager2D::GetInstance()->LoadScene("Datas/scene2d.txt")) {
+		printf("[ERR] Entry point: Failed to init scene");
+		return false;
+	}
+
+	//// 3D
+	//ResourceManager::CreateInstance();
+	//ResourceManager::GetInstance()->LoadResources("Datas/resources.txt");
+	//SceneManager::CreateInstance();
+	//if (!SceneManager::GetInstance()->LoadScene("Datas/scene.txt")) {
+	//	printf("[ERR] Entry point: Failed to init scene");
+	//	return false;
+	//}
 
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -46,15 +61,17 @@ void Draw ( ESContext *esContext )
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	
-	SceneManager::GetInstance()->Render();
+	SceneManager2D::GetInstance()->Render();
+	//SceneManager::GetInstance()->Render();
+
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
 void Update ( ESContext *esContext, float deltaTime )
 {
 	InputManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->m_time += deltaTime;
+	SceneManager2D::GetInstance()->Update(deltaTime);
+	//SceneManager::GetInstance()->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
@@ -93,8 +110,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	//releasing OpenGL resources
 	CleanUp();
 
-	ResourceManager::DestroyInstance();
-	SceneManager::DestroyInstance();
+	ResourceManager2D::DestroyInstance();
+	SceneManager2D::DestroyInstance();
+
+	//ResourceManager::DestroyInstance();
+	//SceneManager::DestroyInstance();
+
 	InputManager::DestroyInstance();
 
 	//identifying memory leaks

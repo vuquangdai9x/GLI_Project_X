@@ -1,104 +1,32 @@
-//TrainingFramework.cpp : Defines the entry point for the console application.
-#include "stdafx.h"
-#include "../Utilities/utilities.h"
-#include "../Framework3D/TrainingFramework/framework3d.h"
+/*
+* Copyright (c) 2006-2007 Erin Catto http://www.box2d.org
+*
+* This software is provided 'as-is', without any express or implied
+* warranty.  In no event will the authors be held liable for any damages
+* arising from the use of this software.
+* Permission is granted to anyone to use this software for any purpose,
+* including commercial applications, and to alter it and redistribute it
+* freely, subject to the following restrictions:
+* 1. The origin of this software must not be misrepresented; you must not
+* claim that you wrote the original software. If you use this software
+* in a product, an acknowledgment in the product documentation would be
+* appreciated but is not required.
+* 2. Altered source versions must be plainly marked as such, and must not be
+* misrepresented as being the original software.
+* 3. This notice may not be removed or altered from any source distribution.
+*/
+
 #include "Box2D/Box2D.h"
-#include <conio.h>
-#include <stddef.h>
 
-// detect memory leak
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+#include <stdio.h>
 
-#ifdef _DEBUG
-#ifndef DBG_NEW
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#define new DBG_NEW
-#endif
-#endif  // _DEBUG
-// ---
-
-
-int Init(ESContext* esContext)
+// This is a simple example of building and running a simulation
+// using Box2D. Here we create a large ground box and a small dynamic
+// box.
+// There are no graphics for this example. Box2D is meant to be used
+// with your rendering engine in your game engine.
+int main(int argc, char** argv)
 {
-	ResourceManager::CreateInstance();
-	//ResourceManager::GetInstance()->LoadResources("Datas/resources.txt");
-	SceneManager::CreateInstance();
-	//SceneManager::GetInstance()->Init("Datas/scene.txt");
-	InputManager::CreateInstance();
-
-	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_STENCIL_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	return 0;
-}
-
-void Draw(ESContext* esContext)
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	SceneManager::GetInstance()->Render();
-	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
-}
-
-void Update(ESContext * esContext, float deltaTime)
-{
-	InputManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->m_time += deltaTime;
-}
-
-void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
-{
-	InputManager::GetInstance()->KeyPressed(key, bIsPressed);
-}
-
-void CleanUp()
-{
-
-}
-
-int _tmain(int argc, _TCHAR * argv[])
-{
-	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	//ESContext esContext;
-
-	//esInitContext(&esContext);
-
-	//esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
-
-	//int iInitResult;
-	//if ((iInitResult = Init(&esContext)) != 0) {
-	//	printf("Oop! Error happen\n");
-	//}
-	//else {
-	//	esRegisterDrawFunc(&esContext, Draw);
-	//	esRegisterUpdateFunc(&esContext, Update);
-
-	//	esRegisterKeyFunc(&esContext, Key);
-
-	//	esMainLoop(&esContext);
-	//}
-
-	////releasing OpenGL resources
-	//CleanUp();
-
-	//ResourceManager::DestroyInstance();
-	//SceneManager::DestroyInstance();
-	//InputManager::DestroyInstance();
-
-	////identifying memory leaks
-	//MemoryDump();
-	//printf("Press any key...\n");
-	//_getch();
-
-	//_CrtDumpMemoryLeaks();
-
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
 
@@ -175,4 +103,3 @@ int _tmain(int argc, _TCHAR * argv[])
 
 	return 0;
 }
-
