@@ -12,6 +12,8 @@
 #include "Box2D/Box2D.h"
 #include <conio.h>
 #include <stddef.h>
+#include "Singleton.h"
+#include "State/GameStateManager.h"
 
 // detect memory leak
 #define _CRTDBG_MAP_ALLOC
@@ -32,6 +34,7 @@ int Init(ESContext* esContext)
 	SceneManager::CreateInstance();
 	SceneManager::GetInstance()->Init(sceneFile);
 	InputManager::CreateInstance();
+	Singleton<GameStateManager>::CreateInstance();
 
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -59,10 +62,11 @@ void Update(ESContext * esContext, float deltaTime)
 
 void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 {
-	InputManager::GetInstance()->KeyPressed(key, bIsPressed);
+	//InputManager::GetInstance()->KeyPressed(key, bIsPressed);
+	Singleton<GameStateManager>::GetInstance()->KeyPress(key, bIsPressed);
 }
 void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
-	printf("% d %d %d %d \n", typeOfService, button, x, y);
+	//printf("% d %d %d %d \n", typeOfService, button, x, y);
 
 }
 void CleanUp()
