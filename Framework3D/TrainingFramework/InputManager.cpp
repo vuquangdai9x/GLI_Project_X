@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "SceneManager2D.h"
 
 InputManager * InputManager::ms_pInstance = nullptr;
 
@@ -9,173 +10,142 @@ InputManager::InputManager()
 	m_mask = 0;
 }
 
-inline void SetBit(unsigned int& mask, int offset)
-{
-	mask |= (1 << offset);
-}
-inline void UnsetBit(unsigned int& mask, int offset)
-{
-	mask &= (~(1 << offset));
-}
-
-inline int GetBit(unsigned int& mask, int offset)
-{
-	return (mask >> offset) & 0x01;
+int InputManager::GetBit(Key key) {
+	return (m_mask >> key) & 0x01;
 }
 
 void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 {
+	Key keyMapped;
+	switch (key)
+	{
+	case 'a':
+	case 'A':
+		keyMapped = Key::A;
+		break;
+	case 's':
+	case 'S':
+		keyMapped = Key::S;
+		break;
+	case 'd':
+	case 'D':
+		keyMapped = Key::D;
+		break;
+	case 'w':
+	case 'W':
+		keyMapped = Key::W;
+		break;
+	case VK_LSHIFT:
+	case VK_RSHIFT:
+	case VK_SHIFT:
+		keyMapped = Key::LSHIFT;
+		break;
+	case VK_SPACE:
+		keyMapped = Key::SPACE;
+		break;
+	case VK_UP:
+		keyMapped = Key::UP;
+		break;
+	case VK_DOWN:
+		keyMapped = Key::DOWN;
+		break;
+	case VK_LEFT:
+		keyMapped = Key::LEFT;
+		break;
+	case VK_RIGHT:
+		keyMapped = Key::RIGHT;
+		break;
+	case '1':
+		keyMapped = Key::N1;
+		break;
+	case '2':
+		keyMapped = Key::N2;
+		break;
+	case '3':
+		keyMapped = Key::N3;
+		break;
+	case '4':
+		keyMapped = Key::N4;
+		break;
+	case 'q':
+	case 'Q':
+		keyMapped = Key::Q;
+		break;
+	case 'e':
+	case 'E':
+		keyMapped = Key::E;
+		break;
+	case VK_TAB:
+		keyMapped = Key::TAB;
+		break;
+	case 'Z':
+	case 'z':
+		keyMapped = Key::Z;
+		break;
+	case 'X':
+	case 'x':
+		keyMapped = Key::X;
+		break;
+	case 'C':
+	case 'c':
+		keyMapped = Key::C;
+		break;
+	default:
+		keyMapped = Key::NONE;
+		return;
+	}
 	if (isKeyPressed) {
-		switch (key)
-		{
-		case 'a':
-		case 'A':
-			SetBit(m_mask, Key::A);
-			break;
-		case 's':
-		case 'S':
-			SetBit(m_mask, Key::S);
-			break;
-		case 'd':
-		case 'D':
-			SetBit(m_mask, Key::D);
-			break;
-		case 'w':
-		case 'W':
-			SetBit(m_mask, Key::W);
-			break;
-		case VK_LSHIFT:
-		case VK_RSHIFT:
-		case VK_SHIFT:
-			SetBit(m_mask, Key::LSHIFT);
-			break;
-		case VK_SPACE:
-			SetBit(m_mask, Key::SPACE);
-			break;
-		case VK_UP:
-			SetBit(m_mask, Key::UP);
-			break;
-		case VK_DOWN:
-			SetBit(m_mask, Key::DOWN);
-			break;
-		case VK_LEFT:
-			SetBit(m_mask, Key::LEFT);
-			break;
-		case VK_RIGHT:
-			SetBit(m_mask, Key::RIGHT);
-			break;
-		case '1':
-			SetBit(m_mask, Key::N1);
-			break;
-		case '2':
-			SetBit(m_mask, Key::N2);
-			break;
-		case '3':
-			SetBit(m_mask, Key::N3);
-			break;
-		case '4':
-			SetBit(m_mask, Key::N4);
-			break;
-		case 'q':
-		case 'Q':
-			SetBit(m_mask, Key::Q);
-			break;
-		case 'e':
-		case 'E':
-			SetBit(m_mask, Key::E);
-			break;
-		case VK_TAB:
-			SetBit(m_mask, Key::TAB);
-			break;
-		}
+		m_mask |= (1 << keyMapped);
 	}
 	else {
-		switch (key)
-		{
-		case 'a':
-		case 'A':
-			UnsetBit(m_mask, Key::A);
-			break;
-		case 's':
-		case 'S':
-			UnsetBit(m_mask, Key::S);
-			break;
-		case 'd':
-		case 'D':
-			UnsetBit(m_mask, Key::D);
-			break;
-		case 'w':
-		case 'W':
-			UnsetBit(m_mask, Key::W);
-			break;
-		case VK_LSHIFT:
-		case VK_RSHIFT:
-		case VK_SHIFT:
-			UnsetBit(m_mask, Key::LSHIFT);
-			break;
-		case VK_SPACE:
-			UnsetBit(m_mask, Key::SPACE);
-			break;
-		case VK_UP:
-			UnsetBit(m_mask, Key::UP);
-			break;
-		case VK_DOWN:
-			UnsetBit(m_mask, Key::DOWN);
-			break;
-		case VK_LEFT:
-			UnsetBit(m_mask, Key::LEFT);
-			break;
-		case VK_RIGHT:
-			UnsetBit(m_mask, Key::RIGHT);
-			break;
-		case '1':
-			UnsetBit(m_mask, Key::N1);
-			break;
-		case '2':
-			UnsetBit(m_mask, Key::N2);
-			break;
-		case '3':
-			UnsetBit(m_mask, Key::N3);
-			break;
-		case '4':
-			UnsetBit(m_mask, Key::N4);
-			break;
-		case 'q':
-		case 'Q':
-			UnsetBit(m_mask, Key::Q);
-			break;
-		case 'e':
-		case 'E':
-			UnsetBit(m_mask, Key::E);
-			break;
-		case VK_TAB:
-			UnsetBit(m_mask, Key::TAB);
-			break;
-		}
+		m_mask &= (~(1 << keyMapped));
 	}
 }
 
 void InputManager::Update(float deltaTime) {
-	Camera& camera = SceneManager::GetInstance()->GetMainCamera();
+	Camera2D& camera = SceneManager2D::GetInstance()->GetMainCamera();
 	Vector3 cameraMoveDirection(0,0,0);
-	cameraMoveDirection.x = GetBit(m_mask, Key::D) - GetBit(m_mask, Key::A);
-	cameraMoveDirection.z = GetBit(m_mask, Key::W) - GetBit(m_mask, Key::S);
+	cameraMoveDirection.x = GetBit(Key::D) - GetBit(Key::A);
+	cameraMoveDirection.y = -GetBit(Key::W) + GetBit(Key::S);
+	camera.Move(cameraMoveDirection,deltaTime);
+
+	camera.Dutch(GetBit(Key::E) - GetBit(Key::Q), deltaTime);
+	camera.Zoom(GetBit(Key::X) - GetBit(Key::Z), deltaTime);
+
+	Sprite& player = SceneManager2D::GetInstance()->GetObjectByID(0);
+
+	float moveSpeed = 3;
+	Vector3 playerPos = player.GetPosition();
+	playerPos.y += (GetBit(Key::DOWN) - GetBit(Key::UP)) * moveSpeed * deltaTime;
+	playerPos.x += (GetBit(Key::RIGHT) - GetBit(Key::LEFT)) * moveSpeed * deltaTime;
+	player.SetPosition(playerPos);
+	Vector2 playerScale = player.GetScale();
+	playerScale.x += (GetBit(Key::N2) - GetBit(Key::N1)) * moveSpeed * deltaTime;
+	playerScale.y += (GetBit(Key::N4) - GetBit(Key::N3)) * moveSpeed * deltaTime;
+	player.SetScale(playerScale);
+	float rotation = player.GetRotation();
+	rotation += (GetBit(Key::SPACE) - GetBit(Key::LSHIFT)) * moveSpeed * deltaTime;
+	player.SetRotation(rotation);
+	
+	/*Camera& camera = SceneManager::GetInstance()->GetMainCamera();
+	Vector3 cameraMoveDirection(0,0,0);
+	cameraMoveDirection.x = GetBit(Key::D) - GetBit(Key::A);
+	cameraMoveDirection.z = GetBit(Key::W) - GetBit(Key::S);
 	camera.MoveByLocalAxis(cameraMoveDirection,deltaTime);
 
-	camera.MoveByWorldAxis(Vector3(0, GetBit(m_mask, Key::SPACE) - GetBit(m_mask, Key::LSHIFT), 0), deltaTime);
+	camera.MoveByWorldAxis(Vector3(0, GetBit(Key::SPACE) - GetBit(Key::LSHIFT), 0), deltaTime);
 
 	Vector3 cameraRotateDirection(0, 0, 0);
-	cameraRotateDirection.x = GetBit(m_mask, Key::DOWN) - GetBit(m_mask, Key::UP);
-	cameraRotateDirection.y = GetBit(m_mask, Key::RIGHT) - GetBit(m_mask, Key::LEFT);
+	cameraRotateDirection.x = GetBit(Key::DOWN) - GetBit(Key::UP);
+	cameraRotateDirection.y = GetBit(Key::RIGHT) - GetBit(Key::LEFT);
 	camera.Rotate(cameraRotateDirection.y,cameraRotateDirection.x,deltaTime);
 
-	if (GetBit(m_mask, Key::TAB) == 1) {
+	if (GetBit(Key::TAB) == 1) {
 		camera.SetVectorUp(Vector3(0, 1, 0));
 	}
 	else {
-		camera.Dutch(GetBit(m_mask, Key::E) - GetBit(m_mask, Key::Q), deltaTime);
+		camera.Dutch(GetBit(Key::E) - GetBit(Key::Q), deltaTime);
 	}
-
-	SceneManager::GetInstance()->m_fogStart += (GetBit(m_mask, Key::N2) - GetBit(m_mask, Key::N1));
-	SceneManager::GetInstance()->m_fogLength += (GetBit(m_mask, Key::N4) - GetBit(m_mask, Key::N3));
+	SceneManager::GetInstance()->m_fogStart += (GetBit(Key::N2) - GetBit(Key::N1));
+	SceneManager::GetInstance()->m_fogLength += (GetBit(Key::N4) - GetBit(Key::N3));*/
 }

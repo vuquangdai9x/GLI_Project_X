@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Camera.h"
-#include "AnimationFunction.h"
+#include "CurveFunction.h"
 
 void Camera::UpdateViewMatrix()
 {
@@ -33,10 +33,10 @@ void Camera::SetOrthorgraphic(float width, float height, float n, float f)
 	if (width == 0 || height == 0 || f==n) return;
 	float r = width / 2;
 	float t = height / 2;
-	/*m_ProjectionMatrix.m[0][0] = 1/r;	m_ProjectionMatrix.m[0][1] = 0;		m_ProjectionMatrix.m[0][2] = 0;			m_ProjectionMatrix.m[0][3] = 0;
+	m_ProjectionMatrix.m[0][0] = 1/r;	m_ProjectionMatrix.m[0][1] = 0;		m_ProjectionMatrix.m[0][2] = 0;			m_ProjectionMatrix.m[0][3] = 0;
 	m_ProjectionMatrix.m[1][0] = 0;		m_ProjectionMatrix.m[1][1] = 1/t;	m_ProjectionMatrix.m[1][2] = 0;			m_ProjectionMatrix.m[1][3] = 0;
-	m_ProjectionMatrix.m[2][0] = 0;		m_ProjectionMatrix.m[2][1] = 0;		m_ProjectionMatrix.m[2][2] = -2/(f-n);	m_ProjectionMatrix.m[2][3] = (f+n)/(n-f);
-	m_ProjectionMatrix.m[3][0] = 0;		m_ProjectionMatrix.m[3][1] = 0;		m_ProjectionMatrix.m[3][2] = 0;		*/	m_ProjectionMatrix.m[3][3] = 1.0f;
+	m_ProjectionMatrix.m[2][0] = 0;		m_ProjectionMatrix.m[2][1] = 0;		m_ProjectionMatrix.m[2][2] = -2/(f-n);	m_ProjectionMatrix.m[2][3] = 0;
+	m_ProjectionMatrix.m[3][0] = 0;		m_ProjectionMatrix.m[3][1] = 0;		m_ProjectionMatrix.m[3][2] =(f+n)/(n-f);m_ProjectionMatrix.m[3][3] = 1.0f;
 }
 
 void Camera::SetSpeed(float moveSpeedX, float moveSpeedY, float moveSpeedZ, float rotateSpeedHorizontal, float rotateSpeedVertical, float dutchSpeed)

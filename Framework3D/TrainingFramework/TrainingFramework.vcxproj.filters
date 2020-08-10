@@ -28,108 +28,153 @@
     <Filter Include="Resources\Textures">
       <UniqueIdentifier>{8d30975c-6f75-4f03-a9ad-d98ddda19f53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\materials">
-      <UniqueIdentifier>{f4ace651-0190-4da8-8ba4-d8bca7992cd7}</UniqueIdentifier>
+    <Filter Include="Header Files\base_framework_3d">
+      <UniqueIdentifier>{441cdd34-6247-4d24-a9c4-e6abbeed7ef3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\materials">
-      <UniqueIdentifier>{9609d87a-8722-4130-a03d-fd8257ea3bea}</UniqueIdentifier>
+    <Filter Include="Header Files\2d">
+      <UniqueIdentifier>{ef7d3c98-e318-4f81-9fe7-e7294b1a832c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\base_framework_3d">
+      <UniqueIdentifier>{dbff145f-4b7a-48b0-a5c8-22c1ed4b9525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\2d">
+      <UniqueIdentifier>{c7758afa-b19e-4e91-855d-0e1e01f13c19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\3d">
+      <UniqueIdentifier>{c62d6d99-56e7-4143-a053-6a54ebf0f9b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3d">
+      <UniqueIdentifier>{f4ace651-0190-4da8-8ba4-d8bca7992cd7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Material.cpp">
-      <Filter>Source Files\materials</Filter>
+      <Filter>Source Files\3d</Filter>
     </ClCompile>
     <ClCompile Include="MaterialTerrain.cpp">
-      <Filter>Source Files\materials</Filter>
+      <Filter>Source Files\3d</Filter>
     </ClCompile>
     <ClCompile Include="MaterialFire.cpp">
-      <Filter>Source Files\materials</Filter>
+      <Filter>Source Files\3d</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationFunction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model3D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shaders.cpp">
+    <ClCompile Include="TrainingFramework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="CurveFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Model3D.cpp">
+      <Filter>Source Files\base_framework_3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders.cpp">
+      <Filter>Source Files\base_framework_3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\base_framework_3d</Filter>
+    </ClCompile>
     <ClCompile Include="vertex.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\base_framework_3d</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera2D.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager2D.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Material2D.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcesManager2D.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Source Files\3d</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Material.h">
-      <Filter>Header Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialTerrain.h">
-      <Filter>Header Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="MaterialFire.h">
-      <Filter>Header Files\materials</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationFunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shaders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vertex.h">
+    <ClInclude Include="CurveFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework3d.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Model3D.h">
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders.h">
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\base_framework_3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera2D.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager2D.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Material2D.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcesManager2D.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialFire.h">
+      <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialTerrain.h">
+      <Filter>Header Files\3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +257,18 @@
     <None Include="..\Resources\Shaders\FireShaderVS.vs">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\Sprite2DShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\Sprite2DShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\SpriteFogShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\SpriteFogShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Textures\Bus.tga">
@@ -288,7 +345,10 @@
     <Text Include="..\Resources\Datas\scene.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
-    <Text Include="..\Resources\Datas\scene2.txt">
+    <Text Include="..\Resources\Datas\scene2d.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
+    <Text Include="..\Resources\Datas\resources2d.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
   </ItemGroup>

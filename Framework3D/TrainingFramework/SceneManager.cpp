@@ -12,7 +12,7 @@ SceneManager::~SceneManager()
 	delete m_mainCamera;
 }
 
-void SceneManager::Init(char * dataSceneFile) {
+bool SceneManager::LoadScene(char * dataSceneFile) {
 	m_fogStart = 30;
 	m_fogLength = 100;
 	m_fogColor = Vector4(1,.9,.9,1);
@@ -24,7 +24,7 @@ void SceneManager::Init(char * dataSceneFile) {
 	FILE * fIn = fopen(filePath, "r");
 	if (fIn == nullptr) {
 		printf("Fails to load scene file");
-		return;
+		return false;
 	}
 
 	GameObject * obj;
@@ -32,8 +32,6 @@ void SceneManager::Init(char * dataSceneFile) {
 	int iModelId;
 	int iMaterialId;
 	int iMainTexId;
-	/*int iNumOfTexture, iNumOfCubeTexture, iShaderId;
-	int * aiTextureId, *aiCubeTexId;*/
 	Vector3 position, rotation, scale;
 	fscanf(fIn, "#Objects: %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
@@ -77,12 +75,14 @@ void SceneManager::Init(char * dataSceneFile) {
 	Camera * camera = new Camera();
 	camera->Init(position, target, nearPlane, farPlane, fov, Globals::screenWidth/(float)Globals::screenHeight, angleLimit);
 	camera->SetSpeed(moveSpeedX, moveSpeedY, moveSpeedZ, rotateSpeedH, rotateSpeedV, dutchSpeed);
-	camera->SetOrthorgraphic(1, 2, nearPlane, farPlane);
+	//camera->SetOrthorgraphic(1, 2, nearPlane, farPlane);
 	SetMainCamera(camera);
 	printf("[msg] SceneManager: Set up Camera\n");
 
 	obj = NULL;
 	camera = NULL;
+
+	return true;
 }
 
 void SceneManager::SetMainCamera(Camera * camera)

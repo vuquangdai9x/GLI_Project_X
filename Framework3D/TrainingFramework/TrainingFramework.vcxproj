@@ -96,16 +96,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationFunction.cpp" />
+    <ClCompile Include="Camera2D.cpp" />
+    <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Material2D.cpp" />
     <ClCompile Include="MaterialFire.cpp" />
     <ClCompile Include="MaterialTerrain.cpp" />
     <ClCompile Include="Model3D.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="ResourcesManager2D.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneManager2D.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -116,7 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Camera2D.h" />
     <ClInclude Include="framework3d.h" />
+    <ClInclude Include="Material2D.h" />
     <ClInclude Include="MaterialFire.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Globals.h" />
@@ -125,12 +132,15 @@
     <ClInclude Include="MaterialTerrain.h" />
     <ClInclude Include="Model3D.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="ResourcesManager2D.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneManager2D.h" />
     <ClInclude Include="Shaders.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="AnimationFunction.h" />
+    <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +165,10 @@
     <None Include="..\Resources\Shaders\CubeShaderVS.vs" />
     <None Include="..\Resources\Shaders\FireShaderFS.fs" />
     <None Include="..\Resources\Shaders\FireShaderVS.vs" />
+    <None Include="..\Resources\Shaders\Sprite2DShaderFS.fs" />
+    <None Include="..\Resources\Shaders\Sprite2DShaderVS.vs" />
+    <None Include="..\Resources\Shaders\SpriteFogShaderFS.fs" />
+    <None Include="..\Resources\Shaders\SpriteFogShaderVS.vs" />
     <None Include="..\Resources\Shaders\TerrainShaderFS.fs" />
     <None Include="..\Resources\Shaders\TerrainShaderVS.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
@@ -194,8 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Datas\resources.txt" />
+    <Text Include="..\Resources\Datas\resources2d.txt" />
     <Text Include="..\Resources\Datas\scene.txt" />
-    <Text Include="..\Resources\Datas\scene2.txt" />
+    <Text Include="..\Resources\Datas\scene2d.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
