@@ -7,33 +7,10 @@
 #include <vector>
 
 class ResourceManager {
-protected:
-	ResourceManager();
-	~ResourceManager();
-	ResourceManager(const ResourceManager &) {}
-	ResourceManager& operator =(const ResourceManager &) {}
 
 public:
-	static void CreateInstance()
-	{
-		if (ms_pInstance == nullptr)
-			ms_pInstance = new ResourceManager;
-	}
-	static ResourceManager * GetInstance()
-	{
-		return ms_pInstance;
-	}
-	static void DestroyInstance()
-	{
-		if (ms_pInstance)
-		{
-			delete ms_pInstance;
-			ms_pInstance = nullptr;
-		}
-	}
-
-protected:
-	static ResourceManager * ms_pInstance;
+	ResourceManager();
+	~ResourceManager();
 
 private:
 	std::vector<Model3D*> m_aModel;

@@ -329,5 +329,3 @@ Material * ResourceManager::GetMaterial(int id)
 	}
 	return NULL;
 }
-
-ResourceManager * ResourceManager::ms_pInstance = NULL;

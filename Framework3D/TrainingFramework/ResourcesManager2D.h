@@ -7,34 +7,11 @@
 #include <vector>
 
 class ResourceManager2D {
-protected:
-	ResourceManager2D();
-	~ResourceManager2D();
-	ResourceManager2D(const ResourceManager2D&) {}
-	ResourceManager2D& operator =(const ResourceManager2D&) {}
 
 public:
-	static void CreateInstance()
-	{
-		if (ms_pInstance == nullptr)
-			ms_pInstance = new ResourceManager2D;
-	}
-	static ResourceManager2D* GetInstance()
-	{
-		return ms_pInstance;
-	}
-	static void DestroyInstance()
-	{
-		if (ms_pInstance)
-		{
-			delete ms_pInstance;
-			ms_pInstance = nullptr;
-		}
-	}
-
-protected:
-	static ResourceManager2D* ms_pInstance;
-
+	ResourceManager2D();
+	~ResourceManager2D();
+	
 private:
 	std::vector<Model3D*> m_aModel;
 	std::vector<Texture*> m_aTexture;

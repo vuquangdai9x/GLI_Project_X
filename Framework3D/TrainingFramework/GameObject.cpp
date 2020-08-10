@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameObject.h"
 #include "ResourceManager.h"
+#include "Singleton.h"
 
 void GameObject::UpdateRotationMatrix()
 {
@@ -43,17 +44,17 @@ void GameObject::Init(Vector3 position, Vector3 rotation, Vector3 scale, int iMo
 	SetScale(scale);
 
 	m_canRender = true;
-	m_model = ResourceManager::GetInstance()->GetModel(iModelId);
+	m_model = Singleton<ResourceManager>::GetInstance()->GetModel(iModelId);
 	if (m_model == NULL) {
 		m_canRender = false;
 		printf("[ERR] GameObject: Failed to get model %d\n", iModelId);
 	}
-	m_material = ResourceManager::GetInstance()->GetMaterial(iMaterialId);
+	m_material = Singleton<ResourceManager>::GetInstance()->GetMaterial(iMaterialId);
 	if (m_material == NULL) {
 		m_canRender = false;
 		printf("[ERR] GameObject: Failed to get material %d\n", iMaterialId);
 	}
-	m_mainTexture = ResourceManager::GetInstance()->GetTexture(iMainTextureId);
+	m_mainTexture = Singleton<ResourceManager>::GetInstance()->GetTexture(iMainTextureId);
 	if (m_mainTexture == NULL) {
 		printf("[ERR] GameObject: Failed to get main texture %d\n", iMainTextureId);
 	}

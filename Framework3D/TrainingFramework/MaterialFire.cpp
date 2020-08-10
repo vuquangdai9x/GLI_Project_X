@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Globals.h"
+#include "Singleton.h"
 
 MaterialFire::MaterialFire(int id) : Material(id)
 {
@@ -14,13 +15,13 @@ bool MaterialFire::Init(int iShaderId, int iDisplTextureId, int iAlphaMaskTextur
 	isLoadSuccessfully = Material::Init(iShaderId);
 	if (!isLoadSuccessfully) return false;
 	
-	m_displTexture = ResourceManager::GetInstance()->GetTexture(iDisplTextureId);
+	m_displTexture = Singleton<ResourceManager>::GetInstance()->GetTexture(iDisplTextureId);
 	if (m_displTexture == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get texture1 %d\n", iDisplTextureId);
 		isLoadSuccessfully = false;
 	}
 
-	m_alphaMaskTexture = ResourceManager::GetInstance()->GetTexture(iAlphaMaskTexture2Id);
+	m_alphaMaskTexture = Singleton<ResourceManager>::GetInstance()->GetTexture(iAlphaMaskTexture2Id);
 	if (m_alphaMaskTexture == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get texture2 %d\n", iAlphaMaskTexture2Id);
 		isLoadSuccessfully = false;
@@ -57,6 +58,6 @@ void MaterialFire::PrepareShader(Matrix & WVP)
 		glUniform1f(m_u_displMaxLocation, (GLfloat)m_displMax);
 	}
 	if (m_u_timeLocation != -1) {
-		glUniform1f(m_u_timeLocation, (GLfloat)(SceneManager::GetInstance()->m_time * m_timeScale));
+		glUniform1f(m_u_timeLocation, (GLfloat)(Singleton<SceneManager>::GetInstance()->m_time * m_timeScale));
 	}
 }

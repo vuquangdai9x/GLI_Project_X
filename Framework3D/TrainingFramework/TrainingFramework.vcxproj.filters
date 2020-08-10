@@ -57,9 +57,6 @@
     <ClCompile Include="MaterialFire.cpp">
       <Filter>Source Files\3d</Filter>
     </ClCompile>
-    <ClCompile Include="TrainingFramework.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -175,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="MaterialTerrain.h">
       <Filter>Header Files\3d</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

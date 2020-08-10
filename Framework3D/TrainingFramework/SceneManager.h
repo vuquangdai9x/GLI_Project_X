@@ -6,34 +6,10 @@
 
 class SceneManager
 {
-protected:
+public:
 	SceneManager() {}
 	~SceneManager();
-	SceneManager(const SceneManager &) {}
-	SceneManager& operator =(const SceneManager &) {}
-
-public:
-	static void CreateInstance()
-	{
-		if (ms_pInstance == nullptr)
-			ms_pInstance = new SceneManager;
-	}
-	static SceneManager * GetInstance()
-	{
-		return ms_pInstance;
-	}
-	static void DestroyInstance()
-	{
-		if (ms_pInstance)
-		{
-			delete ms_pInstance;
-			ms_pInstance = nullptr;
-		}
-	}
-
-protected:
-	static SceneManager * ms_pInstance;
-
+	
 private:
 	std::vector<GameObject*> m_listObject;
 	Camera * m_mainCamera;

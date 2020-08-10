@@ -1,4 +1,5 @@
 #include "GS_WelcomScreen.h"
+#include "../Framework3D/TrainingFramework/framework3d.h"
 
 GS_WelcomScreen::GS_WelcomScreen()
 {
@@ -27,9 +28,12 @@ void GS_WelcomScreen::Update()
 {
 }
 
-void GS_WelcomScreen::KeyPress(unsigned char key, bool bIsPressed)
+void GS_WelcomScreen::KeyPress()
 {
-    if (bIsPressed) {
+    if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) {
+        Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MENU);
+    }
+    /*if (bIsPressed) {
         switch (key)
         {
         case 'a': 
@@ -40,6 +44,6 @@ void GS_WelcomScreen::KeyPress(unsigned char key, bool bIsPressed)
         default:
             break;
         }
-    }
+    }*/
 }
 

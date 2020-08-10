@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "SceneManager.h"
 #include "Globals.h"
+#include "Singleton.h"
 
 MaterialTerrain::MaterialTerrain(int id) : Material(id)
 {
@@ -19,22 +20,22 @@ bool MaterialTerrain::Init(int iShaderId, int iBlendTextureId, int iTexture1Id, 
 	m_u_Tex2Location = glGetUniformLocation(m_shader->program, "u_texture[2]");
 	m_u_Tex3Location = glGetUniformLocation(m_shader->program, "u_texture[3]");
 
-	m_blendTexture = ResourceManager::GetInstance()->GetTexture(iBlendTextureId);
+	m_blendTexture = Singleton<ResourceManager>::GetInstance()->GetTexture(iBlendTextureId);
 	if (m_blendTexture == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get blend texture %d\n", iBlendTextureId);
 		isLoadSuccessfully = false;
 	}
-	m_texture1 = ResourceManager::GetInstance()->GetTexture(iTexture1Id);
+	m_texture1 = Singleton<ResourceManager>::GetInstance()->GetTexture(iTexture1Id);
 	if (m_texture1 == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get texture1 %d\n", iTexture1Id);
 		isLoadSuccessfully = false;
 	}
-	m_texture2 = ResourceManager::GetInstance()->GetTexture(iTexture2Id);
+	m_texture2 = Singleton<ResourceManager>::GetInstance()->GetTexture(iTexture2Id);
 	if (m_texture2 == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get texture2 %d\n", iTexture2Id);
 		isLoadSuccessfully = false;
 	}
-	m_texture3 = ResourceManager::GetInstance()->GetTexture(iTexture3Id);
+	m_texture3 = Singleton<ResourceManager>::GetInstance()->GetTexture(iTexture3Id);
 	if (m_texture3 == NULL) {
 		printf("[ERR] Material Single Texture: Failed to get texture3 %d\n", iTexture3Id);
 		isLoadSuccessfully = false;

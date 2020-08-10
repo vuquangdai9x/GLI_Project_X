@@ -42,9 +42,9 @@ void GameStateManager::update()
 	}
 }
 
-void GameStateManager::KeyPress(unsigned char key, bool bIsPressed)
+void GameStateManager::KeyPress()
 {
 	if (!this->states.empty()) {
-		this->states.top()->KeyPress(key, bIsPressed);
+		this->states.top()->KeyPress();
 	}
 }
