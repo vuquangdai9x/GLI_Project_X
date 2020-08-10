@@ -27,14 +27,19 @@
 
 int Init(ESContext* esContext)
 {
-	char sceneFile[50] = "../Framework3D/Resources/Datas/scene.txt";
-	char resourcesFile[50] = "../Framework3D/Resources/Datas/resources.txt";
-	ResourceManager::CreateInstance();
-	ResourceManager::GetInstance()->LoadResources(resourcesFile);
-	SceneManager::CreateInstance();
-	SceneManager::GetInstance()->Init(sceneFile);
+	char sceneFile[50] = "../Framework3D/Resources/Datas/scene2d.txt";
+	char resourcesFile[50] = "../Framework3D/Resources/Datas/resources2d.txt";
 	InputManager::CreateInstance();
-	Singleton<GameStateManager>::CreateInstance();
+
+	// 2D
+	ResourceManager2D::CreateInstance();
+	ResourceManager2D::GetInstance()->LoadResources(resourcesFile);
+	SceneManager2D::CreateInstance();
+	if (!SceneManager2D::GetInstance()->LoadScene(sceneFile)) {
+		printf("[ERR] Entry point: Failed to init scene");
+		return false;
+	}
+
 
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -49,21 +54,23 @@ void Draw(ESContext* esContext)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	SceneManager::GetInstance()->Render();
+	SceneManager2D::GetInstance()->Render();
+	//SceneManager::GetInstance()->Render();
+
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
 }
 
 void Update(ESContext * esContext, float deltaTime)
 {
 	InputManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->Update(deltaTime);
-	SceneManager::GetInstance()->m_time += deltaTime;
+	SceneManager2D::GetInstance()->Update(deltaTime);
+	//SceneManager::GetInstance()->Update(deltaTime);
 }
 
 void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 {
 	//InputManager::GetInstance()->KeyPressed(key, bIsPressed);
-	Singleton<GameStateManager>::GetInstance()->KeyPress(key, bIsPressed);
+	InputManager::GetInstance()->KeyPressed(key, bIsPressed);
 }
 void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
 	//printf("% d %d %d %d \n", typeOfService, button, x, y);
