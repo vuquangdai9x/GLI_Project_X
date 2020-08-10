@@ -9,7 +9,7 @@ class Sprite{
 public:
 	Sprite(int id);
 	int GetId();
-	void Init(Vector3 position, float rotation, Vector2 scale, int iMaterialId, int iMainTexId);
+	void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
 	//void SetSpriteAnimation(int iTextureId, int iNumOfCols, int iNumOfRows, float interval);
 	void Update(float deltaTime);
 	void Render(Camera2D* mainCamera);
@@ -20,6 +20,8 @@ protected:
 	Vector3 m_position;
 	Vector2 m_scale;
 	float m_rotation;
+	Vector4 m_color;
+
 	Matrix m_WVP;
 	Matrix m_transformMat, m_T, m_R, m_S;
 	void UpdateRotationMatrix();
@@ -37,4 +39,7 @@ public:
 	Vector3 GetPosition();
 	void SetScale(Vector2 scale);
 	Vector2 GetScale();
+	void SetColor(unsigned int hexColor, float alpha);
+	void SetColor(Vector4 color);
+	Vector4 GetColor();
 };

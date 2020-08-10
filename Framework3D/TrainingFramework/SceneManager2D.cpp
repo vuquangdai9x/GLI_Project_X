@@ -31,6 +31,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	Vector3 position;
 	float rotation;
 	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
 
 	int iNumOfAnimations;
 	int iAnimId;
@@ -53,7 +55,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "ROTATION %f\n", &rotation);
 		rotation = rotation * 2 * 3.1416 / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-		obj->Init(position, rotation, scale, iMaterialId, iMainTexId);
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		obj->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		for (int i = 0;i < iNumOfAnimations;i++) {
