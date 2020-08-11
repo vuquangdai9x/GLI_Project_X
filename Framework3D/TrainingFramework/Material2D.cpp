@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Material2D.h"
 #include "ResourcesManager2D.h"
+#include "Singleton.h"
 
 Material2D::Material2D(int id)
 {
@@ -19,7 +20,7 @@ int Material2D::GetId()
 
 bool Material2D::Init(int iShaderId)
 {
-	m_shader = ResourceManager2D::GetInstance()->GetShader(iShaderId);
+	m_shader = Singleton<ResourceManager2D>::GetInstance()->GetShader(iShaderId);
 	if (m_shader == NULL) {
 		printf("[ERR] Material: Failed to get shader %d\n", iShaderId);
 		return false;

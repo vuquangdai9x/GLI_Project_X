@@ -2,6 +2,7 @@
 #include "Material.h"
 #include "ResourceManager.h"
 #include "SceneManager.h"
+#include "Singleton.h"
 
 Material::Material(int id)
 {
@@ -10,7 +11,7 @@ Material::Material(int id)
 
 bool Material::Init(int iShaderId)
 {
-	m_shader = ResourceManager::GetInstance()->GetShader(iShaderId);
+	m_shader = Singleton<ResourceManager>::GetInstance()->GetShader(iShaderId);
 	if (m_shader == NULL) {
 		if (m_shader == NULL) printf("[ERR] Material: Failed to get shader %d\n", iShaderId);
 		return false;
@@ -54,9 +55,9 @@ void Material::PrepareShader(Matrix& WVP)
 	}
 
 	if (m_u_fogStartLocation != -1 && m_u_fogLengthLocation != -1 && m_u_fogColor != -1) {
-		glUniform1f(m_u_fogStartLocation, SceneManager::GetInstance()->m_fogStart);
-		glUniform1f(m_u_fogLengthLocation, SceneManager::GetInstance()->m_fogLength);
-		glUniform4fv(m_u_fogColor, 1, (GLfloat*) & (SceneManager::GetInstance()->m_fogColor));
+		glUniform1f(m_u_fogStartLocation, Singleton<SceneManager>::GetInstance()->m_fogStart);
+		glUniform1f(m_u_fogLengthLocation, Singleton<SceneManager>::GetInstance()->m_fogLength);
+		glUniform4fv(m_u_fogColor, 1, (GLfloat*) & (Singleton<SceneManager>::GetInstance()->m_fogColor));
 	}
 }
 

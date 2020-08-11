@@ -27,7 +27,7 @@ void GS_MainMenu::Update()
 {
 }
 
-void GS_MainMenu::KeyPress(unsigned char key, bool bIsPressed)
+void GS_MainMenu::KeyPress()
 {
 }
 

@@ -120,5 +120,3 @@ GameObject& SceneManager::GetObject(int id)
 std::vector<GameObject*>& SceneManager::GetListObject() {
 	return m_listObject;
 }
-
-SceneManager * SceneManager::ms_pInstance = NULL;

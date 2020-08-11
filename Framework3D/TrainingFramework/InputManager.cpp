@@ -2,8 +2,9 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "SceneManager2D.h"
+#include "Singleton.h"
 
-InputManager * InputManager::ms_pInstance = nullptr;
+//InputManager * InputManager::ms_pInstance = nullptr;
 
 InputManager::InputManager()
 {
@@ -103,7 +104,7 @@ void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 }
 
 void InputManager::Update(float deltaTime) {
-	Camera2D& camera = SceneManager2D::GetInstance()->GetMainCamera();
+	/*Camera2D& camera = SceneManager2D::GetInstance()->GetMainCamera();
 	Vector3 cameraMoveDirection(0,0,0);
 	cameraMoveDirection.x = GetBit(Key::D) - GetBit(Key::A);
 	cameraMoveDirection.y = -GetBit(Key::W) + GetBit(Key::S);
@@ -125,7 +126,7 @@ void InputManager::Update(float deltaTime) {
 	player.SetScale(playerScale);
 	float rotation = player.GetRotation();
 	rotation += (GetBit(Key::SPACE) - GetBit(Key::LSHIFT)) * moveSpeed * deltaTime;
-	player.SetRotation(rotation);
+	player.SetRotation(rotation);*/
 	
 	/*Camera& camera = SceneManager::GetInstance()->GetMainCamera();
 	Vector3 cameraMoveDirection(0,0,0);

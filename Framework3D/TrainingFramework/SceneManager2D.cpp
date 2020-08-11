@@ -145,5 +145,3 @@ Sprite& SceneManager2D::GetObjectByID(int id)
 std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
 }
-
-SceneManager2D* SceneManager2D::ms_pInstance = NULL;

@@ -15,6 +15,6 @@ public:
 	void Render();
 	void Update();
 
-	void KeyPress(unsigned char key, bool bIsPressed);
+	void KeyPress();
 };
 

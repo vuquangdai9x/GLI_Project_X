@@ -17,7 +17,7 @@ public:
 	void Pop();
 	void render();
 	void update();
-	void KeyPress(unsigned char key, bool bIsPressed);
+	void KeyPress();
 
 	const static int WELCOM = 0;
 	const static int MENU = 1;

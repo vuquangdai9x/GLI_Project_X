@@ -2,34 +2,9 @@
 #include "stdafx.h"
 
 class InputManager {
-protected:
-	InputManager();
-	~InputManager() {}
-	InputManager(const InputManager &) {}
-	InputManager& operator =(const InputManager &) {}
 public:
-	static void CreateInstance()
-	{
-		if (ms_pInstance == nullptr)
-			ms_pInstance = new InputManager;
-	}
-	static InputManager * GetInstance()
-	{
-		return ms_pInstance;
-	}
-	static void DestroyInstance()
-	{
-		if (ms_pInstance)
-		{
-			delete ms_pInstance;
-			ms_pInstance = nullptr;
-		}
-	}
-
-	void SomeFunction() {}
-
-protected:
-	static InputManager * ms_pInstance;
+	InputManager();
+	~InputManager() {};
 
 private:
 	// NOTE: if more than 31 key, use: unsigned long int m_mask

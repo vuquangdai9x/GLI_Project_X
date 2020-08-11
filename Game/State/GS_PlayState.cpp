@@ -27,7 +27,7 @@ void GS_PlayState::Update()
 {
 }
 
-void GS_PlayState::KeyPress(unsigned char key, bool bIsPressed)
+void GS_PlayState::KeyPress()
 {
 }
 

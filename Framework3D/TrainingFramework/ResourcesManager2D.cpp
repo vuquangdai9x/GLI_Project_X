@@ -224,5 +224,3 @@ Material2D* ResourceManager2D::GetMaterial(int id)
 	}
 	return NULL;
 }
-
-ResourceManager2D* ResourceManager2D::ms_pInstance = NULL;

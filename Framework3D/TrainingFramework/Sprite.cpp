@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Sprite.h"
 #include "ResourcesManager2D.h"
+#include "Singleton.h"
 
 Sprite::Sprite(int id)
 {
@@ -13,17 +14,17 @@ void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 	SetScale(scale);
 	SetColor(hexColor, alpha);
 	m_canRender = true;
-	m_model = ResourceManager2D::GetInstance()->GetModel(0);
+	m_model = Singleton<ResourceManager2D>::GetInstance()->GetModel(0);
 	if (m_model == NULL) {
 		m_canRender = false;
 		printf("[ERR] GameObject: Failed to get model %d\n", 0);
 	}
-	m_material2d = dynamic_cast<Material2D*>(ResourceManager2D::GetInstance()->GetMaterial(iMaterialId));
+	m_material2d = dynamic_cast<Material2D*>(Singleton<ResourceManager2D>::GetInstance()->GetMaterial(iMaterialId));
 	if (m_material2d == NULL) {
 		m_canRender = false;
 		printf("[ERR] Sprite2d: Can't get Material2D\n");
 	}
-	m_mainTexture = ResourceManager2D::GetInstance()->GetTexture(iMainTexId);
+	m_mainTexture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iMainTexId);
 	if (m_mainTexture == NULL) {
 		printf("[ERR] GameObject: Failed to get main texture %d\n", iMainTexId);
 	}
