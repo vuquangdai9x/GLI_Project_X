@@ -17,10 +17,11 @@ protected:
 	GLint m_u_offsetLocation = -1;
 
 	GLint m_u_colorLocation = -1;
+	GLint m_u_textureSizeRatioLocation = -1;
 public:
 	Material2D(int id);
 	int GetId();
 	virtual void SetMainTexture(Texture* mainTexture);
 	bool Init(int iShaderId);
-	void PrepareShader(Matrix& WVP, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
+	void PrepareShader(Matrix& WVP, float textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
 };

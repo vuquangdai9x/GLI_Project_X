@@ -41,7 +41,7 @@ void Sprite::Render(Camera2D* mainCamera) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);
 
 	m_material2d->SetMainTexture(m_mainTexture);
-	m_material2d->PrepareShader(m_WVP, 0,0,1,1,&m_color);
+	m_material2d->PrepareShader(m_WVP, m_mainTexture->GetRatio(), 0,0,1,1,&m_color);
 
 	glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
 

@@ -100,7 +100,6 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
 	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
-	//camera->SetPerspective(zoom, aspectRatio, nearPlane, farPlane);
 	SetMainCamera(camera);
 	printf("[msg] SceneManager: Set up Camera2D\n");
 

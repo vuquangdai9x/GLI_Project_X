@@ -23,8 +23,8 @@ EGLBoolean CreateEGLContext(EGLNativeWindowType hWnd, EGLDisplay* eglDisplay,
     EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE, EGL_NONE };
 
     // Get Display
-    display = eglGetDisplay(GetDC(hWnd));
-    if (display == EGL_NO_DISPLAY)
+    display = eglGetDisplay(GetDC(hWnd)); 
+    if (display == EGL_NO_DISPLAY)	
     {
         return EGL_FALSE;
     }

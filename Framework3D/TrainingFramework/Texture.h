@@ -6,6 +6,7 @@ protected:
 	int m_id;
 	GLuint m_textureHandle;
 	bool m_isCubeTexture;
+	float m_ratio;
 public:
 	Texture(int id, bool isCubeTexture);
 	virtual ~Texture();
@@ -21,4 +22,5 @@ public:
 	bool LoadCubeTextureFromFile(char* filePath, TILING_MODE tilingMode);
 	bool LoadCubeTextureFromSplittedFiles(char ** imageFiles, TILING_MODE tilingMode);
 	int GetId() { return m_id; }
+	float GetRatio();
 };
