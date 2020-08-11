@@ -127,9 +127,13 @@ void SceneManager2D::Update(float frameTime) {
 	m_mainCamera->Update(frameTime);
 }
 void SceneManager2D::Render() {
+
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->Render(m_mainCamera);
 	}
+	
+	
+	
 }
 void SceneManager2D::AddObject(Sprite* object) {
 	m_listObject.push_back(object);
@@ -144,4 +148,31 @@ Sprite& SceneManager2D::GetObjectByID(int id)
 
 std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
+}
+
+Vector2& SceneManager2D::get2Dpos(float x, float y, float z)
+{
+	float Dim[3];
+	int viewPort[4];
+	viewPort[0] = 0;viewPort[1] = 0;
+	viewPort[2] = Globals::screenWidth;
+	viewPort[3] = Globals::screenHeight;
+	glhProjectf(x,y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	return2D.x = Dim[0];
+	return2D.y = Dim[1];
+	return return2D;
+}
+
+Vector3& SceneManager2D::get3Dpos(float x, float y)
+{
+	float Dim[3];
+	int viewPort[4];
+	viewPort[0] = 0;viewPort[1] = 0;
+	viewPort[2] = Globals::screenWidth;
+	viewPort[3] = Globals::screenHeight;
+	glhUnProjectf(x, y,0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	return3D.x = Dim[0];
+	return3D.y = Dim[1];
+	return3D.z = Dim[2];
+	return return3D;
 }

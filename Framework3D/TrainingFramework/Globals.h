@@ -4,7 +4,7 @@
 class Globals
 {
 public:
-	static const int screenWidth = 900;
-	static const int screenHeight = 600;
+	static const int screenWidth = 480;
+	static const int screenHeight = 960;
 	static constexpr const char * const resourceDir = "../Resources/";
 };

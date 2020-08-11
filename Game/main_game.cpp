@@ -74,8 +74,11 @@ void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 	Singleton<GameStateManager>::GetInstance()->KeyPress();
 }
 void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
-	//printf("% d %d %d %d \n", typeOfService, button, x, y);
-
+	float xx = x, yy = y;
+	printf("2D pos: %f %f \n", xx, yy);
+	Vector3 pos3D;
+	pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(xx, yy);
+	printf("3D pos: %f %f \n", pos3D.x, pos3D.y);
 }
 void CleanUp()
 {

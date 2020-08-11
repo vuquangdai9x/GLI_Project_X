@@ -149,7 +149,7 @@ public:
 	Matrix & SetTranslation(Vector3 &vec);
 
 	Matrix & SetPerspective(GLfloat fovY, GLfloat aspect, GLfloat nearPlane, GLfloat farPlane);
-
+	bool InvertMatrix(Matrix& Invert);
 	Matrix Transpose();
 
 	Matrix operator + (Matrix & mat);

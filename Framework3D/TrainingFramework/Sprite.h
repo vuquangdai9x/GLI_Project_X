@@ -14,7 +14,7 @@ public:
 	void Update(float deltaTime);
 	void Render(Camera2D* mainCamera);
 	void OnDestroy();
-
+	
 protected:
 	int m_id;
 	Vector3 m_position;
@@ -43,3 +43,5 @@ public:
 	void SetColor(Vector4 color);
 	Vector4 GetColor();
 };
+int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate);
+int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix projection, int* viewport, float* objectCoordinate);

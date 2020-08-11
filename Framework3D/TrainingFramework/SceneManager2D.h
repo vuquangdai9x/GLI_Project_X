@@ -12,6 +12,8 @@ public:
 	~SceneManager2D();
 
 private:
+	Vector2 return2D;
+	Vector3 return3D;
 	std::vector<Sprite*> m_listObject;
 	Camera2D* m_mainCamera;
 public:
@@ -26,4 +28,6 @@ public:
 	void SetMainCamera(Camera2D * camera);
 	Camera2D& GetMainCamera();
 	std::vector<Sprite*>& GetListObject();
+	Vector2& get2Dpos(float x, float y, float z);
+	Vector3& get3Dpos(float x, float y);
 };
