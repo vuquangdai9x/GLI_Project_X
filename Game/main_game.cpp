@@ -1,12 +1,5 @@
 //TrainingFramework.cpp : Defines the entry point for the console application.
 #include "stdafx.h"
-#ifdef _DEBUG
-#ifndef DBG_NEW
-#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-#define new DBG_NEW
-#endif
-#endif  // _DEBUG
-// ---
 #include "../Utilities/utilities.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "Box2D/Box2D.h"
@@ -14,12 +7,6 @@
 #include <stddef.h>
 #include "Singleton.h"
 #include "State/GameStateManager.h"
-
-// detect memory leak
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
 #define MOUSE_CLICK     1
 #define MOUSE_RELEASE   2
 #define MOUSE_MOVE    3
@@ -89,7 +76,6 @@ void CleanUp()
 
 int _tmain(int argc, _TCHAR * argv[])
 {
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	ESContext esContext;
 
@@ -122,7 +108,6 @@ int _tmain(int argc, _TCHAR * argv[])
 	printf("Press any key...\n");
 	_getch();
 
-	_CrtDumpMemoryLeaks();
 
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
