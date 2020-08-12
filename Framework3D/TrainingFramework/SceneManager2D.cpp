@@ -131,9 +131,6 @@ void SceneManager2D::Render() {
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->Render(m_mainCamera);
 	}
-	
-	
-	
 }
 void SceneManager2D::AddObject(Sprite* object) {
 	m_listObject.push_back(object);

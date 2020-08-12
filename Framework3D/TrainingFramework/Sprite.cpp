@@ -3,6 +3,10 @@
 #include "ResourcesManager2D.h"
 #include "Singleton.h"
 
+Sprite::Sprite()
+{
+}
+
 Sprite::Sprite(int id)
 {
 	m_id = id;

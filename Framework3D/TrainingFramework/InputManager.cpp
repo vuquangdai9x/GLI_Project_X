@@ -104,7 +104,7 @@ void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 }
 
 void InputManager::Update(float deltaTime) {
-	/*Camera2D& camera = SceneManager2D::GetInstance()->GetMainCamera();
+	/*Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	Vector3 cameraMoveDirection(0,0,0);
 	cameraMoveDirection.x = GetBit(Key::D) - GetBit(Key::A);
 	cameraMoveDirection.y = -GetBit(Key::W) + GetBit(Key::S);
@@ -113,12 +113,12 @@ void InputManager::Update(float deltaTime) {
 	camera.Dutch(GetBit(Key::E) - GetBit(Key::Q), deltaTime);
 	camera.Zoom(GetBit(Key::X) - GetBit(Key::Z), deltaTime);
 
-	Sprite& player = SceneManager2D::GetInstance()->GetObjectByID(0);
+	Sprite& player = Singleton<SceneManager2D>::GetInstance()->GetObjectByID(0);
 
-	float moveSpeed = 3;
+	float moveSpeed = 5;
 	Vector3 playerPos = player.GetPosition();
-	playerPos.y += (GetBit(Key::DOWN) - GetBit(Key::UP)) * moveSpeed * deltaTime;
-	playerPos.x += (GetBit(Key::RIGHT) - GetBit(Key::LEFT)) * moveSpeed * deltaTime;
+	playerPos.y += (GetBit(Key::S) - GetBit(Key::W)) * moveSpeed * deltaTime;
+	playerPos.x += (GetBit(Key::D) - GetBit(Key::A)) * moveSpeed * deltaTime;
 	player.SetPosition(playerPos);
 	Vector2 playerScale = player.GetScale();
 	playerScale.x += (GetBit(Key::N2) - GetBit(Key::N1)) * moveSpeed * deltaTime;

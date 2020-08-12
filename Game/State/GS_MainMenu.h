@@ -13,7 +13,7 @@ public:
 	bool Release();
 
 	void Render();
-	void Update();
+	void Update(float deltaTime);
 
 	void KeyPress();
 };

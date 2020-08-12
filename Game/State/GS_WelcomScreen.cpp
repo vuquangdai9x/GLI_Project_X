@@ -24,26 +24,15 @@ void GS_WelcomScreen::Render()
 {
 }
 
-void GS_WelcomScreen::Update()
+void GS_WelcomScreen::Update(float deltaTime)
 {
+
 }
 
 void GS_WelcomScreen::KeyPress()
 {
     if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) {
-        Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MENU);
+        Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
     }
-    /*if (bIsPressed) {
-        switch (key)
-        {
-        case 'a': 
-        case 'A': {
-            Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MENU);
-            break;
-        }
-        default:
-            break;
-        }
-    }*/
 }
 

@@ -16,7 +16,7 @@ public:
 	void Push(int state);
 	void Pop();
 	void render();
-	void update();
+	void update(float deltaTime);
 	void KeyPress();
 
 	const static int WELCOM = 0;

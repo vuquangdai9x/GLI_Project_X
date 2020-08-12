@@ -1,10 +1,14 @@
 #pragma once
+
 #include"StateBase.h"
 #include"../Singleton.h"
 #include"GameStateManager.h"
+
 #include<stdio.h>
 class GS_PlayState: public StateBase
 {
+private:
+	//Player player;
 public:
 	GS_PlayState();
 	~GS_PlayState();
@@ -12,7 +16,7 @@ public:
 	bool Release();
 
 	void Render();
-	void Update();
+	void Update(float deltaTime);
 
 	void KeyPress();
 };

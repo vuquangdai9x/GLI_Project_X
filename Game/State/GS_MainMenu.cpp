@@ -23,7 +23,7 @@ void GS_MainMenu::Render()
 {
 }
 
-void GS_MainMenu::Update()
+void GS_MainMenu::Update(float deltaTime)
 {
 }
 

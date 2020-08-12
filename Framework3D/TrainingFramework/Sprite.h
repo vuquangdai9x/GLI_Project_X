@@ -7,6 +7,7 @@
 
 class Sprite{
 public:
+	Sprite();
 	Sprite(int id);
 	int GetId();
 	void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);

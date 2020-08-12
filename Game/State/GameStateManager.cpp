@@ -35,10 +35,10 @@ void GameStateManager::render()
 	}
 }
 
-void GameStateManager::update()
+void GameStateManager::update(float deltaTime)
 {
 	if (!this->states.empty()) {
-		this->states.top()->Update();
+		this->states.top()->Update(deltaTime);
 	}
 }
 
