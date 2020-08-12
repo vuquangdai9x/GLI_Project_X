@@ -51,7 +51,7 @@ int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix pro
 	fTempo[4] = projection.m[0][0] * fTempo[0] + projection.m[1][0] * fTempo[1] + projection.m[2][0] * fTempo[2] + projection.m[3][0] * fTempo[3];
 	fTempo[5] = projection.m[0][1] * fTempo[0] + projection.m[1][1] * fTempo[1] + projection.m[2][1] * fTempo[2] + projection.m[3][1] * fTempo[3];
 	fTempo[6] = projection.m[0][2] * fTempo[0] + projection.m[1][2] * fTempo[1] + projection.m[2][2] * fTempo[2] + projection.m[3][2] * fTempo[3];
-	fTempo[7] = -fTempo[2];
+	fTempo[7] = projection.m[0][3] * fTempo[0] + projection.m[1][3] * fTempo[1] + projection.m[2][3] * fTempo[2] + projection.m[3][3] * fTempo[3];
 	// The result normalizes between -1 and 1
 	if (fTempo[7] == 0.0) // The w value
 		return 0;
@@ -63,7 +63,7 @@ int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix pro
 	// Window coordinates
 	// Map x, y to range 0-1
 	windowCoordinate[0] = (fTempo[4] * 0.5 + 0.5) * viewport[2] + viewport[0];
-	windowCoordinate[1] =  (fTempo[5] * 0.5 + 0.5) * viewport[3] + viewport[1];
+	windowCoordinate[1] =  (1-(fTempo[5] * 0.5 + 0.5)) * viewport[3] + viewport[1];
 	// This is only correct when glDepthRange(0.0, 1.0)
 	windowCoordinate[2] = (1.0 + fTempo[6]) * 0.5;	// Between 0 and 1
 	return 1;
@@ -88,7 +88,7 @@ int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix p
 		return 0;
 	v_out.w = 1.0 / v_out.w;
 	objectCoordinate[0] = v_out.x * v_out.w;
-	objectCoordinate[1] = v_out.y * v_out.w;
+	objectCoordinate[1] = -v_out.y * v_out.w;
 	objectCoordinate[2] = v_out.z * v_out.w;
 	return 1;
 }

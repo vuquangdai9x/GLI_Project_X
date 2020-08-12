@@ -28,9 +28,19 @@
 int Init(ESContext* esContext)
 {
 	
+	char sceneFile[50] = "../Framework3D/Resources/Datas/scene2d.txt";
+	char resourcesFile[50] = "../Framework3D/Resources/Datas/resources2d.txt";
 	Singleton<InputManager>::CreateInstance();
+
+	// 2D
 	Singleton<ResourceManager2D>::CreateInstance();
+	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 	Singleton<SceneManager2D>::CreateInstance();
+	if (!Singleton<SceneManager2D>::GetInstance()->LoadScene(sceneFile)) {
+		printf("[ERR] Entry point: Failed to init scene");
+		return false;
+	}
+
 	Singleton<GameStateManager>::CreateInstance();
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -66,11 +76,11 @@ void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 	Singleton<GameStateManager>::GetInstance()->KeyPress();
 }
 void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
-	/*float xx = x, yy = y;
+	float xx = x, yy = y;
 	printf("2D pos: %f %f \n", xx, yy);
 	Vector3 pos3D;
 	pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(xx, yy);
-	printf("3D pos: %f %f \n", pos3D.x, pos3D.y);*/
+	printf("3D pos: %f %f \n", pos3D.x, pos3D.y);
 }
 void CleanUp()
 {

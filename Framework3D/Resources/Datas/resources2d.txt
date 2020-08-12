@@ -7,7 +7,7 @@ ID 0
 FILE "../Framework3D/Resources/Textures/Bus.tga"
 TILING CLAMP
 ID 1
-FILE "../Framework3D/Resources/Textures/Croco.tga"
+FILE "../Framework3D/Resources/Textures/Croco.png"
 TILING CLAMP
 ID 2
 FILE "../Framework3D/Resources/Textures/Dirt.tga"
