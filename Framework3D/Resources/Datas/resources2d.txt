@@ -2,30 +2,33 @@
 ID 0
 FILE "../Framework3D/Resources/Models/Quad.nfg"
 
-#2D Textures: 8
+#2D Textures: 9
 ID 0
-FILE "../Framework3D/Resources/Textures/tga/hot-air-ballon-01.tga"
+FILE "../Framework3D/Resources/Textures/png/player-hot-air-balloon.png"
 TILING CLAMP
 ID 1
-FILE "../Framework3D/Resources/Textures/tga/small-piece-01.tga"
+FILE "../Framework3D/Resources/Textures/png/small-piece-01.png"
 TILING CLAMP
 ID 2
-FILE "../Framework3D/Resources/Textures/tga/small-piece-02.tga"
+FILE "../Framework3D/Resources/Textures/png/small-piece-02.png"
 TILING CLAMP
 ID 3
-FILE "../Framework3D/Resources/Textures/tga/large-piece-01.tga"
+FILE "../Framework3D/Resources/Textures/png/large-piece-01.png"
 TILING REPEAT
 ID 4
-FILE "../Framework3D/Resources/Textures/tga/starting-ground.tga"
+FILE "../Framework3D/Resources/Textures/png/medium-starting-ground.png"
 TILING CLAMP
 ID 5
-FILE "../Framework3D/Resources/Textures/tga/tiny-island.tga"
+FILE "../Framework3D/Resources/Textures/png/tiny-island-01.png"
 TILING MIRROR
 ID 6
-FILE "../Framework3D/Resources/Textures/tga/medium-island.tga"
+FILE "../Framework3D/Resources/Textures/png/small-island-01.png"
 TILING REPEAT
 ID 7
-FILE "../Framework3D/Resources/Textures/tga/medium-island-02.tga"
+FILE "../Framework3D/Resources/Textures/png/medium-island-01.png"
+TILING CLAMP
+ID 8
+FILE "../Framework3D/Resources/Textures/png/medium-cliff-01.png"
 TILING CLAMP
 
 #Shaders: 1
