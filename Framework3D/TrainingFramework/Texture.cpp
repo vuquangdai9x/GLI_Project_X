@@ -27,7 +27,8 @@ bool Texture::LoadTextureFromFile(char * filePath, TILING_MODE tilingMode)
 	if (imageData == NULL) {
 		return false;
 	}
-	m_ratio = iWidth / (float)iHeight;
+	m_width = iWidth;
+	m_height = iHeight;
 
 	GLenum imgFormat = (bpp == 24) ? GL_RGB : GL_RGBA;
 	glTexImage2D(GL_TEXTURE_2D, 0, imgFormat, iWidth, iHeight, 0, imgFormat, GL_UNSIGNED_BYTE, imageData);
@@ -68,7 +69,9 @@ bool Texture::LoadCubeTextureFromFile(char * filePath, TILING_MODE tilingMode)
 	if (imgData == NULL) {
 		return false;
 	}
-	
+	m_width = iWidth;
+	m_height = iHeight;
+
 	GLsizei iSubWidth, iSubHeight;
 	iSubWidth = iWidth / 4;
 	iSubHeight = iHeight / 3;
@@ -146,7 +149,8 @@ bool Texture::LoadCubeTextureFromSplittedFiles(char ** imageFiles, TILING_MODE t
 		}
 		return false;
 	}
-
+	m_width = iWidth;
+	m_height = iHeight;
 	GLenum imgFormat = (bpp == 24) ? GL_RGB : GL_RGBA;
 	for (int i = 0; i<6; i++)
 	{
@@ -181,7 +185,9 @@ bool Texture::LoadCubeTextureFromSplittedFiles(char ** imageFiles, TILING_MODE t
 	return true;
 }
 
-float Texture::GetRatio()
-{
-	return m_ratio;
+float Texture::GetWidth() {
+	return m_width;
+}
+float Texture::GetHeight() {
+	return m_height;
 }

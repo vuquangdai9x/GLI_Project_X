@@ -145,23 +145,6 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Resources\Models\Bila.nfg" />
-    <None Include="..\Resources\Models\bus.nfg" />
-    <None Include="..\Resources\Models\Croco.nfg" />
-    <None Include="..\Resources\Models\cube.nfg" />
-    <None Include="..\Resources\Models\fire.nfg" />
-    <None Include="..\Resources\Models\Goliath.nfg" />
-    <None Include="..\Resources\Models\House.nfg" />
-    <None Include="..\Resources\Models\Marine.nfg" />
-    <None Include="..\Resources\Models\Radar.nfg" />
-    <None Include="..\Resources\Models\SCV.nfg" />
-    <None Include="..\Resources\Models\SkyBox.nfg" />
-    <None Include="..\Resources\Models\Teran_Command_Center.nfg" />
-    <None Include="..\Resources\Models\Terrain.nfg" />
-    <None Include="..\Resources\Models\train.nfg" />
-    <None Include="..\Resources\Models\witch.nfg" />
-    <None Include="..\Resources\Models\Woman1.nfg" />
-    <None Include="..\Resources\Models\Woman2.nfg" />
     <None Include="..\Resources\Shaders\CubeShaderFS.fs" />
     <None Include="..\Resources\Shaders\CubeShaderVS.vs" />
     <None Include="..\Resources\Shaders\FireShaderFS.fs" />
@@ -175,7 +158,6 @@
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />
-    <None Include="..\Resources\Textures\heightmap.raw" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Utilities\Utilities.vcxproj">
@@ -184,33 +166,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\Textures\Bus.tga" />
-    <Image Include="..\Resources\Textures\Croco.tga" />
-    <Image Include="..\Resources\Textures\Dirt.tga" />
-    <Image Include="..\Resources\Textures\DisplacementMap.tga" />
-    <Image Include="..\Resources\Textures\envMap.tga" />
-    <Image Include="..\Resources\Textures\fire3.tga" />
-    <Image Include="..\Resources\Textures\fire_mask.tga" />
-    <Image Include="..\Resources\Textures\Golitah.tga" />
-    <Image Include="..\Resources\Textures\Grass.tga" />
-    <Image Include="..\Resources\Textures\heightmap.tga" />
-    <Image Include="..\Resources\Textures\House.tga" />
-    <Image Include="..\Resources\Textures\Marine.tga" />
-    <Image Include="..\Resources\Textures\NormalMap.tga" />
-    <Image Include="..\Resources\Textures\radar.tga" />
-    <Image Include="..\Resources\Textures\Rock.tga" />
-    <Image Include="..\Resources\Textures\SCV.tga" />
-    <Image Include="..\Resources\Textures\Terrain_blendmap_1.tga" />
-    <Image Include="..\Resources\Textures\Terrain_blendmap_2.tga" />
-    <Image Include="..\Resources\Textures\Train.tga" />
-    <Image Include="..\Resources\Textures\Witch.tga" />
-    <Image Include="..\Resources\Textures\Woman1.tga" />
-    <Image Include="..\Resources\Textures\Woman2.tga" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\Datas\resources.txt" />
     <Text Include="..\Resources\Datas\resources2d.txt" />
-    <Text Include="..\Resources\Datas\scene.txt" />
     <Text Include="..\Resources\Datas\scene2d.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

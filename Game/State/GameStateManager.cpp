@@ -1,4 +1,8 @@
+#include "../stdafx.h"
 #include "GameStateManager.h"
+#include"GS_WelcomScreen.h"
+#include"GS_MainMenu.h"
+#include"GS_PlayState.h"
 
 GameStateManager::GameStateManager()
 {
@@ -7,6 +11,7 @@ GameStateManager::GameStateManager()
 
 GameStateManager::~GameStateManager()
 {
+	
 }
 
 void GameStateManager::Push(int state)

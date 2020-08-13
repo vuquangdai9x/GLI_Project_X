@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HotAirBalloon.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HotAirBalloon.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="State\GameStateManager.h" />

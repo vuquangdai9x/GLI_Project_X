@@ -1,10 +1,6 @@
 #pragma once
 #include"StateBase.h"
-#include"GS_WelcomScreen.h"
-#include"GS_MainMenu.h"
-#include"GS_PlayState.h"
 #include<stack>
-
 
 class GameStateManager
 {

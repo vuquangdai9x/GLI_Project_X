@@ -133,7 +133,15 @@ void SceneManager2D::Render() {
 	}
 }
 void SceneManager2D::AddObject(Sprite* object) {
-	m_listObject.push_back(object);
+	if (m_listObject.size() == 0) m_listObject.push_back(object);
+	else {
+		for (int i = 0;i < m_listObject.size();i++) {
+			if (object->GetPosition().z >= m_listObject[i]->GetPosition().z) {
+				m_listObject.insert(m_listObject.begin() + i, object);
+				break;
+			}
+		}
+	} 
 }
 Sprite& SceneManager2D::GetObjectByID(int id)
 {

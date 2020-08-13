@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "ResourcesManager2D.h"
 #include "Singleton.h"
+#include "Globals.h"
 
 Sprite::Sprite()
 {
@@ -32,6 +33,7 @@ void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 	if (m_mainTexture == NULL) {
 		printf("[ERR] GameObject: Failed to get main texture %d\n", iMainTexId);
 	}
+	m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
 }
 
 void Sprite::Update(float deltaTime) {	
@@ -102,7 +104,7 @@ void Sprite::Render(Camera2D* mainCamera) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);
 
 	m_material2d->SetMainTexture(m_mainTexture);
-	m_material2d->PrepareShader(m_WVP, m_mainTexture->GetRatio(), 0,0,1,1,&m_color);
+	m_material2d->PrepareShader(m_WVP, m_originSize, 0,0,1,1,&m_color);
 
 	glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
 

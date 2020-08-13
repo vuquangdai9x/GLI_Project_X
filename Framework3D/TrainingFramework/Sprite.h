@@ -12,13 +12,14 @@ public:
 	int GetId();
 	void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
 	//void SetSpriteAnimation(int iTextureId, int iNumOfCols, int iNumOfRows, float interval);
-	void Update(float deltaTime);
-	void Render(Camera2D* mainCamera);
-	void OnDestroy();
+	virtual void Update(float deltaTime);
+	virtual void Render(Camera2D* mainCamera);
+	virtual void OnDestroy();
 	
 protected:
 	int m_id;
 	Vector3 m_position;
+	Vector2 m_originSize;
 	Vector2 m_scale;
 	float m_rotation;
 	Vector4 m_color;

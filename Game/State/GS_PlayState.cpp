@@ -1,5 +1,8 @@
+#include "../stdafx.h"
 #include "GS_PlayState.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
+#include"../Singleton.h"
+#include"GameStateManager.h"
 
 GS_PlayState::GS_PlayState()
 {
@@ -14,6 +17,10 @@ GS_PlayState::GS_PlayState()
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
 	}
+
+	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
+	m_player.AssignSprite(0);
+	//
 }
 
 GS_PlayState::~GS_PlayState()
@@ -29,16 +36,23 @@ bool GS_PlayState::Release()
 {
     return false;
 }
-
 void GS_PlayState::Render()
 {
-    Singleton<SceneManager2D>::GetInstance()->Render();
+	Singleton<SceneManager2D>::GetInstance()->Render();
 }
-
 void GS_PlayState::Update(float deltaTime)
 {
-    Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
+	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
+
+	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
+	camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Q), deltaTime);
+	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);
+
+	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
+	m_player.Update(deltaTime);
+	//
 }
+
 
 void GS_PlayState::KeyPress()
 {
