@@ -2,7 +2,7 @@
 #include "Sprite.h"
 #include "ResourcesManager2D.h"
 #include "Singleton.h"
-#include "Globals.h"
+#include "../Framework3D/TrainingFramework/framework3d.h"
 
 Sprite::Sprite()
 {

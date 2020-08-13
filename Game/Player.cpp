@@ -2,6 +2,7 @@
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "../Framework3D/Utilities/utilities.h"
 #include "Singleton.h"
+#include "SceneManager2D.h"
 
 Player::Player()
 {

@@ -3,6 +3,8 @@
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include"../Singleton.h"
 #include"GameStateManager.h"
+#include "../ResourcesManager2D.h"
+#include "../SceneManager2D.h"
 
 GS_PlayState::GS_PlayState()
 {

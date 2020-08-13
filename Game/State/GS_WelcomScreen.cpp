@@ -7,6 +7,7 @@
 GS_WelcomScreen::GS_WelcomScreen()
 {
     printf("GS_WelcomScreen\n");
+	printf("Press A to init scene\n");
 }
 
 GS_WelcomScreen::~GS_WelcomScreen()

@@ -1,6 +1,7 @@
 #include "HotAirBalloon.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "../Framework3D/Utilities/utilities.h"
+#include "SceneManager2D.h"
 #include "Singleton.h"
 
 HotAirBalloon::HotAirBalloon()
