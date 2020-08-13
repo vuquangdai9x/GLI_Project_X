@@ -6,6 +6,3 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
-#include "ResourcesManager2D.h"
-#include "SceneManager2D.h"
-#include "Sprite.h"

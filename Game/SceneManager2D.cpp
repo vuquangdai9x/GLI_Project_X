@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager2D.h"
 #include <math.h>
-#include "Globals.h"
+#include "../Framework3D/TrainingFramework/Globals.h"
 #include "Sprite.h"
 
 SceneManager2D::~SceneManager2D()

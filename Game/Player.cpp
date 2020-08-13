@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
+#include "SceneManager2D.h"
+#include "ResourcesManager2D.h"
 #include "Singleton.h"
 Player::Player()
 {

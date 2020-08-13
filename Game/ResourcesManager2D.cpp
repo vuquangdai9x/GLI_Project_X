@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "ResourcesManager2D.h"
-#include "MaterialTerrain.h"
-#include "MaterialFire.h"
-#include "Material2D.h"
-#include "Globals.h"
+#include "../Framework3D/TrainingFramework/MaterialTerrain.h"
+#include "../Framework3D/TrainingFramework/MaterialFire.h"
+#include "../Framework3D/TrainingFramework/Material2D.h"
+#include "../Framework3D/TrainingFramework/Globals.h"
 
 ResourceManager2D::ResourceManager2D()
 {

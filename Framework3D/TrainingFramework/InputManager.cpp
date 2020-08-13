@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "InputManager.h"
 #include "SceneManager.h"
-#include "SceneManager2D.h"
 #include "Singleton.h"
 
 //InputManager * InputManager::ms_pInstance = nullptr;

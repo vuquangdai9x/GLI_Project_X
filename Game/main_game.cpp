@@ -1,4 +1,6 @@
 //TrainingFramework.cpp : Defines the entry point for the console application.
+#pragma warning(disable: 4996)
+
 #include "stdafx.h"
 #include "../Utilities/utilities.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
@@ -6,6 +8,8 @@
 #include <conio.h>
 #include <stddef.h>
 #include "Singleton.h"
+#include "ResourcesManager2D.h"
+#include "SceneManager2D.h"
 #include "State/GameStateManager.h"
 #define MOUSE_CLICK     1
 #define MOUSE_RELEASE   2

@@ -1,8 +1,9 @@
 #pragma once
+#pragma warning(disable: 4996)
 #include "stdafx.h"
 #include "Sprite.h"
 #include <vector>
-#include "Camera2D.h"
+#include "../Framework3D/TrainingFramework/Camera2D.h"
 
 class SceneManager2D
 {

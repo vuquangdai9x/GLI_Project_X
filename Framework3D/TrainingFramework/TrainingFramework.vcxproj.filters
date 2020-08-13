@@ -75,19 +75,10 @@
     <ClCompile Include="vertex.cpp">
       <Filter>Source Files\base_framework_3d</Filter>
     </ClCompile>
-    <ClCompile Include="Sprite.cpp">
-      <Filter>Source Files\2d</Filter>
-    </ClCompile>
     <ClCompile Include="Camera2D.cpp">
       <Filter>Source Files\2d</Filter>
     </ClCompile>
-    <ClCompile Include="SceneManager2D.cpp">
-      <Filter>Source Files\2d</Filter>
-    </ClCompile>
     <ClCompile Include="Material2D.cpp">
-      <Filter>Source Files\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourcesManager2D.cpp">
       <Filter>Source Files\2d</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
@@ -134,19 +125,10 @@
     <ClInclude Include="Vertex.h">
       <Filter>Header Files\base_framework_3d</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files\2d</Filter>
-    </ClInclude>
     <ClInclude Include="Camera2D.h">
       <Filter>Header Files\2d</Filter>
     </ClInclude>
-    <ClInclude Include="SceneManager2D.h">
-      <Filter>Header Files\2d</Filter>
-    </ClInclude>
     <ClInclude Include="Material2D.h">
-      <Filter>Header Files\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourcesManager2D.h">
       <Filter>Header Files\2d</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
@@ -174,6 +156,9 @@
       <Filter>Header Files\3d</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcesManager2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

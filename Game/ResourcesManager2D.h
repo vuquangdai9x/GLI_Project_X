@@ -1,9 +1,10 @@
 #pragma once
+#pragma warning(disable: 4996)
 #include "stdafx.h"
-#include "Model3D.h"
-#include "Texture.h"
-#include "Shaders.h"
-#include "Material2D.h"
+#include "../Framework3D/TrainingFramework/Model3D.h"
+#include "../Framework3D/TrainingFramework/Texture.h"
+#include "../Framework3D/TrainingFramework/Shaders.h"
+#include "../Framework3D/TrainingFramework/Material2D.h"
 #include <vector>
 
 class ResourceManager2D {
@@ -11,7 +12,7 @@ class ResourceManager2D {
 public:
 	ResourceManager2D();
 	~ResourceManager2D();
-
+	
 private:
 	std::vector<Model3D*> m_aModel;
 	std::vector<Texture*> m_aTexture;

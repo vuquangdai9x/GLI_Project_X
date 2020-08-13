@@ -1,5 +1,5 @@
 #pragma once
-#include "../Framework3D/TrainingFramework/Sprite.h"
+#include "Sprite.h"
 
 class Player: public Sprite
 {
