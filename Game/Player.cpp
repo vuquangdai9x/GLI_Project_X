@@ -48,3 +48,4 @@ void Player::Update(float deltaTime)
 	camPos.y = this->GetPosition().y + m_cameraOffset.y;
 	camera.SetPosition(camPos);
 }
+

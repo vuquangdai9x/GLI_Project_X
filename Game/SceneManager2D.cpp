@@ -3,6 +3,7 @@
 #include <math.h>
 #include "../Framework3D/TrainingFramework/Globals.h"
 #include "Sprite.h"
+#include "Player.h"
 
 SceneManager2D::~SceneManager2D()
 {
@@ -44,6 +45,19 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	int iNumOfAnimTexs;
 	int* aiAnimTexId;
+
+	fscanf(fIn, "PLAYER %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * 3.1416 / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	Player* player = new Player();
+	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(player);
 
 	fscanf(fIn, "#Objects: %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
@@ -127,7 +141,6 @@ void SceneManager2D::Update(float frameTime) {
 	m_mainCamera->Update(frameTime);
 }
 void SceneManager2D::Render() {
-
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->Render(m_mainCamera);
 	}

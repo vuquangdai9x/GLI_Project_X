@@ -67,7 +67,7 @@ void Camera2D::Move(Vector3 direction, float deltaTime, float speedMultiplier)
 	Vector3 deltaMove = direction.Normalize() * speedMultiplier * deltaTime;
 	deltaMove.x *= m_moveSpeed.x;
 	deltaMove.y *= m_moveSpeed.y;
-	deltaMove.z *= m_moveSpeed.z;
+	deltaMove.z = 0;
 
 	SetPosition(m_position + deltaMove);
 }
@@ -78,7 +78,7 @@ float Camera2D::GetDutchAngle() {
 
 void Camera2D::SetDutchAngle(float angle) {
 	m_dutchAngle = angle;
-	m_up = Vector3(cosf(m_dutchAngle + M_PI / 2), sinf(m_dutchAngle +  M_PI / 2), 0);
+	m_up = Vector3(cosf(m_dutchAngle + M_PI / 2), sinf(m_dutchAngle + M_PI / 2), 0);
 	m_xaxis = (m_up.Cross(m_zaxis)).Normalize();
 	m_yaxis = (m_zaxis.Cross(m_xaxis)).Normalize();
 	UpdateViewMatrix();
