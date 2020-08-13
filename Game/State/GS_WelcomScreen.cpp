@@ -7,7 +7,7 @@
 GS_WelcomScreen::GS_WelcomScreen()
 {
     printf("GS_WelcomScreen\n");
-	printf("Press A to init scene\n");
+	printf("Press SPACE to init scene\n");
 }
 
 GS_WelcomScreen::~GS_WelcomScreen()
@@ -34,7 +34,7 @@ bool GS_WelcomScreen::Release()
 
 void GS_WelcomScreen::KeyPress()
 {
-    if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) {
+    if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::SPACE)) {
         Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
     }
 }

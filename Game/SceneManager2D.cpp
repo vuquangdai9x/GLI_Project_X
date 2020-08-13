@@ -51,11 +51,11 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 	fscanf(fIn, "ROTATION %f\n", &rotation);
-	rotation = rotation * 2 * 3.1416 / 360;
+	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-	Player* player = new Player();
+	Player* player = new Player(iObjectId);
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(player);
 
@@ -67,7 +67,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 		fscanf(fIn, "ROTATION %f\n", &rotation);
-		rotation = rotation * 2 * 3.1416 / 360;
+		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		obj->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
@@ -146,15 +146,22 @@ void SceneManager2D::Render() {
 	}
 }
 void SceneManager2D::AddObject(Sprite* object) {
-	if (m_listObject.size() == 0) m_listObject.push_back(object);
-	else {
-		for (int i = 0;i < m_listObject.size();i++) {
-			if (object->GetPosition().z >= m_listObject[i]->GetPosition().z) {
-				m_listObject.insert(m_listObject.begin() + i, object);
-				break;
-			}
+	if (m_listObject.size() == 0) {
+		m_listObject.push_back(object);
+		return;
+	}
+	float zPos = object->GetPosition().z;
+	if (zPos >= m_listObject[0]->GetPosition().z) {
+		m_listObject.insert(m_listObject.begin(), object);
+		return;
+	}
+	for (int i = 1;i < m_listObject.size();i++) {
+		if (m_listObject[i-1]->GetPosition().z >= zPos && zPos >= m_listObject[i]->GetPosition().z) {
+			m_listObject.insert(m_listObject.begin() + i, object);
+			return;
 		}
-	} 
+	}
+	m_listObject.push_back(object);
 }
 Sprite& SceneManager2D::GetObjectByID(int id)
 {

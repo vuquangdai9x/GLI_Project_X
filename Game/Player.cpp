@@ -4,12 +4,14 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 
-Player::Player()
+Player::Player(int id)
 {
 	//this->sprite =& Singleton<SceneManager2D>::GetInstance()->GetObjectByID(0);
 	//Vector2 temp = Singleton<SceneManager2D>::GetInstance()->get2Dpos(this->sprite->GetPosition().x, this->sprite->GetPosition().y, this->sprite->GetPosition().z);
 	//this->x = temp.x;
 	//this->y = temp.y;
+	Sprite::Sprite(id);
+
 	this->m_moveSpeed = 5;
 
 	m_cameraOffset.x = 0;

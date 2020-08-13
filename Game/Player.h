@@ -14,7 +14,7 @@ private:
 	Vector2 m_cameraOffset;
 
 public:
-	Player();
+	Player(int id);
 	~Player();
 	void Update(float deltaTime);
 };
