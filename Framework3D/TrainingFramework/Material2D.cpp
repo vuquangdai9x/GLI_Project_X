@@ -33,11 +33,11 @@ bool Material2D::Init(int iShaderId)
 	m_u_offsetLocation = glGetUniformLocation(m_shader->program, "u_offset");
 
 	m_u_colorLocation = glGetUniformLocation(m_shader->program, "u_color");
-	m_u_textureSizeRatioLocation = glGetUniformLocation(m_shader->program, "u_texSizeRatio");
+	m_u_originSizeLocation = glGetUniformLocation(m_shader->program, "u_originSize");
 	return true;
 }
 
-void Material2D::PrepareShader(Matrix& WVP, float textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color)
+void Material2D::PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color)
 {
 	glUseProgram(m_shader->program);
 	if (m_a_positionLocation != -1)
@@ -72,7 +72,7 @@ void Material2D::PrepareShader(Matrix& WVP, float textureRatio, float offsetX, f
 	if (m_u_colorLocation != -1) {
 		glUniform4fv(m_u_colorLocation, 1, (GLfloat*)color);
 	}
-	if (m_u_textureSizeRatioLocation != -1) {
-		glUniform1f(m_u_textureSizeRatioLocation, (GLfloat)textureRatio);
+	if (m_u_originSizeLocation != -1) {
+		glUniform2f(m_u_originSizeLocation, (GLfloat)textureRatio.x, (GLfloat)textureRatio.y);
 	}
 }

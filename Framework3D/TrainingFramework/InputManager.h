@@ -13,7 +13,4 @@ public:
 	enum Key { NONE, A, D, W, S, LSHIFT, SPACE, UP, DOWN, LEFT, RIGHT, N1, N2, N3, N4, Q, E, TAB, Z, X, C };
 	void KeyPressed(unsigned char key, bool isKeyPressed);
 	int GetBit(Key key);
-
-	void Update(float deltaTime);
-
 };

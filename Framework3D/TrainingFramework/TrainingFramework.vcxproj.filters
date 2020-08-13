@@ -22,12 +22,6 @@
     <Filter Include="Resources\Datas">
       <UniqueIdentifier>{a1e640a0-63e7-4178-9cb8-8da5232aa265}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources\Models">
-      <UniqueIdentifier>{d996c3d2-a88f-451f-83f9-692dafee65d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resources\Textures">
-      <UniqueIdentifier>{8d30975c-6f75-4f03-a9ad-d98ddda19f53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\base_framework_3d">
       <UniqueIdentifier>{441cdd34-6247-4d24-a9c4-e6abbeed7ef3}</UniqueIdentifier>
     </Filter>
@@ -170,60 +164,6 @@
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="..\Readme.doc" />
-    <None Include="..\Resources\Models\Bila.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\bus.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Croco.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\cube.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\fire.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Goliath.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\House.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Marine.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Radar.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\SCV.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\SkyBox.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Teran_Command_Center.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Terrain.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\train.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\witch.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Woman1.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Models\Woman2.nfg">
-      <Filter>Resources\Models</Filter>
-    </None>
-    <None Include="..\Resources\Textures\heightmap.raw">
-      <Filter>Resources\Textures</Filter>
-    </None>
     <None Include="..\Resources\Shaders\CubeShaderFS.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
@@ -256,80 +196,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\Textures\Bus.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Croco.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Dirt.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\DisplacementMap.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\envMap.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\fire_mask.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\fire3.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Golitah.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Grass.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\heightmap.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\House.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Marine.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\NormalMap.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\radar.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Rock.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\SCV.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Terrain_blendmap_1.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Terrain_blendmap_2.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Train.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Witch.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Woman1.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-    <Image Include="..\Resources\Textures\Woman2.tga">
-      <Filter>Resources\Textures</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="..\Resources\Datas\resources.txt">
-      <Filter>Resources\Datas</Filter>
-    </Text>
-    <Text Include="..\Resources\Datas\scene.txt">
-      <Filter>Resources\Datas</Filter>
-    </Text>
     <Text Include="..\Resources\Datas\scene2d.txt">
       <Filter>Resources\Datas</Filter>
     </Text>

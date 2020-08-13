@@ -1,8 +1,7 @@
 #pragma once
-#include "Sprite.h"
+#include "../Framework3D/TrainingFramework/Sprite.h"
 
-class Player: public Sprite
-{
+class HotAirBalloon {
 private:
 	float x, y;
 	float width, height;
@@ -12,10 +11,10 @@ private:
 	float m_moveSpeed;
 
 	Vector2 m_cameraOffset;
-
+	Sprite* m_sprite;
 public:
-	Player();
-	~Player();
+	HotAirBalloon();
+	~HotAirBalloon();
+	void AssignSprite(int id);
 	void Update(float deltaTime);
 };
-

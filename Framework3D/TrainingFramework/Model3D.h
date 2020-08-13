@@ -1,5 +1,5 @@
 #pragma once
-#include "stdafx.h"
+#include "Math.h"
 #include "Vertex.h"
 #include "Shaders.h"
 
