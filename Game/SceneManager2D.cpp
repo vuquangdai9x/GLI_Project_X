@@ -4,6 +4,7 @@
 #include "../Framework3D/TrainingFramework/Globals.h"
 #include "Sprite.h"
 #include "Player.h"
+#include "Obstacle.h"
 
 SceneManager2D::~SceneManager2D()
 {
@@ -59,9 +60,9 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(player);
 
-	fscanf(fIn, "#Objects: %d\n", &iNumOfObject);
+	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
-		obj = new Sprite(iObjectId);
+		Obstacle *obs = new Obstacle(0);
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
@@ -70,7 +71,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-		obj->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		for (int i = 0;i < iNumOfAnimations;i++) {
@@ -94,7 +95,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 			}
 		}
 
-		AddObject(obj);
+		AddObject(obs);
 
 		printf("[msg] SceneManager: Loaded Sprite %d\n\tMaterial: %d\n\tMain Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
