@@ -21,7 +21,6 @@ GS_PlayState::GS_PlayState()
 	}
 
 	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
-	m_player.AssignSprite(0);
 	//
 }
 
@@ -51,7 +50,6 @@ void GS_PlayState::Update(float deltaTime)
 	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);
 
 	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
-	m_player.Update(deltaTime);
 	//
 }
 
