@@ -35,7 +35,6 @@ int main(int argc, char** argv)
 
 	// Construct a world object, which will hold and simulate the rigid bodies.
 	b2World world(gravity);
-
 	// Define the ground body.
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, -10.0f);
@@ -85,6 +84,20 @@ int main(int argc, char** argv)
 	int32 positionIterations = 2;
 
 	// This is our little game loop.
+	for (int32 i = 0; i < 60; ++i)
+	{
+		// Instruct the world to perform a single step of simulation.
+		// It is generally best to keep the time step and iterations fixed.
+		world.Step(timeStep, velocityIterations, positionIterations);
+
+		// Now print the position and angle of the body.
+		b2Vec2 position = body->GetPosition();
+		float32 angle = body->GetAngle();
+
+		printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+	}
+
+	body->SetTransform(b2Vec2(0.0, 4.0), 0.0);
 	for (int32 i = 0; i < 60; ++i)
 	{
 		// Instruct the world to perform a single step of simulation.

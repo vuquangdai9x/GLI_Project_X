@@ -11,6 +11,7 @@
 #include "ResourcesManager2D.h"
 #include "SceneManager2D.h"
 #include "State/GameStateManager.h"
+#include "WorldManager.h"
 #define MOUSE_CLICK     1
 #define MOUSE_RELEASE   2
 #define MOUSE_MOVE    3
@@ -22,23 +23,34 @@ int Init(ESContext* esContext)
 	Singleton<ResourceManager2D>::CreateInstance();
 	Singleton<SceneManager2D>::CreateInstance();
 	Singleton<GameStateManager>::CreateInstance();
+	Singleton<WorldManager>::CreateInstance();
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, 1.0f, 0.0f, 1.0f, 1.0f);
+
 
 	return 0;
 }
 
 void Draw(ESContext* esContext)
 {
+	//DWORD start, end;
+	//start = GetTickCount();
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	//Singleton<SceneManager2D>::GetInstance()->Render();
 	//SceneManager::GetInstance()->Render();
 	Singleton<GameStateManager>::GetInstance()->render();
 	eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);
+
+	//end = GetTickCount();
+	//DWORD deltaTime = end - start;
+	//if (deltaTime < 1000.0 / 60.0)
+		//Sleep(1000 / 60.0 - deltaTime);
 }
 
 void Update(ESContext * esContext, float deltaTime)
@@ -65,7 +77,8 @@ void CleanUp()
 
 int _tmain(int argc, _TCHAR * argv[])
 {
-
+	B2_NOT_USED(argc);
+	B2_NOT_USED(argv);
 	ESContext esContext;
 
 	esInitContext(&esContext);
@@ -91,7 +104,7 @@ int _tmain(int argc, _TCHAR * argv[])
 	Singleton<ResourceManager2D>::DestroyInstance();
 	Singleton<SceneManager2D>::DestroyInstance();
 	Singleton<InputManager>::DestroyInstance();
-
+	Singleton<WorldManager>::DestroyInstance();
 	//identifying memory leaks
 	MemoryDump();
 	printf("Press any key...\n");

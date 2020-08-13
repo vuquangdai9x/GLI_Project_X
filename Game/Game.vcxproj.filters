@@ -60,6 +60,12 @@
     <ClInclude Include="Obstacle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WorldManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -96,6 +102,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemBody.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

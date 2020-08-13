@@ -5,7 +5,8 @@
 #include "Sprite.h"
 #include "Player.h"
 #include "Obstacle.h"
-
+#include "WorldManager.h"
+#include"Singleton.h"
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -58,6 +59,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	Player* player = new Player(iObjectId);
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	player->createBox2D();
 	AddObject(player);
 
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
@@ -136,6 +138,7 @@ Camera2D& SceneManager2D::GetMainCamera()
 
 void SceneManager2D::Update(float frameTime) {
 	m_time += frameTime;
+	Singleton<WorldManager>::GetInstance()->Update(frameTime);
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->Update(frameTime);
 	}
