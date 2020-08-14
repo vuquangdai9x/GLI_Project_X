@@ -74,7 +74,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-
+		obs->createBox2D();
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		for (int i = 0;i < iNumOfAnimations;i++) {
 			fscanf(fIn, "ANIM %d %s\n", &iAnimId, animType);

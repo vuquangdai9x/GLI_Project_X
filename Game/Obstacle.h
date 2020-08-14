@@ -1,5 +1,6 @@
 #pragma once
 #include "Sprite.h"
+#include "ItemBody.h"
 class Obstacle: public Sprite
 {
 private:
@@ -9,9 +10,12 @@ private:
 	float m_moveSpeed;
 	int m_type;
 
+	ItemBody* obstacleBody;
 public:
+
 	Obstacle(int type);
 	~Obstacle();
 	void Update(float deltaTime);
+	void createBox2D();
 };
 

@@ -8,7 +8,9 @@ void Player::createBox2D()
 {
 	x = m_position.x;
 	y = m_position.y;
-	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, 1.0f, 1.0f);
+	width = m_originSize.x * this->GetScale().x;
+	height = m_originSize.y * this->GetScale().y;
+	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
 }
 Player::Player(int id)
 {
@@ -48,11 +50,11 @@ void Player::Update(float deltaTime)
 	//playerPos.y += (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S)) * m_moveSpeed * deltaTime;
 	//playerPos.x += (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) * m_moveSpeed * deltaTime;
 	
-	//float force_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S));
-	//float force_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A));
-	//playerBody->body->ApplyForce(b2Vec2(force_x, force_y), playerBody->body->GetWorldCenter(), TRUE);
-	//if(pre_KeyY!=force_y) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(0.0, (force_y-pre_KeyY)*(Y_FORCE)), true);
-	//if(pre_KeyX != force_x) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( (force_x - pre_KeyX) * X_FORCE,0.0), true);
+	/*float force_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S));
+	float force_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A));
+	playerBody->body->ApplyForce(b2Vec2(force_x, force_y), playerBody->body->GetWorldCenter(), TRUE);
+	if(pre_KeyY!=force_y) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(0.0, (force_y-pre_KeyY)*(Y_FORCE)), true);
+	if(pre_KeyX != force_x) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( (force_x - pre_KeyX) * X_FORCE,0.0), true);*/
 	playerPos.x = playerBody->body->GetPosition().x;
 	playerPos.y = playerBody->body->GetPosition().y;
 	//float delta_x, delta_y;
@@ -62,6 +64,7 @@ void Player::Update(float deltaTime)
 	
 
 	this->SetPosition(playerPos);
+	printf("%f %f \n", playerPos.x, playerPos.y);
 
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	Vector3 camPos = camera.GetPosition();

@@ -21,11 +21,11 @@ WorldManager::~WorldManager()
 	delete m_world;
 }
 
-ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, float h)
+ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, float h,float massD)
 {
 	ItemBody *tmp=new ItemBody(type, x, y);
 	b2BodyDef bodyDef;
-	if (type != STATIC_OBJECT) {
+	if (type != OBSTACLE) {
 		bodyDef.type = b2_dynamicBody;
 	}
 	else {
@@ -45,7 +45,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 
 	b2MassData mass;
 	mass.center = tmp->body->GetWorldCenter();
-	mass.mass = DEFAULT_MASS;
+	mass.mass = massD;
 	tmp->body->SetMassData(&mass);
 	listObject.push_back(tmp);
 	return tmp;
