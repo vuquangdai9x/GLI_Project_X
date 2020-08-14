@@ -36,6 +36,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	Vector2 scale;
 	unsigned int uiHexColor;
 	float alpha;
+	char shapeType[10];
 
 	int iNumOfAnimations;
 	int iAnimId;
@@ -69,12 +70,19 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-		fscanf(fIn, "ROTATION %f\n", &rotation);
+		fscanf(fIn, "ROTATION %f\n", &rotation); 
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-		obs->createBox2D();
+		fscanf(fIn, "TYPE %s\n", shapeType);
+		if (strcmp(shapeType, "RECT") == 0) {
+			obs->createBox2D();
+		}
+		else {
+			obs->createTriangle2D();
+		}
+		
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		for (int i = 0;i < iNumOfAnimations;i++) {
 			fscanf(fIn, "ANIM %d %s\n", &iAnimId, animType);

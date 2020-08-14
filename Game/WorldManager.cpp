@@ -51,6 +51,41 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	return tmp;
 }
 
+ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, float h, float massD)
+{
+	ItemBody* tmp = new ItemBody(type, x, y);
+	b2BodyDef bodyDef;
+	if (type != OBSTACLE) {
+		bodyDef.type = b2_dynamicBody;
+	}
+	else {
+		bodyDef.type = b2_staticBody;
+	}
+
+	bodyDef.position.Set(x, y);
+	tmp->body = m_world->CreateBody(&bodyDef);
+	printf("%f %f %f %f \n", x, y, w, h);
+	b2PolygonShape dynamicPolygon;
+	b2Vec2 vertices[3];
+	vertices[0].Set(0,- h);
+	vertices[1].Set(w, h);
+	vertices[2].Set(- w, h);
+	dynamicPolygon.Set(vertices, 3);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &dynamicPolygon;
+	fixtureDef.density = 5.0f;
+	fixtureDef.friction = 0.0f;
+	tmp->body->CreateFixture(&fixtureDef);
+
+	b2MassData mass;
+	mass.center = tmp->body->GetWorldCenter();
+	mass.mass = massD;
+	tmp->body->SetMassData(&mass);
+	listObject.push_back(tmp);
+	return tmp;
+}
+
 void WorldManager::Update(float deltaTime)
 {
 	m_world->Step(deltaTime, m_velocityIterations, m_positionIterations);

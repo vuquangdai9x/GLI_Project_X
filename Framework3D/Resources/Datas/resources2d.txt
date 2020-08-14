@@ -7,7 +7,7 @@ ID 0
 FILE "../Framework3D/Resources/Textures/png/player-hot-air-balloon.png"
 TILING CLAMP
 ID 1
-FILE "../Framework3D/Resources/Textures/png/medium-starting-ground.png"
+FILE "../Framework3D/Resources/Textures/png/starting-ground-01.png"
 TILING CLAMP
 ID 2
 FILE "../Framework3D/Resources/Textures/png/small-piece-01.png"

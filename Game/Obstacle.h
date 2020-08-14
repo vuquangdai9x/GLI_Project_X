@@ -17,5 +17,6 @@ public:
 	~Obstacle();
 	void Update(float deltaTime);
 	void createBox2D();
+	void createTriangle2D();
 };
 
