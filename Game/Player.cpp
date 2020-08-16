@@ -10,7 +10,68 @@ void Player::createBox2D()
 	y = m_position.y;
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
+	m_currentMoveSpeed = 0.0f;m_desireMoveSpeed = 0.0f;
+	m_currentFlySpeed = Y_FORCE;m_desireFlySpeed = Y_FORCE;
 	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
+	
+	//playerBody->body->ApplyForceToCenter(b2Vec2(0.0f, GRAVITY * DEFAULT_MASS), false);
+}
+void Player::setFlyState(FlyState fly)
+{
+	switch (fly)
+	{
+	case Fast:
+		m_desireFlySpeed = 10.0f;
+		break;
+	case Normal:
+		m_desireFlySpeed = 5.0f;
+		break;
+	case SLow:
+		m_desireFlySpeed = 2.0f;
+		break;
+	case Static:
+		m_desireFlySpeed = 0.0f;
+		break;
+	default:
+		break;
+	}
+	updateFlyState();
+}
+void Player::updateFlyState()
+{
+	m_flyForce = m_desireFlySpeed - this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).y;
+	if (abs(m_flyForce) > maxForce) {
+		if (m_flyForce > 0) m_flyForce = maxForce;
+		else m_flyForce = -maxForce;
+	}
+	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(0.0, m_flyForce * playerBody->body->GetMass()), false);
+}
+void Player::setMoveState(MoveState move)
+{
+	switch (move)
+	{
+	case Left:
+		m_desireMoveSpeed = -5.0;
+		break;
+	case Right:
+		m_desireMoveSpeed = 5.0;
+		break;
+	case NonMove:
+		m_desireMoveSpeed = 0.0;
+		break;
+	default:
+		break;
+	}
+	updateMoveState();
+}
+void Player::updateMoveState()
+{
+	m_moveForce = m_desireMoveSpeed - this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).x;
+	if (abs(m_moveForce) > maxForce) {
+		if (m_moveForce > 0) m_moveForce = maxForce;
+		else m_moveForce = -maxForce;
+	}
+	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( m_moveForce * playerBody->body->GetMass(),0.0), false);
 }
 Player::Player(int id)
 {
@@ -31,47 +92,49 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	/*Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
-	Vector3 cameraMoveDirection(0, 0, 0);
-	cameraMoveDirection.x = Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A);
-	cameraMoveDirection.y = -Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) + Singleton<InputManager>::GetInstance()->GetBit(InputManager::S);
-	camera.Move(cameraMoveDirection, deltaTime);*/
 
-	//camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Q), deltaTime);
-	//camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Z), deltaTime);
-
-	//Sprite& player = Singleton<SceneManager2D>::GetInstance()->GetObjectByID(0);
 
 	Vector3 playerPos;
-	//playerPos.x = this->GetPosition().x;
-	//playerPos.y = this->GetPosition().y;
 	playerPos.z = this->GetPosition().z;
 	this->GetPosition();
-	//playerPos.y += (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S)) * m_moveSpeed * deltaTime;
-	//playerPos.x += (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) * m_moveSpeed * deltaTime;
-	
-	/*float force_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S));
-	float force_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A));
-	playerBody->body->ApplyForce(b2Vec2(force_x, force_y), playerBody->body->GetWorldCenter(), TRUE);
-	if(pre_KeyY!=force_y) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(0.0, (force_y-pre_KeyY)*(Y_FORCE)), true);
-	if(pre_KeyX != force_x) playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( (force_x - pre_KeyX) * X_FORCE,0.0), true);*/
+
+	float key_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S));
+	float key_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A));
+	if (key_y == 1) time++;
+	if (time == 0) {
+		playerPos.x = playerBody->body->GetPosition().x;
+		playerPos.y = playerBody->body->GetPosition().y;
+		this->SetPosition(playerPos);
+		Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
+		Vector3 camPos = camera.GetPosition();
+		camPos.x = this->GetPosition().x + m_cameraOffset.x;
+		camPos.y = this->GetPosition().y + m_cameraOffset.y;
+		camera.SetPosition(camPos);
+
+		//b2Vec2 v = playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter());
+		//this->SetPosition(playerPos);
+		//printf("%f %f \n", v.x, v.y);
+
+		return;
+	};
+	if (time == 1) {
+		playerBody->body->SetLinearVelocity(b2Vec2(0.0, Y_FORCE));
+		return;
+	}
+
+	setFlyState(FlyState(key_y));
+	setMoveState(MoveState(key_x));
 	playerPos.x = playerBody->body->GetPosition().x;
 	playerPos.y = playerBody->body->GetPosition().y;
-	//float delta_x, delta_y;
-	//delta_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S)) * m_moveSpeed * deltaTime;
-	//delta_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A)) * m_moveSpeed * deltaTime;
-	//playerBody->body->SetTransform(b2Vec2(playerPos.x + delta_x, playerPos.y + delta_y), 0.0f);
-	
 
+	b2Vec2 v = playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter());
 	this->SetPosition(playerPos);
-	printf("%f %f \n", playerPos.x, playerPos.y);
-
+	printf("%f %f \n", v.x, v.y);
+	
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	Vector3 camPos = camera.GetPosition();
 	camPos.x = this->GetPosition().x + m_cameraOffset.x;
 	camPos.y = this->GetPosition().y + m_cameraOffset.y;
 	camera.SetPosition(camPos);
-
-	//pre_KeyX = force_x, pre_KeyY = force_y;
 }
 

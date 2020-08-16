@@ -19,21 +19,7 @@ void ItemBody::Update(float deltaTime)
 	{
 	case PLAYER: {
 		body->ApplyForce(b2Vec2(0.0f, GRAVITY*body->GetMass()), body->GetWorldCenter(), true);
-		if (!firstTime) {
-			firstTime++;
-			body->ApplyLinearImpulseToCenter(b2Vec2(0.0, -(Y_FORCE)*body->GetMass()), true);
-			break;
-		}
-		if (firstTime == 1) {
-			firstTime++;
-			body->ApplyLinearImpulseToCenter(b2Vec2(0.0, (Y_FORCE)*body->GetMass()), true);
-			break;
-		}
-		float force_y = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S));
-		float force_x = (Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A));
-		if (pre_KeyY != force_y) body->ApplyLinearImpulseToCenter(b2Vec2(0.0, (force_y - pre_KeyY) * (Y_FORCE)*body->GetMass()), true);
-		if (pre_KeyX != force_x) body->ApplyLinearImpulseToCenter(b2Vec2((force_x - pre_KeyX) * X_FORCE, 0.0), true);
-		pre_KeyX = force_x, pre_KeyY = force_y;
+		
 		break;
 	}
 	case OBSTACLE: {
