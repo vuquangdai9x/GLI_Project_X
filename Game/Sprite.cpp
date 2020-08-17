@@ -36,7 +36,7 @@ void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 	m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
 }
 
-void Sprite::Update(float deltaTime) {	
+void Sprite::Update(float deltaTime) {
 
 }
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
@@ -65,7 +65,7 @@ int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix pro
 	// Window coordinates
 	// Map x, y to range 0-1
 	windowCoordinate[0] = (fTempo[4] * 0.5 + 0.5) * viewport[2] + viewport[0];
-	windowCoordinate[1] =  (1-(fTempo[5] * 0.5 + 0.5)) * viewport[3] + viewport[1];
+	windowCoordinate[1] = (1 - (fTempo[5] * 0.5 + 0.5)) * viewport[3] + viewport[1];
 	// This is only correct when glDepthRange(0.0, 1.0)
 	windowCoordinate[2] = (1.0 + fTempo[6]) * 0.5;	// Between 0 and 1
 	return 1;
@@ -81,7 +81,7 @@ int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix p
 	if (a_matrix.InvertMatrix(m_matrix) == 0)
 		return 0;
 	v_in.x = (winx - (float)viewport[0]) / (float)viewport[2] * 2.0 - 1.0;
-	v_in.y = (winy - (float)viewport[1]) / (float)viewport[3] * 2.0 - 1.0;
+	v_in.y = ((float)viewport[3] - (winy - (float)viewport[1])) / (float)viewport[3] * 2.0 - 1.0;
 	v_in.z = 2.0 * winz - 1.0;
 	v_in.w = 1.0;
 	// Objects coordinates
@@ -90,7 +90,7 @@ int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix p
 		return 0;
 	v_out.w = 1.0 / v_out.w;
 	objectCoordinate[0] = v_out.x * v_out.w;
-	objectCoordinate[1] = -v_out.y * v_out.w;
+	objectCoordinate[1] = v_out.y * v_out.w;
 	objectCoordinate[2] = v_out.z * v_out.w;
 	return 1;
 }
@@ -104,7 +104,7 @@ void Sprite::Render(Camera2D* mainCamera) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);
 
 	m_material2d->SetMainTexture(m_mainTexture);
-	m_material2d->PrepareShader(m_WVP, m_originSize, 0,0,1,1,&m_color);
+	m_material2d->PrepareShader(m_WVP, m_originSize, 0, 0, 1, 1, &m_color);
 
 	glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
 
@@ -131,7 +131,7 @@ void Sprite::UpdateTranslateMatrix()
 
 void Sprite::UpdateScaleMatrix()
 {
-	m_S.SetScale(Vector3(m_scale.x,m_scale.y,1));
+	m_S.SetScale(Vector3(m_scale.x, m_scale.y, 1));
 	m_transformMat = m_S * m_R * m_T;
 }
 

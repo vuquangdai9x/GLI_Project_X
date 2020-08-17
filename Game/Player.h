@@ -1,9 +1,10 @@
 #pragma once
 #include "Sprite.h"
 #include "ItemBody.h"
-enum FlyState{Fast=1,Normal=0,SLow=-1,Static=2};
+#include "CanonBullet.h"
+enum FlyState { Fast = 1, Normal = 0, SLow = -1, Static = 2 };
 enum MoveState { Left = -1, Right = 1, NonMove = 0 };
-class Player: public Sprite
+class Player : public Sprite
 {
 private:
 	float x, y;
@@ -12,7 +13,7 @@ private:
 	float m_currentMoveSpeed, m_desireMoveSpeed;
 	float m_currentFlySpeed, m_desireFlySpeed;
 	float m_flyForce, m_moveForce;
-	float maxForce=0.2f;
+	float maxForce = 0.2f;
 
 	float m_flyMulti, m_moveMulti;
 
@@ -21,8 +22,9 @@ private:
 	float m_moveSpeed;
 	ItemBody* playerBody;
 	Vector2 m_cameraOffset;
-
+	Sprite* m_target;
 	int time = 0;
+	DWORD m_timeEnd = 0;
 
 public:
 	Player(int id);
@@ -33,5 +35,8 @@ public:
 	void updateFlyState();
 	void setMoveState(MoveState move);
 	void updateMoveState();
+	void setTarget(Sprite* target);
+	float getFireAngle();
+	void testCanon();
 };
 

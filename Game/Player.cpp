@@ -4,6 +4,8 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
+#include<math.h>
+
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -13,7 +15,7 @@ void Player::createBox2D()
 	m_currentMoveSpeed = 0.0f;m_desireMoveSpeed = 0.0f;
 	m_currentFlySpeed = Y_FORCE;m_desireFlySpeed = Y_FORCE;
 	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
-	
+
 	//playerBody->body->ApplyForceToCenter(b2Vec2(0.0f, GRAVITY * DEFAULT_MASS), false);
 }
 void Player::setFlyState(FlyState fly)
@@ -71,7 +73,40 @@ void Player::updateMoveState()
 		if (m_moveForce > 0) m_moveForce = maxForce;
 		else m_moveForce = -maxForce;
 	}
-	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( m_moveForce * playerBody->body->GetMass(),0.0), false);
+	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(m_moveForce * playerBody->body->GetMass(), 0.0), false);
+}
+void Player::setTarget(Sprite* target)
+{
+	m_target = target;
+}
+float Player::getFireAngle()
+{
+	Vector3 playerPos, tagetPos;
+	playerPos = this->GetPosition();
+	tagetPos = m_target->GetPosition();
+	Vector2 rootVec(1.0, 0.0);
+	Vector2 current(tagetPos.x - playerPos.x, tagetPos.y - playerPos.y);
+	float cos_angle = (current.Dot(rootVec)) / (current.Length());
+	if (tagetPos.y < playerPos.y)
+		return -(acos(cos_angle));
+	return acosf(cos_angle);
+
+}
+void Player::testCanon()
+{
+	DWORD start = GetTickCount();
+
+	if (start-m_timeEnd >=1000) {
+		Vector3 playerPos, tagetPos;
+		playerPos = this->GetPosition();
+		float angle = getFireAngle() * 180 / M_PI ;
+		printf("%f \n", angle);
+		CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x, playerPos.y), angle);
+		Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
+		m_timeEnd= start;
+	}
+
+	
 }
 Player::Player(int id)
 {
@@ -129,12 +164,26 @@ void Player::Update(float deltaTime)
 
 	b2Vec2 v = playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter());
 	this->SetPosition(playerPos);
-	printf("%f %f \n", v.x, v.y);
-	
+	//printf("%f %f \n", v.x, v.y);
+
+
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	Vector3 camPos = camera.GetPosition();
 	camPos.x = this->GetPosition().x + m_cameraOffset.x;
 	camPos.y = this->GetPosition().y + m_cameraOffset.y;
 	camera.SetPosition(camPos);
+
+	Vector3 targetPos;
+	int i_x, i_y;
+	float f_x, f_y;
+	Singleton<InputManager>::GetInstance()->getXY(i_x, i_y);
+	f_x = i_x;f_y = i_y;
+	targetPos = Singleton<SceneManager2D>::GetInstance()->get3Dpos(f_x, f_y);
+	targetPos.z = playerPos.z + 1.0f;
+	m_target->SetPosition(targetPos);
+
+	//printf("%f \n", getFireAngle());
+	if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();
+
 }
 

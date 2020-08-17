@@ -48,6 +48,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	int iNumOfAnimTexs;
 	int* aiAnimTexId;
+	int targetID;
+
 
 	fscanf(fIn, "PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -62,15 +64,22 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
+	fscanf(fIn, "TARGETTEX %d\n", &targetID);
+	fscanf(fIn, "TARGETSCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "TARGETPOS %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	Sprite* target = new Sprite(targetID);
+	target->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, targetID);
+	player->setTarget(target);
+	AddObject(target);
 
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
-		Obstacle *obs = new Obstacle(0);
+		Obstacle* obs = new Obstacle(0);
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-		fscanf(fIn, "ROTATION %f\n", &rotation); 
+		fscanf(fIn, "ROTATION %f\n", &rotation);
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
@@ -82,7 +91,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		else {
 			obs->createTriangle2D();
 		}
-		
+
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		for (int i = 0;i < iNumOfAnimations;i++) {
 			fscanf(fIn, "ANIM %d %s\n", &iAnimId, animType);
@@ -168,7 +177,7 @@ void SceneManager2D::AddObject(Sprite* object) {
 		return;
 	}
 	for (int i = 1;i < m_listObject.size();i++) {
-		if (m_listObject[i-1]->GetPosition().z >= zPos && zPos >= m_listObject[i]->GetPosition().z) {
+		if (m_listObject[i - 1]->GetPosition().z >= zPos && zPos >= m_listObject[i]->GetPosition().z) {
 			m_listObject.insert(m_listObject.begin() + i, object);
 			return;
 		}
@@ -194,7 +203,7 @@ Vector2& SceneManager2D::get2Dpos(float x, float y, float z)
 	viewPort[0] = 0;viewPort[1] = 0;
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
-	glhProjectf(x,y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	glhProjectf(x, y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
 	return2D.x = Dim[0];
 	return2D.y = Dim[1];
 	return return2D;
@@ -207,7 +216,7 @@ Vector3& SceneManager2D::get3Dpos(float x, float y)
 	viewPort[0] = 0;viewPort[1] = 0;
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
-	glhUnProjectf(x, y,0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	glhUnProjectf(x, y, 0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
 	return3D.x = Dim[0];
 	return3D.y = Dim[1];
 	return3D.z = Dim[2];
