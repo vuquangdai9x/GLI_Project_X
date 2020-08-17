@@ -4,7 +4,7 @@ FILE "../Framework3D/Resources/Models/Quad.nfg"
 
 #2D Textures: 9
 ID 0
-FILE "../Framework3D/Resources/Textures/png/player-hot-air-balloon.png"
+FILE "../Framework3D/Resources/Textures/png/hot-air-balloon-01.png"
 TILING CLAMP
 ID 1
 FILE "../Framework3D/Resources/Textures/png/starting-ground-01.png"

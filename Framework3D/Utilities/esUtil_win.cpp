@@ -1,9 +1,6 @@
 #include "stdafx.h"
 #include <windows.h>
 #include "esUtil.h"
-#define MOUSE_CLICK     1
-#define MOUSE_RELEASE   2
-#define MOUSE_MOVE    3
 
 
 static int mouseX = 0, mouseY = 0;

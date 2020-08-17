@@ -14,6 +14,30 @@ int InputManager::GetBit(Key key) {
 	return (m_mask >> key) & 0x01;
 }
 
+void InputManager::MouseEvent(int typeOfService, int button, int x, int y)
+{
+	m_mouseEvent = typeOfService;
+	this->x = x;
+	this->y = y;
+	this->button = button;
+}
+
+int InputManager::getMouseButton()
+{
+	return button;
+}
+
+int InputManager::getMouseEvent()
+{
+	return m_mouseEvent;
+}
+
+void InputManager::getXY(int& xx, int& yy)
+{
+	xx = x;
+	yy = y;
+}
+
 void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 {
 	Key keyMapped;

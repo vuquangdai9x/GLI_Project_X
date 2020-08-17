@@ -12,9 +12,6 @@
 #include "SceneManager2D.h"
 #include "State/GameStateManager.h"
 #include "WorldManager.h"
-#define MOUSE_CLICK     1
-#define MOUSE_RELEASE   2
-#define MOUSE_MOVE    3
 
 
 int Init(ESContext* esContext)
@@ -64,6 +61,7 @@ void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
 	Singleton<GameStateManager>::GetInstance()->KeyPress();
 }
 void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
+	Singleton<InputManager>::GetInstance()->MouseEvent(typeOfService, button, x, y);
 	/*float xx = x, yy = y;
 	printf("2D pos: %f %f \n", xx, yy);
 	Vector3 pos3D;

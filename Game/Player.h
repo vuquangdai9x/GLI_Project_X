@@ -12,7 +12,7 @@ private:
 	float m_currentMoveSpeed, m_desireMoveSpeed;
 	float m_currentFlySpeed, m_desireFlySpeed;
 	float m_flyForce, m_moveForce;
-	float maxForce=2.0f;
+	float maxForce=0.2f;
 
 	float m_flyMulti, m_moveMulti;
 

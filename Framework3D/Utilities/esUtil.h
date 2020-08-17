@@ -2,6 +2,13 @@
 #include <GLES2/gl2.h>
 #include <EGL/egl.h>
 
+#define MOUSE_CLICK     1
+#define MOUSE_RELEASE   2
+#define MOUSE_MOVE    3
+#define L_MOUSE 1
+#define M_MOUSE 2
+#define R_MOUSE 3
+
 //  Macros
 
 #define ESUTIL_API  __cdecl
