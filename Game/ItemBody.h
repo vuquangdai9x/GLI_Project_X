@@ -3,6 +3,8 @@
 #define PLAYER 0
 #define OBSTACLE 1
 #define ENEMY 2
+#define GUNBULLET 3
+#define CANONBULLET 4
 #define DEFAULT_MASS 5.0f
 #define GRAVITY 10.0f
 #define MOVING_FORCE (15.0f*DEFAULT_MASS)

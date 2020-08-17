@@ -2,7 +2,7 @@
 ID 0
 FILE "../Framework3D/Resources/Models/Quad.nfg"
 
-#2D Textures: 9
+#2D Textures: 11
 ID 0
 FILE "../Framework3D/Resources/Textures/png/hot-air-balloon-01.png"
 TILING CLAMP
@@ -29,6 +29,12 @@ FILE "../Framework3D/Resources/Textures/png/medium-island-01.png"
 TILING CLAMP
 ID 8
 FILE "../Framework3D/Resources/Textures/png/medium-cliff-01.png"
+TILING CLAMP
+ID 9
+FILE "../Framework3D/Resources/Textures/png/bullet-red-02.png"
+TILING CLAMP
+ID 10
+FILE "../Framework3D/Resources/Textures/png/bullet-black-01.png"
 TILING CLAMP
 
 #Shaders: 1

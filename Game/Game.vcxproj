@@ -126,6 +126,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CanonBullet.cpp" />
+    <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -142,6 +145,9 @@
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CanonBullet.h" />
+    <ClInclude Include="GunBullet.h" />
     <ClInclude Include="ItemBody.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
