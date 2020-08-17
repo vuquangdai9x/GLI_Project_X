@@ -21,7 +21,7 @@ GS_PlayState::GS_PlayState()
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
 	}
-	CanonBullet* gun = new CanonBullet(b2Vec2(15, 15), 30);
+	CanonBullet* gun = new CanonBullet(b2Vec2(15, 15), 35);
 	Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
 	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
 	//
