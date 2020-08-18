@@ -112,13 +112,13 @@ void Player::testCanon()
 		float angle = getFireAngle() * 180 / M_PI ;
 		printf("%f \n", angle);
 		if (tagetPos.x > playerPos.x) {
-			//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle);
-			CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle+30);
+			GunBullet* gun = new GunBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle);
+			//CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle+30); // canon thi cong 30 trong that hon
 			Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
 		}
 		else {
-			//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle);
-			CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle-30);
+			GunBullet* gun = new GunBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle);
+			//CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle-30);
 			Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
 		}
 		//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x+1.5, playerPos.y), angle);

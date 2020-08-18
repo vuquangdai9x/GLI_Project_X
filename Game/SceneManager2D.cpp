@@ -7,6 +7,7 @@
 #include "Obstacle.h"
 #include "WorldManager.h"
 #include"Singleton.h"
+#include"Button.h"
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -139,6 +140,91 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	obj = NULL;
 	camera = NULL;
+
+	return true;
+}
+
+bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
+{
+	const char* resourceDir = Globals::resourceDir;
+	char filePath[512];
+	strcpy(filePath, resourceDir);
+	strcat(filePath, dataSceneFile);
+	FILE* fIn = fopen(filePath, "r");
+	if (fIn == nullptr) {
+		printf("Fails to load scene file");
+		return false;
+	}
+
+	int iNumOfObject, iObjectId = 0;
+	int iMaterialId;
+	int iMainTexId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+	int iNumOfAnimations;
+
+	fscanf(fIn, "BACKGROUND %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	Sprite* backGround = new Sprite();
+	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(backGround);
+
+	fscanf(fIn, "GAMENAME %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	Sprite* name = new Sprite();
+	name->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(name);
+
+	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
+	for (int i = 0; i < iNumOfObject; i++) {
+		Button* button = new Button();
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		AddObject(button);
+	}
+
+	float nearPlane, farPlane, zoom;
+
+	fscanf(fIn, "#CAMERA\n");
+	fscanf(fIn, "NEAR %f\n", &nearPlane);
+	fscanf(fIn, "FAR %f\n", &farPlane);
+	fscanf(fIn, "ZOOM %f\n", &zoom);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "DUTCH %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+
+	Camera2D* camera = new Camera2D();
+	camera->Init(position, rotation);
+
+	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
+	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
+	SetMainCamera(camera);
+	printf("[msg] SceneManager: Set up Camera2D\n");
 
 	return true;
 }

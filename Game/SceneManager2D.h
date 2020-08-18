@@ -26,6 +26,7 @@ public:
 	Sprite& GetObjectByID(int id);
 	void RemoveObject(Sprite* object);
 	bool LoadScene(char* dataSceneFile);
+	bool LoadMenuScene(char* dataSceneFile);
 	void SetMainCamera(Camera2D * camera);
 	Camera2D& GetMainCamera();
 	std::vector<Sprite*>& GetListObject();

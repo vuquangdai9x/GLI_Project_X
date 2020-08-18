@@ -3,6 +3,8 @@
 #include"GS_WelcomScreen.h"
 #include"GS_MainMenu.h"
 #include"GS_PlayState.h"
+#include"../Singleton.h"
+#include"../SceneManager2D.h"
 
 GameStateManager::GameStateManager()
 {
@@ -30,6 +32,7 @@ void GameStateManager::Push(int state)
 
 void GameStateManager::Pop()
 {
+	Singleton<SceneManager2D>::GetInstance()->GetListObject().clear();
 	this->states.pop();
 }
 

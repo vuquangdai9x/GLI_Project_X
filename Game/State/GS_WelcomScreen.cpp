@@ -35,7 +35,7 @@ bool GS_WelcomScreen::Release()
 void GS_WelcomScreen::KeyPress()
 {
     if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::SPACE)) {
-        Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+        Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MENU);
     }
 }
 

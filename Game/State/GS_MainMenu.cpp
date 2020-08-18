@@ -1,9 +1,23 @@
 #include "../stdafx.h"
 #include "GS_MainMenu.h"
+#include "../ResourcesManager2D.h"
+#include "../SceneManager2D.h"
+#include "../Framework3D/TrainingFramework/framework3d.h"
+#include"../Singleton.h"
+#include"GameStateManager.h"
 
 GS_MainMenu::GS_MainMenu()
 {
     printf("GS_MainMenu\n");
+	char sceneFile[50] = "../Framework3D/Resources/Datas/scene2d-menu.txt";
+	char resourcesFile[60] = "../Framework3D/Resources/Datas/resources2d.txt";
+
+	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
+
+	if (!Singleton<SceneManager2D>::GetInstance()->LoadMenuScene(sceneFile)) {
+		printf("[ERR] Entry point: Failed to init scene");
+		return;
+	}
 }
 
 GS_MainMenu::~GS_MainMenu()
@@ -17,10 +31,11 @@ bool GS_MainMenu::Create()
 
 void GS_MainMenu::Render()
 {
+	Singleton<SceneManager2D>::GetInstance()->Render();
 }
 void GS_MainMenu::Update(float deltaTime)
 {
-	
+	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
 }
 
 bool GS_MainMenu::Release()
