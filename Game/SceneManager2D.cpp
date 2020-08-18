@@ -144,6 +144,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	return true;
 }
 
+void test() {
+	printf("1 \n");
+}
+void test1() {
+	printf("2 \n");
+}
 bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 {
 	const char* resourceDir = Globals::resourceDir;
@@ -205,6 +211,9 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		if(i==0)
+		button->OnClick(test);
+		else button->OnClick(test1);
 		AddObject(button, MENU_OBJECT);
 	}
 
@@ -324,27 +333,31 @@ std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
 }
 
-Vector2& SceneManager2D::get2Dpos(float x, float y, float z)
+Vector2& SceneManager2D::get2Dpos(float x, float y, float z, int listObjet)
 {
 	float Dim[3];
 	int viewPort[4];
 	viewPort[0] = 0;viewPort[1] = 0;
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
+	if (listObjet == PLAY_OBJECT)
 	glhProjectf(x, y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	else glhProjectf(x, y, z, m_menuCamera->GetViewMatrix(), m_menuCamera->GetProjectionMatrix(), viewPort, Dim);
 	return2D.x = Dim[0];
 	return2D.y = Dim[1];
 	return return2D;
 }
 
-Vector3& SceneManager2D::get3Dpos(float x, float y)
+Vector3& SceneManager2D::get3Dpos(float x, float y, int listObjet)
 {
 	float Dim[3];
 	int viewPort[4];
 	viewPort[0] = 0;viewPort[1] = 0;
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
+	if(listObjet==PLAY_OBJECT)
 	glhUnProjectf(x, y, 0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	else glhUnProjectf(x, y, 0.0, m_menuCamera->GetViewMatrix(), m_menuCamera->GetProjectionMatrix(), viewPort, Dim);
 	return3D.x = Dim[0];
 	return3D.y = Dim[1];
 	return3D.z = Dim[2];
