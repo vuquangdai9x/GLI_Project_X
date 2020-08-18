@@ -177,7 +177,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	Sprite* backGround = new Sprite();
 	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(backGround);
+	AddObject(backGround, MENU_OBJECT);
 
 	fscanf(fIn, "GAMENAME %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -190,7 +190,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	Sprite* name = new Sprite();
 	name->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(name);
+	AddObject(name, MENU_OBJECT);
 
 	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
@@ -205,7 +205,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-		AddObject(button);
+		AddObject(button, MENU_OBJECT);
 	}
 
 	float nearPlane, farPlane, zoom;
@@ -223,52 +223,94 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 
 	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
 	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
-	SetMainCamera(camera);
+	SetMainCamera(camera, MENU_OBJECT);
 	printf("[msg] SceneManager: Set up Camera2D\n");
 
 	return true;
 }
 
-void SceneManager2D::SetMainCamera(Camera2D* camera)
+void SceneManager2D::SetMainCamera(Camera2D* camera, int listObjet)
 {
-	m_mainCamera = camera;
+	if (listObjet == PLAY_OBJECT) {
+		m_mainCamera = camera;
+	}
+	else {
+		m_menuCamera = camera;
+	}
 }
 
-Camera2D& SceneManager2D::GetMainCamera()
+Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 {
+	if(listObjet==PLAY_OBJECT)
 	return *m_mainCamera;
+	return *m_menuCamera;
 }
 
-void SceneManager2D::Update(float frameTime) {
-	m_time += frameTime;
-	Singleton<WorldManager>::GetInstance()->Update(frameTime);
-	for (int i = 0; i < m_listObject.size(); i++) {
-		m_listObject[i]->Update(frameTime);
+void SceneManager2D::Update(float frameTime, int listObjet) {
+	if (listObjet == PLAY_OBJECT) {
+		m_time += frameTime;
+		Singleton<WorldManager>::GetInstance()->Update(frameTime);
+		for (int i = 0; i < m_listObject.size(); i++) {
+			m_listObject[i]->Update(frameTime);
+		}
+		m_mainCamera->Update(frameTime);
 	}
-	m_mainCamera->Update(frameTime);
+	else {
+		for (int i = 0; i < m_menuObject.size(); i++) {
+			m_menuObject[i]->Update(frameTime);
+		}
+		m_menuCamera->Update(frameTime);
+	}
 }
-void SceneManager2D::Render() {
-	for (int i = 0; i < m_listObject.size(); i++) {
-		m_listObject[i]->Render(m_mainCamera);
-	}
-}
-void SceneManager2D::AddObject(Sprite* object) {
-	if (m_listObject.size() == 0) {
-		m_listObject.push_back(object);
-		return;
-	}
-	float zPos = object->GetPosition().z;
-	if (zPos >= m_listObject[0]->GetPosition().z) {
-		m_listObject.insert(m_listObject.begin(), object);
-		return;
-	}
-	for (int i = 1;i < m_listObject.size();i++) {
-		if (m_listObject[i - 1]->GetPosition().z >= zPos && zPos >= m_listObject[i]->GetPosition().z) {
-			m_listObject.insert(m_listObject.begin() + i, object);
-			return;
+void SceneManager2D::Render(int listObjet) {
+	if (listObjet == PLAY_OBJECT) {
+		for (int i = 0; i < m_listObject.size(); i++) {
+			m_listObject[i]->Render(m_mainCamera);
 		}
 	}
-	m_listObject.push_back(object);
+	else {
+		for (int i = 0; i < m_menuObject.size(); i++) {
+			m_menuObject[i]->Render(m_menuCamera);
+		}
+	}
+}
+void SceneManager2D::AddObject(Sprite* object,int listObject) {
+	if (listObject == PLAY_OBJECT) {
+		if (m_listObject.size() == 0) {
+			m_listObject.push_back(object);
+			return;
+		}
+		float zPos = object->GetPosition().z;
+		if (zPos >= m_listObject[0]->GetPosition().z) {
+			m_listObject.insert(m_listObject.begin(), object);
+			return;
+		}
+		for (int i = 1;i < m_listObject.size();i++) {
+			if (m_listObject[i - 1]->GetPosition().z >= zPos && zPos >= m_listObject[i]->GetPosition().z) {
+				m_listObject.insert(m_listObject.begin() + i, object);
+				return;
+			}
+		}
+		m_listObject.push_back(object);
+	}
+	else {
+		if (m_menuObject.size() == 0) {
+			m_menuObject.push_back(object);
+			return;
+		}
+		float zPos = object->GetPosition().z;
+		if (zPos >= m_menuObject[0]->GetPosition().z) {
+			m_menuObject.insert(m_menuObject.begin(), object);
+			return;
+		}
+		for (int i = 1;i < m_menuObject.size();i++) {
+			if (m_menuObject[i - 1]->GetPosition().z >= zPos && zPos >= m_menuObject[i]->GetPosition().z) {
+				m_menuObject.insert(m_menuObject.begin() + i, object);
+				return;
+			}
+		}
+		m_menuObject.push_back(object);
+	}
 }
 Sprite& SceneManager2D::GetObjectByID(int id)
 {

@@ -31,11 +31,11 @@ bool GS_MainMenu::Create()
 
 void GS_MainMenu::Render()
 {
-	Singleton<SceneManager2D>::GetInstance()->Render();
+	Singleton<SceneManager2D>::GetInstance()->Render(MENU_OBJECT);
 }
 void GS_MainMenu::Update(float deltaTime)
 {
-	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
+	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime, MENU_OBJECT);
 }
 
 bool GS_MainMenu::Release()
