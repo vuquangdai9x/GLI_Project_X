@@ -5,6 +5,7 @@
 #include "SceneManager2D.h"
 #include"WorldManager.h"
 #include<math.h>
+#include "GunBullet.h"
 
 void Player::createBox2D()
 {
@@ -84,12 +85,20 @@ float Player::getFireAngle()
 	Vector3 playerPos, tagetPos;
 	playerPos = this->GetPosition();
 	tagetPos = m_target->GetPosition();
-	Vector2 rootVec(1.0, 0.0);
+	Vector2 rootVec(0.0, tagetPos.y - playerPos.y);
 	Vector2 current(tagetPos.x - playerPos.x, tagetPos.y - playerPos.y);
-	float cos_angle = (current.Dot(rootVec)) / (current.Length());
-	if (tagetPos.y < playerPos.y)
-		return -(acos(cos_angle));
-	return acosf(cos_angle);
+	float cos_angle = (rootVec.Length()) / (current.Length());
+	if (tagetPos.x > playerPos.x) {
+		if (tagetPos.y > playerPos.y)
+			return -(acos(cos_angle));
+		return -(asinf(cos_angle)+M_PI_2);
+	}
+	else {
+		if (tagetPos.y > playerPos.y)
+			return (acos(cos_angle));
+		return (asinf(cos_angle) + M_PI_2);
+	}
+	
 
 }
 void Player::testCanon()
@@ -99,10 +108,22 @@ void Player::testCanon()
 	if (start-m_timeEnd >=1000) {
 		Vector3 playerPos, tagetPos;
 		playerPos = this->GetPosition();
+		tagetPos = m_target->GetPosition();
 		float angle = getFireAngle() * 180 / M_PI ;
 		printf("%f \n", angle);
-		CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x, playerPos.y), angle);
-		Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
+		if (tagetPos.x > playerPos.x) {
+			//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle);
+			CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x + 1.0, playerPos.y), angle+30);
+			Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
+		}
+		else {
+			//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle);
+			CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x - 1.0, playerPos.y), angle-30);
+			Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
+		}
+		//GunBullet* gun = new GunBullet(b2Vec2(playerPos.x+1.5, playerPos.y), angle);
+		//CanonBullet* gun = new CanonBullet(b2Vec2(playerPos.x + 1.5, playerPos.y), angle);
+		
 		m_timeEnd= start;
 	}
 

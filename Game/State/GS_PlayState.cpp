@@ -22,7 +22,8 @@ GS_PlayState::GS_PlayState()
 		return ;
 	}
 	
-	
+	GunBullet* gun = new GunBullet(b2Vec2(10, 5), -135);
+	Singleton<SceneManager2D>::GetInstance()->AddObject(gun);
 	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
 	//
 }

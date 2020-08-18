@@ -43,7 +43,7 @@ void CanonBullet::Fire(b2Vec2 direction)
 void CanonBullet::Update(float deltaTime)
 {
 	if (time == 1) {
-		Fire(b2Vec2(sin(m_rotation), cos(m_rotation)));
+		Fire(b2Vec2(sin(-m_rotation), cos(-m_rotation)));
 		time++;
 	}
 	else {

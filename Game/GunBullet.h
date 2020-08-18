@@ -9,5 +9,6 @@ public:
 	void createBox2D();
 	void Fire(b2Vec2 direction);
 	void Update(float deltaTime);
+	int time = 0;
 };
 
