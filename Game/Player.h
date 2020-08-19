@@ -38,5 +38,7 @@ public:
 	void setTarget(Sprite* target);
 	float getFireAngle();
 	void testCanon();
+	void setHP(int hp) { this->m_HP = hp; }
+	int getHP() { return this->m_HP; }
 };
 

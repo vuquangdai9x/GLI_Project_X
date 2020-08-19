@@ -64,7 +64,7 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 
 	bodyDef.position.Set(x, y);
 	tmp->body = m_world->CreateBody(&bodyDef);
-	printf("%f %f %f %f \n", x, y, w, h);
+	//printf("%f %f %f %f \n", x, y, w, h);
 	b2PolygonShape dynamicPolygon;
 	b2Vec2 vertices[3];
 	vertices[0].Set(0,- h);
@@ -88,9 +88,9 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 
 void WorldManager::Update(float deltaTime)
 {
-	m_world->Step(deltaTime, m_velocityIterations, m_positionIterations);
+	
 	for (int i = 0;i < listObject.size();i++) {
 		listObject[i]->Update(deltaTime);
 	}
-	
+	m_world->Step(deltaTime, m_velocityIterations, m_positionIterations);
 }

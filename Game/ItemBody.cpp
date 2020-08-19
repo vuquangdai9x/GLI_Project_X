@@ -28,7 +28,7 @@ void ItemBody::Update(float deltaTime)
 		break;
 	}
 	case ENEMY: {
-		body->ApplyForce(b2Vec2(0.0f, GRAVITY * body->GetMass()), body->GetWorldCenter(), true);
+		body->ApplyForce(b2Vec2(0.0f, GRAVITY * body->GetMass()), body->GetWorldCenter(), false);
 		break;
 	}
 	case GUNBULLET: {
