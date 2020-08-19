@@ -13,6 +13,13 @@ Button::~Button()
 {
 }
 
+void Button::UpdateMember()
+{
+	width = m_originSize.x * this->GetScale().x;
+	height = m_originSize.y * this->GetScale().y;
+	 __w = width / 2, __h = height / 2;
+}
+
 void Button::Update(float deltaTime)
 {
 	if (checkMouse()) {
@@ -43,10 +50,6 @@ bool Button::checkMouse()
 	Singleton<InputManager>::GetInstance()->getXY(xx, yy);
 	Vector3 worldMouse=Singleton<SceneManager2D>::GetInstance()->get3Dpos(xx, yy,MENU_OBJECT);
 	Vector3 thisPos = this->GetPosition();
-	width = m_originSize.x * this->GetScale().x;
-	height = m_originSize.y * this->GetScale().y;
-	float __w = width / 2, __h = height / 2;
-
 	if (worldMouse.x > thisPos.x - __w && worldMouse.x< thisPos.x + __w && worldMouse.y>thisPos.y - __h && worldMouse.y < thisPos.y + __h) return true;
 	return false;
 }

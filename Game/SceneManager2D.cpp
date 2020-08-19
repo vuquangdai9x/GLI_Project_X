@@ -211,6 +211,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->UpdateMember();
 		if(i==0)
 		button->OnClick(test);
 		else button->OnClick(test1);
