@@ -2,7 +2,7 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
-FloatingFish::FloatingFish(int numOfTarget, b2Vec2 target[])
+FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 {
 	this->numOfTarget = numOfTarget;
 	this->target = new b2Vec2[this->numOfTarget];

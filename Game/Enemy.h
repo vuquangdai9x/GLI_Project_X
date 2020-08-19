@@ -13,7 +13,7 @@ protected:
 	float m_moveSpeed;
 	ItemBody* enemyBody;
 public:
-	Enemy();
+	Enemy(int id);
 	~Enemy();
 	virtual void Update(float deltaTime);
 	virtual void createBox2D();

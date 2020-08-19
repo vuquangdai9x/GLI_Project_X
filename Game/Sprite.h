@@ -7,10 +7,10 @@
 
 class Sprite{
 public:
-	Sprite();
 	Sprite(int id);
 	int GetId();
 	void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
+	void Init(Sprite& sprite);
 	//void SetSpriteAnimation(int iTextureId, int iNumOfCols, int iNumOfRows, float interval);
 	virtual void Update(float deltaTime);
 	virtual void Render(Camera2D* mainCamera);
@@ -18,6 +18,7 @@ public:
 	
 protected:
 	int m_id;
+	bool m_isActive;
 	Vector3 m_position;
 	Vector2 m_originSize;
 	Vector2 m_scale;
@@ -44,6 +45,8 @@ public:
 	void SetColor(unsigned int hexColor, float alpha);
 	void SetColor(Vector4 color);
 	Vector4 GetColor();
+	void SetActiveSprite(bool value);
+	bool CheckIsActiveSprite();
 };
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate);
 int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix projection, int* viewport, float* objectCoordinate);

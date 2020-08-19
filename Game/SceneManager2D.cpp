@@ -6,17 +6,22 @@
 #include "Player.h"
 #include "Obstacle.h"
 #include "WorldManager.h"
-#include"Singleton.h"
+
 #include"Button.h"
 #include "State/GameStateManager.h"
 #include "FloatingFish.h"
+
+#include "SimpleGun.h"
+#include "GunBulletPool.h"
+
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->OnDestroy();
 		delete m_listObject[i];
 	}
-	delete m_mainCamera;
+	if (m_mainCamera != NULL) delete m_mainCamera;
+	if (m_combatController != NULL) delete m_combatController;
 }
 
 bool SceneManager2D::LoadScene(char* dataSceneFile) {
@@ -54,6 +59,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	int targetID;
 
 
+	// Set up player
 	fscanf(fIn, "PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
@@ -75,10 +81,63 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->setTarget(target);
 	AddObject(target);
 
+	// Set up weapon & bullet
+	int iPoolId;
+	int iPoolCapacity;
+	// TODO: write code to read from file. The code below is just for testing
+	m_combatController = new CombatController(player);
+	// init bullet pool
+		// define a template bullet, then create bullet pool based on this template
+	scale = Vector2(1.0, 1.0);
+	uiHexColor = 0xffffff;
+	alpha = 1.0;
+	iMaterialId = 0;
+	iMainTexId = 9; // red bullet
+	iPoolCapacity = 500;
+	GunBullet* templateGunBullet = new GunBullet(-1, 1.0, 0.0, 5.0, 30.0, 2);
+	templateGunBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	m_combatController->AddBulletPool(new GunBulletPool(0, iPoolCapacity, 10, templateGunBullet));
+
+	scale = Vector2(1.0, 1.0);
+	uiHexColor = 0xffffff;
+	alpha = 1.0;
+	iMaterialId = 0;
+	iMainTexId = 10; // black bullet
+	iPoolCapacity = 200;
+	GunBullet* templateCannonBullet = new GunBullet(-1, 3.0, 1.0, 7.0, 15.0, 3);
+	templateCannonBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	m_combatController->AddBulletPool(new GunBulletPool(1, iPoolCapacity, 10, templateCannonBullet));
+
+	// add guns
+	//		standard example
+	SimpleGun* gun;
+	int iBulletPoolId;
+	iBulletPoolId = 0;
+	gun = new SimpleGun(0, "Pistol", 0, 0, iBulletPoolId, 0.5, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
+	m_combatController->AddWeapon(gun);
+	//		add more gun. Max is 9 type of guns
+	gun = new SimpleGun(1, "AK", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
+	m_combatController->AddWeapon(gun);
+	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 1.0, 1.0, 0.0, 60 * M_PI / 180, 0.0, 5, 1);
+	m_combatController->AddWeapon(gun);
+	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 0 * M_PI / 180, 0.0, 1, 1);
+	m_combatController->AddWeapon(gun);
+	iBulletPoolId = 1;
+	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 1.0, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
+	m_combatController->AddWeapon(gun);
+	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 45 * M_PI / 180, 0.0, 3, 1);
+	m_combatController->AddWeapon(gun);
+	// give player some bullets when start game
+	m_combatController->AddBullet(0, 500);
+	m_combatController->AddBullet(1, 20);
+	
+
+	//
+	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
-		Obstacle* obs = new Obstacle(0);
 		fscanf(fIn, "\nID %d\n", &iObjectId);
+		Obstacle* obs = new Obstacle(iObjectId,0);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
@@ -139,7 +198,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-		FloatingFish* fish = new FloatingFish(numOfTarget,Target);
+		FloatingFish* fish = new FloatingFish(iObjectId,numOfTarget,Target);
 		fish->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		fish->createBox2D();
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
@@ -206,7 +265,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-	Sprite* backGround = new Sprite();
+	Sprite* backGround = new Sprite(iObjectId);
 	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(backGround, MENU_OBJECT);
 
@@ -219,13 +278,12 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-	Sprite* name = new Sprite();
+	Sprite* name = new Sprite(iObjectId);
 	name->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(name, MENU_OBJECT);
 
 	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
-		Button* button = new Button();
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
@@ -235,6 +293,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		Button* button = new Button(iObjectId);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		button->UpdateMember();
 		if(i==0)
@@ -286,9 +345,11 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		m_time += frameTime;
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 		for (int i = 0; i < m_listObject.size(); i++) {
-			m_listObject[i]->Update(frameTime);
+			if (m_listObject[i]->CheckIsActiveSprite())
+				m_listObject[i]->Update(frameTime);
 		}
 		m_mainCamera->Update(frameTime);
+		m_combatController->Update(frameTime);
 	}
 	else {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -300,7 +361,8 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 void SceneManager2D::Render(int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		for (int i = 0; i < m_listObject.size(); i++) {
-			m_listObject[i]->Render(m_mainCamera);
+			if (m_listObject[i]->CheckIsActiveSprite())
+				m_listObject[i]->Render(m_mainCamera);
 		}
 	}
 	else {

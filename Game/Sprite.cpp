@@ -4,13 +4,10 @@
 #include "Singleton.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 
-Sprite::Sprite()
-{
-}
-
 Sprite::Sprite(int id)
 {
 	m_id = id;
+	m_isActive = true;
 }
 
 void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId) {
@@ -36,7 +33,20 @@ void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 	m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
 }
 
-void Sprite::Update(float deltaTime) {
+void Sprite::Init(Sprite& sprite) // init same as another sprite
+{
+	SetPosition(sprite.m_position);
+	SetRotation(sprite.m_rotation);
+	SetScale(sprite.m_scale);
+	SetColor(sprite.m_color);
+	m_canRender = sprite.m_canRender;
+	m_model = sprite.m_model;
+	m_material2d = sprite.m_material2d;
+	m_mainTexture = sprite.m_mainTexture;
+	m_originSize = sprite.m_originSize;
+}
+
+void Sprite::Update(float deltaTime) {	
 
 }
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
@@ -189,4 +199,14 @@ void Sprite::SetColor(Vector4 color) {
 
 Vector4 Sprite::GetColor() {
 	return m_color;
+}
+
+void Sprite::SetActiveSprite(bool value)
+{
+	m_isActive = value;
+}
+
+bool Sprite::CheckIsActiveSprite()
+{
+	return m_isActive;
 }

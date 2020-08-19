@@ -2,30 +2,27 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
-Bullet::Bullet()
-{
-}
-Bullet::Bullet(b2Vec2 startPosition)
-{
-	Vector3 bulletPos;
-	bulletPos.x = startPosition.x;
-	bulletPos.y = startPosition.y;
-	bulletPos.z = 0;
-}
+
+Bullet::Bullet(int id): Sprite(id), m_player(NULL), m_bulletBody(NULL)
+{}
 
 Bullet::~Bullet()
-{
-}
+{}
 
-void Bullet::createBox2D()
+void Bullet::SetActiveBullet(bool value)
 {
-}
-
-void Bullet::Fire(b2Vec2 direction)
-{
+	m_bulletBody->body->SetActive(value);
+	SetActiveSprite(value);
 }
 
 void Bullet::Update(float deltaTime)
 {
-	
+	if (m_bulletBody != NULL) {
+		Vector3 pos;
+		pos.x = m_bulletBody->body->GetPosition().x;
+		pos.y = m_bulletBody->body->GetPosition().y;
+		pos.z = GetPosition().z;
+		this->SetPosition(pos);
+		this->SetRotation(m_bulletBody->body->GetAngle());
+	}
 }

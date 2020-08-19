@@ -9,7 +9,7 @@ private:
 	void(__cdecl* Click)();
 	DWORD m_click = 0;
 public:
-	Button();
+	Button(int id);
 	~Button();
 	void UpdateMember();
 	void Update(float deltaTime);

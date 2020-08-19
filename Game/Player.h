@@ -1,7 +1,6 @@
 #pragma once
 #include "Sprite.h"
 #include "ItemBody.h"
-#include "CanonBullet.h"
 enum FlyState { Fast = 1, Normal = 0, SLow = -1, Static = 2 };
 enum MoveState { Left = -1, Right = 1, NonMove = 0 };
 class Player : public Sprite

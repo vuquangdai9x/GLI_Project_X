@@ -12,7 +12,7 @@ private:
 
 	bool direction;
 public:
-	FloatingFish(int numOfTarget, b2Vec2 target[]);
+	FloatingFish(int id, int numOfTarget, b2Vec2 target[]);
 	~FloatingFish();
 	void Update(float deltaTime);
 	void createBox2D();

@@ -1,21 +1,18 @@
 #pragma once
 #include "Sprite.h"
 #include "ItemBody.h"
+#include "Player.h"
 class Bullet : public Sprite
 {
 protected:
-	float x, y;
-	float width, height;
-
-	int m_damage;
-	float m_moveSpeed;
-	ItemBody* bulletBody;
+	ItemBody* m_bulletBody;
+	Player* m_player;
 public:
-	Bullet();
-	Bullet(b2Vec2 startPosition);
-	~Bullet();
-	virtual void createBox2D();
-	virtual void Fire(b2Vec2 direction);
+	Bullet(int id);
+	virtual ~Bullet();
+	virtual void CreatePhysicsBody() = 0;
+	virtual void Fire(Player* player, Vector2 startPos, Vector2 direction) = 0;
 	virtual void Update(float deltaTime);
+	void SetActiveBullet(bool value);
 };
 

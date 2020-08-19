@@ -6,7 +6,6 @@
 #include "../ResourcesManager2D.h"
 #include "../SceneManager2D.h"
 #include "../GunBullet.h"
-#include "../CanonBullet.h"
 #include "../FloatingFish.h"
 
 GS_PlayState::GS_PlayState()
@@ -22,8 +21,6 @@ GS_PlayState::GS_PlayState()
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
 	}
-	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
-	//
 }
 
 GS_PlayState::~GS_PlayState()

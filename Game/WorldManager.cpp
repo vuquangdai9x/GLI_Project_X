@@ -3,7 +3,8 @@
 WorldManager::WorldManager()
 {
 	
-	b2Vec2 gravity(0.0f, -GRAVITY);
+	//b2Vec2 gravity(0.0f, -GRAVITY);
+	b2Vec2 gravity(0.0f, 0.0f);
 	m_world = new b2World(gravity);
 	m_world->SetAllowSleeping(true);
 	
@@ -18,6 +19,9 @@ WorldManager::WorldManager()
 
 WorldManager::~WorldManager()
 {
+	for (int i = 0;i < listObject.size();i++) {
+		delete listObject[i];
+	}
 	delete m_world;
 }
 
@@ -41,10 +45,32 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
+
+	// set filter
+	fixtureDef.filter.categoryBits = (short)(1 << type);
+	switch (type)
+	{
+	case PLAYER:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
+		break;
+	case ENEMY:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	case OBSTACLE:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		break;
+	case PLAYERBULLET:
+		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
+		break;
+	case ENEMYBULLET:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	}
+
 	tmp->body->CreateFixture(&fixtureDef);
 
 	b2MassData mass;
-	mass.center = tmp->body->GetWorldCenter();
+	mass.center = tmp->body->GetWorldCenter(); 
 	mass.mass = massD;
 	tmp->body->SetMassData(&mass);
 	listObject.push_back(tmp);
@@ -76,6 +102,28 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicPolygon;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
+
+	// set filter
+	fixtureDef.filter.categoryBits = (short)(1 << type);
+	switch (type)
+	{
+	case PLAYER:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
+		break;
+	case ENEMY:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	case OBSTACLE:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		break;
+	case PLAYERBULLET:
+		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
+		break;
+	case ENEMYBULLET:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	}
+
 	tmp->body->CreateFixture(&fixtureDef);
 
 	b2MassData mass;

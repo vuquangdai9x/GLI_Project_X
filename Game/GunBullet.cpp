@@ -1,57 +1,54 @@
 #include "GunBullet.h"
-#include "Singleton.h"
 #include "SceneManager2D.h"
-#include"WorldManager.h"
-GunBullet::GunBullet(b2Vec2 startPosition, float angle)
+#include "WorldManager.h"
+
+GunBullet::GunBullet(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime)
+	: Bullet(id), 
+	m_mass(mass), m_gravityScale(gravityScale), 
+	m_damage(damage), m_initSpeed(initSpeed), 
+	m_existTime(existTime), m_timeCounter(-1)
+{}
+
+GunBullet::GunBullet(int id, GunBullet & templateBullet)
+	:GunBullet(id,templateBullet.m_mass,templateBullet.m_gravityScale,templateBullet.m_damage,templateBullet.m_initSpeed,templateBullet.m_existTime)
 {
-	Vector3 bulletPos;
-	bulletPos.x = startPosition.x;
-	bulletPos.y = startPosition.y;
-	bulletPos.z = 0;
-	float rotation = angle * 2 * M_PI / 360;
-	this->Init(bulletPos, rotation, Vector2(0.5, 0.5), 0xffffff, 1, 0, 9);
-	this->createBox2D();
-	m_moveSpeed = 100;
+	Init(templateBullet); // init sprite props
 }
 
 GunBullet::~GunBullet()
 {
 }
 
-void GunBullet::createBox2D()
+void GunBullet::CreatePhysicsBody()
 {
-	x = m_position.x;
-	y = m_position.y;
-	width = m_originSize.x * this->GetScale().x;
-	height = m_originSize.y * this->GetScale().y;
-	this->bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(GUNBULLET, x, y, width, height, 6);
+	if (m_mainTexture == NULL) {
+		printf("[ERR] CannonBullet: MainTexure was not set\n");
+		return;
+	}
+	float width = m_originSize.x * this->GetScale().x;
+	float height = m_originSize.y * this->GetScale().y;
+	this->m_bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYERBULLET, 1, 2, width, height);
+	this->m_bulletBody->SetGravityScale(m_gravityScale);
 }
 
-void GunBullet::Fire(b2Vec2 direction)
+void GunBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 {
-	bulletBody->body->ApplyLinearImpulseToCenter(b2Vec2(m_moveSpeed * direction.x * bulletBody->body->GetMass(), m_moveSpeed * direction.y * bulletBody->body->GetMass()), false);
+	Vector2 normDirection = direction.Normalize();
+	// move to startPosition and rotate
+	float rotation = acosf(normDirection.x) * (normDirection.y < 0 ? -1 : 1);
+	m_bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
+	SetActiveBullet(true);
+	// set velocity
+	m_bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));
 
-	Vector3 bulletPos;
-	bulletPos.z = this->GetPosition().z;
-	bulletPos.x = this->bulletBody->body->GetPosition().x;
-	bulletPos.y = this->bulletBody->body->GetPosition().y;
-
-	this->SetPosition(bulletPos);
+	m_timeCounter = m_existTime;
 }
 
 void GunBullet::Update(float deltaTime)
 {
-	if (time == 1) {
-		Fire(b2Vec2(sin(-m_rotation), cos(-m_rotation)));
-		time++;
-	}
-	else {
-		Vector3 bulletPos;
-		bulletPos.z = this->GetPosition().z;
-		bulletPos.x = this->bulletBody->body->GetPosition().x;
-		bulletPos.y = this->bulletBody->body->GetPosition().y;
-
-		this->SetPosition(bulletPos);
-		time++;
+	Bullet::Update(deltaTime);
+	if (m_timeCounter > 0) {
+		m_timeCounter -= deltaTime;
+		if (m_timeCounter < 0) SetActiveBullet(false);
 	}
 }

@@ -91,6 +91,24 @@ void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 	case '4':
 		keyMapped = Key::N4;
 		break;
+	case '5':
+		keyMapped = Key::N5;
+		break;
+	case '6':
+		keyMapped = Key::N6;
+		break;
+	case '7':
+		keyMapped = Key::N7;
+		break;
+	case '8':
+		keyMapped = Key::N8;
+		break;
+	case '9':
+		keyMapped = Key::N9;
+		break;
+	case '0':
+		keyMapped = Key::N0;
+		break;
 	case 'q':
 	case 'Q':
 		keyMapped = Key::Q;

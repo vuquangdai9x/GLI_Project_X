@@ -4,7 +4,7 @@
 #include"SceneManager2D.h"
 void doNothing() {
 }
-Button::Button()
+Button::Button(int id):Sprite(id)
 {
 	this->Click = doNothing;
 }

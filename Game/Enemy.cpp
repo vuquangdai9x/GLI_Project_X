@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy()
+Enemy::Enemy(int id):Sprite(id)
 {
 }
 

@@ -4,6 +4,9 @@
 #include "Sprite.h"
 #include <vector>
 #include "../Framework3D/TrainingFramework/Camera2D.h"
+#include "CombatController.h"
+#include "Singleton.h"
+#include "BulletPool.h"
 
 #define PLAY_OBJECT 0
 #define MENU_OBJECT 1
@@ -21,6 +24,7 @@ private:
 	std::vector<Sprite*> m_listObject,m_menuObject;
 	Camera2D* m_mainCamera,*m_menuCamera;
 
+	CombatController* m_combatController = NULL;
 public:
 	float m_time = 0;
 
