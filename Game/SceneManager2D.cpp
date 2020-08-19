@@ -8,6 +8,7 @@
 #include "WorldManager.h"
 #include"Singleton.h"
 #include"Button.h"
+#include "State/GameStateManager.h"
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -144,8 +145,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	return true;
 }
 
-void test() {
-	printf("1 \n");
+void goToPlay() {
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
 void test1() {
 	printf("2 \n");
@@ -213,7 +214,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		button->UpdateMember();
 		if(i==0)
-		button->OnClick(test);
+		button->OnClick(goToPlay);
 		else button->OnClick(test1);
 		AddObject(button, MENU_OBJECT);
 	}
