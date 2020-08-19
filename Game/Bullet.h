@@ -5,11 +5,11 @@
 class Bullet : public Sprite
 {
 protected:
-	float m_mass;
-	float m_damage;
-	float m_initSpeed;
-	ItemBody* bulletBody;
-	Player* m_player;
+	float m_mass = 0;
+	float m_damage = 0;
+	float m_initSpeed = 0;
+	ItemBody* bulletBody = NULL;
+	Player* m_player = NULL;
 public:
 	Bullet(int id, float mass, float damage, float initSpeed);
 	Bullet(int id, Bullet& bullet);

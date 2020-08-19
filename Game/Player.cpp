@@ -126,7 +126,7 @@ void Player::Update(float deltaTime)
 
 	b2Vec2 v = playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter());
 	this->SetPosition(playerPos);
-	printf("%f %f \n", v.x, v.y);
+	//printf("%f %f \n", v.x, v.y);
 	
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	Vector3 camPos = camera.GetPosition();

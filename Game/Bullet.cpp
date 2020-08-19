@@ -19,5 +19,12 @@ Bullet::~Bullet()
 
 void Bullet::Update(float deltaTime)
 {
-	
+	if (bulletBody != NULL) {
+		Vector3 pos;
+		pos.x = bulletBody->body->GetPosition().x;
+		pos.y = bulletBody->body->GetPosition().y;
+		pos.z = GetPosition().z;
+		this->SetPosition(pos);
+		this->SetRotation(bulletBody->body->GetAngle());
+	}
 }

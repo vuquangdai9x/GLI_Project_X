@@ -15,26 +15,28 @@ SimpleGun::SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, Bul
 
 int SimpleGun::Fire(Player* player, Vector2 direction, int iBulletAmountCanUse)
 {
-	printf("Fire by gun %s: direction=%d,%d\n", m_name,direction.x,direction.y);
 	if (m_timeCounter <= 0) {
-		int iFireAmount = (iBulletAmountCanUse > m_iFireAtOnce) ? iBulletAmountCanUse : m_iFireAtOnce;
+		int iFireAmount = (iBulletAmountCanUse < m_iFireAtOnce) ? iBulletAmountCanUse : m_iFireAtOnce;
+
+		printf("Fire %d bullet by gun %s: direction=%f,%f\n", iFireAmount, m_name, direction.x, direction.y);
+		Vector2 startPosition;
+		startPosition.x = player->GetPosition().x;
+		startPosition.y = player->GetPosition().y;
 		for (int i = 0; i < iFireAmount; i++) {
 			Bullet* bullet = m_bulletPool->GetBullet();
 			if (bullet != NULL) {
-				Vector2 startPosition;
-				startPosition.x = player->GetPosition().x;
-				startPosition.y = player->GetPosition().y;
 				bullet->Fire(player, startPosition, direction);
 			}
 		}
-		m_iShotCounter--;
+		/*m_iShotCounter--;
 		if (m_iShotCounter <= 0) {
 			m_timeCounter = m_rechargeTime;
 			m_iShotCounter = m_iFireAmount;
 		}
 		else {
 			m_timeCounter = m_shortRechargeTime;
-		}
+		}*/
+		m_timeCounter = m_rechargeTime;
 		return iFireAmount;
 	}
 	else {

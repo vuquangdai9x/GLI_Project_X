@@ -27,6 +27,7 @@ void GunBullet::InitPhysics()
 
 void GunBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 {
+	printf("fire\n");
 	Vector2 normDirection = direction.Normalize();
 	// move to startPosition and rotate
 	SetActiveBullet(false);
@@ -35,10 +36,21 @@ void GunBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 	SetActiveBullet(true);
 	// set velocity
 	bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));
+
+	m_existTime = 5;
 }
 
 void GunBullet::SetActiveBullet(bool value)
 {
 	bulletBody->body->SetActive(value);
 	SetActiveSprite(value);
+}
+
+void GunBullet::Update(float deltaTime)
+{
+	Bullet::Update(deltaTime);
+	if (m_existTime > 0) {
+		m_existTime -= deltaTime;
+		if (m_existTime < 0) SetActiveBullet(false);
+	}
 }

@@ -11,6 +11,8 @@ private:
 	int m_iCurrentBulletIndex;
 	std::vector<BulletPackage*> m_bulletPackages;
 	Vector2 m_targetPos;
+
+	bool m_isFiring;
 private:
 	void Fire();
 public:
@@ -20,5 +22,6 @@ public:
 	void Update(float deltaTime);
 	void ChangeWeapon(int index);
 	void AddBullet(BulletPackage* pack);
+	void AddBullet(BulletType bulletType, int iAmount);
 	Vector2 GetTargetPosition();
 };
