@@ -18,6 +18,9 @@ WorldManager::WorldManager()
 
 WorldManager::~WorldManager()
 {
+	for (int i = 0;i < listObject.size();i++) {
+		delete listObject[i];
+	}
 	delete m_world;
 }
 
@@ -44,7 +47,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	tmp->body->CreateFixture(&fixtureDef);
 
 	b2MassData mass;
-	mass.center = tmp->body->GetWorldCenter();
+	mass.center = tmp->body->GetWorldCenter(); 
 	mass.mass = massD;
 	tmp->body->SetMassData(&mass);
 	listObject.push_back(tmp);

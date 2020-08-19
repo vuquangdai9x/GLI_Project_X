@@ -2,7 +2,7 @@
 #include "Singleton.h"
 #include "WorldManager.h"
 
-Obstacle::Obstacle(int type)
+Obstacle::Obstacle(int id, int type): Sprite(id)
 {
 	this->m_type = type;
 }

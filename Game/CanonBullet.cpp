@@ -1,57 +1,43 @@
 #include "CanonBullet.h"
-#include "Singleton.h"
 #include "SceneManager2D.h"
-#include"WorldManager.h"
+#include "WorldManager.h"
+CanonBullet::CanonBullet(int id, float mass, float damage, float initSpeed) : Bullet(id, mass, damage, initSpeed)
+{}
 
-CanonBullet::CanonBullet(b2Vec2 startPosition, float angle)
+CanonBullet::CanonBullet(int id, CanonBullet & templateBullet)
+	: Bullet(id, templateBullet)
 {
-	Vector3 bulletPos;
-	bulletPos.x = startPosition.x;
-	bulletPos.y = startPosition.y;
-	bulletPos.z = 0;
-	float rotation = angle * 2 * M_PI / 360;
-	this->Init(bulletPos, rotation, Vector2(0.5, 0.5), 0xffffff, 1, 0, 9);
-	this->createBox2D();
-	m_moveSpeed = 100.0;
 }
 
 CanonBullet::~CanonBullet()
 {
 }
 
-void CanonBullet::createBox2D()
+void CanonBullet::InitPhysics()
 {
-	x = m_position.x;
-	y = m_position.y;
-	width = m_originSize.x * this->GetScale().x;
-	height = m_originSize.y * this->GetScale().y;
-	this->bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(CANONBULLET, x, y, width, height, 20);
+	if (m_mainTexture == NULL) {
+		printf("[ERR] CannonBullet: MainTexure was not set\n");
+		return;
+	}
+	float width = m_originSize.x * this->GetScale().x;
+	float height = m_originSize.y * this->GetScale().y;
+	this->bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(CANONBULLET, 0, 0, width, height);
+	SetActiveBullet(false);
 }
 
-void CanonBullet::Fire(b2Vec2 direction)
+void CanonBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 {
-	bulletBody->body->ApplyLinearImpulseToCenter(b2Vec2(m_moveSpeed * direction.x * bulletBody->body->GetMass() , (m_moveSpeed * direction.y +1000000*GRAVITY)* bulletBody->body->GetMass()), false);
-
-	Vector3 bulletPos;
-	bulletPos.z = this->GetPosition().z;
-	bulletPos.x = this->bulletBody->body->GetPosition().x;
-	bulletPos.y = this->bulletBody->body->GetPosition().y;
-
-	this->SetPosition(bulletPos);
+	Vector2 normDirection = direction.Normalize();
+	// move to startPosition and rotate
+	float rotation = acosf(normDirection.x);
+	bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
+	SetActiveBullet(true);
+	// set velocity
+	bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));
 }
 
-void CanonBullet::Update(float deltaTime)
+void CanonBullet::SetActiveBullet(bool value)
 {
-	if (time == 0) {
-		Fire(b2Vec2(sin(m_rotation), cos(m_rotation)));
-		time++;
-	}
-	else {
-		Vector3 bulletPos;
-		bulletPos.z = this->GetPosition().z;
-		bulletPos.x = this->bulletBody->body->GetPosition().x;
-		bulletPos.y = this->bulletBody->body->GetPosition().y;
-
-		this->SetPosition(bulletPos);
-	}
+	bulletBody->body->SetActive(value);
+	SetActiveSprite(value);
 }

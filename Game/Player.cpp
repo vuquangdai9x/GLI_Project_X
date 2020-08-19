@@ -73,13 +73,12 @@ void Player::updateMoveState()
 	}
 	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2( m_moveForce * playerBody->body->GetMass(),0.0), false);
 }
-Player::Player(int id)
+Player::Player(int id): Sprite(id)
 {
 	//this->sprite =& Singleton<SceneManager2D>::GetInstance()->GetObjectByID(0);
 	//Vector2 temp = Singleton<SceneManager2D>::GetInstance()->get2Dpos(this->sprite->GetPosition().x, this->sprite->GetPosition().y, this->sprite->GetPosition().z);
 	//this->x = temp.x;
 	//this->y = temp.y;
-	Sprite::Sprite(id);
 	this->m_moveSpeed = 5;
 
 	m_cameraOffset.x = 0;
@@ -92,8 +91,6 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-
-
 	Vector3 playerPos;
 	playerPos.z = this->GetPosition().z;
 	this->GetPosition();
@@ -122,8 +119,8 @@ void Player::Update(float deltaTime)
 		return;
 	}
 
-	setFlyState(FlyState(key_y));
-	setMoveState(MoveState(key_x));
+	setFlyState(FlyState((int)key_y));
+	setMoveState(MoveState((int)key_x));
 	playerPos.x = playerBody->body->GetPosition().x;
 	playerPos.y = playerBody->body->GetPosition().y;
 

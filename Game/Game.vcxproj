@@ -127,14 +127,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletPackage.cpp" />
+    <ClCompile Include="BulletPool.cpp" />
+    <ClCompile Include="CannonBulletPool.cpp" />
     <ClCompile Include="CanonBullet.cpp" />
+    <ClCompile Include="CombatController.cpp" />
     <ClCompile Include="GunBullet.cpp" />
+    <ClCompile Include="GunBulletPool.cpp" />
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourcesManager2D.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
+    <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
     <ClCompile Include="State\GS_MainMenu.cpp" />
@@ -142,17 +148,24 @@
     <ClCompile Include="State\GS_WelcomScreen.cpp" />
     <ClCompile Include="State\StateBase.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletPackage.h" />
+    <ClInclude Include="BulletPool.h" />
+    <ClInclude Include="CannonBulletPool.h" />
     <ClInclude Include="CanonBullet.h" />
+    <ClInclude Include="CombatController.h" />
     <ClInclude Include="GunBullet.h" />
+    <ClInclude Include="GunBulletPool.h" />
     <ClInclude Include="ItemBody.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesManager2D.h" />
     <ClInclude Include="SceneManager2D.h" />
+    <ClInclude Include="SimpleGun.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="State\GameStateManager.h" />
@@ -162,6 +175,7 @@
     <ClInclude Include="State\StateBase.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,24 @@
     <Filter Include="Header Files\GameState">
       <UniqueIdentifier>{30349862-bcd2-4915-840d-94358cf45be2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Combat">
+      <UniqueIdentifier>{fe4a00cf-7506-4f2b-ad63-046fe595722c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat\Bullet">
+      <UniqueIdentifier>{f7998a19-bd53-4a66-a3c3-b828e70328cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Combat\Weapon">
+      <UniqueIdentifier>{ad2f82f7-d1a9-4713-8cd9-b8230d8d6ee9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat">
+      <UniqueIdentifier>{2dadfcad-90f0-4bd1-9f40-fe00433974b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat\Weapon">
+      <UniqueIdentifier>{8f25d85c-3724-4cba-9699-d378b44c1323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Combat\Bullet">
+      <UniqueIdentifier>{d7e7c376-a8c9-4686-b9cd-6f567b61b30f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -67,13 +85,34 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GunBullet.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CanonBullet.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Combat\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GunBullet.h">
+      <Filter>Header Files\Combat\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatController.h">
+      <Filter>Header Files\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Combat\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletPackage.h">
+      <Filter>Header Files\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleGun.h">
+      <Filter>Header Files\Combat\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletPool.h">
+      <Filter>Header Files\Combat\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GunBulletPool.h">
+      <Filter>Header Files\Combat\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CannonBulletPool.h">
+      <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -120,13 +159,34 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GunBullet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CanonBullet.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Combat\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GunBullet.cpp">
+      <Filter>Source Files\Combat\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Combat\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleGun.cpp">
+      <Filter>Source Files\Combat\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="CombatController.cpp">
+      <Filter>Source Files\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletPackage.cpp">
+      <Filter>Source Files\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletPool.cpp">
+      <Filter>Source Files\Combat\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GunBulletPool.cpp">
+      <Filter>Source Files\Combat\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CannonBulletPool.cpp">
+      <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

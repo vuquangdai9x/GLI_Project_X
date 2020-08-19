@@ -6,6 +6,7 @@
 #include "../Framework3D/TrainingFramework/Shaders.h"
 #include "../Framework3D/TrainingFramework/Material2D.h"
 #include <vector>
+#include "Singleton.h"
 
 class ResourceManager2D {
 

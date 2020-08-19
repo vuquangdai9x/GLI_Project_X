@@ -4,11 +4,11 @@
 class CanonBullet : public Bullet
 {
 public:
-	CanonBullet(b2Vec2 startPosition, float angle);
+	CanonBullet(int id, float mass, float damage, float initSpeed);
+	CanonBullet(int id, CanonBullet& templateBullet);
 	~CanonBullet();
-	void createBox2D();
-	void Fire(b2Vec2 direction);
-	void Update(float deltaTime);
-	int time = 0;
+	void InitPhysics();
+	void Fire(Player* player, Vector2 startPosition, Vector2 direction);
+	void SetActiveBullet(bool value);
 };
 

@@ -4,6 +4,9 @@
 #include "Sprite.h"
 #include <vector>
 #include "../Framework3D/TrainingFramework/Camera2D.h"
+#include "CombatController.h"
+#include "Singleton.h"
+#include "BulletPool.h"
 
 class SceneManager2D
 {
@@ -16,7 +19,10 @@ private:
 	Vector2 return2D;
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject;
-	Camera2D* m_mainCamera;
+	Camera2D* m_mainCamera = NULL;
+
+	CombatController* m_combatController = NULL;
+	std::vector<BulletPool*> m_ListBulletPool;
 public:
 	float m_time = 0;
 

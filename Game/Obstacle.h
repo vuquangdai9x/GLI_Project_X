@@ -13,7 +13,7 @@ private:
 	ItemBody* obstacleBody;
 public:
 
-	Obstacle(int type);
+	Obstacle(int id, int type);
 	~Obstacle();
 	void Update(float deltaTime);
 	void createBox2D();

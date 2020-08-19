@@ -4,10 +4,11 @@
 class GunBullet : public Bullet
 {
 public:
-	GunBullet(b2Vec2 startPosition, float angle);
+	GunBullet(int id, float mass, float damage, float initSpeed);
+	GunBullet(int id, GunBullet& templateBullet);
 	~GunBullet();
-	void createBox2D();
-	void Fire(b2Vec2 direction);
-	void Update(float deltaTime);
+	void InitPhysics();
+	void Fire(Player* player, Vector2 startPosition, Vector2 direction);
+	void SetActiveBullet(bool value);
 };
 
