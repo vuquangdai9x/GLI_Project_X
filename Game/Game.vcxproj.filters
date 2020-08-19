@@ -87,9 +87,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="CanonBullet.h">
-      <Filter>Header Files\Combat\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="GunBullet.h">
       <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Combat\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletPackage.h">
-      <Filter>Header Files\Combat</Filter>
     </ClInclude>
     <ClInclude Include="SimpleGun.h">
       <Filter>Header Files\Combat\Weapon</Filter>
@@ -111,8 +105,8 @@
     <ClInclude Include="GunBulletPool.h">
       <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="CannonBulletPool.h">
-      <Filter>Header Files\Combat\Bullet</Filter>
+    <ClInclude Include="BulletType.h">
+      <Filter>Header Files\Combat</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +155,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="CanonBullet.cpp">
-      <Filter>Source Files\Combat\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="GunBullet.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
@@ -176,16 +167,10 @@
     <ClCompile Include="CombatController.cpp">
       <Filter>Source Files\Combat</Filter>
     </ClCompile>
-    <ClCompile Include="BulletPackage.cpp">
-      <Filter>Source Files\Combat</Filter>
-    </ClCompile>
     <ClCompile Include="BulletPool.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="GunBulletPool.cpp">
-      <Filter>Source Files\Combat\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="CannonBulletPool.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
   </ItemGroup>

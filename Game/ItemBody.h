@@ -19,6 +19,7 @@ public:
 	~ItemBody();
 	b2Body* body;
 	void Update(float deltaTime);
+	void SetGravityScale(float value);
 private:
 	int m_type;
 	float m_x, m_y;
@@ -26,5 +27,7 @@ private:
 	int firstTime = 0;
 	float pre_KeyX = 0.0f;
 	float pre_KeyY = 0.0f;
+
+	float m_gravityScale;
 };
 

@@ -13,7 +13,7 @@ CanonBullet::~CanonBullet()
 {
 }
 
-void CanonBullet::InitPhysics()
+void CanonBullet::InitBullet()
 {
 	if (m_mainTexture == NULL) {
 		printf("[ERR] CannonBullet: MainTexure was not set\n");
@@ -31,6 +31,14 @@ void CanonBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 	// move to startPosition and rotate
 	float rotation = acosf(normDirection.x);
 	bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
+	
+	Vector3 pos;
+	pos.x = startPosition.x;
+	pos.y = startPosition.y;
+	pos.z = GetPosition().z;
+	this->SetPosition(pos);
+	this->SetRotation(rotation);
+
 	SetActiveBullet(true);
 	// set velocity
 	bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));

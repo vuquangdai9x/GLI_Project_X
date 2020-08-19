@@ -9,7 +9,7 @@ protected:
 	float m_timeCounter, m_shortTimeCounter;
 	int m_iShotCounter;
 public:
-	SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, BulletType bulletType, float oppositeForce, float rechargeTime, float shortRechargeTime, float randomAngle, float spreadRandomAngle, int iFireAtOnce, int iFireAmount);
-	int Fire(Player* player, Vector2 direction, int iBulletAmountCanUse);
+	SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float shortRechargeTime, float randomAngle, float spreadRandomAngle, int iFireAtOnce, int iFireAmount);
+	int Fire(Player* player, Vector2 direction);
 	void UpdateGunStatus(float deltaTime);
 };

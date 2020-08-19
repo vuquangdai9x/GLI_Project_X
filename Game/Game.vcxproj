@@ -127,10 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletPackage.cpp" />
     <ClCompile Include="BulletPool.cpp" />
-    <ClCompile Include="CannonBulletPool.cpp" />
-    <ClCompile Include="CanonBullet.cpp" />
     <ClCompile Include="CombatController.cpp" />
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
@@ -153,10 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletPackage.h" />
     <ClInclude Include="BulletPool.h" />
-    <ClInclude Include="CannonBulletPool.h" />
-    <ClInclude Include="CanonBullet.h" />
+    <ClInclude Include="BulletType.h" />
     <ClInclude Include="CombatController.h" />
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />

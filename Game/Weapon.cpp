@@ -2,8 +2,8 @@
 #include "ResourcesManager2D.h"
 #include "Singleton.h"
 
-Weapon::Weapon(int id, char* name, int iWeaponTexId, int iTargetTexId, BulletType bulletType, float oppositeForce):
-m_id(id),m_name(name),m_bulletType(bulletType),m_oppositeForce(oppositeForce)
+Weapon::Weapon(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce)
+	: m_id(id), m_name(name), m_iBulletTypeId(iBulletTypeId), m_oppositeForce(oppositeForce), m_bulletPool(NULL)
 {
 	m_weaponTexture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iWeaponTexId);
 	m_targetTexture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iTargetTexId);
@@ -39,7 +39,7 @@ Texture* Weapon::GetWeaponTexture()
 	return m_weaponTexture;
 }
 
-BulletType Weapon::GetbulletType()
+int Weapon::GetbulletTypeId()
 {
-	return m_bulletType;
+	return m_iBulletTypeId;
 }

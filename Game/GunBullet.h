@@ -3,16 +3,20 @@
 #include <stdlib.h>
 class GunBullet : public Bullet
 {
-private:
+protected:
+	float m_mass;
+	float m_gravityScale;
+	float m_damage;
+	float m_initSpeed;
 	float m_existTime;
-public:
-	GunBullet(int id, float mass, float damage, float initSpeed);
-	GunBullet(int id, GunBullet& templateBullet);
-	~GunBullet();
-	void InitPhysics();
-	void Fire(Player* player, Vector2 startPosition, Vector2 direction);
-	void SetActiveBullet(bool value);
 
+	float m_timeCounter;
+public:
+	GunBullet(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime);
+	GunBullet(int id, GunBullet& templateBullet);
+	virtual ~GunBullet();
+	void CreatePhysicsBody();
+	void Fire(Player* player, Vector2 startPosition, Vector2 direction);
 	void Update(float deltaTime);
 };
 

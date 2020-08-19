@@ -3,7 +3,8 @@
 WorldManager::WorldManager()
 {
 	
-	b2Vec2 gravity(0.0f, -GRAVITY);
+	//b2Vec2 gravity(0.0f, -GRAVITY);
+	b2Vec2 gravity(0.0f, 0.0f);
 	m_world = new b2World(gravity);
 	m_world->SetAllowSleeping(true);
 	
@@ -95,5 +96,4 @@ void WorldManager::Update(float deltaTime)
 	for (int i = 0;i < listObject.size();i++) {
 		listObject[i]->Update(deltaTime);
 	}
-	
 }

@@ -15,15 +15,16 @@ CombatController::~CombatController()
 	for (int i = 0; i < m_weapons.size(); i++) {
 		delete m_weapons[i];
 	}
-	for (int i = 0; i < m_bulletPackages.size(); i++) {
-		delete m_bulletPackages[i];
+	for (int i = 0; i < m_bulletStorages.size(); i++) {
+		delete m_bulletStorages[i];
 	}
 }
 
 void CombatController::Fire()
 {
-	int bulletAmount = m_bulletPackages[m_iCurrentBulletIndex]->m_iAmount;
+	int bulletAmount = m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet();
 	if (bulletAmount <= 0) {
+		printf("Out of ammo\n");
 		return;
 	}
 	//printf("Player: %f,%f \t Target: %f,%f \n", m_pPlayer->GetPosition().x, m_pPlayer->GetPosition().y, m_targetPos.x, m_targetPos.y);
@@ -31,12 +32,9 @@ void CombatController::Fire()
 	direction.x = m_targetPos.x - m_pPlayer->GetPosition().x;
 	// TODO: y is invert when convert from 2d to 3d. When it is fixed, change the code below
 	direction.y = m_targetPos.y + m_pPlayer->GetPosition().y;
-	int iFiredAmount = m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction, bulletAmount);
-	if (iFiredAmount > 0) {
+	if (m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction)) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
-
-		m_bulletPackages[m_iCurrentBulletIndex]->m_iAmount -= iFiredAmount;
 	}
 }
 
@@ -44,20 +42,27 @@ void CombatController::AddWeapon(Weapon* newWeapon)
 {
 	for (int i = 0; i < m_weapons.size(); i++) {
 		if (m_weapons[i]->GetId() == newWeapon->GetId()) {
+			printf("[msg] CombatController: Add existing weapon %d: %s\n", newWeapon->GetId(), newWeapon->GetName());
 			return; // weapon existed
 		}
 	}
-	printf("[msg] CombatController: Add new Weapon: %s\n",newWeapon->GetName());
-	m_weapons.push_back(newWeapon);
+
 	bool isExistBulletType = false;
-	for (int i = 0; i < m_bulletPackages.size(); i++) {
-		if (m_bulletPackages[i]->m_bulletType == newWeapon->GetbulletType()) {
+	int iBulletStorageIndex = 0;
+	for (int i = 0; i < m_bulletStorages.size(); i++) {
+		if (m_bulletStorages[i]->GetId() == newWeapon->GetbulletTypeId()) {
 			isExistBulletType = true;
+			iBulletStorageIndex = i;
 			break;
 		}
 	}
 	if (!isExistBulletType) {
-		m_bulletPackages.push_back(new BulletPackage(newWeapon->GetbulletType(), 0));
+		printf("[ERR] CombatController: There is no bullet pool for weapon %d: %s\n", newWeapon->GetId(), newWeapon->GetName());
+	}
+	else {
+		printf("[msg] CombatController: Add new Weapon %d: %s\n", newWeapon->GetId(), newWeapon->GetName());
+		m_weapons.push_back(newWeapon);
+		newWeapon->BindBulletPool(m_bulletStorages[iBulletStorageIndex]);
 	}
 }
 
@@ -101,47 +106,35 @@ void CombatController::ChangeWeapon(int index)
 	if (index >= m_weapons.size()) return;
 	if (index == m_iCurrentWeaponIndex) return;
 	printf("[msg] CombatController: Change weapon %d: %s\n", index, m_weapons[index]->GetName());
-
 	m_iCurrentWeaponIndex = index;
-	BulletType currBulletType = m_weapons[index]->GetbulletType();
-	for (int i = 0; i < m_bulletPackages.size(); i++) {
-		if (m_bulletPackages[i]->m_bulletType == currBulletType) {
+
+	int iCurrentBulletTypeId = m_weapons[index]->GetbulletTypeId();
+	for (int i = 0; i < m_bulletStorages.size(); i++) {
+		if (m_bulletStorages[i]->GetId() == iCurrentBulletTypeId) {
 			m_iCurrentBulletIndex = i;
 			break;
 		}
 	}
 }
 
-void CombatController::AddBullet(BulletPackage* pack)
+void CombatController::AddBullet(int iBulletTypeId, int iAmount)
 {
-	printf("[msg] CombatController: Add %d bullet\n", pack->m_iAmount);
-	bool isExistBulletType = false;
-	for (int i = 0; i < m_bulletPackages.size(); i++) {
-		if (m_bulletPackages[i]->m_bulletType == pack->m_bulletType) {
-			m_bulletPackages[i]->m_iAmount += pack->m_iAmount;
-			isExistBulletType = true;
+	for (int i = 0;i < m_bulletStorages.size(); i++) {
+		if (m_bulletStorages[i]->GetId() == iBulletTypeId) {
+			m_bulletStorages[i]->AddBullet(iAmount);
 			break;
 		}
-	}
-	if (!isExistBulletType) {
-		m_bulletPackages.push_back(new BulletPackage(pack->m_bulletType, pack->m_iAmount));
 	}
 }
 
-void CombatController::AddBullet(BulletType bulletType, int iAmount)
+void CombatController::AddBulletPool(BulletPool* pool)
 {
-	printf("[msg] CombatController: Add %d bullet\n", iAmount);
-	bool isExistBulletType = false;
-	for (int i = 0; i < m_bulletPackages.size(); i++) {
-		if (m_bulletPackages[i]->m_bulletType == bulletType) {
-			m_bulletPackages[i]->m_iAmount += iAmount;
-			isExistBulletType = true;
-			break;
+	for (int i = 0;i < m_bulletStorages.size(); i++) {
+		if (pool->GetId() == m_bulletStorages[i]->GetId()) {
+			return;
 		}
 	}
-	if (!isExistBulletType) {
-		m_bulletPackages.push_back(new BulletPackage(bulletType, iAmount));
-	}
+	m_bulletStorages.push_back(pool);
 }
 
 Vector2 CombatController::GetTargetPosition()
