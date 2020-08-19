@@ -83,8 +83,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	alpha = 1.0;
 	iMaterialId = 0;
 	iMainTexId = 9; // red bullet
-	iPoolCapacity = 50;
-	GunBullet* templateGunBullet = new GunBullet(-1, 1.0, 0.0, 5.0, 15.0, 2);
+	iPoolCapacity = 500;
+	GunBullet* templateGunBullet = new GunBullet(-1, 1.0, 0.0, 5.0, 30.0, 2);
 	templateGunBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	m_combatController->AddBulletPool(new GunBulletPool(0, iPoolCapacity, 10, templateGunBullet));
 
@@ -93,8 +93,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	alpha = 1.0;
 	iMaterialId = 0;
 	iMainTexId = 10; // black bullet
-	iPoolCapacity = 20;
-	GunBullet* templateCannonBullet = new GunBullet(-1, 3.0, 1.0, 7.0, 10.0, 3);
+	iPoolCapacity = 200;
+	GunBullet* templateCannonBullet = new GunBullet(-1, 3.0, 1.0, 7.0, 15.0, 3);
 	templateCannonBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	m_combatController->AddBulletPool(new GunBulletPool(1, iPoolCapacity, 10, templateCannonBullet));
 
@@ -103,22 +103,22 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	SimpleGun* gun;
 	int iBulletPoolId;
 	iBulletPoolId = 0;
-	gun = new SimpleGun(0, "Pistol", 0, 0, iBulletPoolId, 0.5, 0.5, 0.0, 0.05, 0.0, 1, 1);
+	gun = new SimpleGun(0, "Pistol", 0, 0, iBulletPoolId, 0.5, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
 	m_combatController->AddWeapon(gun);
 	//		add more gun. Max is 9 type of guns
-	gun = new SimpleGun(1, "AK", 0, 0, iBulletPoolId, 0.5, 0.1, 0.1, 0.05, 0.1, 1, 3);
+	gun = new SimpleGun(1, "AK", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 1.0, 1.0, 0.0, 1.00, 0.0, 5, 1);
+	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 1.0, 1.0, 0.0, 60 * M_PI / 180, 0.0, 5, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 0.00, 0.0, 1, 1);
+	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 0 * M_PI / 180, 0.0, 1, 1);
 	m_combatController->AddWeapon(gun);
 	iBulletPoolId = 1;
-	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 1.0, 0.5, 0.0, 0.00, 0.0, 1, 1);
+	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 1.0, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 1.0, 0.5, 0.0, 0.00, 0.0, 3, 1);
+	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 45 * M_PI / 180, 0.0, 3, 1);
 	m_combatController->AddWeapon(gun);
 	// give player some bullets when start game
-	m_combatController->AddBullet(0, 50);
+	m_combatController->AddBullet(0, 500);
 	m_combatController->AddBullet(1, 20);
 	
 

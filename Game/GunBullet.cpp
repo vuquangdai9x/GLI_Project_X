@@ -27,16 +27,15 @@ void GunBullet::CreatePhysicsBody()
 	}
 	float width = m_originSize.x * this->GetScale().x;
 	float height = m_originSize.y * this->GetScale().y;
-	this->m_bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(GUNBULLET, 1, 2, width, height);
+	this->m_bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYERBULLET, 1, 2, width, height);
 	this->m_bulletBody->SetGravityScale(m_gravityScale);
 }
 
 void GunBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
 {
-	printf("fire\n");
 	Vector2 normDirection = direction.Normalize();
 	// move to startPosition and rotate
-	float rotation = acosf(normDirection.x);
+	float rotation = acosf(normDirection.x) * (normDirection.y < 0 ? -1 : 1);
 	m_bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
 	SetActiveBullet(true);
 	// set velocity
