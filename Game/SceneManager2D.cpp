@@ -11,6 +11,7 @@
 #include "State/GameStateManager.h"
 #include "FloatingFish.h"
 #include"SuicideBug.h"
+#include "RockyGolem.h"
 
 
 #include "SimpleGun.h"
@@ -225,6 +226,23 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		//bug->SetIgnore();
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bug);
+	}
+
+	fscanf(fIn, "ROCKYGOLEM %d\n", &iNumOfObject);
+	for (int i = 0; i < iNumOfObject; i++) {
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		RockyGolem* rocky = new RockyGolem(iObjectId);
+		rocky->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		rocky->createBox2D();
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		AddObject(rocky);
 	}
 
 	float nearPlane, farPlane, zoom;

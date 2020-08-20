@@ -17,7 +17,7 @@ AutoGun::AutoGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBu
 	srand(time(NULL));
 }
 
-int AutoGun::Fire(Player* player, Vector2 direction)
+int AutoGun::Fire(Sprite* shooter, Vector2 direction)
 {
 	int iFireAmount = 0;
 	if (m_timeCounter <= 0) {
@@ -31,8 +31,8 @@ int AutoGun::Fire(Player* player, Vector2 direction)
 		m_shortTimeCounter = m_shortRechargeTime;
 
 		Vector2 startPosition;
-		startPosition.x = player->GetPosition().x;
-		startPosition.y = player->GetPosition().y;
+		startPosition.x = shooter->GetPosition().x;
+		startPosition.y = shooter->GetPosition().y;
 
 		float maxRandomAngle;
 		if (m_iFireAmount > 1)
@@ -52,7 +52,7 @@ int AutoGun::Fire(Player* player, Vector2 direction)
 				bulletDirecion.x = direction.x * cosf(randomAngle) - direction.y * sinf(randomAngle);
 				bulletDirecion.y = direction.x * sinf(randomAngle) + direction.y * cosf(randomAngle);
 
-				bullet->Fire(player, startPosition, bulletDirecion);
+				bullet->Fire(shooter, startPosition, bulletDirecion);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 #pragma once
 #include"Bullet.h"
 #include <stdlib.h>
-class GunBullet : public Bullet
+class FallingRock : public Bullet
 {
 protected:
 	float m_mass;
@@ -12,9 +12,9 @@ protected:
 
 	float m_timeCounter;
 public:
-	GunBullet(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime);
-	GunBullet(int id, GunBullet& templateBullet);
-	virtual ~GunBullet();
+	FallingRock(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime);
+	FallingRock(int id, FallingRock& templateBullet);
+	virtual ~FallingRock();
 	void CreatePhysicsBody();
 	void Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction);
 	void Update(float deltaTime);

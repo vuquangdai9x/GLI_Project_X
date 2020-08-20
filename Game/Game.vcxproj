@@ -130,6 +130,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FallingRock.cpp" />
+    <ClCompile Include="FallingRockPool.cpp" />
     <ClCompile Include="FloatingFish.cpp" />
     <ClCompile Include="BulletPool.cpp" />
     <ClCompile Include="CombatController.cpp" />
@@ -140,6 +142,7 @@
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourcesManager2D.cpp" />
+    <ClCompile Include="RockyGolem.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
     <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -158,6 +161,8 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FallingRock.h" />
+    <ClInclude Include="FallingRockPool.h" />
     <ClInclude Include="FloatingFish.h" />
     <ClInclude Include="BulletPool.h" />
     <ClInclude Include="BulletType.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesManager2D.h" />
+    <ClInclude Include="RockyGolem.h" />
     <ClInclude Include="SceneManager2D.h" />
     <ClInclude Include="SimpleGun.h" />
     <ClInclude Include="Singleton.h" />
