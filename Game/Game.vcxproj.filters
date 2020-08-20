@@ -117,6 +117,9 @@
     <ClInclude Include="FloatingFish.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AutoGun.h">
+      <Filter>Header Files\Combat\Weapon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="FloatingFish.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoGun.cpp">
+      <Filter>Source Files\Combat\Weapon</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

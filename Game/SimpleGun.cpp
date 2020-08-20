@@ -2,43 +2,28 @@
 #include <stdlib.h> 
 #include <time.h>
 
-SimpleGun::SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float shortRechargeTime, float randomAngle, float spreadRandomAngle, int iFireAtOnce, int iFireAmount)
+SimpleGun::SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float randomAngle, int iFireAtOnce)
 	:Weapon(id, name, iWeaponTexId, iTargetTexId, iBulletTypeId, oppositeForce),
 	m_rechargeTime(rechargeTime),
-	m_shortRechargeTime(shortRechargeTime),
 	m_randomAngle(randomAngle),
-	m_spreadRandomAngle(spreadRandomAngle),
-	m_iFireAtOnce(iFireAtOnce),
-	m_iFireAmount(iFireAmount)
+	m_iFireAtOnce(iFireAtOnce)
 {
-	m_timeCounter = m_shortTimeCounter = -1;
-	m_iShotCounter = m_iFireAmount;
-
+	m_timeCounter = -1;
+	m_firedPrevFrame = false;
+	m_canFire = true;
 	srand(time(NULL));
 }
 
 int SimpleGun::Fire(Player* player, Vector2 direction)
 {
 	int iFireAmount = 0;
-	if (m_timeCounter <= 0) {
+	if (m_timeCounter <= 0 && m_canFire) {
 		m_timeCounter = m_rechargeTime;
-		m_shortTimeCounter = -1;
-		m_iShotCounter = m_iFireAmount;
-	}
-
-	if (m_iShotCounter > 0 && m_shortTimeCounter <= 0) {
-		m_iShotCounter--;
-		m_shortTimeCounter = m_shortRechargeTime;
 
 		Vector2 startPosition;
 		startPosition.x = player->GetPosition().x;
 		startPosition.y = player->GetPosition().y;
 
-		float maxRandomAngle;
-		if (m_iFireAmount > 1)
-			maxRandomAngle = m_spreadRandomAngle - (m_spreadRandomAngle - m_randomAngle) / (m_iFireAmount - 1) * m_iShotCounter;
-		else
-			maxRandomAngle = m_randomAngle;
 		Vector2 bulletDirecion;
 		float randomAngle;
 
@@ -46,8 +31,7 @@ int SimpleGun::Fire(Player* player, Vector2 direction)
 			Bullet* bullet = m_bulletPool->GetBullet();
 			if (bullet != NULL) {
 				iFireAmount++;
-
-				randomAngle = maxRandomAngle * (((float)rand() / (float)RAND_MAX + i) / m_iFireAtOnce - 0.5);
+				randomAngle = m_randomAngle * (((float)rand() / (float)RAND_MAX + i) / m_iFireAtOnce - 0.5);
 
 				bulletDirecion.x = direction.x * cosf(randomAngle) - direction.y * sinf(randomAngle);
 				bulletDirecion.y = direction.x * sinf(randomAngle) + direction.y * cosf(randomAngle);
@@ -56,6 +40,7 @@ int SimpleGun::Fire(Player* player, Vector2 direction)
 			}
 		}
 	}
+	m_firedPrevFrame = true;
 	return iFireAmount;
 }
 
@@ -64,7 +49,11 @@ void SimpleGun::UpdateGunStatus(float deltaTime)
 	if (m_timeCounter > 0) {
 		m_timeCounter -= deltaTime;
 	}
-	if (m_shortTimeCounter > 0) {
-		m_shortTimeCounter -= deltaTime;
+	if (m_firedPrevFrame) {
+		m_canFire = false;
+		m_firedPrevFrame = false;
+	}
+	else {
+		m_canFire = true;
 	}
 }

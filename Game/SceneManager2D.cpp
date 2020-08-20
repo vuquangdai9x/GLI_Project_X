@@ -12,6 +12,7 @@
 #include "FloatingFish.h"
 
 #include "SimpleGun.h"
+#include "AutoGun.h"
 #include "GunBulletPool.h"
 
 SceneManager2D::~SceneManager2D()
@@ -110,26 +111,26 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	// add guns
 	//		standard example
-	SimpleGun* gun;
+	Weapon* gun;
 	int iBulletPoolId;
 	iBulletPoolId = 0;
-	gun = new SimpleGun(0, "Pistol", 0, 0, iBulletPoolId, 0.5, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
+	gun = new SimpleGun(0, "Pistol", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	//		add more gun. Max is 9 type of guns
-	gun = new SimpleGun(1, "AK", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
+	gun = new AutoGun(1, "AK", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 1.0, 1.0, 0.0, 60 * M_PI / 180, 0.0, 5, 1);
+	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 0 * M_PI / 180, 0.0, 1, 1);
+	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	iBulletPoolId = 1;
-	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 1.0, 0.5, 0.0, 5 * M_PI / 180, 0.0, 1, 1);
+	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 1.0, 1.5, 0.0, 45 * M_PI / 180, 0.0, 3, 1);
+	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
 	m_combatController->AddWeapon(gun);
 	// give player some bullets when start game
 	m_combatController->AddBullet(0, 500);
-	m_combatController->AddBullet(1, 20);
+	m_combatController->AddBullet(1, 200);
 	
 
 	//
