@@ -149,6 +149,7 @@
     <ClCompile Include="State\GS_WelcomScreen.cpp" />
     <ClCompile Include="State\StateBase.cpp" />
     <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="SuicideBug.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
@@ -177,6 +178,7 @@
     <ClInclude Include="State\GS_WelcomScreen.h" />
     <ClInclude Include="State\StateBase.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SuicideBug.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldManager.h" />

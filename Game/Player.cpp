@@ -190,14 +190,14 @@ void Player::Update(float deltaTime)
 	camPos.y = this->GetPosition().y + m_cameraOffset.y;
 	camera.SetPosition(camPos);
 
-	/*Vector3 targetPos;
+	Vector3 targetPos;
 	int i_x, i_y;
 	float f_x, f_y;
 	Singleton<InputManager>::GetInstance()->getXY(i_x, i_y);
 	f_x = i_x;f_y = i_y;
 	targetPos = Singleton<SceneManager2D>::GetInstance()->get3Dpos(f_x, f_y);
 	targetPos.z = playerPos.z + 1.0f;
-	m_target->SetPosition(targetPos);*/
+	m_target->SetPosition(targetPos);
 
 	//printf("%f \n", getFireAngle());
 	//if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();

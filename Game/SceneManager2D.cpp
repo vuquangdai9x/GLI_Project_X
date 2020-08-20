@@ -10,6 +10,8 @@
 #include"Button.h"
 #include "State/GameStateManager.h"
 #include "FloatingFish.h"
+#include"SuicideBug.h"
+
 
 #include "SimpleGun.h"
 #include "AutoGun.h"
@@ -205,6 +207,25 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(fish);
 	}
+	fscanf(fIn, "SUICIDEBUG %d\n", &iNumOfObject);
+	for (int i = 0; i < iNumOfObject; i++) {
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "NUM OF TARGET %d\n", &numOfTarget);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		SuicideBug* bug = new SuicideBug(iObjectId);
+		bug->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		bug->createBox2D();
+		bug->SetIgnore();
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		AddObject(bug);
+	}
+
 	float nearPlane, farPlane, zoom;
 
 	fscanf(fIn, "\n#CAMERA\n");
@@ -344,13 +365,13 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;
-		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 		for (int i = 0; i < m_listObject.size(); i++) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
+		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 	}
 	else {
 		for (int i = 0; i < m_menuObject.size(); i++) {

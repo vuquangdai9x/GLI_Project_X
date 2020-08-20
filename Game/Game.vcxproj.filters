@@ -120,6 +120,9 @@
     <ClInclude Include="AutoGun.h">
       <Filter>Header Files\Combat\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="SuicideBug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -196,6 +199,9 @@
     </ClCompile>
     <ClCompile Include="AutoGun.cpp">
       <Filter>Source Files\Combat\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="SuicideBug.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
