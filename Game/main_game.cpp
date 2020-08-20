@@ -53,6 +53,7 @@ void Draw(ESContext* esContext)
 void Update(ESContext * esContext, float deltaTime)
 {
 	Singleton<GameStateManager>::GetInstance()->update(deltaTime);
+	
 }
 
 void Key(ESContext * esContext, unsigned char key, bool bIsPressed)

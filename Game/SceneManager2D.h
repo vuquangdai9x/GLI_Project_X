@@ -23,7 +23,7 @@ private:
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject,m_menuObject;
 	Camera2D* m_mainCamera,*m_menuCamera;
-
+	Player* m_curent;
 	CombatController* m_combatController = NULL;
 public:
 	float m_time = 0;
@@ -38,6 +38,8 @@ public:
 	void SetMainCamera(Camera2D * camera, int listObjet = PLAY_OBJECT);
 	Camera2D& GetMainCamera(int listObjet = PLAY_OBJECT);
 	std::vector<Sprite*>& GetListObject();
+
+	void getPlayerPos(Vector3& pos);
 	Vector2& get2Dpos(float x, float y, float z, int listObjet = PLAY_OBJECT);
 	Vector3& get3Dpos(float x, float y, int listObjet = PLAY_OBJECT);
 };

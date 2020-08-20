@@ -43,7 +43,6 @@ void GS_PlayState::Render()
 void GS_PlayState::Update(float deltaTime)
 {
 	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
-
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Q), deltaTime);
 	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);

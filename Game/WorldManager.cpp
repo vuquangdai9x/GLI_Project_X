@@ -56,11 +56,14 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	case ENEMY:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
 		break;
+	case SPECIAL_ENEMY:
+		fixtureDef.filter.maskBits = (1 << PLAYERBULLET);
+		break;
 	case OBSTACLE:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
+		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET|1<<SPECIAL_ENEMY);
 		break;
 	case ENEMYBULLET:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);

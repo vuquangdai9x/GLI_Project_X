@@ -24,6 +24,7 @@ SceneManager2D::~SceneManager2D()
 		delete m_listObject[i];
 	}
 	if (m_mainCamera != NULL) delete m_mainCamera;
+	if (m_menuCamera!= NULL) delete m_menuCamera;
 	if (m_combatController != NULL) delete m_combatController;
 }
 
@@ -83,7 +84,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	target->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, targetID);
 	player->setTarget(target);
 	AddObject(target);
-
+	m_curent = player;
 	// Set up weapon & bullet
 	int iPoolId;
 	int iPoolCapacity;
@@ -221,7 +222,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		SuicideBug* bug = new SuicideBug(iObjectId);
 		bug->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		bug->createBox2D();
-		bug->SetIgnore();
+		//bug->SetIgnore();
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bug);
 	}
@@ -441,6 +442,11 @@ Sprite& SceneManager2D::GetObjectByID(int id)
 
 std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
+}
+
+void SceneManager2D::getPlayerPos(Vector3 &pos)
+{
+	pos= m_curent->GetPosition();
 }
 
 Vector2& SceneManager2D::get2Dpos(float x, float y, float z, int listObjet)
