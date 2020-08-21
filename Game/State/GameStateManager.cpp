@@ -8,7 +8,7 @@
 
 GameStateManager::GameStateManager()
 {
-	this->states.push(new GS_WelcomScreen());
+	this->states.push(new GS_PlayState());
 }
 
 GameStateManager::~GameStateManager()

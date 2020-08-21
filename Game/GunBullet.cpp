@@ -31,7 +31,7 @@ void GunBullet::CreatePhysicsBody()
 	this->m_bulletBody->SetGravityScale(m_gravityScale);
 }
 
-void GunBullet::Fire(Player* player, Vector2 startPosition, Vector2 direction)
+void GunBullet::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
 {
 	Vector2 normDirection = direction.Normalize();
 	// move to startPosition and rotate

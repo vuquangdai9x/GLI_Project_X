@@ -105,6 +105,9 @@ void Camera2D::Zoom(float direction, float deltaTime, float speedMultiplier) {
 	SetZoom(m_zoom + deltaZoom);
 }
 
+float Camera2D::GetNearPlane() { return m_nearPlane; }
+float Camera2D::GetFarPlane() { return m_farPlane; }
+
 Matrix & Camera2D::GetViewMatrix()
 {
 	return m_ViewMatrix;

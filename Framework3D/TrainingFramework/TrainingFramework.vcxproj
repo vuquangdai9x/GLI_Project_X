@@ -146,8 +146,6 @@
     <None Include="..\Resources\Shaders\FireShaderVS.vs" />
     <None Include="..\Resources\Shaders\Sprite2DShaderFS.fs" />
     <None Include="..\Resources\Shaders\Sprite2DShaderVS.vs" />
-    <None Include="..\Resources\Shaders\SpriteFogShaderFS.fs" />
-    <None Include="..\Resources\Shaders\SpriteFogShaderVS.vs" />
     <None Include="..\Resources\Shaders\TerrainShaderFS.fs" />
     <None Include="..\Resources\Shaders\TerrainShaderVS.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />

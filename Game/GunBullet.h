@@ -16,7 +16,7 @@ public:
 	GunBullet(int id, GunBullet& templateBullet);
 	virtual ~GunBullet();
 	void CreatePhysicsBody();
-	void Fire(Player* player, Vector2 startPosition, Vector2 direction);
+	void Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction);
 	void Update(float deltaTime);
 	int time = 0;
 };

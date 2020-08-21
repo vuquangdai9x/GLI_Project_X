@@ -36,6 +36,9 @@ public:
 	float GetZoom();
 	void SetZoom(float value);
 	void Zoom(float direction, float deltaTime, float speedMultiplier = 1);
+
+	float GetNearPlane();
+	float GetFarPlane();
 	
 	Matrix& GetViewMatrix();
 	Matrix& GetProjectionMatrix();

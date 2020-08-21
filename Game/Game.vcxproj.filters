@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Combat\Bullet">
       <UniqueIdentifier>{d7e7c376-a8c9-4686-b9cd-6f567b61b30f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{bfa680b5-3f79-447d-972f-f82e997baa1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{90672610-4f1e-4287-b432-a4c74d40e134}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -120,6 +126,9 @@
     <ClInclude Include="AutoGun.h">
       <Filter>Header Files\Combat\Weapon</Filter>
     </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -196,6 +205,9 @@
     </ClCompile>
     <ClCompile Include="AutoGun.cpp">
       <Filter>Source Files\Combat\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

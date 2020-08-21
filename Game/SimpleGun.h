@@ -9,6 +9,6 @@ protected:
 	bool m_firedPrevFrame, m_canFire;
 public:
 	SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float randomAngle, int iFireAtOnce);
-	int Fire(Player* player, Vector2 direction);
+	int Fire(Sprite* shooter, Vector2 direction);
 	void UpdateGunStatus(float deltaTime);
 };

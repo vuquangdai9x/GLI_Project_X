@@ -9,6 +9,8 @@ Sprite::Sprite(int id)
 	m_id = id;
 	m_isActive = true;
 }
+Sprite::~Sprite() {}
+void Sprite::Update(float deltaTime) {}
 
 void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId) {
 	SetPosition(position);
@@ -46,9 +48,6 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	m_originSize = sprite.m_originSize;
 }
 
-void Sprite::Update(float deltaTime) {	
-
-}
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
 {
 	// Transformation vectors

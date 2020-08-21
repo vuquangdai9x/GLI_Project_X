@@ -15,11 +15,17 @@
 #include "AutoGun.h"
 #include "GunBulletPool.h"
 
+#include "UIComponent.h"
+
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
 		m_listObject[i]->OnDestroy();
 		delete m_listObject[i];
+	}
+	for (int i = 0; i < m_listUIComponents.size(); i++) {
+		m_listUIComponents[i]->OnDestroy();
+		delete m_listUIComponents[i];
 	}
 	if (m_mainCamera != NULL) delete m_mainCamera;
 	if (m_combatController != NULL) delete m_combatController;
@@ -121,17 +127,44 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	m_combatController->AddWeapon(gun);
 	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
+	gun = new AutoGun(3, "Uzi", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 15 * M_PI / 180, 30 * M_PI / 180, 1, 7);
+	m_combatController->AddWeapon(gun);
+	gun = new SimpleGun(4, "Sniper", 0, 0, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	iBulletPoolId = 1;
-	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
+	gun = new SimpleGun(5, "Cannon", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
+	gun = new SimpleGun(6, "SuperCannon", 0, 0, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
 	m_combatController->AddWeapon(gun);
 	// give player some bullets when start game
 	m_combatController->AddBullet(0, 500);
 	m_combatController->AddBullet(1, 200);
 	
+
+	// test UI. For all UIcomponent, set camera-position-z < UI-position-z < 0
+	UIComponent* ui;
+	
+	position = Vector3(0, 0, -1);
+	rotation = 0;
+	scale = Vector2(1.0, 1.0);
+	uiHexColor = 0xffffff;
+	alpha = 1.0;
+	iMaterialId = 0;
+	iMainTexId = 15; // black bullet
+
+	ui = new UIComponent(-1);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(1, -1, -1, 1);
+	ui->SetRenderType(UIComponent::RenderType::Expand);
+	AddUIComponent(ui);
+
+	iMainTexId = 10; // black bullet
+	ui = new UIComponent(-1);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(0.5, -0.5, -0.5, 0.5);
+	ui->SetRenderType(UIComponent::RenderType::Expand);
+	AddUIComponent(ui);
+	// TODO: delete this when finish testing
 
 	//
 	// set up other object
@@ -343,11 +376,42 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
+
+		// TODO: testing UIComponent. Delete this when finish testing
+		//m_ui->SetTop(m_ui->GetTop() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N1) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N2)));
+		//m_ui->SetBottom(m_ui->GetBottom() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N3) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N4)));
+		//m_ui->SetLeft(m_ui->GetLeft() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N5) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N6)));
+		//m_ui->SetRight(m_ui->GetRight() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N7) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N8)));
+		//m_ui->SetRotation(m_ui->GetRotation() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N9) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N0)));
+
+		Vector3 newPos = m_listUIComponents[0]->GetPosition();
+		newPos.x += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::RIGHT) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LEFT));
+		newPos.y += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::UP) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::DOWN));
+		newPos.z += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT));
+		m_listUIComponents[0]->SetPosition(newPos);
+		printf("%f\n", newPos.z);
+
+		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
+		//	m_ui->SetRenderType(UIComponent::RenderType::Fit);
+		//}
+		//else if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
+		//	m_ui->SetRenderType(UIComponent::RenderType::Expand);
+		//}
+		//else if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+		//	m_ui->SetRenderType(UIComponent::RenderType::Stretch);
+		//}
+		
+
+
 		m_time += frameTime;
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 		for (int i = 0; i < m_listObject.size(); i++) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
+		}
+		for (int i = 0; i < m_listUIComponents.size(); i++) {
+			if (m_listUIComponents[i]->CheckIsActiveSprite())
+				m_listUIComponents[i]->Update(frameTime);
 		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
@@ -364,6 +428,10 @@ void SceneManager2D::Render(int listObjet) {
 		for (int i = 0; i < m_listObject.size(); i++) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
+		}
+		for (int i = 0; i < m_listUIComponents.size(); i++) {
+			if (m_listUIComponents[i]->CheckIsActiveSprite())
+				m_listUIComponents[i]->Render(m_mainCamera);
 		}
 	}
 	else {
@@ -416,6 +484,24 @@ Sprite& SceneManager2D::GetObjectByID(int id)
 		if (m_listObject[i]->GetId() == id)
 			return *(m_listObject[i]);
 	}
+}
+void SceneManager2D::AddUIComponent(UIComponent* object) {
+	if (m_listUIComponents.size() == 0) {
+		m_listUIComponents.push_back(object);
+		return;
+	}
+	float zPos = object->GetPosition().z;
+	if (zPos >= m_listUIComponents[0]->GetPosition().z) {
+		m_listUIComponents.insert(m_listUIComponents.begin(), object);
+		return;
+	}
+	for (int i = 1;i < m_listUIComponents.size();i++) {
+		if (m_listUIComponents[i - 1]->GetPosition().z >= zPos && zPos >= m_listUIComponents[i]->GetPosition().z) {
+			m_listUIComponents.insert(m_listUIComponents.begin() + i, object);
+			return;
+		}
+	}
+	m_listUIComponents.push_back(object);
 }
 
 std::vector<Sprite*>& SceneManager2D::GetListObject() {

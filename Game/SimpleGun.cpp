@@ -14,15 +14,15 @@ SimpleGun::SimpleGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int
 	srand(time(NULL));
 }
 
-int SimpleGun::Fire(Player* player, Vector2 direction)
+int SimpleGun::Fire(Sprite* shooter, Vector2 direction)
 {
 	int iFireAmount = 0;
 	if (m_timeCounter <= 0 && m_canFire) {
 		m_timeCounter = m_rechargeTime;
 
 		Vector2 startPosition;
-		startPosition.x = player->GetPosition().x;
-		startPosition.y = player->GetPosition().y;
+		startPosition.x = shooter->GetPosition().x;
+		startPosition.y = shooter->GetPosition().y;
 
 		Vector2 bulletDirecion;
 		float randomAngle;
@@ -36,7 +36,7 @@ int SimpleGun::Fire(Player* player, Vector2 direction)
 				bulletDirecion.x = direction.x * cosf(randomAngle) - direction.y * sinf(randomAngle);
 				bulletDirecion.y = direction.x * sinf(randomAngle) + direction.y * cosf(randomAngle);
 
-				bullet->Fire(player, startPosition, bulletDirecion);
+				bullet->Fire(shooter, startPosition, bulletDirecion);
 			}
 		}
 	}
