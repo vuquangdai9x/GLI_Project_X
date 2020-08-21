@@ -154,6 +154,7 @@
     <ClCompile Include="State\StateBase.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="SuicideBug.cpp" />
+    <ClCompile Include="VampireBat.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
@@ -188,6 +189,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="SuicideBug.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="VampireBat.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>

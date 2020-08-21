@@ -13,6 +13,7 @@
 #include"SuicideBug.h"
 #include "RockyGolem.h"
 #include "DeadlyBird.h"
+#include "VampireBat.h"
 
 #include "SimpleGun.h"
 #include "AutoGun.h"
@@ -260,7 +261,24 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bird);
 	}
-
+	fscanf(fIn, "VAMPIREBAT %d\n", &iNumOfObject);
+	for (int i = 0; i < iNumOfObject; i++) {
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		Vector3 startPos, endPos;
+		fscanf(fIn, "START POSITION %f %f %f\n", &(startPos.x), &(startPos.y), &(startPos.z));
+		fscanf(fIn, "END POSITION %f %f %f\n", &(endPos.x), &(endPos.y), &(endPos.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		VampireBat* bat = new VampireBat(iObjectId, Vector2(startPos.x, startPos.y), Vector2(endPos.x, endPos.y));
+		bat->Init(startPos, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		bat->createBox2D();
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		AddObject(bat);
+	}
 
 	float nearPlane, farPlane, zoom;
 
