@@ -29,6 +29,7 @@ public:
 	Vector2 Modulate(Vector2 & vector);
 	GLfloat Dot(Vector2 & vector);
 
+
 	//access to elements
 	GLfloat operator [] (unsigned int idx);
 

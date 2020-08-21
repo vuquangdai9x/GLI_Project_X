@@ -129,6 +129,7 @@
     <ClCompile Include="AutoGun.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="DeadlyBird.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FallingRock.cpp" />
     <ClCompile Include="FallingRockPool.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="AutoGun.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="DeadlyBird.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FallingRock.h" />
     <ClInclude Include="FallingRockPool.h" />

@@ -19,6 +19,7 @@ Vector2 & Vector2::Normalize()
 	return *this;
 }
 
+
 Vector2 Vector2::operator + (Vector2 & vector)
 {
 	return Vector2(x + vector.x, y + vector.y);
