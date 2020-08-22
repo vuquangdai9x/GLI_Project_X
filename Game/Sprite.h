@@ -10,8 +10,8 @@ public:
 	Sprite(int id);
 	virtual ~Sprite();
 	int GetId();
-	void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
-	void Init(Sprite& sprite);
+	virtual void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
+	virtual void Init(Sprite& sprite);
 	//void SetSpriteAnimation(int iTextureId, int iNumOfCols, int iNumOfRows, float interval);
 	virtual void Update(float deltaTime);
 	virtual void Render(Camera2D* mainCamera);
@@ -35,7 +35,6 @@ protected:
 	Model3D* m_model;
 	Material2D* m_material2d;
 	Texture* m_mainTexture;
-	bool m_canRender = false;
 public:
 	virtual void SetRotation(float rotation);
 	float GetRotation();

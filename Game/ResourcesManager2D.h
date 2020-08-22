@@ -7,9 +7,9 @@
 #include "../Framework3D/TrainingFramework/Material2D.h"
 #include <vector>
 #include "Singleton.h"
+#include "FontFace.h"
 
 class ResourceManager2D {
-
 public:
 	ResourceManager2D();
 	~ResourceManager2D();
@@ -19,10 +19,12 @@ private:
 	std::vector<Texture*> m_aTexture;
 	std::vector<Shaders*> m_aShader;
 	std::vector<Material2D*> m_aMaterial;
+	std::vector<FontFace*> m_aFontFace;
 public:
 	void LoadResources(char* dataResourceFile);
 	Model3D* GetModel(int id);
 	Texture* GetTexture(int id);
 	Shaders* GetShader(int id);
 	Material2D* GetMaterial(int id);
+	FontFace* GetFontFace(int id);
 };

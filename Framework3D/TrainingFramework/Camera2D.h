@@ -39,6 +39,7 @@ public:
 
 	float GetNearPlane();
 	float GetFarPlane();
+	float GetAspectRatio();
 	
 	Matrix& GetViewMatrix();
 	Matrix& GetProjectionMatrix();

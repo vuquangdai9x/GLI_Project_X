@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -76,12 +76,12 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Framework3D\Include;$(SolutionDir)\Box2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Framework3D\Include;$(SolutionDir)\Box2D;$(SolutionDir)\FreeType\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libEGL.lib;libGLESv2.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,10 +133,12 @@
     <ClCompile Include="FloatingFish.cpp" />
     <ClCompile Include="BulletPool.cpp" />
     <ClCompile Include="CombatController.cpp" />
+    <ClCompile Include="FontFace.cpp" />
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="main_game.cpp" />
+    <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourcesManager2D.cpp" />
@@ -150,10 +152,12 @@
     <ClCompile Include="State\StateBase.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="UIComponent.cpp" />
+    <ClCompile Include="UIText.cpp" />
     <ClCompile Include="Weapon.cpp" />
     <ClCompile Include="WorldManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\FreeType\include\ft2build.h" />
     <ClInclude Include="AutoGun.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
@@ -162,9 +166,11 @@
     <ClInclude Include="BulletPool.h" />
     <ClInclude Include="BulletType.h" />
     <ClInclude Include="CombatController.h" />
+    <ClInclude Include="FontFace.h" />
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />
     <ClInclude Include="ItemBody.h" />
+    <ClInclude Include="MaterialText2D.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesManager2D.h" />
@@ -180,6 +186,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UIComponent.h" />
+    <ClInclude Include="UIText.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldManager.h" />
   </ItemGroup>

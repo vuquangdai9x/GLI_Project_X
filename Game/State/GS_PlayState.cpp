@@ -12,8 +12,8 @@ GS_PlayState::GS_PlayState()
 {
     printf("GS_PlayState\n");
 	// 2D
-	char sceneFile[50] = "../Framework3D/Resources/Datas/scene2d.txt";
-	char resourcesFile[50] = "../Framework3D/Resources/Datas/resources2d.txt";
+	char sceneFile[50] = "Datas/scene2d.txt";
+	char resourcesFile[50] = "Datas/resources2d.txt";
 
 	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 

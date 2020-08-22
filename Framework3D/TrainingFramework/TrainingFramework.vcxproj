@@ -148,6 +148,8 @@
     <None Include="..\Resources\Shaders\Sprite2DShaderVS.vs" />
     <None Include="..\Resources\Shaders\TerrainShaderFS.fs" />
     <None Include="..\Resources\Shaders\TerrainShaderVS.vs" />
+    <None Include="..\Resources\Shaders\TextShaderFS.fs" />
+    <None Include="..\Resources\Shaders\TextShaderVS.vs" />
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs" />
     <None Include="..\Resources\Shaders\TriangleShaderVS.vs" />
     <None Include="..\Readme.doc" />

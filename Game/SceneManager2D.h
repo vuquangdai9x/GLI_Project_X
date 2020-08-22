@@ -23,18 +23,15 @@ private:
 	Vector2 return2D;
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject,m_menuObject;
-	std::vector<UIComponent*> m_listUIComponents;
 	Camera2D* m_mainCamera,*m_menuCamera;
 
 	CombatController* m_combatController = NULL;
-
 public:
 	float m_time = 0;
 
 	void Update(float frameTime, int listObjet = PLAY_OBJECT);
 	void Render(int listObjet = PLAY_OBJECT);
 	void AddObject(Sprite* object,int listObjet = PLAY_OBJECT);
-	void AddUIComponent(UIComponent* ui);
 	Sprite& GetObjectByID(int id);
 	void RemoveObject(Sprite* object);
 	bool LoadScene(char* dataSceneFile);

@@ -6,3 +6,5 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "InputManager.h"
+#include "Camera2D.h"
+#include "Material2D.h"

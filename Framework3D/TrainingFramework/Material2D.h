@@ -22,6 +22,6 @@ public:
 	Material2D(int id);
 	int GetId();
 	virtual void SetMainTexture(Texture* mainTexture);
-	bool Init(int iShaderId);
-	void PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
+	virtual bool Init(int iShaderId);
+	virtual void PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
 };
