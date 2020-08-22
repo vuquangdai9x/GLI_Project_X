@@ -33,11 +33,9 @@ void UIText::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 
 void UIText::Render(Camera2D* mainCamera) {
 	if (m_materialText == NULL || m_model == NULL || m_font == NULL) return;
-	if (m_originSize.x == 0 || m_originSize.y == 0) return;
 
-	CalculateScaleForRenderType(mainCamera);
-	CalculateTranslateForAlign(mainCamera);
-	m_WVP = m_scaleRenderMatrix * m_translateAlignMatrix * m_transformMat;
+	CalculateUITransform(mainCamera);
+	m_WVP = m_scaleUIMatrix * m_transformMat * m_translateAlignMatrix;
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);

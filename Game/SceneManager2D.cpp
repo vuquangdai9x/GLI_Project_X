@@ -149,7 +149,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	iMaterialId = 0;
 	iMainTexId = 15; 
 
-	/*ui = new UIComponent(-23);
+	/*ui = new UIComponent(-29);
 	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	ui->SetBound(1, -1, -1, 1);
 	ui->SetRenderType(UIComponent::RenderType::Fit);
@@ -166,10 +166,10 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	UIText* text = new UIText(-29);
 	iMaterialId = 1;
 	text->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	text->SetBound(0.5, -0.5, -0.5, 0.5);
+	text->SetBound(1, -1, -1, 1);
 	text->SetRenderType(UIComponent::RenderType::Fit);
 	text->SetFont(0);
-	text->SetText("fqwfwd23f7823");
+	text->SetText("fqFFXW##RGr373");
 	AddObject(text);
 	// TODO: delete this when finish testing
 
@@ -398,16 +398,46 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		//printf("%f\n", newPos.z);
 
 		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
-			m_ui->SetRenderType(UIComponent::RenderType::Fit);
+			switch (m_ui->GetRenderType()) {
+			case UIComponent::RenderType::Expand:
+				m_ui->SetRenderType(UIComponent::RenderType::Fit);
+				break;
+			case UIComponent::RenderType::Fit:
+				m_ui->SetRenderType(UIComponent::RenderType::Stretch);
+				break;
+			case UIComponent::RenderType::Stretch:
+				m_ui->SetRenderType(UIComponent::RenderType::Expand);
+				break;
+			}
 		}
-		else if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
-			m_ui->SetRenderType(UIComponent::RenderType::Expand);
+		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
+			switch (m_ui->GetAlignVertical())
+			{
+			case UIComponent::AlignVertical::Top:
+				m_ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+				break;
+			case UIComponent::AlignVertical::Bottom:
+				m_ui->SetAlignVertical(UIComponent::AlignVertical::Middle);
+				break;
+			case UIComponent::AlignVertical::Middle:
+				m_ui->SetAlignVertical(UIComponent::AlignVertical::Top);
+				break;
+			}
 		}
-		else if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
-			m_ui->SetRenderType(UIComponent::RenderType::Stretch);
+		if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+			switch (m_ui->GetAlignHorizontal())
+			{
+			case UIComponent::AlignHorizontal::Left:
+				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Right);
+				break;
+			case UIComponent::AlignHorizontal::Right:
+				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Center);
+				break;
+			case UIComponent::AlignHorizontal::Center:
+				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+				break;
+			}
 		}
-		
-
 
 		m_time += frameTime;
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);

@@ -1,52 +1,88 @@
 #include "UIComponent.h"
 
-void UIComponent::CalculateScaleForRenderType(Camera2D* mainCamera)
+void UIComponent::CalculateUITransform(Camera2D* mainCamera)
 {
+	if (m_originSize.x == 0 || m_originSize.y == 0) return;
 	Vector3 scaleSize(1, 1, 1);
-	if (m_originSize.x != 0 && m_originSize.y != 0) {
-		switch (m_renderType)
-		{
-		case RenderType::Fit:
-			if ((m_right - m_left) / m_originSize.x * mainCamera->GetAspectRatio() < (m_top - m_bottom) / m_originSize.y) {
-				scaleSize.x = (m_right - m_left) / 2;
-				scaleSize.y = scaleSize.x / m_originSize.x * m_originSize.y * mainCamera->GetAspectRatio();
-			}
-			else {
-				scaleSize.y = (m_top - m_bottom) / 2;
-				scaleSize.x = scaleSize.y / m_originSize.y * m_originSize.x / mainCamera->GetAspectRatio();
-			}
-			break;
-		case RenderType::Expand:
-			if ((m_right - m_left) / m_originSize.x * mainCamera->GetAspectRatio() > (m_top - m_bottom) / m_originSize.y) {
-				scaleSize.x = (m_right - m_left) / 2;
-				scaleSize.y = scaleSize.x / m_originSize.x * m_originSize.y * mainCamera->GetAspectRatio();
-			}
-			else {
-				scaleSize.y = (m_top - m_bottom) / 2;
-				scaleSize.x = scaleSize.y / m_originSize.y * m_originSize.x / mainCamera->GetAspectRatio();
-			}
-			break;
-		case RenderType::Stretch:
-		default:
+	Vector3 translateAlign(0, 0, 0);
+	bool isAlignH = false, isAlignV = false;
+	switch (m_renderType)
+	{
+	case RenderType::Fit:
+		if ((m_right - m_left) / m_originSize.x * mainCamera->GetAspectRatio() < (m_top - m_bottom) / m_originSize.y) {
 			scaleSize.x = (m_right - m_left) / 2;
+			scaleSize.y = scaleSize.x / m_originSize.x * m_originSize.y * mainCamera->GetAspectRatio();
+			isAlignV = true;
+		}
+		else {
 			scaleSize.y = (m_top - m_bottom) / 2;
+			scaleSize.x = scaleSize.y / m_originSize.y * m_originSize.x / mainCamera->GetAspectRatio();
+			isAlignH = true;
+		}
+		break;
+	case RenderType::Expand:
+		if ((m_right - m_left) / m_originSize.x * mainCamera->GetAspectRatio() > (m_top - m_bottom) / m_originSize.y) {
+			scaleSize.x = (m_right - m_left) / 2;
+			scaleSize.y = scaleSize.x / m_originSize.x * m_originSize.y * mainCamera->GetAspectRatio();
+			isAlignV = true;
+		}
+		else {
+			scaleSize.y = (m_top - m_bottom) / 2;
+			scaleSize.x = scaleSize.y / m_originSize.y * m_originSize.x / mainCamera->GetAspectRatio();
+			isAlignH = true;
+		}
+		break;
+	case RenderType::Stretch:
+	default:
+		scaleSize.x = (m_right - m_left) / 2;
+		scaleSize.y = (m_top - m_bottom) / 2;
+		break;
+	}
+
+	if (isAlignV) {
+		switch (m_alignV)
+		{
+		case AlignVertical::Top:
+			translateAlign.y = (m_top - m_position.y) - scaleSize.y;
+			break;
+		case AlignVertical::Bottom:
+			translateAlign.y = -((m_position.y - m_bottom) - scaleSize.y);
+			break;
+		case AlignVertical::Middle:
+		default:
+			translateAlign.y = 0;
 			break;
 		}
+		//if (m_renderType == RenderType::Expand) translateAlign.y = -translateAlign.y;
 	}
-	m_scaleRenderMatrix.SetScale(scaleSize);
-}
+	if (isAlignH) {
+		switch (m_alignH)
+		{
+		case AlignHorizontal::Left:
+			translateAlign.x = -((m_position.x - m_left) - scaleSize.x);
+			break;
+		case AlignHorizontal::Right:
+			translateAlign.x = (m_right - m_position.x) - scaleSize.x;
+			break;
+		case AlignHorizontal::Center:
+		default:
+			translateAlign.x = 0;
+			break;
+		}
+		//if (m_renderType == RenderType::Expand) translateAlign.x = -translateAlign.x;
+	}
 
-void UIComponent::CalculateTranslateForAlign(Camera2D* mainCamera)
-{
-	Vector3 translateAlign(0, 0, 0);
-	m_translateAlignMatrix.SetTranslation(translateAlign);
+	
+
+	m_scaleUIMatrix = Matrix().SetScale(scaleSize);
+	m_translateAlignMatrix = Matrix().SetTranslation(translateAlign);
 }
 
 UIComponent::UIComponent(int id)
 	: Sprite(id), 
 	m_renderType(RenderType::Fit), 
-	m_alignH(AlignHorizontal::Middle), 
-	m_alignV(AlignVertical::Center)
+	m_alignH(AlignHorizontal::Center), 
+	m_alignV(AlignVertical::Middle)
 {
 	m_top = 1;
 	m_bottom = 0;
@@ -57,11 +93,9 @@ UIComponent::~UIComponent() {}
 
 void UIComponent::Render(Camera2D* mainCamera) {
 	if (m_material2d == NULL || m_model == NULL) return;
-	if (m_originSize.x == 0 || m_originSize.y == 0) return;
-
-	CalculateScaleForRenderType(mainCamera);
-	CalculateTranslateForAlign(mainCamera);
-	m_WVP = m_scaleRenderMatrix * m_translateAlignMatrix * m_transformMat;
+	
+	CalculateUITransform(mainCamera);
+	m_WVP = m_scaleUIMatrix * m_transformMat * m_translateAlignMatrix;
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);
@@ -106,6 +140,21 @@ void UIComponent::SetAlignHorizontal(AlignHorizontal h) {
 }
 void UIComponent::SetAlignVertical(AlignVertical v) {
 	m_alignV = v;
+}
+
+UIComponent::RenderType UIComponent::GetRenderType()
+{
+	return m_renderType;
+}
+
+UIComponent::AlignHorizontal UIComponent::GetAlignHorizontal()
+{
+	return m_alignH;
+}
+
+UIComponent::AlignVertical UIComponent::GetAlignVertical()
+{
+	return m_alignV;
 }
 
 void UIComponent::SetTop(float value) {
