@@ -8,6 +8,10 @@ SuicideBug::SuicideBug(int id) :Enemy(id)
 
 }
 
+SuicideBug::~SuicideBug()
+{
+}
+
 void SuicideBug::Update(float deltaTime)
 {
 	Vector3 thisPos = this->GetPosition(), playerPos;

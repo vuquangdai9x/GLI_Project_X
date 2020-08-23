@@ -14,7 +14,7 @@ protected:
 	ItemBody* enemyBody;
 public:
 	Enemy(int id);
-	~Enemy();
+	virtual ~Enemy();
 	virtual void Update(float deltaTime);
 	virtual void createBox2D();
 	void setHP(int hp) { this->m_HP = hp; }

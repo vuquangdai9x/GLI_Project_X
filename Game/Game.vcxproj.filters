@@ -37,6 +37,21 @@
     <Filter Include="Source Files\Combat\Bullet">
       <UniqueIdentifier>{d7e7c376-a8c9-4686-b9cd-6f567b61b30f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{bfa680b5-3f79-447d-972f-f82e997baa1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{90672610-4f1e-4287-b432-a4c74d40e134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FreeType">
+      <UniqueIdentifier>{787922ca-323c-47dc-b6a5-2172715ea471}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\enemy">
+      <UniqueIdentifier>{4e6ec45d-03f0-48c3-b7b2-cdd7c550320d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\enemy">
+      <UniqueIdentifier>{97e2f669-706c-4313-9e3b-4aa533b4947b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -75,9 +90,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -108,23 +120,8 @@
     <ClInclude Include="BulletType.h">
       <Filter>Header Files\Combat</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FloatingFish.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AutoGun.h">
       <Filter>Header Files\Combat\Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="SuicideBug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="RockyGolem.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FallingRock.h">
       <Filter>Header Files\Combat\Bullet</Filter>
@@ -132,14 +129,47 @@
     <ClInclude Include="FallingRockPool.h">
       <Filter>Header Files\Combat\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="DeadlyBird.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VampireBat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="State\GS_PauseState.h">
       <Filter>Header Files\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeType\include\ft2build.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponent.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIText.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="FontFace.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MaterialText2D.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadlyBird.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatingFish.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="RockyGolem.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="SuicideBug.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="VampireBat.h">
+      <Filter>Header Files\enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -176,9 +206,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WorldManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -206,23 +233,8 @@
     <ClCompile Include="GunBulletPool.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FloatingFish.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="AutoGun.cpp">
       <Filter>Source Files\Combat\Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="SuicideBug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RockyGolem.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FallingRockPool.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
@@ -230,14 +242,44 @@
     <ClCompile Include="FallingRock.cpp">
       <Filter>Source Files\Combat\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="DeadlyBird.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="VampireBat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="State\GS_PauseState.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="FontFace.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialText2D.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponent.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIText.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="DeadlyBird.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="FloatingFish.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="RockyGolem.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="SuicideBug.cpp">
+      <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="VampireBat.cpp">
+      <Filter>Source Files\enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

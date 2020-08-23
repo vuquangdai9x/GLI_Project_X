@@ -4,6 +4,7 @@
 #include "../Framework3D/TrainingFramework/MaterialFire.h"
 #include "../Framework3D/TrainingFramework/Material2D.h"
 #include "../Framework3D/TrainingFramework/Globals.h"
+#include "MaterialText2D.h"
 
 ResourceManager2D::ResourceManager2D()
 {
@@ -23,6 +24,9 @@ ResourceManager2D::~ResourceManager2D()
 	}
 	for (int i = 0; i < m_aMaterial.size(); i++) {
 		delete m_aMaterial[i];
+	}
+	for (int i = 0; i < m_aFontFace.size(); i++) {
+		delete m_aFontFace[i];
 	}
 }
 
@@ -182,10 +186,74 @@ void ResourceManager2D::LoadResources(char* dataResourceFile)
 				printf("[ERR] ResourceManager: Failed to load Default Material %d : Shader = %d\n", iMaterialId, iShaderId);
 				delete pMaterial;
 			}
-		}else {
+		}
+		else if (strcmp("TEXT", materialType) == 0) 
+		{
+			MaterialText2D* pMaterial;
+			int iShaderId;
+			pMaterial = new MaterialText2D(iMaterialId);
+			fscanf(fIn, "SHADER %d\n", &iShaderId);
+			if (pMaterial->Init(iShaderId)) {
+				m_aMaterial.push_back(pMaterial);
+				printf("[msg] ResourceManager: Loaded Text Material %d : Shader = %d\n", iMaterialId, iShaderId);
+			}
+			else {
+				printf("[ERR] ResourceManager: Failed to load Text Material %d : Shader = %d\n", iMaterialId, iShaderId);
+				delete pMaterial;
+			}
+		}
+		else {
 			printf("[ERR] ResourceManager: There no material has this type\n");
 		}
 	}
+
+	//
+	// Load Fonts
+	//
+	FT_Library FTLibrary;
+	int iFT_Error = FT_Init_FreeType(&FTLibrary);
+	if (iFT_Error) {
+		printf("[ERR] ResourceManager: Fail to init FreeType library\n");
+	}
+	int iNumOfFonts;
+	fscanf(fIn, "\n#Fonts: %d\n", &iNumOfFonts);
+	for (int i = 0; i < iNumOfFonts; i++) {
+		int iFontId;
+		FontFace* pFontFace;
+		char pixelSizeType[10];
+		float iPixelWidth, iPixelHeight;
+		fscanf(fIn, "ID %d\n", &iFontId);
+		fscanf(fIn, "FILE \"%[^\"]\"\n", fileName);
+		strcpy(filePath, resourceDir);
+		strcat(filePath, fileName);
+
+		fscanf(fIn, "PIXELSIZE %s\n", pixelSizeType);
+		fscanf(fIn, "%f %f\n", &iPixelWidth, &iPixelHeight);
+		if (strcmp("ABSOLUTE", pixelSizeType) == 0) {
+			// do nothing
+		}
+		else if (strcmp("RELATIVE", pixelSizeType) == 0) {
+			iPixelWidth *= Globals::screenWidth;
+			iPixelHeight *= Globals::screenHeight;
+		}
+		else {
+			printf("[ERR] ResourceManager: There is no pixelsize type %s of font %d : %s\n", pixelSizeType, iFontId, fileName);
+			continue;
+		}
+		
+		if (FTLibrary != NULL) {
+			pFontFace = new FontFace(iFontId);
+			if (pFontFace->LoadFont(FTLibrary, filePath, iPixelWidth, iPixelHeight)) {
+				m_aFontFace.push_back(pFontFace);
+				printf("[msg] ResourceManager: Loaded Font %d : %s | PixelSize: %s %f %f\n", iFontId, fileName, pixelSizeType, iPixelWidth, iPixelHeight);
+			}
+			else {
+				printf("[ERR] ResourceManager: Failed to load Font %d : %s | PixelSize: %s %d %d\n", iFontId, fileName, pixelSizeType, iPixelWidth, iPixelHeight);
+				delete pFontFace;
+			}
+		}
+	}
+
 	fclose(fIn);
 }
 
@@ -221,6 +289,13 @@ Material2D* ResourceManager2D::GetMaterial(int id)
 	for (int i = 0; i < m_aMaterial.size(); i++) {
 		if (m_aMaterial[i]->GetId() == id)
 			return m_aMaterial[i];
+	}
+	return NULL;
+}
+FontFace* ResourceManager2D::GetFontFace(int id) {
+	for (int i = 0; i < m_aFontFace.size(); i++) {
+		if (m_aFontFace[i]->GetId() == id)
+			return m_aFontFace[i];
 	}
 	return NULL;
 }

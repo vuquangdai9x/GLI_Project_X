@@ -19,13 +19,18 @@ int Init(ESContext* esContext)
 	Singleton<InputManager>::CreateInstance();
 	Singleton<ResourceManager2D>::CreateInstance();
 	Singleton<SceneManager2D>::CreateInstance();
-	Singleton<GameStateManager>::CreateInstance();
 	Singleton<WorldManager>::CreateInstance();
+	Singleton<GameStateManager>::CreateInstance();
+	
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	//glDisable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 	glEnable(GL_BLEND);
+
+	glBlendEquation(GL_FUNC_ADD);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	//Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, 1.0f, 0.0f, 1.0f, 1.0f);
 	
 

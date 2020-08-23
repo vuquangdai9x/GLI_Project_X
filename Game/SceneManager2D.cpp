@@ -19,6 +19,9 @@
 #include "AutoGun.h"
 #include "GunBulletPool.h"
 
+#include "UIComponent.h"
+#include "UIText.h"
+
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -126,17 +129,74 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	m_combatController->AddWeapon(gun);
 	gun = new SimpleGun(2, "Shotgun", 0, 0, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(3, "Sniper", 0, 0, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
+	gun = new AutoGun(3, "Uzi", 0, 0, iBulletPoolId, 0.5, 0.75, 0.05, 15 * M_PI / 180, 30 * M_PI / 180, 1, 7);
+	m_combatController->AddWeapon(gun);
+	gun = new SimpleGun(4, "Sniper", 0, 0, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	iBulletPoolId = 1;
-	gun = new SimpleGun(4, "Cannon", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
+	gun = new SimpleGun(5, "Cannon", 0, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(5, "SuperCannon", 0, 0, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
+	gun = new SimpleGun(6, "SuperCannon", 0, 0, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
 	m_combatController->AddWeapon(gun);
 	// give player some bullets when start game
 	m_combatController->AddBullet(0, 500);
 	m_combatController->AddBullet(1, 200);
 	
+
+	// test UI. For all UIcomponent, set camera-position-z < UI-position-z < 0
+	UIComponent* ui;
+	
+	position = Vector3(0, 0, -1);
+	rotation = 0;
+	scale = Vector2(1.0, 1.0);
+	uiHexColor = 0xffffff;
+	alpha = 1;		 
+	iMaterialId = 0;
+	iMainTexId = 15; 
+
+	/*ui = new UIComponent(-29);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(1, -1, -1, 1);
+	ui->SetRenderType(UIComponent::RenderType::Fit);
+	AddObject(ui);*/
+
+	iMainTexId = 0;
+	ui = new UIComponent(-1);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(1, 0.9, -1, -0.9);
+	ui->SetRenderType(UIComponent::RenderType::Fit);
+	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+	AddObject(ui);
+
+	iMainTexId = 16;
+	ui = new UIComponent(-1);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(1, 0.9, -0.9, -0.8);
+	ui->SetRenderType(UIComponent::RenderType::Fit);
+	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+	AddObject(ui);
+	iMainTexId = 17;
+	ui = new UIComponent(-1);
+	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	ui->SetBound(1, 0.9, -0.8, -0.7);
+	ui->SetRenderType(UIComponent::RenderType::Fit);
+	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+	AddObject(ui);
+
+	uiHexColor = 0xff00ff;
+	alpha = 0.75;
+	UIText* text = new UIText(-29);
+	iMaterialId = 1;
+	text->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	text->SetBound(1, -1, -1, 1);
+	text->SetRenderType(UIComponent::RenderType::Fit);
+	text->SetFont(0);
+	text->SetText("There's an error when set GS_MainMenu first");
+	AddObject(text);
+	// TODO: delete this when finish testing
 
 	//
 	// set up other object
@@ -184,7 +244,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 		AddObject(obs);
 
-		printf("[msg] SceneManager: Loaded Sprite %d\n\tMaterial: %d\n\tMain Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
+		printf("[msg] SceneManager: Loaded Sprite %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
 	int numOfTarget;
 	b2Vec2 Target[10];
@@ -418,6 +478,62 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
+		//UIComponent* m_ui = &dynamic_cast<UIComponent&>(GetObjectByID(-29));
+		//// TODO: testing UIComponent. Delete this when finish testing
+		//m_ui->SetTop(m_ui->GetTop() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N1) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N2)));
+		//m_ui->SetBottom(m_ui->GetBottom() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N3) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N4)));
+		//m_ui->SetLeft(m_ui->GetLeft() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N5) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N6)));
+		//m_ui->SetRight(m_ui->GetRight() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N7) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N8)));
+		//m_ui->SetRotation(m_ui->GetRotation() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N9) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N0)));
+		//Vector3 newPos = m_ui->GetPosition();
+		//newPos.x += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::RIGHT) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LEFT));
+		//newPos.y += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::UP) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::DOWN));
+		////newPos.z += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT));
+		//m_ui->SetPosition(newPos);
+		////printf("%f\n", newPos.z);
+
+		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
+		//	switch (m_ui->GetRenderType()) {
+		//	case UIComponent::RenderType::Expand:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Fit);
+		//		break;
+		//	case UIComponent::RenderType::Fit:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Stretch);
+		//		break;
+		//	case UIComponent::RenderType::Stretch:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Expand);
+		//		break;
+		//	}
+		//}
+		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
+		//	switch (m_ui->GetAlignVertical())
+		//	{
+		//	case UIComponent::AlignVertical::Top:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+		//		break;
+		//	case UIComponent::AlignVertical::Bottom:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Middle);
+		//		break;
+		//	case UIComponent::AlignVertical::Middle:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Top);
+		//		break;
+		//	}
+		//}
+		//if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+		//	switch (m_ui->GetAlignHorizontal())
+		//	{
+		//	case UIComponent::AlignHorizontal::Left:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Right);
+		//		break;
+		//	case UIComponent::AlignHorizontal::Right:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Center);
+		//		break;
+		//	case UIComponent::AlignHorizontal::Center:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		//		break;
+		//	}
+		//}
+
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
 			if (m_listObject[i]->CheckIsActiveSprite())

@@ -9,21 +9,20 @@ Sprite::Sprite(int id)
 	m_id = id;
 	m_isActive = true;
 }
+Sprite::~Sprite() {}
+void Sprite::Update(float deltaTime) {}
 
 void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId) {
 	SetPosition(position);
 	SetRotation(rotation);
 	SetScale(scale);
 	SetColor(hexColor, alpha);
-	m_canRender = true;
 	m_model = Singleton<ResourceManager2D>::GetInstance()->GetModel(0);
 	if (m_model == NULL) {
-		m_canRender = false;
 		printf("[ERR] GameObject: Failed to get model %d\n", 0);
 	}
 	m_material2d = dynamic_cast<Material2D*>(Singleton<ResourceManager2D>::GetInstance()->GetMaterial(iMaterialId));
 	if (m_material2d == NULL) {
-		m_canRender = false;
 		printf("[ERR] Sprite2d: Can't get Material2D\n");
 	}
 	m_mainTexture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iMainTexId);
@@ -39,16 +38,12 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	SetRotation(sprite.m_rotation);
 	SetScale(sprite.m_scale);
 	SetColor(sprite.m_color);
-	m_canRender = sprite.m_canRender;
 	m_model = sprite.m_model;
 	m_material2d = sprite.m_material2d;
 	m_mainTexture = sprite.m_mainTexture;
 	m_originSize = sprite.m_originSize;
 }
 
-void Sprite::Update(float deltaTime) {	
-
-}
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
 {
 	// Transformation vectors
@@ -107,7 +102,7 @@ int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix p
 
 
 void Sprite::Render(Camera2D* mainCamera) {
-	if (!m_canRender) return;
+	if (m_material2d == NULL || m_model == NULL) return;
 	m_WVP = m_transformMat * mainCamera->GetViewMatrix() * mainCamera->GetProjectionMatrix();
 	//m_WVP = m_transformMat;
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vboId);

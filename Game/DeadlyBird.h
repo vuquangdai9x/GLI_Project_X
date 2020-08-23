@@ -4,6 +4,7 @@ class DeadlyBird : public Enemy
 {
 public: 
 	DeadlyBird(int id);
+	~DeadlyBird();
 	void Update(float deltaTime);
 	void Seek(Vector2 target,Vector2 v);
 	void createBox2D();

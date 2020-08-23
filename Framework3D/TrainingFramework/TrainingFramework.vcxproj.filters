@@ -188,10 +188,10 @@
     <None Include="..\Resources\Shaders\Sprite2DShaderFS.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\SpriteFogShaderVS.vs">
+    <None Include="..\Resources\Shaders\TextShaderVS.vs">
       <Filter>Resources\Shaders</Filter>
     </None>
-    <None Include="..\Resources\Shaders\SpriteFogShaderFS.fs">
+    <None Include="..\Resources\Shaders\TextShaderFS.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
   </ItemGroup>

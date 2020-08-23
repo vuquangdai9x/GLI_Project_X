@@ -6,7 +6,8 @@
 #include "../Framework3D/TrainingFramework/Camera2D.h"
 #include "CombatController.h"
 #include "Singleton.h"
-#include "BulletPool.h"
+
+#include "UIComponent.h"
 
 #define PLAY_OBJECT 0
 #define MENU_OBJECT 1

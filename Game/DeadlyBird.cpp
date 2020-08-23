@@ -6,6 +6,9 @@
 DeadlyBird::DeadlyBird(int id):Enemy(id)
 {
 }
+DeadlyBird::~DeadlyBird()
+{
+}
 void DeadlyBird::Update(float deltaTime)
 {
 	Vector3 thisPos = this->GetPosition(), playerPos;
