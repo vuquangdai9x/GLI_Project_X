@@ -1,11 +1,15 @@
 #pragma once
 #include"StateBase.h"
 #include<stack>
+#include "GS_PauseState.h"
+
 
 class GameStateManager
 {
 private:
 	std::stack<StateBase*> states;
+	bool paused;
+	GS_PauseState* pauseState;
 public:
 	GameStateManager();
 	~GameStateManager();
@@ -14,6 +18,7 @@ public:
 	void render();
 	void update(float deltaTime);
 	void KeyPress();
+	void setPaused(bool p) { this->paused = p; }
 
 	const static int WELCOM = 0;
 	const static int MENU = 1;

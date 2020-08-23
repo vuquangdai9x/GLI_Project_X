@@ -1,0 +1,42 @@
+#include "../stdafx.h"
+#include "GS_PauseState.h"
+#include "../Framework3D/TrainingFramework/framework3d.h"
+#include"../Singleton.h"
+#include"GameStateManager.h"
+#include "../ResourcesManager2D.h"
+#include "../SceneManager2D.h"
+
+GS_PauseState::GS_PauseState()
+{
+	printf("GS_PauseState");
+}
+
+GS_PauseState::~GS_PauseState()
+{
+}
+
+bool GS_PauseState::Create()
+{
+	return false;
+}
+
+bool GS_PauseState::Release()
+{
+	return false;
+}
+
+void GS_PauseState::Render()
+{
+	Singleton<SceneManager2D>::GetInstance()->Render();
+}
+
+void GS_PauseState::Update(float deltaTime)
+{
+}
+
+void GS_PauseState::KeyPress()
+{
+	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::ESCAPE)) {
+		Singleton<GameStateManager>::GetInstance()->setPaused(false);
+	}
+}

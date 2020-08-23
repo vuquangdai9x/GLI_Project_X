@@ -54,5 +54,8 @@ void GS_PlayState::Update(float deltaTime)
 
 void GS_PlayState::KeyPress()
 {
+	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::ESCAPE)) {
+		Singleton<GameStateManager>::GetInstance()->setPaused(true);
+	}
 }
 

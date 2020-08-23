@@ -132,6 +132,9 @@ void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 	case 'c':
 		keyMapped = Key::C;
 		break;
+	case VK_ESCAPE:
+		keyMapped = Key::ESCAPE;
+		break;
 	default:
 		keyMapped = Key::NONE;
 		return;

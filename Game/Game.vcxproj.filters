@@ -138,6 +138,9 @@
     <ClInclude Include="VampireBat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="State\GS_PauseState.h">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -232,6 +235,9 @@
     </ClCompile>
     <ClCompile Include="VampireBat.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="State\GS_PauseState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
