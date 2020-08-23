@@ -162,7 +162,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	ui->SetRenderType(UIComponent::RenderType::Expand);
 	AddObject(ui);*/
 
-	uiHexColor = 0xff00ff;
+	/*uiHexColor = 0xff00ff;
 	UIText* text = new UIText(-29);
 	iMaterialId = 1;
 	text->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
@@ -170,7 +170,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	text->SetRenderType(UIComponent::RenderType::Fit);
 	text->SetFont(0);
 	text->SetText("fqFFXW##RGr373");
-	AddObject(text);
+	AddObject(text);*/
 	// TODO: delete this when finish testing
 
 	//
@@ -383,61 +383,61 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
-		UIComponent* m_ui = &dynamic_cast<UIComponent&>(GetObjectByID(-29));
-		// TODO: testing UIComponent. Delete this when finish testing
-		m_ui->SetTop(m_ui->GetTop() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N1) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N2)));
-		m_ui->SetBottom(m_ui->GetBottom() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N3) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N4)));
-		m_ui->SetLeft(m_ui->GetLeft() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N5) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N6)));
-		m_ui->SetRight(m_ui->GetRight() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N7) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N8)));
-		m_ui->SetRotation(m_ui->GetRotation() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N9) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N0)));
-		Vector3 newPos = m_ui->GetPosition();
-		newPos.x += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::RIGHT) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LEFT));
-		newPos.y += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::UP) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::DOWN));
-		//newPos.z += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT));
-		m_ui->SetPosition(newPos);
-		//printf("%f\n", newPos.z);
+		//UIComponent* m_ui = &dynamic_cast<UIComponent&>(GetObjectByID(-29));
+		//// TODO: testing UIComponent. Delete this when finish testing
+		//m_ui->SetTop(m_ui->GetTop() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N1) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N2)));
+		//m_ui->SetBottom(m_ui->GetBottom() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N3) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N4)));
+		//m_ui->SetLeft(m_ui->GetLeft() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N5) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N6)));
+		//m_ui->SetRight(m_ui->GetRight() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N7) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N8)));
+		//m_ui->SetRotation(m_ui->GetRotation() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N9) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N0)));
+		//Vector3 newPos = m_ui->GetPosition();
+		//newPos.x += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::RIGHT) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LEFT));
+		//newPos.y += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::UP) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::DOWN));
+		////newPos.z += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT));
+		//m_ui->SetPosition(newPos);
+		////printf("%f\n", newPos.z);
 
-		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
-			switch (m_ui->GetRenderType()) {
-			case UIComponent::RenderType::Expand:
-				m_ui->SetRenderType(UIComponent::RenderType::Fit);
-				break;
-			case UIComponent::RenderType::Fit:
-				m_ui->SetRenderType(UIComponent::RenderType::Stretch);
-				break;
-			case UIComponent::RenderType::Stretch:
-				m_ui->SetRenderType(UIComponent::RenderType::Expand);
-				break;
-			}
-		}
-		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
-			switch (m_ui->GetAlignVertical())
-			{
-			case UIComponent::AlignVertical::Top:
-				m_ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-				break;
-			case UIComponent::AlignVertical::Bottom:
-				m_ui->SetAlignVertical(UIComponent::AlignVertical::Middle);
-				break;
-			case UIComponent::AlignVertical::Middle:
-				m_ui->SetAlignVertical(UIComponent::AlignVertical::Top);
-				break;
-			}
-		}
-		if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
-			switch (m_ui->GetAlignHorizontal())
-			{
-			case UIComponent::AlignHorizontal::Left:
-				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Right);
-				break;
-			case UIComponent::AlignHorizontal::Right:
-				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Center);
-				break;
-			case UIComponent::AlignHorizontal::Center:
-				m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-				break;
-			}
-		}
+		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
+		//	switch (m_ui->GetRenderType()) {
+		//	case UIComponent::RenderType::Expand:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Fit);
+		//		break;
+		//	case UIComponent::RenderType::Fit:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Stretch);
+		//		break;
+		//	case UIComponent::RenderType::Stretch:
+		//		m_ui->SetRenderType(UIComponent::RenderType::Expand);
+		//		break;
+		//	}
+		//}
+		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
+		//	switch (m_ui->GetAlignVertical())
+		//	{
+		//	case UIComponent::AlignVertical::Top:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
+		//		break;
+		//	case UIComponent::AlignVertical::Bottom:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Middle);
+		//		break;
+		//	case UIComponent::AlignVertical::Middle:
+		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Top);
+		//		break;
+		//	}
+		//}
+		//if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+		//	switch (m_ui->GetAlignHorizontal())
+		//	{
+		//	case UIComponent::AlignHorizontal::Left:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Right);
+		//		break;
+		//	case UIComponent::AlignHorizontal::Right:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Center);
+		//		break;
+		//	case UIComponent::AlignHorizontal::Center:
+		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		//		break;
+		//	}
+		//}
 
 		m_time += frameTime;
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
