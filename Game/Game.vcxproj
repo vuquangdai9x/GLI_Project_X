@@ -140,6 +140,7 @@
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
     <ClCompile Include="ItemBody.cpp" />
+    <ClCompile Include="ListenerClass.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />
     <ClInclude Include="ItemBody.h" />
+    <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MaterialText2D.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Player.h" />
@@ -200,6 +202,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UIComponent.h" />
     <ClInclude Include="UIText.h" />
+    <ClInclude Include="UserData.h" />
     <ClInclude Include="VampireBat.h" />
     <ClInclude Include="Weapon.h" />
     <ClInclude Include="WorldManager.h" />

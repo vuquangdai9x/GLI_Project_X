@@ -22,6 +22,7 @@ public:
 	b2Body* body;
 	void Update(float deltaTime);
 	void SetGravityScale(float value);
+	int GetType() { return this->m_type; }
 private:
 	int m_type;
 	float m_x, m_y;

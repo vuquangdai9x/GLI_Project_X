@@ -1,5 +1,6 @@
 #include "WorldManager.h"
-
+#include "ListenerClass.h"
+#include "UserData.h"
 WorldManager::WorldManager()
 {
 	
@@ -7,6 +8,8 @@ WorldManager::WorldManager()
 	b2Vec2 gravity(0.0f, 0.0f);
 	m_world = new b2World(gravity);
 	m_world->SetAllowSleeping(true);
+	
+	m_world->SetContactListener(new ListenerClass());
 	
 	b2BodyDef groundBodyDef;
 	groundBodyDef.position.Set(0.0f, -GRAVITY);
@@ -60,7 +63,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYERBULLET);
 		break;
 	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY)  | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	case PLAYERBULLET:
 		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET|1<<SPECIAL_ENEMY);
@@ -76,6 +79,11 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	mass.center = tmp->body->GetWorldCenter(); 
 	mass.mass = massD;
 	tmp->body->SetMassData(&mass);
+
+	UserData *user = new UserData;
+	user->m_type = tmp->GetType();
+	tmp->body->SetUserData(user);
+
 	listObject.push_back(tmp);
 	return tmp;
 }
@@ -117,7 +125,7 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
 		break;
 	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	case PLAYERBULLET:
 		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
@@ -128,11 +136,15 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 	}
 
 	tmp->body->CreateFixture(&fixtureDef);
-
 	b2MassData mass;
 	mass.center = tmp->body->GetWorldCenter();
 	mass.mass = massD;
 	tmp->body->SetMassData(&mass);
+
+	UserData* user = new UserData;
+	user->m_type = tmp->GetType();
+	tmp->body->SetUserData(user);
+
 	listObject.push_back(tmp);
 	return tmp;
 }

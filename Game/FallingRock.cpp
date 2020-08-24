@@ -1,6 +1,7 @@
 #include "FallingRock.h"
 #include "SceneManager2D.h"
 #include "WorldManager.h"
+#include "UserData.h"
 
 FallingRock::FallingRock(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime)
 	: Bullet(id),
@@ -50,5 +51,9 @@ void FallingRock::Update(float deltaTime)
 	if (m_timeCounter > 0) {
 		m_timeCounter -= deltaTime;
 		if (m_timeCounter < 0) SetActiveBullet(false);
+	}
+	UserData* user = (UserData*)m_bulletBody->body->GetUserData();
+	if (user->IsCollison) {
+		SetActiveBullet(false);
 	}
 }
