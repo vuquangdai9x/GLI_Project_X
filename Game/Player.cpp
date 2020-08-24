@@ -6,7 +6,7 @@
 #include"WorldManager.h"
 #include<math.h>
 #include "GunBullet.h"
-
+#include"UserData.h"
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -199,6 +199,15 @@ void Player::Update(float deltaTime)
 	targetPos.z = playerPos.z + 1.0f;
 	m_target->SetPosition(targetPos);
 
+	UserData* user = (UserData*)this->playerBody->body->GetUserData();
+	if (user->IsCollison > 0) {
+		this->SetColor(0xffafff, 1);
+	}
+
+	else {
+	this->SetColor(0xffffff, 1);
+	}
+	
 	//printf("%f \n", getFireAngle());
 	//if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();
 }
