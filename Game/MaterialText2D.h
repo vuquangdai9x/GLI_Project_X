@@ -7,6 +7,6 @@ protected:
 public:
 	MaterialText2D(int id);
 	virtual bool Init(int iShaderId);
-	virtual void PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
+	virtual void PrepareShader(Matrix& WVP, float textureWidth, float textureHeight, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color);
 	virtual void SetTextureHandle(GLuint handle);
 };

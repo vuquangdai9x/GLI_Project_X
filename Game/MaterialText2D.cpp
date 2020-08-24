@@ -8,7 +8,7 @@ void MaterialText2D::SetTextureHandle(GLuint handle) {
 	m_uiTextureHandle = handle;
 	m_isSetTextureHandle = true;
 }
-void MaterialText2D::PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color) {
+void MaterialText2D::PrepareShader(Matrix& WVP, float textureWidth, float textureHeight, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color) {
 	glUseProgram(m_shader->program);
 	if (m_a_positionLocation != -1)
 	{
@@ -38,6 +38,6 @@ void MaterialText2D::PrepareShader(Matrix& WVP, Vector2 textureRatio, float offs
 		glUniform4fv(m_u_colorLocation, 1, (GLfloat*)color);
 	}
 	if (m_u_originSizeLocation != -1) {
-		glUniform2f(m_u_originSizeLocation, (GLfloat)textureRatio.x, (GLfloat)textureRatio.y);
+		glUniform2f(m_u_originSizeLocation, (GLfloat)textureWidth, (GLfloat)textureHeight);
 	}
 }

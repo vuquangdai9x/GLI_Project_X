@@ -6,6 +6,8 @@
 Material2D::Material2D(int id)
 {
 	m_id = id;
+	m_mainTexure = NULL;
+	m_shader = NULL;
 }
 
 void Material2D::SetMainTexture(Texture* mainTexture)
@@ -37,7 +39,7 @@ bool Material2D::Init(int iShaderId)
 	return true;
 }
 
-void Material2D::PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color)
+void Material2D::PrepareShader(Matrix& WVP, float textureWidth, float textureHeight, float offsetX, float offsetY, float subWidth, float subHeight, Vector4* color)
 {
 	glUseProgram(m_shader->program);
 	if (m_a_positionLocation != -1)
@@ -73,6 +75,6 @@ void Material2D::PrepareShader(Matrix& WVP, Vector2 textureRatio, float offsetX,
 		glUniform4fv(m_u_colorLocation, 1, (GLfloat*)color);
 	}
 	if (m_u_originSizeLocation != -1) {
-		glUniform2f(m_u_originSizeLocation, (GLfloat)textureRatio.x, (GLfloat)textureRatio.y);
+		glUniform2f(m_u_originSizeLocation, (GLfloat)textureWidth, (GLfloat)textureHeight);
 	}
 }

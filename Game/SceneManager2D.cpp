@@ -79,9 +79,17 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	Player* player = new Player(iObjectId);
+
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
+
+	AnimationController& animPlayer = player->GetAnimationController();
+	animPlayer.AddAnimState(0, 15, 2, 3, 3);
+	animPlayer.SetDefaultAnimState(0);
+	animPlayer.RunAnimState(0,-1);
+	player->SetUseAnimation(true);
+
 	fscanf(fIn, "TARGETTEX %d\n", &targetID);
 	fscanf(fIn, "TARGETSCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "TARGETPOS %f %f %f\n", &(position.x), &(position.y), &(position.z));

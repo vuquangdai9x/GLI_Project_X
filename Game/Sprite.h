@@ -4,6 +4,7 @@
 #include "../Framework3D/TrainingFramework/Camera2D.h"
 #include "../Framework3D/TrainingFramework/Model3D.h"
 #include "../Framework3D/TrainingFramework/Texture.h"
+#include "AnimationController.h"
 
 class Sprite{
 public:
@@ -35,6 +36,9 @@ protected:
 	Model3D* m_model;
 	Material2D* m_material2d;
 	Texture* m_mainTexture;
+
+	bool m_isUseAnimation;
+	AnimationController m_animationController;
 public:
 	virtual void SetRotation(float rotation);
 	float GetRotation();
@@ -47,6 +51,9 @@ public:
 	Vector4 GetColor();
 	void SetActiveSprite(bool value);
 	bool CheckIsActiveSprite();
+
+	AnimationController& GetAnimationController();
+	void SetUseAnimation(bool isUseAnimation);
 };
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate);
 int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix projection, int* viewport, float* objectCoordinate);

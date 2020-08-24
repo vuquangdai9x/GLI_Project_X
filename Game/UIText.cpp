@@ -45,7 +45,7 @@ void UIText::Render(Camera2D* mainCamera) {
 		//m_charWVP = Matrix().SetScale(scaleSize) * m_WVP;
 		FontFace::Character ch = m_font->GetCharacter(m_text[i]);
 		m_materialText->SetTextureHandle(ch.uiTextureHandle);
-		m_materialText->PrepareShader(m_aCharacterWVP[i] * m_WVP, Vector2(1,1), 0, 0, 1, 1, &m_color);
+		m_materialText->PrepareShader(m_aCharacterWVP[i] * m_WVP, 1, 1, 0, 0, 1, 1, &m_color);
 		glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
 	}
 	

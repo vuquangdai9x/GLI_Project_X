@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AutoGun.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -166,6 +167,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\FreeType\include\ft2build.h" />
+    <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AutoGun.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
