@@ -21,3 +21,8 @@ void ItemBody::SetGravityScale(float value)
 {
 	m_gravityScale = value;
 }
+
+void ItemBody::setActive(bool active)
+{
+	m_active = active;
+}

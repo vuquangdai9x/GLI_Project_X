@@ -153,6 +153,7 @@ void WorldManager::Update(float deltaTime)
 {
 	
 	for (int i = 0;i < listObject.size();i++) {
+		listObject[i]->body->SetActive(listObject[i]->getActive());
 		listObject[i]->Update(deltaTime);
 	}
 	m_world->Step(deltaTime, m_velocityIterations, m_positionIterations);

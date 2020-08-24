@@ -53,7 +53,7 @@ void FallingRock::Update(float deltaTime)
 		if (m_timeCounter < 0) SetActiveBullet(false);
 	}
 	UserData* user = (UserData*)m_bulletBody->body->GetUserData();
-	if (user->IsCollison) {
+	if (user->IsCollison>0) {
 		SetActiveBullet(false);
 	}
 }

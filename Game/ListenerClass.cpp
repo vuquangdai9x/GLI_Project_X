@@ -15,9 +15,9 @@ void ListenerClass::BeginContact(b2Contact* contact)
 	
 	
 	if (user1 && user2) {
-		user1->IsCollison = true;
+		user1->IsCollison ++;
 		user1->m_typeB = user2->m_type;
-		user2->IsCollison = true;
+		user2->IsCollison ++;
 		user2->m_typeB = user1->m_type;
 	}
 }
@@ -35,9 +35,9 @@ void ListenerClass::EndContact(b2Contact* contact)
 
 
 	if (user1 && user2) {
-		user1->IsCollison = false;
+		user1->IsCollison --;
 		user1->m_typeB = user1->m_type;
-		user2->IsCollison = false;
+		user2->IsCollison --;
 		user2->m_typeB = user2->m_type;
 	}
 }

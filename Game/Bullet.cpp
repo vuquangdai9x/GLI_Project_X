@@ -11,7 +11,7 @@ Bullet::~Bullet()
 
 void Bullet::SetActiveBullet(bool value)
 {
-	m_bulletBody->body->SetActive(value);
+	m_bulletBody->setActive(value);
 	SetActiveSprite(value);
 }
 

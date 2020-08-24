@@ -2,6 +2,6 @@
 struct UserData
 {
 	int m_type;
-	bool IsCollison = false;
+	int IsCollison = 0;
 	int m_typeB;
 };
