@@ -139,6 +139,7 @@
     <ClCompile Include="FontFace.cpp" />
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
+    <ClCompile Include="HUDController.cpp" />
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="FontFace.h" />
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />
+    <ClInclude Include="HUDController.h" />
     <ClInclude Include="ItemBody.h" />
     <ClInclude Include="MaterialText2D.h" />
     <ClInclude Include="Obstacle.h" />

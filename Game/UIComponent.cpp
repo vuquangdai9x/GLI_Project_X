@@ -32,6 +32,16 @@ void UIComponent::CalculateUITransform(Camera2D* mainCamera)
 			isAlignH = true;
 		}
 		break;
+	case RenderType::FitHeight:
+		scaleSize.y = (m_top - m_bottom) / 2;
+		scaleSize.x = scaleSize.y / m_originSize.y * m_originSize.x / mainCamera->GetAspectRatio();
+		isAlignH = true;
+		break;
+	case RenderType::FitWidth:
+		scaleSize.x = (m_right - m_left) / 2;
+		scaleSize.y = scaleSize.x / m_originSize.x * m_originSize.y * mainCamera->GetAspectRatio();
+		isAlignV = true;
+		break;
 	case RenderType::Stretch:
 	default:
 		scaleSize.x = (m_right - m_left) / 2;

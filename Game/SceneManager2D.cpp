@@ -143,61 +143,61 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	m_combatController->AddBullet(1, 200);
 	
 
-	// test UI. For all UIcomponent, set camera-position-z < UI-position-z < 0
-	UIComponent* ui;
-	
 	position = Vector3(0, 0, -1);
 	rotation = 0;
 	scale = Vector2(1.0, 1.0);
 	uiHexColor = 0xffffff;
-	alpha = 1;		 
+	alpha = 1;
 	iMaterialId = 0;
-	iMainTexId = 15; 
+	iMainTexId = 15;
 
-	/*ui = new UIComponent(-29);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, -1, -1, 1);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	AddObject(ui);*/
-
-	iMainTexId = 0;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -1, -0.9);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
-
-	iMainTexId = 16;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -0.9, -0.8);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
-	iMainTexId = 17;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -0.8, -0.7);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
-
-	uiHexColor = 0xff00ff;
-	alpha = 0.75;
-	UIText* text = new UIText(-29);
+	float healthBarScale = 100;
+	UIComponent* healthIcon = new UIComponent(-1);
+	iMainTexId = 25;
+	uiHexColor = 0xE84545;
+	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthIcon);
+	UIComponent* healthBar = new UIComponent(-1);
+	iMainTexId = 26;
+	uiHexColor = 0xE84545;
+	healthBar->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthBar);
+	UIComponent* healthDecorate = new UIComponent(-1);
+	iMainTexId = 25;
+	uiHexColor = 0xE84545;
+	healthDecorate->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthDecorate);
+	
+	UIComponent* weaponIcon = new UIComponent(-1);
+	iMainTexId = 23;
+	uiHexColor = 0xFFFFFF;
+	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(weaponIcon);
+	UIComponent* targetIcon = new UIComponent(-1);
+	iMainTexId = 27;
+	uiHexColor = 0xE84545;
+	targetIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(targetIcon);
+	
 	iMaterialId = 1;
-	text->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	text->SetBound(1, -1, -1, 1);
-	text->SetRenderType(UIComponent::RenderType::Fit);
-	text->SetFont(0);
-	text->SetText("There's an error when set GS_MainMenu first");
-	AddObject(text);
-	// TODO: delete this when finish testing
+	UIText* bulletStatus = new UIText(-1);
+	iMainTexId = -1;
+	uiHexColor = 0xFFFFFF;
+	bulletStatus->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	bulletStatus->SetText("45/250");
+	bulletStatus->SetFont(2);
+	AddObject(bulletStatus);
+	UIText* score = new UIText(-1);
+	iMainTexId = -1;
+	uiHexColor = 0xFFFFFF;
+	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	score->SetFont(2);
+	score->SetText("Score: 6996");
+	AddObject(score);
 
+	m_HUDController = new HUDController();
+	m_HUDController->Init(healthBarScale, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
+	
 	//
 	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);

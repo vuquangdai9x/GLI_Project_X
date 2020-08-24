@@ -171,6 +171,9 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="HUDController.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -280,6 +283,9 @@
     </ClCompile>
     <ClCompile Include="VampireBat.cpp">
       <Filter>Source Files\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDController.cpp">
+      <Filter>Source Files\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
