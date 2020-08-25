@@ -565,6 +565,16 @@ Sprite& SceneManager2D::GetObjectByID(int id)
 	}
 }
 
+void SceneManager2D::RemoveObject(Sprite* object)
+{
+	for (int i = 0;i < m_listObject.size();i++) {
+		if (m_listObject[i] == object) {
+			m_listObject.erase(m_listObject.begin()+i);
+			break;
+		}
+	}
+}
+
 std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
 }

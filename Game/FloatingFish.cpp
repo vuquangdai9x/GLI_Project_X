@@ -93,7 +93,7 @@ void FloatingFish::Update(float deltaTime)
 	}
 
 	Enemy::takeDamage();
-	printf("%d\n", this->m_HP);
+	//printf("%d\n", this->m_HP);
 }
 
 void FloatingFish::createBox2D()

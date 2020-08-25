@@ -206,6 +206,10 @@ void Player::Update(float deltaTime)
 	UserData* user = (UserData*)this->playerBody->body->GetUserData();
 	if (user->IsCollison > 0) {
 		this->SetColor(0xffafff, 1);
+		this->m_HP -= user->m_receiveDamage;
+		printf("%f \n", m_HP);
+		if (this->m_HP <= 0) {
+		}
 	}
 
 	else {

@@ -35,8 +35,6 @@ public:
 	void setMoveState(MoveState move);
 	void updateMoveState();
 	void setTarget(Sprite* target);
-	float getFireAngle();
-	void testCanon();
 	void setHP(int hp) { this->m_HP = hp; }
 	int getHP() { return this->m_HP; }
 	void setDamage(int dmg) { this->m_damage = dmg; }
