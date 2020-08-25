@@ -3,7 +3,7 @@
 #include <vector>
 class UIComponent : public Sprite {
 public:
-	enum RenderType{Stretch, Fit, Expand};
+	enum RenderType{Stretch, Fit, Expand, FitHeight, FitWidth};
 	enum AlignVertical{Top, Middle, Bottom};
 	enum AlignHorizontal{Left, Center, Right};
 protected:
@@ -24,6 +24,7 @@ public:
 	virtual void SetRenderType(RenderType type);
 	virtual void SetAlignHorizontal(AlignHorizontal h);
 	virtual void SetAlignVertical(AlignVertical v);
+
 
 	RenderType GetRenderType();
 	AlignHorizontal GetAlignHorizontal();

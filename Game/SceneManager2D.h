@@ -5,6 +5,7 @@
 #include <vector>
 #include "../Framework3D/TrainingFramework/Camera2D.h"
 #include "CombatController.h"
+#include "HUDController.h"
 #include "Singleton.h"
 
 #include "UIComponent.h"
@@ -26,6 +27,7 @@ private:
 	Camera2D* m_mainCamera,*m_menuCamera;
 	Player* m_curent;
 	CombatController* m_combatController = NULL;
+	HUDController* m_HUDController = NULL;
 public:
 	float m_time = 0;
 

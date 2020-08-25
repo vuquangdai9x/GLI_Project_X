@@ -149,6 +149,8 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
+	Sprite::Update(deltaTime);
+
 	Vector3 playerPos;
 	playerPos.z = this->GetPosition().z;
 	this->GetPosition();

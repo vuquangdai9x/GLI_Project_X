@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 18
+#2D Textures: 31
 ID 0
 FILE "Textures/png/hot-air-balloon-01.png"
 TILING CLAMP
@@ -58,6 +58,45 @@ FILE "Textures/png/monster-05.png"
 TILING CLAMP
 ID 17
 FILE "Textures/png/monster-02.png"
+TILING CLAMP
+ID 18
+FILE "Textures/png/weapon/weapon-ak.png"
+TILING CLAMP
+ID 19
+FILE "Textures/png/weapon/weapon-cannon.png"
+TILING CLAMP
+ID 20
+FILE "Textures/png/weapon/weapon-pistol.png"
+TILING CLAMP
+ID 21
+FILE "Textures/png/weapon/weapon-rifle.png"
+TILING CLAMP
+ID 22
+FILE "Textures/png/weapon/weapon-shotgun.png"
+TILING CLAMP
+ID 23
+FILE "Textures/png/weapon/weapon-sniper.png"
+TILING CLAMP
+ID 24
+FILE "Textures/png/weapon/weapon-uzi.png"
+TILING CLAMP
+ID 25
+FILE "Textures/png/UI/heart-01.png"
+TILING CLAMP
+ID 26
+FILE "Textures/png/UI/square.png"
+TILING CLAMP
+ID 27
+FILE "Textures/png/UI/target-01.png"
+TILING CLAMP
+ID 28
+FILE "Textures/png/UI/target-02.png"
+TILING CLAMP
+ID 29
+FILE "Textures/png/UI/target-03.png"
+TILING CLAMP
+ID 30
+FILE "Textures/png/UI/target-04.png"
 TILING CLAMP
 
 #Shaders: 2

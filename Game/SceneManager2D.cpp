@@ -79,9 +79,11 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	Player* player = new Player(iObjectId);
+
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
+
 	fscanf(fIn, "TARGETTEX %d\n", &targetID);
 	fscanf(fIn, "TARGETSCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "TARGETPOS %f %f %f\n", &(position.x), &(position.y), &(position.z));
@@ -143,61 +145,71 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	m_combatController->AddBullet(1, 200);
 	
 
-	// test UI. For all UIcomponent, set camera-position-z < UI-position-z < 0
-	UIComponent* ui;
-	
 	position = Vector3(0, 0, -1);
 	rotation = 0;
 	scale = Vector2(1.0, 1.0);
 	uiHexColor = 0xffffff;
-	alpha = 1;		 
+	alpha = 1;
 	iMaterialId = 0;
-	iMainTexId = 15; 
+	iMainTexId = 15;
 
-	/*ui = new UIComponent(-29);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, -1, -1, 1);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	AddObject(ui);*/
+	float healthBarScale = 100;
+	UIComponent* healthIcon = new UIComponent(-1);
+	iMainTexId = 25;
+	uiHexColor = 0xE84545;
+	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthIcon);
+	UIComponent* healthBar = new UIComponent(-1);
+	iMainTexId = 26;
+	uiHexColor = 0xE84545;
+	healthBar->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthBar);
+	UIComponent* healthDecorate = new UIComponent(-1);
+	iMainTexId = 25;
+	uiHexColor = 0xE84545;
+	healthDecorate->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthDecorate);
+	
+	UIComponent* weaponIcon = new UIComponent(-1);
+	iMainTexId = 23;
+	uiHexColor = 0xFFFFFF;
+	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(weaponIcon);
 
-	iMainTexId = 0;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -1, -0.9);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
+	AnimationController& animCtrl = weaponIcon->GetAnimationController();
+	int listTextAnim[] = { 18,19,20,21,22,23,24 };
+	animCtrl.AddAnimState(0, 15, 4, 6, 6);
+	animCtrl.AddAnimState(1, 7, listTextAnim, 7);
+	animCtrl.SetDefaultAnimState(1);
+	animCtrl.RunAnimState(0, 2);
+	//animCtrl.RunAnimState(1, 3);
+	weaponIcon->SetUseAnimation(true);
 
-	iMainTexId = 16;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -0.9, -0.8);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
-	iMainTexId = 17;
-	ui = new UIComponent(-1);
-	ui->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	ui->SetBound(1, 0.9, -0.8, -0.7);
-	ui->SetRenderType(UIComponent::RenderType::Fit);
-	ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-	AddObject(ui);
-
-	uiHexColor = 0xff00ff;
-	alpha = 0.75;
-	UIText* text = new UIText(-29);
+	UIComponent* targetIcon = new UIComponent(-1);
+	iMainTexId = 27;
+	uiHexColor = 0xE84545;
+	targetIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(targetIcon);
+	
 	iMaterialId = 1;
-	text->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	text->SetBound(1, -1, -1, 1);
-	text->SetRenderType(UIComponent::RenderType::Fit);
-	text->SetFont(0);
-	text->SetText("There's an error when set GS_MainMenu first");
-	AddObject(text);
-	// TODO: delete this when finish testing
+	UIText* bulletStatus = new UIText(-1);
+	iMainTexId = -1;
+	uiHexColor = 0xFFFFFF;
+	bulletStatus->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	bulletStatus->SetText("45/250");
+	bulletStatus->SetFont(2);
+	AddObject(bulletStatus);
+	UIText* score = new UIText(-1);
+	iMainTexId = -1;
+	uiHexColor = 0xFFFFFF;
+	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	score->SetFont(2);
+	score->SetText("Score: 6996");
+	AddObject(score);
 
+	m_HUDController = new HUDController();
+	m_HUDController->Init(healthBarScale, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
+	
 	//
 	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
@@ -478,62 +490,6 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
-		//UIComponent* m_ui = &dynamic_cast<UIComponent&>(GetObjectByID(-29));
-		//// TODO: testing UIComponent. Delete this when finish testing
-		//m_ui->SetTop(m_ui->GetTop() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N1) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N2)));
-		//m_ui->SetBottom(m_ui->GetBottom() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N3) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N4)));
-		//m_ui->SetLeft(m_ui->GetLeft() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N5) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N6)));
-		//m_ui->SetRight(m_ui->GetRight() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N7) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N8)));
-		//m_ui->SetRotation(m_ui->GetRotation() + 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N9) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::N0)));
-		//Vector3 newPos = m_ui->GetPosition();
-		//newPos.x += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::RIGHT) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LEFT));
-		//newPos.y += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::UP) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::DOWN));
-		////newPos.z += 0.01 * (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT));
-		//m_ui->SetPosition(newPos);
-		////printf("%f\n", newPos.z);
-
-		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
-		//	switch (m_ui->GetRenderType()) {
-		//	case UIComponent::RenderType::Expand:
-		//		m_ui->SetRenderType(UIComponent::RenderType::Fit);
-		//		break;
-		//	case UIComponent::RenderType::Fit:
-		//		m_ui->SetRenderType(UIComponent::RenderType::Stretch);
-		//		break;
-		//	case UIComponent::RenderType::Stretch:
-		//		m_ui->SetRenderType(UIComponent::RenderType::Expand);
-		//		break;
-		//	}
-		//}
-		//if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT)) {
-		//	switch (m_ui->GetAlignVertical())
-		//	{
-		//	case UIComponent::AlignVertical::Top:
-		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Bottom);
-		//		break;
-		//	case UIComponent::AlignVertical::Bottom:
-		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Middle);
-		//		break;
-		//	case UIComponent::AlignVertical::Middle:
-		//		m_ui->SetAlignVertical(UIComponent::AlignVertical::Top);
-		//		break;
-		//	}
-		//}
-		//if(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
-		//	switch (m_ui->GetAlignHorizontal())
-		//	{
-		//	case UIComponent::AlignHorizontal::Left:
-		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Right);
-		//		break;
-		//	case UIComponent::AlignHorizontal::Right:
-		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Center);
-		//		break;
-		//	case UIComponent::AlignHorizontal::Center:
-		//		m_ui->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-		//		break;
-		//	}
-		//}
-
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
 			if (m_listObject[i]->CheckIsActiveSprite())

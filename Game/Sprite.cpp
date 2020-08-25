@@ -8,9 +8,18 @@ Sprite::Sprite(int id)
 {
 	m_id = id;
 	m_isActive = true;
+	m_isUseAnimation = false;
+
+	m_rotation = 0;
+
+	m_model = NULL;
+	m_material2d = NULL;
+	m_mainTexture = NULL;
 }
 Sprite::~Sprite() {}
-void Sprite::Update(float deltaTime) {}
+void Sprite::Update(float deltaTime) {
+	if (m_isUseAnimation) m_animationController.UpdateAnim(deltaTime);
+}
 
 void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId) {
 	SetPosition(position);
@@ -108,8 +117,22 @@ void Sprite::Render(Camera2D* mainCamera) {
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_model->m_iboId);
 
-	m_material2d->SetMainTexture(m_mainTexture);
-	m_material2d->PrepareShader(m_WVP, m_originSize, 0, 0, 1, 1, &m_color);
+	if (m_isUseAnimation) {
+		m_material2d->SetMainTexture(m_animationController.GetTexture());
+		m_material2d->PrepareShader(m_WVP, 
+			m_animationController.m_frameWidth, 
+			m_animationController.m_frameHeight, 
+			m_animationController.m_offsetX,
+			m_animationController.m_offsetY, 
+			m_animationController.m_subWidth,
+			m_animationController.m_subHeight, 
+			&m_color
+		);
+	}
+	else {
+		m_material2d->SetMainTexture(m_mainTexture);
+		m_material2d->PrepareShader(m_WVP, m_originSize.x, m_originSize.y, 0, 0, 1, 1, &m_color);
+	}
 
 	glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
 
@@ -204,4 +227,13 @@ void Sprite::SetActiveSprite(bool value)
 bool Sprite::CheckIsActiveSprite()
 {
 	return m_isActive;
+}
+
+void Sprite::SetUseAnimation(bool isUseAnimation)
+{
+	m_isUseAnimation = isUseAnimation;
+}
+
+AnimationController& Sprite::GetAnimationController() {
+	return m_animationController;
 }
