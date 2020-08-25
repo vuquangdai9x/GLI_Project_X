@@ -6,6 +6,7 @@
 DeadlyBird::DeadlyBird(int id):Enemy(id)
 {
 	this->m_maxHP = this->m_HP = 100;
+	basic_Dmg = 100;
 }
 DeadlyBird::~DeadlyBird()
 {
@@ -51,4 +52,6 @@ void DeadlyBird::createBox2D()
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width, height, 8);
+	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
+	user->m_damage = basic_Dmg;
 }

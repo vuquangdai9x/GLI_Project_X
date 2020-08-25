@@ -209,6 +209,7 @@ void Player::Update(float deltaTime)
 		this->m_HP -= user->m_receiveDamage;
 		this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
 		if (this->m_HP <= 0) {
+			m_HP = 0;
 		}
 	}
 

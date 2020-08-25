@@ -48,9 +48,10 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
-
+	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
+	
 	switch (type)
 	{
 	case PLAYER:
