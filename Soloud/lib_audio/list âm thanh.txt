@@ -1,0 +1,7 @@
+Nhạc nền						
+âm thanh súng nhân vật: 4 loại				theo tên	
+âm thanh nhân vật trúng đạn (trừ HP)			trung_dan
+âm thanh kẻ thù bị tiêu diệt				kill
+âm thanh nhặt icon					item
+âm thanh chuyển súng					doi_sung
+âm thanh va chạm vào chứng ngại vật (âm thanh chết) 	endgame
