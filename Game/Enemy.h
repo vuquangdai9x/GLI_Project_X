@@ -17,6 +17,7 @@ public:
 	virtual ~Enemy();
 	virtual void Update(float deltaTime);
 	virtual void createBox2D();
+	void takeDamage();
 	void setHP(int hp) { this->m_HP = hp; }
 	int getHP() { return this->m_HP; }
 };

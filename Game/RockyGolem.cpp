@@ -8,6 +8,8 @@
 RockyGolem::RockyGolem(int id) :Enemy(id)
 {
 	this->createWeapon();
+
+	this->m_maxHP = this->m_HP = 100;
 }
 
 RockyGolem::~RockyGolem()
@@ -31,6 +33,8 @@ void RockyGolem::Update(float deltaTime)
 	rockyGolemPos.x = this->enemyBody->body->GetPosition().x;
 	rockyGolemPos.y = this->enemyBody->body->GetPosition().y;
 	this->SetPosition(rockyGolemPos);
+
+	Enemy::takeDamage();
 }
 
 void RockyGolem::createBox2D()

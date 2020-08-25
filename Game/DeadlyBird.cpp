@@ -5,6 +5,7 @@
 #include<math.h>
 DeadlyBird::DeadlyBird(int id):Enemy(id)
 {
+	this->m_maxHP = this->m_HP = 100;
 }
 DeadlyBird::~DeadlyBird()
 {
@@ -35,6 +36,8 @@ void DeadlyBird::Update(float deltaTime)
 	thisPos.x = enemyBody->body->GetPosition().x;
 	thisPos.y = enemyBody->body->GetPosition().y;
 	this->SetPosition(thisPos);
+
+	Enemy::takeDamage();
 }
 void DeadlyBird::Seek(Vector2 target, Vector2 currentV)
 {

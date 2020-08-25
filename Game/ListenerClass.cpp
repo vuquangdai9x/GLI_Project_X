@@ -17,8 +17,10 @@ void ListenerClass::BeginContact(b2Contact* contact)
 	if (user1 && user2) {
 		user1->IsCollison ++;
 		user1->m_typeB = user2->m_type;
+		user1->m_receiveDamage = user2->m_damage;
 		user2->IsCollison ++;
 		user2->m_typeB = user1->m_type;
+		user2->m_receiveDamage = user1->m_damage;
 	}
 }
 
@@ -37,7 +39,9 @@ void ListenerClass::EndContact(b2Contact* contact)
 	if (user1 && user2) {
 		user1->IsCollison --;
 		user1->m_typeB = user1->m_type;
+		user1->m_receiveDamage = 0;
 		user2->IsCollison --;
 		user2->m_typeB = user2->m_type;
+		user2->m_receiveDamage = 0;
 	}
 }

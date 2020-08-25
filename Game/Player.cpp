@@ -17,6 +17,8 @@ void Player::createBox2D()
 	m_currentFlySpeed = Y_FORCE;m_desireFlySpeed = Y_FORCE;
 	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
 
+	this->m_damage = 0;
+
 	//playerBody->body->ApplyForceToCenter(b2Vec2(0.0f, GRAVITY * DEFAULT_MASS), false);
 }
 void Player::setFlyState(FlyState fly)

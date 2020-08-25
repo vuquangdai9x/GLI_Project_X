@@ -14,6 +14,8 @@ FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 	this->m_maxforce = 0.1;
 	this->velocity = b2Vec2(0, 0);
 	this->direction = true;
+
+	this->m_maxHP = this->m_HP = 100;
 }
 
 FloatingFish::~FloatingFish()
@@ -89,6 +91,9 @@ void FloatingFish::Update(float deltaTime)
 			if (currentTarget == 0) direction = true;
 		}
 	}
+
+	Enemy::takeDamage();
+	printf("%d\n", this->m_HP);
 }
 
 void FloatingFish::createBox2D()

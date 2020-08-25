@@ -2,6 +2,7 @@
 #include "SceneManager2D.h"
 #include "WorldManager.h"
 #include "UserData.h"
+#include "Player.h"
 
 GunBullet::GunBullet(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime)
 	: Bullet(id), 
@@ -30,6 +31,7 @@ void GunBullet::CreatePhysicsBody()
 	float height = m_originSize.y * this->GetScale().y;
 	this->m_bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYERBULLET, 1, 2, width, height);
 	this->m_bulletBody->SetGravityScale(m_gravityScale);
+	
 }
 
 void GunBullet::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
@@ -41,7 +43,12 @@ void GunBullet::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
 	SetActiveBullet(true);
 	// set velocity
 	m_bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));
-
+	Player* player = dynamic_cast<Player*>(shooter);
+	if (player) {
+		UserData* user = (UserData*)m_bulletBody->body->GetUserData();
+		user->m_damage = this->m_damage + player->getDamage();
+		m_bulletBody->body->SetUserData(user);
+	}
 	m_timeCounter = m_existTime;
 }
 

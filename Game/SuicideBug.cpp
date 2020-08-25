@@ -5,7 +5,7 @@
 #include<math.h>
 SuicideBug::SuicideBug(int id) :Enemy(id)
 {
-
+	this->m_maxHP = this->m_HP = 100;
 }
 
 SuicideBug::~SuicideBug()
@@ -41,6 +41,8 @@ void SuicideBug::Update(float deltaTime)
 	 thisPos.y = enemyBody->body->GetPosition().y;
 
 	 this->SetPosition(thisPos);
+
+	 Enemy::takeDamage();
 }
 
 void SuicideBug::SetIgnore()

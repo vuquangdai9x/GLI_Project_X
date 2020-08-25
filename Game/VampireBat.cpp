@@ -15,6 +15,8 @@ VampireBat::VampireBat(int id, Vector2 startPos, Vector2 endPos) : Enemy(id)
 	this->m_maxforce = 0.2;
 	this->direction = true;
 	this->m_active = false;
+
+	this->m_maxHP = this->m_HP = 100;
 }
 
 VampireBat::~VampireBat()
@@ -94,6 +96,8 @@ void VampireBat::Update(float deltaTime)
 	vampireBatPos.x = this->enemyBody->body->GetPosition().x;
 	vampireBatPos.y = this->enemyBody->body->GetPosition().y;
 	this->SetPosition(vampireBatPos);
+
+	Enemy::takeDamage();
 }
 
 void VampireBat::createBox2D()
