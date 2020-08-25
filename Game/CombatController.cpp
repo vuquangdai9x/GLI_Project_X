@@ -2,6 +2,7 @@
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "Singleton.h"
 #include "SceneManager2D.h"
+#include "SoundManager.h"
 
 CombatController::CombatController(Player* player): m_pPlayer(player)
 {
@@ -31,7 +32,9 @@ void CombatController::Fire()
 	Vector2 direction;
 	direction.x = m_targetPos.x - m_pPlayer->GetPosition().x;
 	direction.y = m_targetPos.y - m_pPlayer->GetPosition().y;
-	if (m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction)) {
+	int force = m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction);
+	Singleton<SoundManager>::GetInstance()->Fire(m_iCurrentWeaponIndex);
+	if (force) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
 	}
@@ -104,6 +107,7 @@ void CombatController::ChangeWeapon(int index)
 {
 	if (index >= m_weapons.size()) return;
 	if (index == m_iCurrentWeaponIndex) return;
+	Singleton<SoundManager>::GetInstance()->ChangeWeapon();
 	printf("[msg] CombatController: Change weapon %d: %s\n", index, m_weapons[index]->GetName());
 	m_iCurrentWeaponIndex = index;
 

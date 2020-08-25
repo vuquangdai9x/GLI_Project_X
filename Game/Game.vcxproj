@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Framework3D\Include;$(SolutionDir)\Box2D;$(SolutionDir)\FreeType\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Soloud\include;$(SolutionDir)\Framework3D\Include;$(SolutionDir)\FreeType\Include;$(SolutionDir)\Box2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +151,7 @@
     <ClCompile Include="RockyGolem.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
     <ClCompile Include="SimpleGun.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
     <ClCompile Include="State\GS_MainMenu.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="SceneManager2D.h" />
     <ClInclude Include="SimpleGun.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="State\GameStateManager.h" />
     <ClInclude Include="State\GS_MainMenu.h" />
@@ -220,6 +222,12 @@
     </ProjectReference>
     <ProjectReference Include="..\Framework3D\Utilities\Utilities.vcxproj">
       <Project>{0d44529e-f7dd-4454-8ead-9afd857f53b4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Soloud\build\vs2019\SoloudDynamic.vcxproj">
+      <Project>{40064f81-acc6-cab7-7501-1435e1800f94}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Soloud\build\vs2019\SoloudStatic.vcxproj">
+      <Project>{83540317-6fb7-92bb-183d-cb71047f5e3e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

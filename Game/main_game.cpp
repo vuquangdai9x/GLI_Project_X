@@ -12,14 +12,16 @@
 #include "SceneManager2D.h"
 #include "State/GameStateManager.h"
 #include "WorldManager.h"
-
+#include "SoundManager.h"
 
 int Init(ESContext* esContext)
 {
+	Singleton<SoundManager>::CreateInstance();
 	Singleton<InputManager>::CreateInstance();
 	Singleton<ResourceManager2D>::CreateInstance();
 	Singleton<SceneManager2D>::CreateInstance();
 	Singleton<WorldManager>::CreateInstance();
+
 	Singleton<GameStateManager>::CreateInstance();
 	
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
@@ -109,8 +111,9 @@ int _tmain(int argc, _TCHAR * argv[])
 	Singleton<SceneManager2D>::DestroyInstance();
 	Singleton<InputManager>::DestroyInstance();
 	Singleton<WorldManager>::DestroyInstance();
+	Singleton<SoundManager>::DestroyInstance();
 	//identifying memory leaks
-	MemoryDump();
+	//MemoryDump();
 	printf("Press any key...\n");
 	_getch();
 	return 0;
