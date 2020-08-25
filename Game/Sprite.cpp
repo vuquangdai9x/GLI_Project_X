@@ -38,7 +38,9 @@ void Sprite::Init(Vector3 position, float rotation, Vector2 scale, unsigned int 
 	if (m_mainTexture == NULL) {
 		printf("[ERR] GameObject: Failed to get main texture %d\n", iMainTexId);
 	}
-	m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
+	else {
+		m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
+	}
 }
 
 void Sprite::Init(Sprite& sprite) // init same as another sprite

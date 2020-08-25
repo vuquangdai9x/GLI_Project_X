@@ -4,100 +4,81 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 31
-ID 0
-FILE "Textures/png/hot-air-balloon-01.png"
-TILING CLAMP
-ID 1
-FILE "Textures/png/starting-ground-01.png"
-TILING CLAMP
-ID 2
-FILE "Textures/png/small-piece-01.png"
-TILING CLAMP
-ID 3
-FILE "Textures/png/small-piece-02.png"
-TILING CLAMP
-ID 4
-FILE "Textures/png/large-piece-01.png"
-TILING REPEAT
-ID 5
-FILE "Textures/png/tiny-island-01.png"
-TILING MIRROR
-ID 6
-FILE "Textures/png/small-island-01.png"
-TILING REPEAT
-ID 7
-FILE "Textures/png/medium-island-01.png"
-TILING CLAMP
-ID 8
-FILE "Textures/png/medium-cliff-01.png"
-TILING CLAMP
-ID 9
-FILE "Textures/png/bullet-red-02.png"
-TILING CLAMP
-ID 10
-FILE "Textures/png/bullet-black-01.png"
-TILING CLAMP
-ID 11
-FILE "Textures/png/target-01.png"
-TILING CLAMP
+#2D Textures: 37
+ID 10101
+FILE "Textures/png/hot-air-balloon-01.png" CLAMP
+ID 20101
+FILE "Textures/png/obstacle/starting-ground-01.png" CLAMP
+ID 20201
+FILE "Textures/png/obstacle/small-piece-01.png" CLAMP
+ID 20202
+FILE "Textures/png/obstacle/small-piece-02.png" CLAMP
+ID 20301
+FILE "Textures/png/obstacle/large-piece-01.png" CLAMP
+ID 20401
+FILE "Textures/png/obstacle/tiny-island-01.png" CLAMP
+ID 20501
+FILE "Textures/png/obstacle/small-island-01.png" CLAMP
+ID 20601
+FILE "Textures/png/obstacle/medium-island-01.png" CLAMP
+ID 20602
+FILE "Textures/png/obstacle/medium-cliff-01.png" CLAMP
+ID 30101
+FILE "Textures/png/enemy/floating-fish-01.png" CLAMP
+ID 30201
+FILE "Textures/png/enemy/suicide-bug-fly-01.png" CLAMP
+ID 30202
+FILE "Textures/png/enemy/suicide-bug-idle-01.png" CLAMP
+ID 30301
+FILE "Textures/png/enemy/monster-01.png" CLAMP
+ID 30401
+FILE "Textures/png/enemy/monster-02.png" CLAMP
+ID 30501
+FILE "Textures/png/enemy/monster-03.png" CLAMP
+ID 30601
+FILE "Textures/png/enemy/vampire-bat-01.png" CLAMP
+ID 30701
+FILE "Textures/png/enemy/monster-04.png" CLAMP
+ID 30801
+FILE "Textures/png/enemy/monster-05.png" CLAMP
+ID 50101
+FILE "Textures/png/weapon/weapon-ak.png" CLAMP
+ID 50201
+FILE "Textures/png/weapon/weapon-cannon.png" CLAMP
+ID 50301
+FILE "Textures/png/weapon/weapon-pistol.png" CLAMP
+ID 50401
+FILE "Textures/png/weapon/weapon-rifle.png" CLAMP
+ID 50501
+FILE "Textures/png/weapon/weapon-shotgun.png" CLAMP
+ID 50601
+FILE "Textures/png/weapon/weapon-sniper.png" CLAMP
+ID 50701
+FILE "Textures/png/weapon/weapon-uzi.png" CLAMP
+ID 55101
+FILE "Textures/png/bullet/bullet-red-02.png" CLAMP
+ID 55201
+FILE "Textures/png/bullet/bullet-black-01.png" CLAMP
+ID 60101
+FILE "Textures/png/UI/heart-01.png" CLAMP
+ID 60102
+FILE "Textures/png/UI/square.png" CLAMP
+ID 60201
+FILE "Textures/png/UI/target-01.png" CLAMP
+ID 60202
+FILE "Textures/png/UI/target-02.png" CLAMP
+ID 60203
+FILE "Textures/png/UI/target-03.png" CLAMP
+ID 60204
+FILE "Textures/png/UI/target-04.png" CLAMP
 ID 12
-FILE "Textures/png/game-name.png"
-TILING CLAMP
+FILE "Textures/png/UI/game-name.png" CLAMP
 ID 13
-FILE "Textures/png/play-button.png"
-TILING CLAMP
+FILE "Textures/png/UI/play-button.png" CLAMP
 ID 14
-FILE "Textures/png/quit-button.png"
-TILING CLAMP
+FILE "Textures/png/UI/quit-button.png" CLAMP
 ID 15
-FILE "Textures/png/background-01.png"
-TILING CLAMP
-ID 16
-FILE "Textures/png/monster-05.png"
-TILING CLAMP
-ID 17
-FILE "Textures/png/monster-02.png"
-TILING CLAMP
-ID 18
-FILE "Textures/png/weapon/weapon-ak.png"
-TILING CLAMP
-ID 19
-FILE "Textures/png/weapon/weapon-cannon.png"
-TILING CLAMP
-ID 20
-FILE "Textures/png/weapon/weapon-pistol.png"
-TILING CLAMP
-ID 21
-FILE "Textures/png/weapon/weapon-rifle.png"
-TILING CLAMP
-ID 22
-FILE "Textures/png/weapon/weapon-shotgun.png"
-TILING CLAMP
-ID 23
-FILE "Textures/png/weapon/weapon-sniper.png"
-TILING CLAMP
-ID 24
-FILE "Textures/png/weapon/weapon-uzi.png"
-TILING CLAMP
-ID 25
-FILE "Textures/png/UI/heart-01.png"
-TILING CLAMP
-ID 26
-FILE "Textures/png/UI/square.png"
-TILING CLAMP
-ID 27
-FILE "Textures/png/UI/target-01.png"
-TILING CLAMP
-ID 28
-FILE "Textures/png/UI/target-02.png"
-TILING CLAMP
-ID 29
-FILE "Textures/png/UI/target-03.png"
-TILING CLAMP
-ID 30
-FILE "Textures/png/UI/target-04.png"
-TILING CLAMP
+FILE "Textures/png/background-01.png" CLAMP
 
 #Shaders: 2
 ID 0

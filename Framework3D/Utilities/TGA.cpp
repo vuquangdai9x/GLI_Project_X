@@ -649,6 +649,10 @@ void LoadUncompressedImage( char* pDest, char * pSrc, TGA_HEADER * pHeader )
 
 char * LoadTGA( const char * szFileName, int * width, int * height, int * bpp )
 {
+	FILE* f;
+	if (fopen_s(&f, szFileName, "rb") != 0)
+		return NULL;
+
     if (szFileName[strlen(szFileName)-1] == 'g') {
         std::vector<unsigned char> buffer, image;
         loadFile(buffer, std::string(szFileName));
@@ -663,13 +667,9 @@ char * LoadTGA( const char * szFileName, int * width, int * height, int * bpp )
         for (int i = 0;i < h;i++) {
             memcpy(outB + i * w * 4, outBuf + (h - i-1) * w * 4, w * 4);
         }
+		delete[] outBuf;
         return outB;
-
     }
-    FILE * f;
-	
-	if (fopen_s(&f, szFileName, "rb" ) != 0)
-        return NULL;
 
     TGA_HEADER header;
     fread( &header, sizeof(header), 1, f );

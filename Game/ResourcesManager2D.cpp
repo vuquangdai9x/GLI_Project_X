@@ -106,11 +106,14 @@ void ResourceManager2D::LoadResources(char* dataResourceFile)
 		fscanf(fIn, "ID %d\n", &iTextureId);
 		m_texture = new Texture(iTextureId, false);
 
-		fscanf(fIn, "FILE \"%[^\"]\"\n", fileName);
+		if (iTextureId == 15) {
+			printf("");
+		}
+
+		fscanf(fIn, "FILE \"%[^\"]\" %s\n", fileName, tilingSetting);
 		strcpy(filePath, resourceDir);
 		strcat(filePath, fileName);
 
-		fscanf(fIn, "TILING %s\n", tilingSetting);
 		if (strcmp("CLAMP", tilingSetting) == 0) tilingMode = Texture::TILING_MODE::CLAMP;
 		else if (strcmp("REPEAT", tilingSetting) == 0) tilingMode = Texture::TILING_MODE::REPEAT;
 		else if (strcmp("MIRROR", tilingSetting) == 0) tilingMode = Texture::TILING_MODE::MIRROR;
@@ -121,7 +124,7 @@ void ResourceManager2D::LoadResources(char* dataResourceFile)
 			printf("[msg] ResourceManager: Loaded Texture %d : %s . %s %d\n", iTextureId, fileName, tilingSetting, tilingMode);
 		}
 		else {
-			printf("[ERR] ResourceManager: Failed to load Texture %s\n", fileName);
+			printf("[ERR] ResourceManager: Failed to load Texture %d : %s\n", iTextureId, fileName);
 			delete m_texture;
 		}
 	}

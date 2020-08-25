@@ -49,7 +49,7 @@ void RockyGolem::createBox2D()
 void RockyGolem::createWeapon()
 {
 	FallingRock* templateFallingRock = new FallingRock(-1, 3.0, 1.0, 7.0, 15.0, 3);
-	templateFallingRock->Init(this->GetPosition(), 0, Vector2(1.0, 1.0), 0xffffff, 1.0, 0, 10);
+	templateFallingRock->Init(this->GetPosition(), 0, Vector2(1.0, 1.0), 0xffffff, 1.0, 0, 20301);
 	FallingRockPool *pool = new FallingRockPool(3, -1, 10, templateFallingRock);
 	this->rockyGolemGun = new SimpleGun(6, "Rocky", 0, 0, 0, 0, 0, 45 * M_PI / 180, 3);
 	this->rockyGolemGun->BindBulletPool(pool);

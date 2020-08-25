@@ -43,9 +43,6 @@
     <Filter Include="Source Files\UI">
       <UniqueIdentifier>{90672610-4f1e-4287-b432-a4c74d40e134}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\FreeType">
-      <UniqueIdentifier>{787922ca-323c-47dc-b6a5-2172715ea471}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\enemy">
       <UniqueIdentifier>{4e6ec45d-03f0-48c3-b7b2-cdd7c550320d}</UniqueIdentifier>
     </Filter>
@@ -177,6 +174,12 @@
     <ClInclude Include="UserData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HUDController.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -288,6 +291,12 @@
       <Filter>Source Files\enemy</Filter>
     </ClCompile>
     <ClCompile Include="ListenerClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HUDController.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
