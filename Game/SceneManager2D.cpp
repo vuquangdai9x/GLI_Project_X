@@ -124,21 +124,21 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	Weapon* gun;
 	int iBulletPoolId;
 	iBulletPoolId = 0;
-	gun = new SimpleGun(0, "Pistol", 50301, 0, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
+	gun = new SimpleGun(0, "Pistol", 50301, 60201, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	//		add more gun. Max is 9 type of guns
 	gun = new AutoGun(1, "AK", 50101, 60201, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(2, "Shotgun", 50501, 60201, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
+	gun = new SimpleGun(2, "Shotgun", 50501, 60202, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
 	m_combatController->AddWeapon(gun);
-	gun = new AutoGun(3, "Uzi", 50701, 60201, iBulletPoolId, 0.5, 0.75, 0.05, 15 * M_PI / 180, 30 * M_PI / 180, 1, 7);
+	gun = new AutoGun(3, "Uzi", 50701, 60203, iBulletPoolId, 0.5, 0.75, 0.05, 15 * M_PI / 180, 30 * M_PI / 180, 1, 7);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(4, "Sniper", 50601, 60201, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
+	gun = new SimpleGun(4, "Sniper", 50601, 60204, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
 	iBulletPoolId = 1;
-	gun = new SimpleGun(5, "Cannon", 50201, 60201, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
+	gun = new SimpleGun(5, "Cannon", 50201, 60203, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
 	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(6, "SuperCannon", 50201, 60201, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
+	gun = new SimpleGun(6, "SuperCannon", 50201, 60203, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
 	m_combatController->AddWeapon(gun);
 	// give player some bullets when start game
 	m_combatController->AddBullet(0, 500);
@@ -171,19 +171,19 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	AddObject(healthDecorate);
 	
 	UIComponent* weaponIcon = new UIComponent(-1);
-	iMainTexId = 50401;
+	iMainTexId = 50301;
 	uiHexColor = 0xFFFFFF;
 	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(weaponIcon);
 
-	AnimationController& animCtrl = weaponIcon->GetAnimationController();
+	/*AnimationController& animCtrl = weaponIcon->GetAnimationController();
 	int listTextAnim[] = { 50101,50201,50301,50401,50501,50601,50701 };
 	animCtrl.AddAnimState(0, 15, 4, 6, 6);
 	animCtrl.AddAnimState(1, 7, listTextAnim, 7);
 	animCtrl.SetDefaultAnimState(1);
 	animCtrl.RunAnimState(0, 2);
 	//animCtrl.RunAnimState(1, 3);
-	weaponIcon->SetUseAnimation(true);
+	weaponIcon->SetUseAnimation(true);*/
 
 	UIComponent* targetIcon = new UIComponent(-1);
 	iMainTexId = 60203;
@@ -207,9 +207,10 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	score->SetText("Score: 6996");
 	AddObject(score);
 
-	m_HUDController = new HUDController();
+	HUDController* m_HUDController = new HUDController();
 	m_HUDController->Init(healthBarScale, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
-	
+
+	player->setHUDController(m_HUDController);
 	//
 	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);

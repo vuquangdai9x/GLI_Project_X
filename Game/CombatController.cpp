@@ -34,6 +34,9 @@ void CombatController::Fire()
 	if (m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction)) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
+		m_pPlayer->getHUDController()->UpdateBulletStatus(m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
+			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity());
+		
 	}
 }
 
@@ -108,6 +111,10 @@ void CombatController::ChangeWeapon(int index)
 	m_iCurrentWeaponIndex = index;
 
 	int iCurrentBulletTypeId = m_weapons[index]->GetbulletTypeId();
+
+	m_pPlayer->getHUDController()->ChangeWeaponIcon(m_weapons[m_iCurrentWeaponIndex]->GetWeaponTexture());
+	m_pPlayer->getHUDController()->ChangeTargetIcon(m_weapons[m_iCurrentWeaponIndex]->GetTargetTexture());
+
 	for (int i = 0; i < m_bulletStorages.size(); i++) {
 		if (m_bulletStorages[i]->GetId() == iCurrentBulletTypeId) {
 			m_iCurrentBulletIndex = i;

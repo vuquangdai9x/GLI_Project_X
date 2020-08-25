@@ -207,7 +207,7 @@ void Player::Update(float deltaTime)
 	if (user->IsCollison > 0) {
 		this->SetColor(0xffafff, 1);
 		this->m_HP -= user->m_receiveDamage;
-		printf("%d \n", m_HP);
+		this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
 		if (this->m_HP <= 0) {
 		}
 	}

@@ -51,9 +51,11 @@ public:
 	Vector4 GetColor();
 	void SetActiveSprite(bool value);
 	bool CheckIsActiveSprite();
+	void SetMainTexture(int iMainTexId);
 
 	AnimationController& GetAnimationController();
 	void SetUseAnimation(bool isUseAnimation);
+
 };
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate);
 int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix projection, int* viewport, float* objectCoordinate);

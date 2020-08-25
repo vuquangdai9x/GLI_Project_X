@@ -91,11 +91,12 @@ void HUDController::UpdateHealthBar(float currentHP, float maxHP)
 
 void HUDController::ChangeWeaponIcon(Texture* weaponTex)
 {
-	
+	m_weaponIcon->SetMainTexture(weaponTex->GetId());
 }
 
 void HUDController::ChangeTargetIcon(Texture* targetTex)
 {
+	m_targetIcon->SetMainTexture(targetTex->GetId());
 }
 
 void HUDController::UpdateTargetPosition(float screenRatioPosX, float screenRatioPosY)

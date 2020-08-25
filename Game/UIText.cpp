@@ -9,6 +9,7 @@ UIText::UIText(int id)
 
 UIText::~UIText() {
 	if (m_aCharacterWVP != NULL) delete[] m_aCharacterWVP;
+	if (m_text != NULL) delete[] m_text;
 }
 
 void UIText::Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId) {
@@ -55,9 +56,11 @@ void UIText::Render(Camera2D* mainCamera) {
 }
 
 const char * UIText::GetText() { return m_text; }
-void UIText::SetText(const char* text) {
-	m_text = text;
+void UIText::SetText(char* text) {
+	if (m_text != NULL) delete[] m_text;
 	m_iTextLength = strlen(text);
+	m_text = new char[m_iTextLength + 1];
+	strcpy(m_text, text);
 	if (m_aCharacterWVP != NULL) delete[] m_aCharacterWVP;
 	m_aCharacterWVP = new Matrix[m_iTextLength];
 	CalculateOriginSize();

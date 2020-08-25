@@ -231,6 +231,17 @@ bool Sprite::CheckIsActiveSprite()
 	return m_isActive;
 }
 
+void Sprite::SetMainTexture(int iMainTexId)
+{
+	m_mainTexture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iMainTexId);
+	if (m_mainTexture == NULL) {
+		printf("[ERR] GameObject: Failed to get main texture %d\n", iMainTexId);
+	}
+	else {
+		m_originSize = Vector2(m_mainTexture->GetWidth() / (float)Globals::pixelPerUnit, m_mainTexture->GetHeight() / (float)Globals::pixelPerUnit);
+	}		
+}
+
 void Sprite::SetUseAnimation(bool isUseAnimation)
 {
 	m_isUseAnimation = isUseAnimation;

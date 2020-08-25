@@ -1,6 +1,7 @@
 #pragma once
 #include "Sprite.h"
 #include "ItemBody.h"
+#include "HUDController.h"
 enum FlyState { Fast = 1, Normal = 0, SLow = -1, Static = 2 };
 enum MoveState { Left = -1, Right = 1, NonMove = 0 };
 class Player : public Sprite
@@ -22,6 +23,7 @@ private:
 	ItemBody* playerBody;
 	Vector2 m_cameraOffset;
 	Sprite* m_target;
+	HUDController* m_HUDController;
 	int time = 0;
 	DWORD m_timeEnd = 0;
 
@@ -39,5 +41,7 @@ public:
 	int getHP() { return this->m_HP; }
 	void setDamage(int dmg) { this->m_damage = dmg; }
 	int getDamage() { return this->m_damage; }
+	void setHUDController(HUDController* hud) { this->m_HUDController = hud; }
+	HUDController* getHUDController() { return this->m_HUDController; }
 };
 

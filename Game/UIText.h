@@ -5,7 +5,7 @@
 
 class UIText : public UIComponent {
 protected:
-	const char* m_text;
+	char* m_text;
 	int m_iTextLength;
 	FontFace* m_font;
 	Matrix* m_aCharacterWVP;
@@ -18,5 +18,5 @@ public:
 	virtual void Render(Camera2D* mainCamera);
 	void SetFont(int iFontFaceId);
 	const char * GetText();
-	void SetText(const char* text);
+	void SetText(char* text);
 };

@@ -27,7 +27,6 @@ private:
 	Camera2D* m_mainCamera,*m_menuCamera;
 	Player* m_curent;
 	CombatController* m_combatController = NULL;
-	HUDController* m_HUDController = NULL;
 public:
 	float m_time = 0;
 
