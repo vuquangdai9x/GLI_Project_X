@@ -16,7 +16,7 @@ void Player::createBox2D()
 	m_currentMoveSpeed = 0.0f;m_desireMoveSpeed = 0.0f;
 	m_currentFlySpeed = Y_FORCE;m_desireFlySpeed = Y_FORCE;
 	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
-
+	m_HP = m_maxHP = 100;
 	this->m_damage = 0;
 
 	//playerBody->body->ApplyForceToCenter(b2Vec2(0.0f, GRAVITY * DEFAULT_MASS), false);
@@ -207,7 +207,7 @@ void Player::Update(float deltaTime)
 	if (user->IsCollison > 0) {
 		this->SetColor(0xffafff, 1);
 		this->m_HP -= user->m_receiveDamage;
-		printf("%f \n", m_HP);
+		printf("%d \n", m_HP);
 		if (this->m_HP <= 0) {
 		}
 	}

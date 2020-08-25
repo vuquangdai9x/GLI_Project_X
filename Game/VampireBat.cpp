@@ -15,8 +15,8 @@ VampireBat::VampireBat(int id, Vector2 startPos, Vector2 endPos) : Enemy(id)
 	this->m_maxforce = 0.2;
 	this->direction = true;
 	this->m_active = false;
-
-	this->m_maxHP = this->m_HP = 100;
+	basic_Dmg = 5;
+	this->m_maxHP = this->m_HP = 5;
 }
 
 VampireBat::~VampireBat()
@@ -108,6 +108,8 @@ void VampireBat::createBox2D()
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width, height, 6);
 	enemyBody->SetGravityScale(0);
+	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
+	user->m_damage = basic_Dmg;
 }
 
 bool VampireBat::checkPlayer()

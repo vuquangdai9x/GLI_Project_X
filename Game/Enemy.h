@@ -1,12 +1,13 @@
 #pragma once
 #include "Sprite.h"
 #include "ItemBody.h"
-
+#include"UserData.h"
 class Enemy : public Sprite
 {
 protected:
 	float x, y;
 	float width, height;
+	int basic_Dmg;
 
 	DWORD m_TakeDameTime = 0;
 	int m_animationTime = 200;

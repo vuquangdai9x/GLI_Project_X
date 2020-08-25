@@ -30,6 +30,8 @@ void FallingRock::CreatePhysicsBody()
 	float height = m_originSize.y * this->GetScale().y;
 	this->m_bulletBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMYBULLET, 1, 2, width, height);
 	this->m_bulletBody->SetGravityScale(m_gravityScale);
+	UserData* user = (UserData*)this->m_bulletBody->body->GetUserData();
+	user->m_damage = 25;
 }
 
 void FallingRock::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
