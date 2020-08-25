@@ -5,9 +5,11 @@
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include"../Singleton.h"
 #include"GameStateManager.h"
+#include "../SoundManager.h"
 
 GS_MainMenu::GS_MainMenu()
 {
+	Singleton<SoundManager>::GetInstance()->Init();
     printf("GS_MainMenu\n");
 	char sceneFile[50] = "../Framework3D/Resources/Datas/scene2d-menu.txt";
 	char resourcesFile[60] = "../Framework3D/Resources/Datas/resources2d.txt";

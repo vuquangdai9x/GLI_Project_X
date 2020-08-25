@@ -5,4 +5,4 @@
 #include "esUtil_win.h"
 #include "Math.h"
 #include "TGA.h"
-#include "MemoryOperators.h"
+//#include "MemoryOperators.h"

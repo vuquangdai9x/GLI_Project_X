@@ -5,6 +5,7 @@
 #include"GS_PlayState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
+#include"../SoundManager.h"
 
 GameStateManager::GameStateManager()
 {
@@ -25,6 +26,7 @@ void GameStateManager::Push(int state)
 		this->states.push(new GS_MainMenu());
 	}
 	else if (state == PLAY) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_PlayState());
 	}
 	
