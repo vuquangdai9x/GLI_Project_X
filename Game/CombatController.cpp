@@ -5,8 +5,8 @@
 
 CombatController::CombatController(Player* player): m_pPlayer(player)
 {
-	m_iCurrentBulletIndex = 0;
-	m_iCurrentWeaponIndex = 0;
+	m_iCurrentBulletIndex = -1;
+	m_iCurrentWeaponIndex = -1;
 	m_isFiring = false;
 }
 

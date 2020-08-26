@@ -189,29 +189,48 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	}
 
 	// add guns
-	//		standard example
-	Weapon* gun;
-	int iBulletPoolId;
-	iBulletPoolId = 0;
-	gun = new SimpleGun(0, "Pistol", 50301, 60201, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
-	m_combatController->AddWeapon(gun);
-	//		add more gun. Max is 9 type of guns
-	gun = new AutoGun(1, "AK", 50101, 60201, iBulletPoolId, 0.5, 0.75, 0.05, 5*M_PI/180, 10*M_PI/180, 1, 5);
-	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(2, "Shotgun", 50501, 60202, iBulletPoolId, 0.5, 0.1, 60 * M_PI / 180, 5);
-	m_combatController->AddWeapon(gun);
-	gun = new AutoGun(3, "Uzi", 50701, 60203, iBulletPoolId, 0.5, 0.75, 0.05, 15 * M_PI / 180, 30 * M_PI / 180, 1, 7);
-	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(4, "Sniper", 50601, 60204, iBulletPoolId, 0.5, 0.1, 0 * M_PI / 180, 1);
-	m_combatController->AddWeapon(gun);
-	iBulletPoolId = 1;
-	gun = new SimpleGun(5, "Cannon", 50201, 60203, iBulletPoolId, 0.5, 0.1, 5 * M_PI / 180, 1);
-	m_combatController->AddWeapon(gun);
-	gun = new SimpleGun(6, "SuperCannon", 50201, 60203, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
-	m_combatController->AddWeapon(gun);
+	int iNumOfWeapons;
+	fscanf(fIn, "#WEAPON %d\n", &iNumOfWeapons);
+	for (int i = 0;i < iNumOfWeapons;i++) {
+		Weapon* gun;
 
-	m_combatController->ChangeWeapon(1);
-	// give player some bullets when start game
+		int iWeaponId;
+		char weaponType[20];
+		char weaponName[255];
+		int iWeaponTexId, iTargetTexId;
+		int iBulletType;
+		float oppositeForce;
+		float rechargeTime, shortRechargeTime;
+		float randomAngle, spreadRandomAngle;
+		int iFireAtOnce, iFireAmount;
+		fscanf(fIn, "ID %d\n", &iWeaponId);
+		fscanf(fIn, "TYPE %s\n", weaponType);
+		fscanf(fIn, "NAME %s\n", weaponName);
+		fscanf(fIn, "WEAPON TEX %d\n", &iWeaponTexId);
+		fscanf(fIn, "TARGET TEX %d\n", &iTargetTexId);
+		fscanf(fIn, "BULLET TYPE %d\n", &iBulletType);
+		fscanf(fIn, "OPPOSITE FORCE %f\n", &oppositeForce);
+		fscanf(fIn, "RECHARGE TIME %f\n", &rechargeTime);
+		fscanf(fIn, "RANDOM ANGLE %f\n", &randomAngle);
+		randomAngle = randomAngle * M_PI / 180;
+		fscanf(fIn, "FIRE AT ONCE %d\n", &iFireAtOnce);
+
+		if (strcmp("SIMPLEGUN", weaponType) == 0) {
+			gun = new SimpleGun(iWeaponId, weaponName, iWeaponTexId, iTargetTexId, iBulletType, oppositeForce, rechargeTime, randomAngle, iFireAtOnce);
+			m_combatController->AddWeapon(gun);
+		}else if (strcmp("AUTOGUN", weaponType) == 0) {
+			fscanf(fIn, "SHORT RECHARGE TIME %f\n", &shortRechargeTime);
+			fscanf(fIn, "SPREAD ANGLE %f\n", &spreadRandomAngle);
+			spreadRandomAngle = spreadRandomAngle * M_PI / 180;
+			fscanf(fIn, "FIRE AMOUNT %d\n", &iFireAmount);
+			gun = new AutoGun(iWeaponId, weaponName, iWeaponTexId, iTargetTexId, iBulletType, oppositeForce, rechargeTime, shortRechargeTime, randomAngle, spreadRandomAngle, iFireAtOnce, iFireAmount);
+			m_combatController->AddWeapon(gun);
+		}
+		else {
+			printf("[ERR] SceneManager2D: Weapon %d: type invalid: %s", iWeaponId, weaponType);
+		}
+	}
+	m_combatController->ChangeWeapon(0);
 	
 	//
 	// set up other object
