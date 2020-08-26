@@ -55,7 +55,7 @@ public:
 
 	AnimationController& GetAnimationController();
 	void SetUseAnimation(bool isUseAnimation);
-
+	bool CheckUseAnimation();
 };
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate);
 int glhUnProjectf(float winx, float winy, float winz, Matrix modelview, Matrix projection, int* viewport, float* objectCoordinate);

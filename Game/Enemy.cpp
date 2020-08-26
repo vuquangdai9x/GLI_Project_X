@@ -13,6 +13,7 @@ Enemy::~Enemy()
 
 void Enemy::Update(float deltaTime)
 {
+	Sprite::Update(deltaTime);
 }
 
 void Enemy::createBox2D()

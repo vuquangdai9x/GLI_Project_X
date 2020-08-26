@@ -1,5 +1,8 @@
 #include "UIComponent.h"
 
+#include "../Framework3D/TrainingFramework/framework3d.h"
+#include "Singleton.h"
+
 void UIComponent::CalculateUITransform(Camera2D* mainCamera)
 {
 	float originWidth = 0, originHeight = 0;
@@ -213,4 +216,20 @@ void UIComponent::SetRight(float value) {
 }
 float UIComponent::GetRight() {
 	return m_right;
+}
+
+bool UIComponent::CheckMouseInside() {
+	int iMousePosX, iMousePosY;
+	Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
+	// chuyen ve toa do [-1..1]
+	float mousePosX = iMousePosX / (float)Globals::screenWidth * 2 - 1;
+	float mousePosY = iMousePosY / (float)Globals::screenHeight * 2 - 1;
+	mousePosY *= -1; // toa do chuot nguoc voi toa do UI
+
+	Vector4 bottomLeft(-1, -1, 0, 1);
+	Vector4 topRight(1, 1, 0, 1);
+	bottomLeft = m_WVP * bottomLeft;
+	topRight = m_WVP * topRight;
+
+	return ((bottomLeft.x < mousePosX && mousePosX < topRight.x) && (bottomLeft.y < mousePosY && mousePosY < topRight.y));
 }

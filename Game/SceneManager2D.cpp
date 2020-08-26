@@ -33,6 +33,63 @@ SceneManager2D::~SceneManager2D()
 	if (m_combatController != NULL) delete m_combatController;
 }
 
+bool SceneManager2D::LoadAnimation(FILE* fIn, Sprite* sprite) {
+	int iNumOfAnimations;
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	if (iNumOfAnimations > 0) {
+		AnimationController& animCtrl = sprite->GetAnimationController();
+		int iDefaultAnimId;
+		fscanf(fIn, "DEFAULT %d\n", &iDefaultAnimId);
+		int iCountValidAnim = 0;
+		for (int i = 0;i < iNumOfAnimations;i++) {
+			int iAnimStateId;
+			char animType[20];
+			float cycleTime;
+			int iAnimTexId;
+			int iSplitX, iSplitY;
+			int iNumOfAnimTextures;
+			int* listTextAnim;
+			fscanf(fIn, "ANIM %d\n", &iAnimStateId);
+			fscanf(fIn, "TYPE %s\n", animType);
+			fscanf(fIn, "CYCLE TIME %f\n", &cycleTime);
+
+			if (strcmp("SPLIT", animType) == 0) {
+				fscanf(fIn, "TEXTURE %d\n", &iAnimTexId);
+				fscanf(fIn, "SPLITXY %d %d\n", &iSplitX, &iSplitY);
+				animCtrl.AddAnimState(iAnimStateId, iAnimTexId, iSplitX, iSplitY, cycleTime);
+				iCountValidAnim++;
+			}
+			else if (strcmp("MULTITEX", animType) == 0) {
+				//TEXTURES 7: 50101 50201 50301 50401 50501 50601 50701
+				fscanf(fIn, "TEXTURES %d:", &iNumOfAnimTextures);
+				listTextAnim = new int[iNumOfAnimTextures];
+				for (int j = 0;j < iNumOfAnimTextures;j++) {
+					fscanf(fIn, " %d", &(listTextAnim[j]));
+				}
+				fscanf(fIn, "\n");
+				animCtrl.AddAnimState(iAnimStateId, iNumOfAnimTextures, listTextAnim, cycleTime);
+				delete[] listTextAnim;
+				iCountValidAnim++;
+			}
+			else {
+				printf("[ERR] SceneManager2D:LoadAnimation: AnimId %d: type invalid: %s", iAnimStateId, animType);
+			}
+		}
+
+		if (iCountValidAnim > 0) {
+			printf("[msg] SceneManager2D:LoadAnimation: Loaded %d animation\n", iCountValidAnim);
+			animCtrl.SetDefaultAnimState(iDefaultAnimId);
+			sprite->SetUseAnimation(true);
+			return true;
+		}
+		else {
+			printf("[ERR] SceneManager2D:LoadAnimation: No animation valid\n");
+			return false;
+		}
+	}
+	return false;
+}
+
 bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	const char* resourceDir = Globals::resourceDir;
 	char filePath[512];
@@ -45,7 +102,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	}
 
 	Sprite* obj;
-	int iNumOfObject, iObjectId = 0;
+	int iNumOfObject, iObjectId;
 	int iMaterialId;
 	int iMainTexId;
 	int iFontId;
@@ -56,19 +113,6 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	float alpha;
 	char shapeType[10];
 
-	int iNumOfAnimations;
-	int iAnimId;
-	char animType[10];
-
-	int iAnimTextureId;
-	int iDivisionX, iDivisionY;
-	float animDuration;
-
-	int iNumOfAnimTexs;
-	int* aiAnimTexId;
-	int targetID;
-
-
 	// Set up player
 	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -78,13 +122,16 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 
 	Player* player = new Player(iObjectId);
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
 	m_curent = player;
+	
+	LoadAnimation(fIn, player);
+	
+	printf("[msg] SceneManager2D: Init player\n");
 
 	// set up HUD
 	fscanf(fIn, "\n#HUD\n", &iObjectId);
@@ -93,30 +140,37 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-	UIComponent * healthIcon = new UIComponent(-1);
+
+	UIComponent* healthIcon = new UIComponent(-1);
 	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(healthIcon);
+	LoadAnimation(fIn, healthIcon);
+	
+	printf("[msg] SceneManager2D: HUD | Init health icon\n");
 
 	fscanf(fIn, "+ HEALTH BAR\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	UIComponent * healthBar = new UIComponent(-1);
 	healthBar->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(healthBar);
+	LoadAnimation(fIn, healthBar);
+
+	printf("[msg] SceneManager2D: HUD | Init health bar\n");
 
 	fscanf(fIn, "+ HEALTH DECORATE\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 	UIComponent * healthDecorate = new UIComponent(-1);
 	healthDecorate->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(healthDecorate);
+	LoadAnimation(fIn, healthDecorate);
+
+	printf("[msg] SceneManager2D: HUD | Init health decorate\n");
 
 	fscanf(fIn, "+ WEAPON ICON\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -126,6 +180,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(weaponIcon);
 
+	printf("[msg] SceneManager2D: HUD | Init weapon icon\n");
+
 	fscanf(fIn, "+ TARGET ICON\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
@@ -133,6 +189,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	UIComponent * targetIcon = new UIComponent(-1);
 	targetIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(targetIcon);
+
+	printf("[msg] SceneManager2D: HUD | Init target icon\n");
 
 	fscanf(fIn, "+ BULLET STATUS\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -143,6 +201,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	bulletStatus->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	bulletStatus->SetFont(iFontId);
 	AddObject(bulletStatus);
+	printf("[msg] SceneManager2D: HUD | Init bullet status textbox\n");
 
 	fscanf(fIn, "+ SCORE\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -153,15 +212,17 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	score->SetFont(iFontId);
 	AddObject(score);
+	printf("[msg] SceneManager2D: HUD | Init score textbox\n");
 	score->SetText("Score: 6996");
+
 
 	HUDController * m_HUDController = new HUDController();
 	m_HUDController->Init(100, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
 	player->setHUDController(m_HUDController);
+	printf("[msg] SceneManager2D: HUD | Done setup HUDController\n");
 
 	// Set up weapon & bullet
 	int iNumOfPlayerBullet;
-	
 	m_combatController = new CombatController(player);
 
 	fscanf(fIn, "#PLAYER_BULLET %d\n", &iNumOfPlayerBullet);
@@ -181,11 +242,14 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		GunBullet* templateGunBullet = new GunBullet(-1, bulletMass, bulletGravityScale, bulletDamage, bulletInitSpeed, bulletExistTime);
 		templateGunBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		LoadAnimation(fIn, templateGunBullet);
+
 		m_combatController->AddBulletPool(new GunBulletPool(iPoolId, iPoolCapacity, 10, templateGunBullet));
 		m_combatController->AddBullet(iPoolId, iPoolInitCount);
+
+		printf("[msg] SceneManager2D: Init Bullet Pool %d\n", iPoolId);
 	}
 
 	// add guns
@@ -218,6 +282,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		if (strcmp("SIMPLEGUN", weaponType) == 0) {
 			gun = new SimpleGun(iWeaponId, weaponName, iWeaponTexId, iTargetTexId, iBulletType, oppositeForce, rechargeTime, randomAngle, iFireAtOnce);
 			m_combatController->AddWeapon(gun);
+
+			printf("[msg] SceneManager2D: Init simple gun %d: %s\n", iWeaponId, weaponName);
 		}else if (strcmp("AUTOGUN", weaponType) == 0) {
 			fscanf(fIn, "SHORT RECHARGE TIME %f\n", &shortRechargeTime);
 			fscanf(fIn, "SPREAD ANGLE %f\n", &spreadRandomAngle);
@@ -225,6 +291,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 			fscanf(fIn, "FIRE AMOUNT %d\n", &iFireAmount);
 			gun = new AutoGun(iWeaponId, weaponName, iWeaponTexId, iTargetTexId, iBulletType, oppositeForce, rechargeTime, shortRechargeTime, randomAngle, spreadRandomAngle, iFireAtOnce, iFireAmount);
 			m_combatController->AddWeapon(gun);
+
+			printf("[msg] SceneManager2D: Init auto gun %d: %s\n", iWeaponId, weaponName);
 		}
 		else {
 			printf("[ERR] SceneManager2D: Weapon %d: type invalid: %s", iWeaponId, weaponType);
@@ -247,44 +315,28 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 		obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		fscanf(fIn, "TYPE %s\n", shapeType);
+		
+		LoadAnimation(fIn, obs);
 		if (strcmp(shapeType, "RECT") == 0) {
 			obs->createBox2D();
 		}
 		else {
 			obs->createTriangle2D();
 		}
-
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-		for (int i = 0;i < iNumOfAnimations;i++) {
-			fscanf(fIn, "ANIM %d %s\n", &iAnimId, animType);
-			if (strcmp("SPLIT", animType) == 0) {
-				fscanf(fIn, "TEX %d\n", &iAnimTextureId);
-				fscanf(fIn, "DIVIDE %d %d\n", &iDivisionX, &iDivisionY);
-				fscanf(fIn, "DURATION %f\n", &animDuration);
-			}
-			else if (strcmp("FILES", animType) == 0) {
-				fscanf(fIn, "TEXTURES %d\n", &iNumOfAnimTexs);
-				aiAnimTexId = new int[iNumOfAnimTexs];
-				for (int j = 0;j < iNumOfAnimTexs;j++) {
-					fscanf(fIn, "TEX %d\n", &(aiAnimTexId[j]));
-				}
-				fscanf(fIn, "DURATION %f\n", &animDuration);
-				delete[] aiAnimTexId;
-			}
-			else {
-				printf("[ERR] SceneManager: Animation type is invalid: %s\n", animType);
-			}
-		}
-
 		AddObject(obs);
-
-		printf("[msg] SceneManager: Loaded Sprite %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
+		printf("[msg] SceneManager: Loaded Obstacle %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
 	int numOfTarget;
 	b2Vec2 Target[10];
 
 	fscanf(fIn, "\n#ENEMY\n");
-	fscanf(fIn, "FLOATINGFISH %d\n", &iNumOfObject);
+	fscanf(fIn, "#FLOATINGFISH\n");
+
+	// use template fish for reduce animation writing for each object in scene.txt
+	FloatingFish templateFish(-1,1,Target);
+	LoadAnimation(fIn, &templateFish);
+
+	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -301,10 +353,22 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		FloatingFish* fish = new FloatingFish(iObjectId,numOfTarget,Target);
 		fish->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		fish->createBox2D();
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		
+		// clone animation from template
+		fish->GetAnimationController().Clone(templateFish.GetAnimationController());
+		fish->SetUseAnimation(templateFish.CheckUseAnimation());
+
 		AddObject(fish);
+
+		printf("[msg] SceneManager: Loaded FloatingFish %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
-	fscanf(fIn, "SUICIDEBUG %d\n", &iNumOfObject);
+
+	fscanf(fIn, "#SUICIDEBUG\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	SuicideBug templateBug(-1);
+	LoadAnimation(fIn, &templateBug);
+
+	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -319,11 +383,20 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		bug->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		bug->createBox2D();
 		//bug->SetIgnore();
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bug);
+
+		bug->GetAnimationController().Clone(templateBug.GetAnimationController());
+		bug->SetUseAnimation(templateBug.CheckUseAnimation());
+
+		printf("[msg] SceneManager: Loaded SuicideBug %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
 
-	fscanf(fIn, "ROCKYGOLEM %d\n", &iNumOfObject);
+	fscanf(fIn, "#ROCKYGOLEM\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	RockyGolem templateGolem(-1);
+	LoadAnimation(fIn, &templateGolem);
+
+	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -336,10 +409,20 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		RockyGolem* rocky = new RockyGolem(iObjectId);
 		rocky->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		rocky->createBox2D();
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(rocky);
+
+		rocky->GetAnimationController().Clone(templateGolem.GetAnimationController());
+		rocky->SetUseAnimation(templateGolem.CheckUseAnimation());
+
+		printf("[msg] SceneManager: Loaded RockyGolem %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
-	fscanf(fIn, "DEADLYBIRD %d\n", &iNumOfObject);
+
+	fscanf(fIn, "#DEADLYBIRD\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	DeadlyBird templateBird(-1);
+	LoadAnimation(fIn, &templateBird);
+
+	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -352,10 +435,20 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		DeadlyBird* bird = new DeadlyBird(iObjectId);
 		bird->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		bird->createBox2D();
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bird);
+
+		bird->GetAnimationController().Clone(templateBird.GetAnimationController());
+		bird->SetUseAnimation(templateBird.CheckUseAnimation());
+
+		printf("[msg] SceneManager: Loaded DeadlyBird %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
-	fscanf(fIn, "VAMPIREBAT %d\n", &iNumOfObject);
+
+	fscanf(fIn, "#VAMPIREBAT\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	VampireBat templateBat(-1, Vector2(0,0), 1);
+	LoadAnimation(fIn, &templateBat);
+
+	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
 		fscanf(fIn, "\nID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -371,8 +464,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		VampireBat* bat = new VampireBat(iObjectId, Vector2(startPos.x, startPos.y), range);
 		bat->Init(startPos, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		bat->createBox2D();
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 		AddObject(bat);
+
+		bat->GetAnimationController().Clone(templateBat.GetAnimationController());
+		bat->SetUseAnimation(templateBat.CheckUseAnimation());
+
+		printf("[msg] SceneManager: Loaded VampireBat %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 	}
 
 	float nearPlane, farPlane, zoom;

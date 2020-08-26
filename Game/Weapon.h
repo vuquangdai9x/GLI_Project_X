@@ -14,6 +14,7 @@ protected:
 	BulletPool* m_bulletPool;
 public:
 	Weapon(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce);
+	virtual ~Weapon();
 	virtual int Fire(Sprite* shooter, Vector2 direction) = 0;
 	virtual float GetOppositeForce();
 	virtual void UpdateGunStatus(float deltaTime) = 0;

@@ -53,6 +53,8 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	m_material2d = sprite.m_material2d;
 	m_mainTexture = sprite.m_mainTexture;
 	m_originSize = sprite.m_originSize;
+	m_animationController.Clone(sprite.GetAnimationController());
+	SetUseAnimation(sprite.m_isUseAnimation);
 }
 
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
@@ -246,6 +248,7 @@ void Sprite::SetUseAnimation(bool isUseAnimation)
 {
 	m_isUseAnimation = isUseAnimation;
 }
+bool Sprite::CheckUseAnimation() { return m_isUseAnimation; }
 
 AnimationController& Sprite::GetAnimationController() {
 	return m_animationController;

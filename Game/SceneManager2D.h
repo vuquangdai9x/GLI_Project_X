@@ -27,6 +27,8 @@ private:
 	Camera2D* m_mainCamera,*m_menuCamera;
 	Player* m_curent;
 	CombatController* m_combatController = NULL;
+
+	bool LoadAnimation(FILE* fIn, Sprite* sprite);
 public:
 	float m_time = 0;
 

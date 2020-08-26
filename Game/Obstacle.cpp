@@ -14,6 +14,7 @@ Obstacle::~Obstacle()
 
 void Obstacle::Update(float deltaTime)
 {
+	Sprite::Update(deltaTime);
 }
 
 void Obstacle::createBox2D()

@@ -17,6 +17,7 @@ void Bullet::SetActiveBullet(bool value)
 
 void Bullet::Update(float deltaTime)
 {
+	Sprite::Update(deltaTime);
 	if (m_bulletBody != NULL) {
 		Vector3 pos;
 		pos.x = m_bulletBody->body->GetPosition().x;

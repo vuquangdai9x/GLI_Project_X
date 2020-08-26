@@ -19,6 +19,7 @@ RockyGolem::~RockyGolem()
 
 void RockyGolem::Update(float deltaTime)
 {
+	Enemy::Update(deltaTime);
 	Vector3 playerPos;
 	Singleton<SceneManager2D>::GetInstance()->getPlayerPos(playerPos);
 	float scale = rand() / (float)RAND_MAX; /* [0, 1.0] */

@@ -24,6 +24,7 @@ FloatingFish::~FloatingFish()
 
 void FloatingFish::Update(float deltaTime)
 {
+	Enemy::Update(deltaTime);
 	Vector3 floatingFishPos = this->GetPosition();
 	if (direction) {
 		Vector2 desired (target[currentTarget+1].x - floatingFishPos.x, target[currentTarget+1].y - floatingFishPos.y);

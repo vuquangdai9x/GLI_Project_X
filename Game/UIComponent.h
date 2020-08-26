@@ -38,4 +38,6 @@ public:
 	float GetBottom();
 	float GetLeft();
 	float GetRight();
+
+	bool CheckMouseInside();
 };

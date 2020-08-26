@@ -15,9 +15,44 @@ AnimationController::~AnimationController()
 	for (int i = 0;i < m_listAnimState.size();i++) {
 		if (m_listAnimState[i].listTexture != NULL) {
 			delete[] m_listAnimState[i].listTexture;
-			printf("[msg] AnimationController:destructor: delete list texture of anim %d\n", m_listAnimState[i].id);
 		}
 	}
+}
+
+void AnimationController::Clone(AnimationController& originAnimCtrl) {
+	m_listAnimState.clear();
+	for (int i = 0; i < originAnimCtrl.m_listAnimState.size();i++) {
+		if (originAnimCtrl.m_listAnimState[i].isUseList) {
+			int iNumOfTexture = originAnimCtrl.m_listAnimState[i].iNumOfTexture;
+			Texture** listTexture = new Texture * [iNumOfTexture];
+			for (int j = 0;j < iNumOfTexture;j++) {
+				listTexture[j] = originAnimCtrl.m_listAnimState[i].listTexture[j];
+			}
+			m_listAnimState.push_back(AnimState{
+					originAnimCtrl.m_listAnimState[i].id,
+					true,
+					NULL,
+					iNumOfTexture,
+					listTexture,
+					0, 0,
+					originAnimCtrl.m_listAnimState[i].cycleTime
+				});
+		}
+		else {
+			m_listAnimState.push_back(AnimState{
+				originAnimCtrl.m_listAnimState[i].id,
+				false,
+				originAnimCtrl.m_listAnimState[i].texture,
+				0,
+				NULL,
+				originAnimCtrl.m_listAnimState[i].iSplitX,
+				originAnimCtrl.m_listAnimState[i].iSplitY,
+				originAnimCtrl.m_listAnimState[i].cycleTime
+			});
+		}
+	}
+	if (originAnimCtrl.m_defaultAnimState != NULL)
+		SetDefaultAnimState(originAnimCtrl.m_defaultAnimState->id);
 }
 
 void AnimationController::AddAnimState(int iAnimId, int iTextureId, int iSplitX, int iSplitY, float cycleTime)
@@ -41,15 +76,13 @@ void AnimationController::AddAnimState(int iAnimId, int iTextureId, int iSplitX,
 			break;
 		}
 	}
-	m_listAnimState.push_back(AnimState{
-			iAnimId,
-			false,
-			texture,
-			0,
-			NULL,
-			iSplitX, iSplitY,
-			cycleTime
-		});
+	m_listAnimState.push_back(AnimState{ iAnimId,
+		false,
+		texture,
+		0,
+		NULL,
+		iSplitX, iSplitY,
+		cycleTime });
 }
 
 void AnimationController::AddAnimState(int iAnimId, int iNumOfTexture, int listTexId[], float cycleTime)
@@ -58,9 +91,12 @@ void AnimationController::AddAnimState(int iAnimId, int iNumOfTexture, int listT
 		printf("[ERR] AnimationController:AddAnimState: Number of texture is zero\n");
 		return;
 	}
+	int iNumOfTextureValid = 0;
 	Texture * *listTexture = new Texture * [iNumOfTexture];
 	for (int i = 0;i < iNumOfTexture;i++) {
-		listTexture[i] = Singleton<ResourceManager2D>::GetInstance()->GetTexture(listTexId[i]);
+		listTexture[iNumOfTextureValid] = Singleton<ResourceManager2D>::GetInstance()->GetTexture(listTexId[i]);
+		if (listTexture[iNumOfTextureValid] != NULL)
+			iNumOfTextureValid++;
 	}
 	if (cycleTime <= 0) {
 		printf("[ERR] AnimationController:AddAnimState: Cycle time is less or equal zero\n");
@@ -73,14 +109,13 @@ void AnimationController::AddAnimState(int iAnimId, int iNumOfTexture, int listT
 		}
 	}
 	m_listAnimState.push_back(AnimState{
-			iAnimId,
-			true,
-			NULL,
-			iNumOfTexture,
-			listTexture,
-			0, 0,
-			cycleTime
-		});
+		iAnimId,
+		true,
+		NULL,
+		iNumOfTextureValid,
+		listTexture,
+		0, 0,
+		cycleTime });
 }
 
 void AnimationController::RunAnimState(int iAnimId, int iLoopCount)

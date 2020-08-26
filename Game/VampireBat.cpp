@@ -31,6 +31,7 @@ VampireBat::~VampireBat()
 
 void VampireBat::Update(float deltaTime)
 {
+	Enemy::Update(deltaTime);
 	Vector3 vampireBatPos = this->GetPosition();
 	Vector3 playerPos;
 	Singleton<SceneManager2D>::GetInstance()->getPlayerPos(playerPos);

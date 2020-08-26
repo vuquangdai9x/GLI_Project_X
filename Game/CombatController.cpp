@@ -82,7 +82,6 @@ void CombatController::Update(float deltaTime)
 		iMouseScreenPosX / (float)Globals::screenWidth,
 		iMouseScreenPosY / (float)Globals::screenHeight
 	);
-	printf("%d,%d\n", iMouseScreenPosX, iMouseScreenPosY);
 
 	if (m_weapons.size() == 0) return;
 

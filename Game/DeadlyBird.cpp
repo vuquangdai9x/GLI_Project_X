@@ -13,6 +13,7 @@ DeadlyBird::~DeadlyBird()
 }
 void DeadlyBird::Update(float deltaTime)
 {
+	Enemy::Update(deltaTime);
 	Vector3 thisPos = this->GetPosition(), playerPos;
 	Singleton<SceneManager2D>::GetInstance()->getPlayerPos(playerPos);
 	Vector2 pos2d, playerPos2D(playerPos.x, playerPos.y);
