@@ -23,7 +23,7 @@ void ListenerClass::BeginContact(b2Contact* contact)
 		user2->m_receiveDamage = user1->m_damage;
 		
 		if (user1->m_type == PLAYER) {
-			user2->m_receiveDamage = user2->m_damage;
+			user2->m_receiveDamage = 0;
 			b2Vec2 pos1 = b1->GetPosition();
 			b2Vec2 pos2 = b2->GetPosition();
 			b2Vec2 rs = pos1 - pos2;
@@ -31,7 +31,7 @@ void ListenerClass::BeginContact(b2Contact* contact)
 			b1->ApplyLinearImpulseToCenter(rs, true);
 		}
 		else if (user2->m_type == PLAYER) { 
-			user1->m_receiveDamage = user1->m_damage;
+			user1->m_receiveDamage = 0;
 			b2Vec2 pos1 = b1->GetPosition();
 			b2Vec2 pos2 = b2->GetPosition();
 			b2Vec2 rs = pos2 - pos1;

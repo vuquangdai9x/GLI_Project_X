@@ -6,7 +6,7 @@
 SuicideBug::SuicideBug(int id) :Enemy(id)
 {
 	this->m_maxHP = this->m_HP = 50;
-	basic_Dmg = 50;
+	this->m_damage = 50;
 }
 
 SuicideBug::~SuicideBug()
@@ -58,5 +58,5 @@ void SuicideBug::createBox2D()
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width, height, 8);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
-	user->m_damage = basic_Dmg;
+	user->m_damage = this->m_damage;
 }

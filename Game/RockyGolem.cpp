@@ -10,7 +10,7 @@ RockyGolem::RockyGolem(int id) :Enemy(id)
 	this->createWeapon();
 
 	this->m_maxHP = this->m_HP = 100;
-	basic_Dmg = 25;
+	this->m_damage = 25;
 }
 
 RockyGolem::~RockyGolem()
@@ -46,7 +46,7 @@ void RockyGolem::createBox2D()
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMY, x, y, width, height, 200);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
-	user->m_damage = basic_Dmg;
+	user->m_damage = this->m_damage;
 }
 
 void RockyGolem::createWeapon()

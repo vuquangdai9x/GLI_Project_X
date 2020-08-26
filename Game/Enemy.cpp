@@ -25,7 +25,7 @@ void Enemy::takeDamage()
 	start = GetTickCount();
 	UserData* user = (UserData*)enemyBody->body->GetUserData();
 	if (user->IsCollison > 0) {
-		if (user->m_typeB == PLAYERBULLET|| user->m_typeB == PLAYER) {
+		if (user->m_typeB == PLAYERBULLET) {
 			m_TakeDameTime = GetTickCount();
 			this->m_HP -= user->m_receiveDamage;
 			this->SetColor(0xffafff, 1);

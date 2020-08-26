@@ -14,7 +14,7 @@ FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 	this->m_maxforce = 0.1;
 	this->velocity = b2Vec2(0, 0);
 	this->direction = true;
-	basic_Dmg = 25;
+	this->m_damage = 25;
 	this->m_maxHP = this->m_HP = 100;
 }
 
@@ -93,7 +93,7 @@ void FloatingFish::Update(float deltaTime)
 	}
 
 	Enemy::takeDamage();
-	printf("%d\n", this->m_HP);
+	//printf("%d\n", this->m_HP);
 }
 
 void FloatingFish::createBox2D()
@@ -104,5 +104,5 @@ void FloatingFish::createBox2D()
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMY, x, y, width, height,8);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
-	user->m_damage = basic_Dmg;
+	user->m_damage = this->m_damage;
 }
