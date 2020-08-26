@@ -22,7 +22,6 @@ private:
 	float m_moveSpeed;
 	ItemBody* playerBody;
 	Vector2 m_cameraOffset;
-	Sprite* m_target;
 	HUDController* m_HUDController;
 	int time = 0;
 	DWORD m_timeEnd = 0;
@@ -36,7 +35,6 @@ public:
 	void updateFlyState();
 	void setMoveState(MoveState move);
 	void updateMoveState();
-	void setTarget(Sprite* target);
 	void setHP(int hp) { this->m_HP = hp; }
 	int getHP() { return this->m_HP; }
 	void setDamage(int dmg) { this->m_damage = dmg; }

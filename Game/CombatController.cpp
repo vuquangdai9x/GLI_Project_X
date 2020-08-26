@@ -24,7 +24,7 @@ void CombatController::Fire()
 {
 	int bulletAmount = m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet();
 	if (bulletAmount <= 0) {
-		printf("Out of ammo\n");
+		//printf("Out of ammo\n");
 		return;
 	}
 	//printf("Player: %f,%f \t Target: %f,%f \n", m_pPlayer->GetPosition().x, m_pPlayer->GetPosition().y, m_targetPos.x, m_targetPos.y);
@@ -34,9 +34,10 @@ void CombatController::Fire()
 	if (m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction)) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
-		m_pPlayer->getHUDController()->UpdateBulletStatus(m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
-			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity());
-		
+		m_pPlayer->getHUDController()->UpdateBulletStatus(
+			m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
+			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
+		);
 	}
 }
 
@@ -77,6 +78,11 @@ void CombatController::Update(float deltaTime)
 	m_targetPos.x = targetPos.x;
 	m_targetPos.y = targetPos.y;
 	// TODO: update target UI
+	m_pPlayer->getHUDController()->UpdateTargetPosition(
+		iMouseScreenPosX / (float)Globals::screenWidth,
+		iMouseScreenPosY / (float)Globals::screenHeight
+	);
+	printf("%d,%d\n", iMouseScreenPosX, iMouseScreenPosY);
 
 	if (m_weapons.size() == 0) return;
 
@@ -121,6 +127,11 @@ void CombatController::ChangeWeapon(int index)
 			break;
 		}
 	}
+
+	m_pPlayer->getHUDController()->UpdateBulletStatus(
+		m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
+		m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
+	);
 }
 
 void CombatController::AddBullet(int iBulletTypeId, int iAmount)
@@ -130,6 +141,12 @@ void CombatController::AddBullet(int iBulletTypeId, int iAmount)
 			m_bulletStorages[i]->AddBullet(iAmount);
 			break;
 		}
+	}
+	if (iBulletTypeId == m_iCurrentBulletIndex) {
+		m_pPlayer->getHUDController()->UpdateBulletStatus(
+			m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
+			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
+		);
 	}
 }
 

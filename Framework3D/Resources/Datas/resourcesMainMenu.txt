@@ -1,0 +1,49 @@
+#Models: 2
+ID 0
+FILE "Models/Quad.nfg"
+ID 1
+FILE "Models/Quad-reverse.nfg"
+
+#2D Textures: 4
+ID 12
+FILE "Textures/png/UI/game-name.png" CLAMP
+ID 13
+FILE "Textures/png/UI/play-button.png" CLAMP
+ID 14
+FILE "Textures/png/UI/quit-button.png" CLAMP
+ID 15
+FILE "Textures/png/background-01.png" CLAMP
+
+#Shaders: 2
+ID 0
+VS: "Shaders/Sprite2DShaderVS.vs"
+FS: "Shaders/Sprite2DShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+ID 1
+VS: "Shaders/TextShaderVS.vs"
+FS: "Shaders/TextShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+
+#Materials: 2
+ID 0 DEFAULT
+SHADER 0
+ID 1 TEXT
+SHADER 1
+
+#Fonts: 3
+ID 0
+FILE "Fonts/OpenSans-Bold.ttf"
+PIXELSIZE ABSOLUTE
+0 200
+ID 1
+FILE "Fonts/OpenSans-Italic.ttf"
+PIXELSIZE RELATIVE
+0 0.5
+ID 2
+FILE "Fonts/OpenSans-Regular.ttf"
+PIXELSIZE RELATIVE
+0 0.5

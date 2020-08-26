@@ -161,6 +161,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Resources\Datas\resourcesMainMenu.txt" />
     <Text Include="..\Resources\Datas\resources2d.txt" />
     <Text Include="..\Resources\Datas\scene2d.txt" />
   </ItemGroup>

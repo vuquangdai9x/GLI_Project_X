@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 37
+#2D Textures: 36
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -25,10 +25,14 @@ ID 20602
 FILE "Textures/png/obstacle/medium-cliff-01.png" CLAMP
 ID 30101
 FILE "Textures/png/enemy/floating-fish-01.png" CLAMP
+ID 30102
+FILE "Textures/png/enemy/floating-fish-animation.png" CLAMP
 ID 30201
 FILE "Textures/png/enemy/suicide-bug-fly-01.png" CLAMP
 ID 30202
 FILE "Textures/png/enemy/suicide-bug-idle-01.png" CLAMP
+ID 30203
+FILE "Textures/png/enemy/suicide-bug-fly-animation.png" CLAMP
 ID 30301
 FILE "Textures/png/enemy/monster-01.png" CLAMP
 ID 30401
@@ -37,6 +41,8 @@ ID 30501
 FILE "Textures/png/enemy/monster-03.png" CLAMP
 ID 30601
 FILE "Textures/png/enemy/vampire-bat-01.png" CLAMP
+ID 30602
+FILE "Textures/png/enemy/vampire-bat-animation.png" CLAMP
 ID 30701
 FILE "Textures/png/enemy/monster-04.png" CLAMP
 ID 30801
@@ -71,14 +77,6 @@ ID 60203
 FILE "Textures/png/UI/target-03.png" CLAMP
 ID 60204
 FILE "Textures/png/UI/target-04.png" CLAMP
-ID 12
-FILE "Textures/png/UI/game-name.png" CLAMP
-ID 13
-FILE "Textures/png/UI/play-button.png" CLAMP
-ID 14
-FILE "Textures/png/UI/quit-button.png" CLAMP
-ID 15
-FILE "Textures/png/background-01.png" CLAMP
 
 #Shaders: 2
 ID 0

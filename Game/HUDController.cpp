@@ -104,6 +104,7 @@ void HUDController::UpdateTargetPosition(float screenRatioPosX, float screenRati
 	Vector3 newPos = m_targetIcon->GetPosition();
 	newPos.x = screenRatioPosX * 2 - 1;
 	newPos.y = screenRatioPosY * 2 - 1;
+	newPos.y *= -1;
 	m_targetIcon->SetPosition(newPos);
 }
 

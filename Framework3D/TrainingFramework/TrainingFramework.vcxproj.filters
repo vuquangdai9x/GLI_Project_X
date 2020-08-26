@@ -202,5 +202,8 @@
     <Text Include="..\Resources\Datas\resources2d.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
+    <Text Include="..\Resources\Datas\resourcesMainMenu.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
   </ItemGroup>
 </Project>

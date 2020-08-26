@@ -10,7 +10,7 @@ GS_MainMenu::GS_MainMenu()
 {
     printf("GS_MainMenu\n");
 	char sceneFile[50] = "Datas/scene2d-menu.txt";
-	char resourcesFile[60] = "Datas/resources2d.txt";
+	char resourcesFile[60] = "Datas/resourcesMainMenu.txt";
 
 	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 

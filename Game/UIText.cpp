@@ -104,4 +104,6 @@ void UIText::CalculateOriginSize() {
 	m_originSize /= Globals::pixelPerUnit;
 
 	SetBound(m_top, m_bottom, m_left, m_right); // re-calculate position and scale because originSize has change
+
+	delete[] aiOffsetX;
 }

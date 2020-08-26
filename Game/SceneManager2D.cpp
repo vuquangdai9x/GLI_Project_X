@@ -48,6 +48,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	int iNumOfObject, iObjectId = 0;
 	int iMaterialId;
 	int iMainTexId;
+	int iFontId;
 	Vector3 position;
 	float rotation;
 	Vector2 scale;
@@ -69,7 +70,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 
 	// Set up player
-	fscanf(fIn, "PLAYER %d\n", &iObjectId);
+	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
@@ -78,46 +79,114 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
 	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
-	Player* player = new Player(iObjectId);
 
+	Player* player = new Player(iObjectId);
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
-
-	fscanf(fIn, "TARGETTEX %d\n", &targetID);
-	fscanf(fIn, "TARGETSCALE %f %f\n", &(scale.x), &(scale.y));
-	fscanf(fIn, "TARGETPOS %f %f %f\n", &(position.x), &(position.y), &(position.z));
-	Sprite* target = new Sprite(targetID);
-	target->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, targetID);
-	player->setTarget(target);
-	AddObject(target);
 	m_curent = player;
-	// Set up weapon & bullet
-	int iPoolId;
-	int iPoolCapacity;
-	// TODO: write code to read from file. The code below is just for testing
-	m_combatController = new CombatController(player);
-	// init bullet pool
-		// define a template bullet, then create bullet pool based on this template
-	scale = Vector2(1.0, 1.0);
-	uiHexColor = 0xffffff;
-	alpha = 1.0;
-	iMaterialId = 0;
-	iMainTexId = 55101; // red bullet
-	iPoolCapacity = 500;
-	GunBullet* templateGunBullet = new GunBullet(-1, 1.0, 0.0, 5.0, 30.0, 2);
-	templateGunBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	m_combatController->AddBulletPool(new GunBulletPool(0, iPoolCapacity, 10, templateGunBullet));
 
-	scale = Vector2(1.0, 1.0);
-	uiHexColor = 0xffffff;
-	alpha = 1.0;
-	iMaterialId = 0;
-	iMainTexId = 55201; // black bullet
-	iPoolCapacity = 200;
-	GunBullet* templateCannonBullet = new GunBullet(-1, 3.0, 1.0, 7.0, 15.0, 3);
-	templateCannonBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	m_combatController->AddBulletPool(new GunBulletPool(1, iPoolCapacity, 10, templateCannonBullet));
+	// set up HUD
+	fscanf(fIn, "\n#HUD\n", &iObjectId);
+	fscanf(fIn, "+ HEALTH ICON\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	UIComponent * healthIcon = new UIComponent(-1);
+	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthIcon);
+
+	fscanf(fIn, "+ HEALTH BAR\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	UIComponent * healthBar = new UIComponent(-1);
+	healthBar->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthBar);
+
+	fscanf(fIn, "+ HEALTH DECORATE\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	UIComponent * healthDecorate = new UIComponent(-1);
+	healthDecorate->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(healthDecorate);
+
+	fscanf(fIn, "+ WEAPON ICON\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	UIComponent * weaponIcon = new UIComponent(-1);
+	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(weaponIcon);
+
+	fscanf(fIn, "+ TARGET ICON\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	UIComponent * targetIcon = new UIComponent(-1);
+	targetIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(targetIcon);
+
+	fscanf(fIn, "+ BULLET STATUS\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "FONT %d\n", &iFontId);
+	UIText * bulletStatus = new UIText(-1);
+	bulletStatus->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	bulletStatus->SetFont(iFontId);
+	AddObject(bulletStatus);
+
+	fscanf(fIn, "+ SCORE\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "FONT %d\n", &iFontId);
+	UIText * score = new UIText(-1);
+	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	score->SetFont(iFontId);
+	AddObject(score);
+	score->SetText("Score: 6996");
+
+	HUDController * m_HUDController = new HUDController();
+	m_HUDController->Init(100, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
+	player->setHUDController(m_HUDController);
+
+	// Set up weapon & bullet
+	int iNumOfPlayerBullet;
+	
+	m_combatController = new CombatController(player);
+
+	fscanf(fIn, "#PLAYER_BULLET %d\n", &iNumOfPlayerBullet);
+	for (int i = 0;i < iNumOfPlayerBullet;i++) {
+		int iPoolId;
+		int iPoolCapacity, iPoolInitCount;
+		float bulletMass, bulletDamage, bulletInitSpeed, bulletGravityScale, bulletExistTime;
+		fscanf(fIn, "ID %d\n", &iPoolId);
+		fscanf(fIn, "INIT %d\n", &iPoolInitCount);
+		fscanf(fIn, "CAPACITY %d\n", &iPoolCapacity);
+		fscanf(fIn, "MASS %f\n", &bulletMass);
+		fscanf(fIn, "GRAVITY SCALE %f\n", &bulletGravityScale);
+		fscanf(fIn, "DAMAGE %f\n", &bulletDamage);
+		fscanf(fIn, "INIT SPEED %f\n", &bulletInitSpeed);
+		fscanf(fIn, "EXIST TIME %f\n", &bulletExistTime);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+		GunBullet* templateGunBullet = new GunBullet(-1, bulletMass, bulletGravityScale, bulletDamage, bulletInitSpeed, bulletExistTime);
+		templateGunBullet->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		m_combatController->AddBulletPool(new GunBulletPool(iPoolId, iPoolCapacity, 10, templateGunBullet));
+		m_combatController->AddBullet(iPoolId, iPoolInitCount);
+	}
 
 	// add guns
 	//		standard example
@@ -140,77 +209,10 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	m_combatController->AddWeapon(gun);
 	gun = new SimpleGun(6, "SuperCannon", 50201, 60203, iBulletPoolId, 0.5, 0.1, 45 * M_PI / 180, 3);
 	m_combatController->AddWeapon(gun);
+
+	m_combatController->ChangeWeapon(1);
 	// give player some bullets when start game
-	m_combatController->AddBullet(0, 500);
-	m_combatController->AddBullet(1, 200);
 	
-
-	position = Vector3(0, 0, -1);
-	rotation = 0;
-	scale = Vector2(1.0, 1.0);
-	uiHexColor = 0xffffff;
-	alpha = 1;
-	iMaterialId = 0;
-	iMainTexId = 15;
-
-	float healthBarScale = 100;
-	UIComponent* healthIcon = new UIComponent(-1);
-	iMainTexId = 60101;
-	uiHexColor = 0xE84545;
-	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(healthIcon);
-	UIComponent* healthBar = new UIComponent(-1);
-	iMainTexId = 60102;
-	uiHexColor = 0xE84545;
-	healthBar->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(healthBar);
-	UIComponent* healthDecorate = new UIComponent(-1);
-	iMainTexId = 60101;
-	uiHexColor = 0xE84545;
-	healthDecorate->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(healthDecorate);
-	
-	UIComponent* weaponIcon = new UIComponent(-1);
-	iMainTexId = 50301;
-	uiHexColor = 0xFFFFFF;
-	weaponIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(weaponIcon);
-
-	/*AnimationController& animCtrl = weaponIcon->GetAnimationController();
-	int listTextAnim[] = { 50101,50201,50301,50401,50501,50601,50701 };
-	animCtrl.AddAnimState(0, 15, 4, 6, 6);
-	animCtrl.AddAnimState(1, 7, listTextAnim, 7);
-	animCtrl.SetDefaultAnimState(1);
-	animCtrl.RunAnimState(0, 2);
-	//animCtrl.RunAnimState(1, 3);
-	weaponIcon->SetUseAnimation(true);*/
-
-	UIComponent* targetIcon = new UIComponent(-1);
-	iMainTexId = 60203;
-	uiHexColor = 0xE84545;
-	targetIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(targetIcon);
-	
-	iMaterialId = 1;
-	UIText* bulletStatus = new UIText(-1);
-	iMainTexId = -1;
-	uiHexColor = 0xFFFFFF;
-	bulletStatus->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	bulletStatus->SetText("45/250");
-	bulletStatus->SetFont(2);
-	AddObject(bulletStatus);
-	UIText* score = new UIText(-1);
-	iMainTexId = -1;
-	uiHexColor = 0xFFFFFF;
-	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	score->SetFont(2);
-	score->SetText("Score: 6996");
-	AddObject(score);
-
-	HUDController* m_HUDController = new HUDController();
-	m_HUDController->Init(healthBarScale, healthIcon, healthBar, healthDecorate, bulletStatus, weaponIcon, targetIcon, score);
-
-	player->setHUDController(m_HUDController);
 	//
 	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
