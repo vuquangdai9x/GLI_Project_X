@@ -180,6 +180,9 @@
     <ClInclude Include="AnimationController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="State\GS_GameOverState.h">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -298,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="AnimationController.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="State\GS_GameOverState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

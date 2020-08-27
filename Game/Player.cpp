@@ -7,6 +7,7 @@
 #include<math.h>
 #include "GunBullet.h"
 #include"UserData.h"
+#include"State/GameStateManager.h"
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -144,14 +145,19 @@ void Player::Update(float deltaTime)
 		this->m_HP -= user->m_receiveDamage;
 		this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
 		if (this->m_HP <= 0) {
-			m_HP = 0;
+			//m_HP = 0;
+			Singleton<GameStateManager>::GetInstance()->Pop();
+			Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
 		}
 	}
 
 	else {
-	this->SetColor(0xffffff, 1);
+	     this->SetColor(0xffffff, 1);
 	}
-	
+	m_score = playerPos.y;
+	this->m_HUDController->UpdateScore(m_score);
+
+
 	//printf("%f \n", getFireAngle());
 	//if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();
 }

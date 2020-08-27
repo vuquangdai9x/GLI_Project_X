@@ -153,6 +153,7 @@
     <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
+    <ClCompile Include="State\GS_GameOverState.cpp" />
     <ClCompile Include="State\GS_MainMenu.cpp" />
     <ClCompile Include="State\GS_PauseState.cpp" />
     <ClCompile Include="State\GS_PlayState.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="State\GameStateManager.h" />
+    <ClInclude Include="State\GS_GameOverState.h" />
     <ClInclude Include="State\GS_MainMenu.h" />
     <ClInclude Include="State\GS_PauseState.h" />
     <ClInclude Include="State\GS_PlayState.h" />

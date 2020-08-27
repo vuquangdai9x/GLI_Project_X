@@ -20,6 +20,8 @@ private:
 	int m_HP, m_maxHP;
 	int m_damage;
 	float m_moveSpeed;
+	int m_score;
+
 	ItemBody* playerBody;
 	Vector2 m_cameraOffset;
 	HUDController* m_HUDController;
@@ -39,6 +41,8 @@ public:
 	int getHP() { return this->m_HP; }
 	void setDamage(int dmg) { this->m_damage = dmg; }
 	int getDamage() { return this->m_damage; }
+	void setScore(int hp) { this->m_score = m_score; }
+	int getScore() { return this->m_score; }
 	void setHUDController(HUDController* hud) { this->m_HUDController = hud; }
 	HUDController* getHUDController() { return this->m_HUDController; }
 };

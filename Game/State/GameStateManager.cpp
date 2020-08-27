@@ -4,6 +4,7 @@
 #include"GS_MainMenu.h"
 #include"GS_PlayState.h"
 #include"GS_PauseState.h"
+#include"GS_GameOverState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
 
@@ -31,7 +32,9 @@ void GameStateManager::Push(int state)
 	else if (state == PLAY) {
 		this->states.push(new GS_PlayState());
 	}
-	
+	else if (state == GAMEOVER) {
+		this->states.push(new GS_GameOverState());
+	}
 }
 
 void GameStateManager::Pop()
