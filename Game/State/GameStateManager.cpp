@@ -36,7 +36,7 @@ void GameStateManager::Push(int state)
 
 void GameStateManager::Pop()
 {
-	//Singleton<SceneManager2D>::GetInstance()->GetListObject().clear();
+	Singleton<SceneManager2D>::GetInstance()->GetListObject().clear();
 	this->states.pop();
 }
 

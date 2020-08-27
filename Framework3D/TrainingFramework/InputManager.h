@@ -19,4 +19,5 @@ public:
 	int getMouseButton();
 	int getMouseEvent();
 	void getXY(int& xx, int& yy);
+	void fixButton() { this->m_mouseEvent = MOUSE_RELEASE; }
 };

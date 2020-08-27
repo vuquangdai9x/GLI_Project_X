@@ -15,7 +15,7 @@ GS_PlayState::GS_PlayState()
 	char sceneFile[50] = "Datas/scene2d.txt";
 	char resourcesFile[50] = "Datas/resources2d.txt";
 
-	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
+	//Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 
 	if (!Singleton<SceneManager2D>::GetInstance()->LoadScene(sceneFile)) {
 		printf("[ERR] Entry point: Failed to init scene");

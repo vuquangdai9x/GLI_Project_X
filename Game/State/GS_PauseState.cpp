@@ -9,12 +9,36 @@
 GS_PauseState::GS_PauseState()
 {
 	printf("GS_PauseState");
+	char sceneFile[50] = "Datas/scene2d-pause.txt";
+	char resourcesFile[60] = "Datas/resources2d.txt";
+
+	Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
+
+	button = Singleton<SceneManager2D>::GetInstance()->LoadPauseScene(sceneFile);
+	for (int i = 0; i < this->button.size(); i++) {
+		button[i]->UpdateMember();
+	}
 }
 
 GS_PauseState::~GS_PauseState()
 {
 }
 
+void BackToMenu()
+{
+	Singleton<GameStateManager>::GetInstance()->setPaused(false);
+	Singleton<GameStateManager>::GetInstance()->Pop();
+}
+void Resume()
+{
+	Singleton<GameStateManager>::GetInstance()->setPaused(false);
+}
+void Reload()
+{
+	Singleton<GameStateManager>::GetInstance()->setPaused(false);
+	Singleton<GameStateManager>::GetInstance()->Pop();
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+}
 bool GS_PauseState::Create()
 {
 	return false;
@@ -28,10 +52,24 @@ bool GS_PauseState::Release()
 void GS_PauseState::Render()
 {
 	Singleton<SceneManager2D>::GetInstance()->Render();
+	Singleton<SceneManager2D>::GetInstance()->Render(PAUSE_OBJECT);
 }
 
 void GS_PauseState::Update(float deltaTime)
 {
+	for (int i = 0; i < this->button.size(); i++) {
+		button[i]->Update(deltaTime);
+		if (i == 0) {
+			button[i]->OnClick(BackToMenu);
+		}
+		else if (i == 1) {
+			button[i]->OnClick(Resume);
+		}
+		else if (i == 2) {
+			button[i]->OnClick(Reload);
+		}
+	}
+	Singleton<InputManager>::GetInstance()->fixButton();
 }
 
 void GS_PauseState::KeyPress()
@@ -40,3 +78,4 @@ void GS_PauseState::KeyPress()
 		Singleton<GameStateManager>::GetInstance()->setPaused(false);
 	}
 }
+

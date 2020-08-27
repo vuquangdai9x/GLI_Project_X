@@ -103,7 +103,7 @@ void FloatingFish::createBox2D()
 	y = m_position.y;
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
-	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMY, x, y, width, height,8);
+	enemyBody = Singleton<WorldManager>::GetInstance()->createFloating(ENEMY, x, y, width, height,8);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
 	user->m_damage = this->m_damage;
 }

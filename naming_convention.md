@@ -51,4 +51,5 @@ A = 5 - Weapon & bullet
 A = 6 - UI
 	BC = 01: Health bar
 	Bc = 02: Target
+	BC = 03: Button
 A = 7 - Other

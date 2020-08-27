@@ -9,6 +9,7 @@ public:
 	~WorldManager();
 	ItemBody* createRectagle(int type, float x, float y, float w, float h, float massD = DEFAULT_MASS);
 	ItemBody* createTriangle(int type, float x, float y, float w, float h, float massD = DEFAULT_MASS);
+	ItemBody* createFloating(int type, float x, float y, float w, float h, float massD = DEFAULT_MASS);
 	void Update(float deltaTime);
 private:
 	b2World* m_world;

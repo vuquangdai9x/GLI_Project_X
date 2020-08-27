@@ -9,9 +9,11 @@
 #include "Singleton.h"
 
 #include "UIComponent.h"
+#include "Button.h"
 
 #define PLAY_OBJECT 0
 #define MENU_OBJECT 1
+#define PAUSE_OBJECT 2
 
 class SceneManager2D
 {
@@ -24,6 +26,7 @@ private:
 	Vector2 return2D;
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject,m_menuObject;
+	std::vector<Sprite*> m_pauseObject;
 	Camera2D* m_mainCamera,*m_menuCamera;
 	Player* m_curent;
 	CombatController* m_combatController = NULL;
@@ -39,6 +42,7 @@ public:
 	void RemoveObject(Sprite* object);
 	bool LoadScene(char* dataSceneFile);
 	bool LoadMenuScene(char* dataSceneFile);
+	std::vector<Button*> LoadPauseScene(char* dataSceneFile);
 	void SetMainCamera(Camera2D * camera, int listObjet = PLAY_OBJECT);
 	Camera2D& GetMainCamera(int listObjet = PLAY_OBJECT);
 	std::vector<Sprite*>& GetListObject();

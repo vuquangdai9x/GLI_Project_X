@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 36
+#2D Textures: 40
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -77,6 +77,14 @@ ID 60203
 FILE "Textures/png/UI/target-03.png" CLAMP
 ID 60204
 FILE "Textures/png/UI/target-04.png" CLAMP
+ID 60301
+FILE "Textures/png/UI/button_back_hover.png" CLAMP
+ID 60302
+FILE "Textures/png/UI/button_play_hover.png" CLAMP
+ID 60303
+FILE "Textures/png/UI/button_reload_hover.png" CLAMP
+ID 16
+FILE "Textures/png/background-02.png" CLAMP
 
 #Shaders: 2
 ID 0

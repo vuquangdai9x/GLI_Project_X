@@ -1,6 +1,6 @@
 #pragma once
-#include "Sprite.h"
-class Button : public Sprite
+#include "UIComponent.h"
+class Button : public UIComponent
 {
 private:
 	float x, y;

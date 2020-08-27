@@ -1,11 +1,12 @@
 #pragma once
 #include"StateBase.h"
+#include"../Button.h"
+#include<vector>
 
 class GS_PauseState : public StateBase
 {
 private:
-	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
-	//
+	std::vector<Button*> button;
 
 public:
 	GS_PauseState();
@@ -17,4 +18,5 @@ public:
 	void Update(float deltaTime);
 
 	void KeyPress();
+
 };

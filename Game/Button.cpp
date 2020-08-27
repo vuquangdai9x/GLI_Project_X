@@ -4,7 +4,7 @@
 #include"SceneManager2D.h"
 void doNothing() {
 }
-Button::Button(int id):Sprite(id)
+Button::Button(int id):UIComponent(id)
 {
 	this->Click = doNothing;
 }
@@ -46,10 +46,17 @@ void __cdecl Button::OnClick(void(__cdecl* Click)())
 
 bool Button::checkMouse()
 {
-	int xx, yy;
-	Singleton<InputManager>::GetInstance()->getXY(xx, yy);
-	Vector3 worldMouse=Singleton<SceneManager2D>::GetInstance()->get3Dpos(xx, yy,MENU_OBJECT);
-	Vector3 thisPos = this->GetPosition();
-	if (worldMouse.x > thisPos.x - __w && worldMouse.x< thisPos.x + __w && worldMouse.y>thisPos.y - __h && worldMouse.y < thisPos.y + __h) return true;
-	return false;
+	int iMousePosX, iMousePosY;
+	Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
+	// chuyen ve toa do [-1..1]
+	float mousePosX = iMousePosX / (float)Globals::screenWidth * 2 - 1;
+	float mousePosY = iMousePosY / (float)Globals::screenHeight * 2 - 1;
+	mousePosY *= -1; // toa do chuot nguoc voi toa do UI
+
+	Vector4 bottomLeft(-1, -1, 0, 1);
+	Vector4 topRight(1, 1, 0, 1);
+	bottomLeft =  bottomLeft * m_WVP;
+	topRight = topRight * m_WVP;
+
+	return ((bottomLeft.x < mousePosX&& mousePosX < topRight.x) && (bottomLeft.y < mousePosY&& mousePosY < topRight.y));
 }

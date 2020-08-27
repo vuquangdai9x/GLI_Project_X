@@ -522,7 +522,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	Vector2 scale;
 	unsigned int uiHexColor;
 	float alpha;
-	int iNumOfAnimations;
+	float top, bot, left, right;
 
 	fscanf(fIn, "BACKGROUND %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -532,7 +532,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+
 	Sprite* backGround = new Sprite(iObjectId);
 	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(backGround, MENU_OBJECT);
@@ -545,7 +545,7 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+
 	Sprite* name = new Sprite(iObjectId);
 	name->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(name, MENU_OBJECT);
@@ -560,12 +560,17 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
 		Button* button = new Button(iObjectId);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+
 		button->UpdateMember();
-		if(i==0)
-		button->OnClick(goToPlay);
+		if (i == 0)
+			button->OnClick(goToPlay);
 		else button->OnClick(test1);
 		AddObject(button, MENU_OBJECT);
 	}
@@ -589,6 +594,86 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 	printf("[msg] SceneManager: Set up Camera2D\n");
 
 	return true;
+}
+
+std::vector<Button*> SceneManager2D::LoadPauseScene(char* dataSceneFile)
+{
+	const char* resourceDir = Globals::resourceDir;
+	char filePath[512];
+	strcpy(filePath, resourceDir);
+	strcat(filePath, dataSceneFile);
+	FILE* fIn = fopen(filePath, "r");
+	if (fIn == nullptr) {
+		printf("Fails to load scene file");
+		return std::vector<Button*>();
+	}
+	
+	int iNumOfObject, iObjectId = 0;
+	int iMaterialId;
+	int iMainTexId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+	float top, bot, left, right;
+
+	fscanf(fIn, "BACKGROUND %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+
+	Sprite* backGround = new Sprite(iObjectId);
+	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(backGround, PAUSE_OBJECT);
+
+	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
+	std::vector<Button*> listButton;
+
+	for (int i = 0; i < iNumOfObject; i++) {
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		Button* button = new Button(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+
+		AddObject(button, PAUSE_OBJECT);
+		listButton.push_back(button);
+	}
+
+	float nearPlane, farPlane, zoom;
+
+	fscanf(fIn, "#CAMERA\n");
+	fscanf(fIn, "NEAR %f\n", &nearPlane);
+	fscanf(fIn, "FAR %f\n", &farPlane);
+	fscanf(fIn, "ZOOM %f\n", &zoom);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "DUTCH %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+
+	Camera2D* camera = new Camera2D();
+	camera->Init(position, rotation);
+
+	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
+	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
+	SetMainCamera(camera, MENU_OBJECT);
+	printf("[msg] SceneManager: Set up Camera2D\n");
+
+	return listButton;
+
 }
 
 void SceneManager2D::SetMainCamera(Camera2D* camera, int listObjet)
@@ -619,9 +704,15 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		m_combatController->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 	}
-	else {
+	else if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
 			m_menuObject[i]->Update(frameTime);
+		}
+		m_menuCamera->Update(frameTime);
+	}
+	else {
+		for (int i = 0; i < m_pauseObject.size(); i++) {
+			m_pauseObject[i]->Update(frameTime);
 		}
 		m_menuCamera->Update(frameTime);
 	}
@@ -633,9 +724,14 @@ void SceneManager2D::Render(int listObjet) {
 				m_listObject[i]->Render(m_mainCamera);
 		}
 	}
-	else {
+	else  if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
 			m_menuObject[i]->Render(m_menuCamera);
+		}
+	}
+	else {
+		for (int i = 0; i < m_pauseObject.size(); i++) {
+			m_pauseObject[i]->Render(m_menuCamera);
 		}
 	}
 }
@@ -658,7 +754,7 @@ void SceneManager2D::AddObject(Sprite* object,int listObject) {
 		}
 		m_listObject.push_back(object);
 	}
-	else {
+	else  if (listObject == MENU_OBJECT) {
 		if (m_menuObject.size() == 0) {
 			m_menuObject.push_back(object);
 			return;
@@ -675,6 +771,24 @@ void SceneManager2D::AddObject(Sprite* object,int listObject) {
 			}
 		}
 		m_menuObject.push_back(object);
+	}
+	else {
+		if (m_pauseObject.size() == 0) {
+			m_pauseObject.push_back(object);
+			return;
+		}
+		float zPos = object->GetPosition().z;
+		if (zPos >= m_pauseObject[0]->GetPosition().z) {
+			m_pauseObject.insert(m_pauseObject.begin(), object);
+			return;
+		}
+		for (int i = 1; i < m_pauseObject.size(); i++) {
+			if (m_pauseObject[i - 1]->GetPosition().z >= zPos && zPos >= m_pauseObject[i]->GetPosition().z) {
+				m_pauseObject.insert(m_pauseObject.begin() + i, object);
+				return;
+			}
+		}
+		m_pauseObject.push_back(object);
 	}
 }
 Sprite& SceneManager2D::GetObjectByID(int id)
