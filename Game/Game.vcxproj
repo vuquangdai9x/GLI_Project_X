@@ -130,7 +130,10 @@
     <ClCompile Include="AutoGun.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="DeadlyBird.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FallingRock.cpp" />
     <ClCompile Include="FallingRockPool.cpp" />
@@ -172,10 +175,14 @@
     <ClInclude Include="AutoGun.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="DeadlyBird.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FallingRock.h" />
     <ClInclude Include="FallingRockPool.h" />
+    <ClInclude Include="Firework.h" />
     <ClInclude Include="FloatingFish.h" />
     <ClInclude Include="BulletPool.h" />
     <ClInclude Include="BulletType.h" />

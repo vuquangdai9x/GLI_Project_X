@@ -22,6 +22,15 @@
 #include "UIComponent.h"
 #include "UIText.h"
 
+SceneManager2D::SceneManager2D()
+{
+	m_mainCamera = NULL;
+	m_menuCamera = NULL;
+	m_currentPlayer = NULL;
+	m_combatController = NULL;
+	m_time = 0;
+}
+
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -127,7 +136,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
-	m_curent = player;
+	m_currentPlayer = player;
 	
 	LoadAnimation(fIn, player);
 	
@@ -701,7 +710,7 @@ std::vector<Sprite*>& SceneManager2D::GetListObject() {
 
 void SceneManager2D::getPlayerPos(Vector3 &pos)
 {
-	pos= m_curent->GetPosition();
+	pos= m_currentPlayer->GetPosition();
 }
 
 Vector2& SceneManager2D::get2Dpos(float x, float y, float z, int listObjet)

@@ -15,9 +15,8 @@
 
 class SceneManager2D
 {
-
 public:
-	SceneManager2D() {}
+	SceneManager2D();
 	~SceneManager2D();
 
 private:
@@ -25,12 +24,12 @@ private:
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject,m_menuObject;
 	Camera2D* m_mainCamera,*m_menuCamera;
-	Player* m_curent;
-	CombatController* m_combatController = NULL;
+	Player* m_currentPlayer;
+	CombatController* m_combatController;
 
 	bool LoadAnimation(FILE* fIn, Sprite* sprite);
 public:
-	float m_time = 0;
+	float m_time;
 
 	void Update(float frameTime, int listObjet = PLAY_OBJECT);
 	void Render(int listObjet = PLAY_OBJECT);

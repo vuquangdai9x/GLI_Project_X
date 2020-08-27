@@ -49,6 +49,12 @@
     <Filter Include="Source Files\enemy">
       <UniqueIdentifier>{97e2f669-706c-4313-9e3b-4aa533b4947b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\effect">
+      <UniqueIdentifier>{7bf5c7f2-526f-4571-9390-9a82cdbddfaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\effect">
+      <UniqueIdentifier>{47b3184a-27ca-4fdd-b796-359a9aca3e01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -180,6 +186,18 @@
     <ClInclude Include="AnimationController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Firework.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveFunction.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -298,6 +316,15 @@
     </ClCompile>
     <ClCompile Include="AnimationController.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveFunction.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Source Files\effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
