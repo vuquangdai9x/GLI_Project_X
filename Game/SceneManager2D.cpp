@@ -500,7 +500,7 @@ void goToPlay() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
 void test1() {
-	printf("2 \n");
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MAP);
 }
 bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 {
@@ -676,6 +676,100 @@ std::vector<Button*> SceneManager2D::LoadPauseScene(char* dataSceneFile)
 
 }
 
+std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
+{
+	const char* resourceDir = Globals::resourceDir;
+	char filePath[512];
+	strcpy(filePath, resourceDir);
+	strcat(filePath, dataSceneFile);
+	FILE* fIn = fopen(filePath, "r");
+	if (fIn == nullptr) {
+		printf("Fails to load scene file");
+		return std::vector<UnitButton*>();
+	}
+
+	int iNumOfObject, iObjectId = 0;
+	int iMaterialId;
+	int iMainTexId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+	float top, bot, left, right;
+	char shapeType[10];
+	fscanf(fIn, "BACKGROUND %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+
+	Sprite* backGround = new Sprite(iObjectId);
+	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	AddObject(backGround, MAP_OBJECT);
+
+	Obstacle* obs = new Obstacle(iObjectId, 0);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	fscanf(fIn, "TYPE %s\n", shapeType);
+
+	LoadAnimation(fIn, obs);
+	AddObject(obs, MAP_OBJECT);
+
+	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
+	std::vector<UnitButton*> listButton;
+	UnitInfor infor;
+	for (int i = 0; i < iNumOfObject; i++) {
+		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		UnitButton* button = new UnitButton(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+		infor.mainTex = iMainTexId;
+		button->setInformation(infor);
+		AddObject(button, MAP_OBJECT);
+		listButton.push_back(button);
+	}
+
+	float nearPlane, farPlane, zoom;
+
+	fscanf(fIn, "#CAMERA\n");
+	fscanf(fIn, "NEAR %f\n", &nearPlane);
+	fscanf(fIn, "FAR %f\n", &farPlane);
+	fscanf(fIn, "ZOOM %f\n", &zoom);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "DUTCH %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+
+	Camera2D* camera = new Camera2D();
+	camera->Init(position, rotation);
+
+	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
+	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
+	SetMainCamera(camera, MAP_OBJECT);
+	printf("[msg] SceneManager: Set up Camera2D\n");
+
+	return listButton;
+}
+
 std::vector<Button*> SceneManager2D::LoadGameOverScene(char* dataSceneFile)
 {
 	const char* resourceDir = Globals::resourceDir;
@@ -796,6 +890,9 @@ void SceneManager2D::SetMainCamera(Camera2D* camera, int listObjet)
 	if (listObjet == PLAY_OBJECT) {
 		m_mainCamera = camera;
 	}
+	else  if (listObjet == MAP_OBJECT) {
+		m_mapCamera = camera;
+	}
 	else {
 		m_menuCamera = camera;
 	}
@@ -805,6 +902,8 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 {
 	if(listObjet==PLAY_OBJECT)
 	return *m_mainCamera;
+	if (listObjet == MAP_OBJECT)
+		return *m_mapCamera;
 	return *m_menuCamera;
 }
 
@@ -855,6 +954,11 @@ void SceneManager2D::Render(int listObjet) {
 			m_pauseObject[i]->Render(m_menuCamera);
 		}
 	}
+	else  if (listObjet == MAP_OBJECT) {
+		for (int i = 0; i < m_mapObject.size(); i++) {
+			m_mapObject[i]->Render(m_mapCamera);
+		}
+	}
 	else {
 		for (int i = 0; i < m_gameoverObject.size(); i++) {
 			m_gameoverObject[i]->Render(m_menuCamera);
@@ -897,6 +1001,24 @@ void SceneManager2D::AddObject(Sprite* object,int listObject) {
 			}
 		}
 		m_menuObject.push_back(object);
+	}
+	else  if (listObject == MAP_OBJECT) {
+		if (m_mapObject.size() == 0) {
+			m_mapObject.push_back(object);
+			return;
+		}
+		float zPos = object->GetPosition().z;
+		if (zPos >= m_mapObject[0]->GetPosition().z) {
+			m_mapObject.insert(m_mapObject.begin(), object);
+			return;
+		}
+		for (int i = 1;i < m_mapObject.size();i++) {
+			if (m_mapObject[i - 1]->GetPosition().z >= zPos && zPos >= m_mapObject[i]->GetPosition().z) {
+				m_mapObject.insert(m_mapObject.begin() + i, object);
+				return;
+			}
+		}
+		m_mapObject.push_back(object);
 	}
 	else if (listObject == PAUSE_OBJECT) {
 		if (m_pauseObject.size() == 0) {
@@ -970,7 +1092,8 @@ Vector2& SceneManager2D::get2Dpos(float x, float y, float z, int listObjet)
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
 	if (listObjet == PLAY_OBJECT)
-	glhProjectf(x, y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+		glhProjectf(x, y, z, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	else if (listObjet == MAP_OBJECT) glhProjectf(x, y, z, m_mapCamera->GetViewMatrix(), m_mapCamera->GetProjectionMatrix(), viewPort, Dim);
 	else glhProjectf(x, y, z, m_menuCamera->GetViewMatrix(), m_menuCamera->GetProjectionMatrix(), viewPort, Dim);
 	return2D.x = Dim[0];
 	return2D.y = Dim[1];
@@ -984,8 +1107,10 @@ Vector3& SceneManager2D::get3Dpos(float x, float y, int listObjet)
 	viewPort[0] = 0;viewPort[1] = 0;
 	viewPort[2] = Globals::screenWidth;
 	viewPort[3] = Globals::screenHeight;
-	if(listObjet==PLAY_OBJECT)
-	glhUnProjectf(x, y, 0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	if (listObjet == PLAY_OBJECT)
+		glhUnProjectf(x, y, 0.0, m_mainCamera->GetViewMatrix(), m_mainCamera->GetProjectionMatrix(), viewPort, Dim);
+	else if (listObjet == MAP_OBJECT)
+		glhUnProjectf(x, y, 0.0, m_mapCamera->GetViewMatrix(), m_mapCamera->GetProjectionMatrix(), viewPort, Dim);
 	else glhUnProjectf(x, y, 0.0, m_menuCamera->GetViewMatrix(), m_menuCamera->GetProjectionMatrix(), viewPort, Dim);
 	return3D.x = Dim[0];
 	return3D.y = Dim[1];

@@ -10,11 +10,12 @@
 
 #include "UIComponent.h"
 #include "Button.h"
-
+#include"UnitButton.h"
 #define PLAY_OBJECT 0
 #define MENU_OBJECT 1
 #define PAUSE_OBJECT 2
 #define GAMEOVER_OBJECT 3
+#define MAP_OBJECT 5
 
 class SceneManager2D
 {
@@ -26,9 +27,9 @@ public:
 private:
 	Vector2 return2D;
 	Vector3 return3D;
-	std::vector<Sprite*> m_listObject,m_menuObject;
+	std::vector<Sprite*> m_listObject,m_menuObject,m_mapObject;
 	std::vector<Sprite*> m_pauseObject,m_gameoverObject;
-	Camera2D* m_mainCamera,*m_menuCamera;
+	Camera2D* m_mainCamera,*m_menuCamera,*m_mapCamera;
 	Player* m_curent;
 	CombatController* m_combatController = NULL;
 
@@ -44,6 +45,7 @@ public:
 	bool LoadScene(char* dataSceneFile);
 	bool LoadMenuScene(char* dataSceneFile);
 	std::vector<Button*> LoadPauseScene(char* dataSceneFile);
+	std::vector<UnitButton*> LoadMapScene(char* dataSceneFile);
 	std::vector<Button*> LoadGameOverScene(char* dataSceneFile);
 	void SetMainCamera(Camera2D * camera, int listObjet = PLAY_OBJECT);
 	Camera2D& GetMainCamera(int listObjet = PLAY_OBJECT);

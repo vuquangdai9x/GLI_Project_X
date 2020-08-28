@@ -2,7 +2,7 @@
 #include "UIComponent.h"
 class Button : public UIComponent
 {
-private:
+protected:
 	float x, y;
 	float width, height;
 	float __w, __h;

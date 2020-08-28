@@ -4,6 +4,7 @@
 #include"GS_MainMenu.h"
 #include"GS_PlayState.h"
 #include"GS_PauseState.h"
+#include "MapEditor.h"
 #include"GS_GameOverState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
@@ -34,6 +35,9 @@ void GameStateManager::Push(int state)
 	}
 	else if (state == GAMEOVER) {
 		this->states.push(new GS_GameOverState());
+	}
+	else if (state == MAP) {
+		this->states.push(new MapEditor());
 	}
 }
 
