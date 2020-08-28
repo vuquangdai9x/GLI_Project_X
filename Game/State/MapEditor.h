@@ -16,6 +16,7 @@ public:
 	void Update(float deltaTime);
 	void addObject();
 	void KeyPress();
+	Sprite* checkInside(float x, float y);
 private:
 	std::vector<UnitButton*> button;
 	int m_mouseDragCheck=0;

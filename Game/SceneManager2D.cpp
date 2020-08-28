@@ -725,11 +725,12 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 	LoadAnimation(fIn, obs);
 	AddObject(obs, MAP_OBJECT);
 
-	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
+	fscanf(fIn, "OBSTACALS %d\n", &iNumOfObject);
 	std::vector<UnitButton*> listButton;
 	UnitInfor infor;
 	for (int i = 0; i < iNumOfObject; i++) {
-		fscanf(fIn, "\nID %d\n", &iObjectId);
+		infor.type = OBSTACLE_UNIT;
+		fscanf(fIn, "\nID %d\n", &infor.id);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
@@ -737,6 +738,13 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 		rotation = rotation * 2 * M_PI / 360;
 		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "TYPE %s\n", shapeType);
+		if (strcmp(shapeType, "RECT") == 0) {
+			infor.boxType = REACT_UNIT;
+		}
+		else {
+			infor.boxType = TRIAGLE_UNIT;
+		}
 		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
 		UnitButton* button = new UnitButton(iObjectId);
 		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
@@ -744,6 +752,7 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
 		button->SetRenderType(UIComponent::RenderType::FitHeight);
 		infor.mainTex = iMainTexId;
+
 		button->setInformation(infor);
 		AddObject(button, MAP_OBJECT);
 		listButton.push_back(button);
@@ -1070,6 +1079,16 @@ void SceneManager2D::RemoveObject(Sprite* object)
 	for (int i = 0;i < m_listObject.size();i++) {
 		if (m_listObject[i] == object) {
 			m_listObject.erase(m_listObject.begin()+i);
+			break;
+		}
+	}
+}
+
+void SceneManager2D::RemoveMapObject(Sprite* object)
+{
+	for (int i = 0;i < m_mapObject.size();i++) {
+		if (m_mapObject[i] == object) {
+			m_mapObject.erase(m_mapObject.begin() + i);
 			break;
 		}
 	}

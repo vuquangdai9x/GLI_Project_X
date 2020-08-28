@@ -42,7 +42,7 @@ void MapEditor::Render()
 
 void MapEditor::Update(float deltaTime)
 {
-	if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) m_currentSprite = NULL;
+	
 	if (m_curent != NULL) {
 		addObject();
 		m_curent = NULL;
@@ -53,20 +53,44 @@ void MapEditor::Update(float deltaTime)
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->Update(deltaTime);
 	}
-	//Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera(MAP_OBJECT);
-	
-	if (m_currentSprite!=NULL) {
+	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera(MAP_OBJECT);
+	Vector3 cameraPos = camera.GetPosition();
+	cameraPos.y += (Singleton<InputManager>::GetInstance()->GetBit(InputManager::W) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::S)) * deltaTime*camera.GetZoom();
+	cameraPos.x += ((Singleton<InputManager>::GetInstance()->GetBit(InputManager::D) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::A))) * deltaTime* camera.GetZoom();
+	camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Q), deltaTime);
+	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);
+	camera.SetPosition(cameraPos);
+	if (m_currentSprite!=NULL&& Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_MOVE) {
 		int iMousePosX, iMousePosY, pre_x, pre_y;
 		Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
-		float f_iMousePosX = iMousePosX, f_iMousePosY = iMousePosY;
-
-		Vector3 pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(iMousePosX, iMousePosY, MENU_OBJECT);
+		Vector3 pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(iMousePosX, iMousePosY, MAP_OBJECT);
 		Vector3 Pos = m_currentSprite->GetPosition();
 		Pos.x = pos3D.x;
 		Pos.y = pos3D.y;
 		m_currentSprite->SetPosition(Pos);
-		Singleton<InputManager>::GetInstance()->fixButton();
+		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+			for (int i = 0;i < m_Obstacle.size();i++) {
+				if (m_Obstacle[i] == m_currentSprite) {
+					m_Obstacle.erase(m_Obstacle.begin() + i);
+					break;
+				}
+			}
+			Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_currentSprite);
+			delete m_currentSprite;
+			m_currentSprite = NULL;
+		}
+		//Singleton<InputManager>::GetInstance()->fixButton();
 		
+	}
+	else if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK&& m_currentSprite==NULL) {
+		int iMousePosX, iMousePosY, pre_x, pre_y;
+		Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
+		Vector3 pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(iMousePosX, iMousePosY, MAP_OBJECT);
+		m_currentSprite = checkInside(pos3D.x, pos3D.y);
+		Singleton<InputManager>::GetInstance()->fixButton();
+	}
+	else if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK&& m_currentSprite != NULL) {
+		m_currentSprite = NULL; Singleton<InputManager>::GetInstance()->fixButton();
 	}
 }
 
@@ -81,7 +105,7 @@ void MapEditor::addObject()
 	Vector2 scale;
 	unsigned int uiHexColor;
 	float alpha;
-	Obstacle* obs = new Obstacle(1, 0);
+	Obstacle* obs = new Obstacle(m_curent->id, 0);
 	iMaterialId = 0;
 	iMainTexId = m_curent->mainTex;
 	rotation = 0;
@@ -95,10 +119,25 @@ void MapEditor::addObject()
 	obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	m_currentSprite = obs;
 	Singleton<SceneManager2D>::GetInstance()->AddObject(obs, MAP_OBJECT);
+	if (m_curent->type == OBSTACLE_UNIT) {
+		m_Obstacle.push_back(obs);
+	}
 
 }
 
 void MapEditor::KeyPress()
 {
+}
+
+Sprite* MapEditor::checkInside(float x, float y)
+{
+	for (int i = 0;i < m_Obstacle.size();i++) {
+		Vector3 pos3d = m_Obstacle[i]->GetPosition();
+		float width = m_Obstacle[i]->GetOrgSize().x * m_Obstacle[i]->GetScale().x;
+		float height = m_Obstacle[i]->GetOrgSize().y * m_Obstacle[i]->GetScale().y;
+		if (x< pos3d.x + width / 2 && x > pos3d.x - width / 2 && y< pos3d.y + height / 2 && y > pos3d.y - height / 2)
+			return m_Obstacle[i];
+	}
+	return nullptr;
 }
 

@@ -42,6 +42,7 @@ public:
 	void AddObject(Sprite* object,int listObjet = PLAY_OBJECT);
 	Sprite& GetObjectByID(int id);
 	void RemoveObject(Sprite* object);
+	void RemoveMapObject(Sprite* object);
 	bool LoadScene(char* dataSceneFile);
 	bool LoadMenuScene(char* dataSceneFile);
 	std::vector<Button*> LoadPauseScene(char* dataSceneFile);

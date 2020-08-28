@@ -46,6 +46,7 @@ public:
 	Vector3 GetPosition();
 	virtual void SetScale(Vector2 scale);
 	Vector2 GetScale();
+	Vector2 GetOrgSize();
 	virtual void SetColor(unsigned int hexColor, float alpha);
 	virtual void SetColor(Vector4 color);
 	Vector4 GetColor();

@@ -1,9 +1,15 @@
 #pragma once
 #include "Button.h"
+#define REACT_UNIT 0
+#define TRIAGLE_UNIT 1
+
+#define OBSTACLE_UNIT 0
+
 struct UnitInfor {
 	int type;
 	int boxType;
 	int mainTex;
+	int id;
 };
 class UnitButton :public Button
 {

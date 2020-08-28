@@ -205,6 +205,11 @@ Vector2 Sprite::GetScale()
 	return m_scale;
 }
 
+Vector2 Sprite::GetOrgSize()
+{
+	return m_originSize;
+}
+
 void Sprite::SetColor(unsigned int hexColor, float alpha) {
 	m_color.x = ((hexColor & 0xFF0000) >> 16) / (float)255;
 	m_color.y = ((hexColor & 0x00FF00) >> 8) / (float)255;
