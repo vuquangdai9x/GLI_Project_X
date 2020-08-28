@@ -20,7 +20,7 @@ public:
 private:
 	std::vector<UnitButton*> button;
 	int m_mouseDragCheck=0;
-	std::vector<Sprite*> m_Obstacle;
+	std::vector<Sprite*> m_Obstacle,m_suicudeBug;
 	UnitInfor *m_curent ;
 	Sprite* m_currentSprite ;
 };

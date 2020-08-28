@@ -757,6 +757,32 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 		AddObject(button, MAP_OBJECT);
 		listButton.push_back(button);
 	}
+	fscanf(fIn, "#SUICIDEBUG\n");
+	SuicideBug templateBug(-1);
+	LoadAnimation(fIn, &templateBug);
+	{
+		infor.type = SUICIDEBUG_UNIT;
+		fscanf(fIn, "\nID %d\n", &infor.id);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		UnitButton* button = new UnitButton(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+		infor.mainTex = iMainTexId;
+		button->GetAnimationController().Clone(templateBug.GetAnimationController());
+		button->SetUseAnimation(templateBug.CheckUseAnimation());
+		button->setInformation(infor);
+		AddObject(button, MAP_OBJECT);
+		listButton.push_back(button);
+	}
 
 	float nearPlane, farPlane, zoom;
 

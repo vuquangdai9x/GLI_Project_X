@@ -4,7 +4,7 @@
 #define TRIAGLE_UNIT 1
 
 #define OBSTACLE_UNIT 0
-
+#define SUICIDEBUG_UNIT 2
 struct UnitInfor {
 	int type;
 	int boxType;

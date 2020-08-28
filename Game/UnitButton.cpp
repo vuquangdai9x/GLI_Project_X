@@ -14,6 +14,7 @@ void UnitButton::setBuffer(UnitInfor **buf)
 
 void UnitButton::Update(float deltaTime)
 {
+	
 	if(checkMouse()) {
 		if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) {
 			DWORD start = GetTickCount();
@@ -23,6 +24,7 @@ void UnitButton::Update(float deltaTime)
 			}
 		}
 		else {
+			Sprite::Update(deltaTime);
 			this->SetColor(0xffafff, 1);
 		}
 	}

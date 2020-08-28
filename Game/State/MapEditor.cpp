@@ -75,6 +75,12 @@ void MapEditor::Update(float deltaTime)
 					break;
 				}
 			}
+			for (int i = 0;i < m_suicudeBug.size();i++) {
+				if (m_suicudeBug[i] == m_currentSprite) {
+					m_suicudeBug.erase(m_suicudeBug.begin() + i);
+					break;
+				}
+			}
 			Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_currentSprite);
 			delete m_currentSprite;
 			m_currentSprite = NULL;
@@ -96,6 +102,7 @@ void MapEditor::Update(float deltaTime)
 
 void MapEditor::addObject()
 {
+	if (m_curent->type == OBSTACLE_UNIT) {
 	int iNumOfObject, iObjectId;
 	int iMaterialId;
 	int iMainTexId;
@@ -119,8 +126,35 @@ void MapEditor::addObject()
 	obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	m_currentSprite = obs;
 	Singleton<SceneManager2D>::GetInstance()->AddObject(obs, MAP_OBJECT);
-	if (m_curent->type == OBSTACLE_UNIT) {
+	
 		m_Obstacle.push_back(obs);
+	}
+	else if (m_curent->type == SUICIDEBUG_UNIT) {
+		int iNumOfObject, iObjectId;
+		int iMaterialId;
+		int iMainTexId;
+		int iFontId;
+		Vector3 position;
+		float rotation;
+		Vector2 scale;
+		unsigned int uiHexColor;
+		float alpha;
+		Obstacle* obs = new Obstacle(m_curent->id, 0);
+		iMaterialId = 0;
+		iMainTexId = m_curent->mainTex;
+		rotation = 0;
+		scale.x = 1;
+		scale.y = 1;
+		uiHexColor = 0xffffff;
+		alpha = 0.9;
+		position.x = 3;
+		position.y = 3;
+		position.z = -0.9;
+		obs->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		m_currentSprite = obs;
+		Singleton<SceneManager2D>::GetInstance()->AddObject(obs, MAP_OBJECT);
+
+		m_suicudeBug.push_back(obs);
 	}
 
 }
@@ -137,6 +171,13 @@ Sprite* MapEditor::checkInside(float x, float y)
 		float height = m_Obstacle[i]->GetOrgSize().y * m_Obstacle[i]->GetScale().y;
 		if (x< pos3d.x + width / 2 && x > pos3d.x - width / 2 && y< pos3d.y + height / 2 && y > pos3d.y - height / 2)
 			return m_Obstacle[i];
+	}
+	for (int i = 0;i < m_suicudeBug.size();i++) {
+		Vector3 pos3d = m_suicudeBug[i]->GetPosition();
+		float width = m_suicudeBug[i]->GetOrgSize().x * m_suicudeBug[i]->GetScale().x;
+		float height = m_suicudeBug[i]->GetOrgSize().y * m_suicudeBug[i]->GetScale().y;
+		if (x< pos3d.x + width / 2 && x > pos3d.x - width / 2 && y< pos3d.y + height / 2 && y > pos3d.y - height / 2)
+			return m_suicudeBug[i];
 	}
 	return nullptr;
 }
