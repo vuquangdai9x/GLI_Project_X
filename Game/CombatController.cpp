@@ -3,6 +3,8 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 
+#include "EffectManager.h"
+
 CombatController::CombatController(Player* player): m_pPlayer(player)
 {
 	m_iCurrentBulletIndex = -1;
@@ -38,6 +40,9 @@ void CombatController::Fire()
 			m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
 			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
 		);
+
+		// TODO: add fire effect
+		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_pPlayer->GetPosition(), 10000);
 	}
 }
 
@@ -138,14 +143,14 @@ void CombatController::AddBullet(int iBulletTypeId, int iAmount)
 	for (int i = 0;i < m_bulletStorages.size(); i++) {
 		if (m_bulletStorages[i]->GetId() == iBulletTypeId) {
 			m_bulletStorages[i]->AddBullet(iAmount);
+			if (i == m_iCurrentBulletIndex) {
+				m_pPlayer->getHUDController()->UpdateBulletStatus(
+					m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
+					m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
+				);
+			}
 			break;
 		}
-	}
-	if (iBulletTypeId == m_iCurrentBulletIndex) {
-		m_pPlayer->getHUDController()->UpdateBulletStatus(
-			m_bulletStorages[m_iCurrentBulletIndex]->GetCountBullet(),
-			m_bulletStorages[m_iCurrentBulletIndex]->GetCapacity()
-		);
 	}
 }
 

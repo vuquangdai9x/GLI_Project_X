@@ -188,6 +188,12 @@
     <None Include="..\Resources\Shaders\TextShaderFS.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\ParticlesShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\ParticlesShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Datas\scene2d.txt">
@@ -197,6 +203,9 @@
       <Filter>Resources\Datas</Filter>
     </Text>
     <Text Include="..\Resources\Datas\resourcesMainMenu.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
+    <Text Include="..\Resources\Datas\effects.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
   </ItemGroup>

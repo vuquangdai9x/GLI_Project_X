@@ -192,10 +192,19 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Header Files\effect</Filter>
     </ClInclude>
-    <ClInclude Include="Firework.h">
+    <ClInclude Include="CurveFunction.h">
       <Filter>Header Files\effect</Filter>
     </ClInclude>
-    <ClInclude Include="CurveFunction.h">
+    <ClInclude Include="MaterialParticle2D.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectCompositePool.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectComposite.h">
       <Filter>Header Files\effect</Filter>
     </ClInclude>
   </ItemGroup>
@@ -324,6 +333,21 @@
       <Filter>Source Files\effect</Filter>
     </ClCompile>
     <ClCompile Include="Effect.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialParticle2D.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlesEmitter.h">
+      <Filter>Header Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlesEmitter.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectComposite.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectCompositePool.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
   </ItemGroup>

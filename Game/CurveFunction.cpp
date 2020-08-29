@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "CurveFunction.h"
 
 float CurveFunction::EaseInOut(float start, float end, float value) {

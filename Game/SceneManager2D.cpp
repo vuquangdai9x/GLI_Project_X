@@ -22,6 +22,8 @@
 #include "UIComponent.h"
 #include "UIText.h"
 
+#include "EffectManager.h"
+
 SceneManager2D::SceneManager2D()
 {
 	m_mainCamera = NULL;
@@ -621,12 +623,16 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
+		Singleton<EffectManager>::GetInstance()->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
+
+		printf("y = %f\n", m_mainCamera->GetPosition().y);
 	}
 	else {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -638,9 +644,11 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 void SceneManager2D::Render(int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		for (int i = 0; i < m_listObject.size(); i++) {
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}
+		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
 	}
 	else {
 		for (int i = 0; i < m_menuObject.size(); i++) {

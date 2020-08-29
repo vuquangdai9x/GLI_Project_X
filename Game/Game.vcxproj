@@ -133,7 +133,9 @@
     <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="DeadlyBird.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectComposite.cpp" />
     <ClCompile Include="EffectManager.cpp" />
+    <ClCompile Include="EffectCompositePool.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FallingRock.cpp" />
     <ClCompile Include="FallingRockPool.cpp" />
@@ -147,8 +149,11 @@
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="ListenerClass.cpp" />
     <ClCompile Include="main_game.cpp" />
+    <ClCompile Include="MaterialParticle2D.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="ParticlesEmitter.cpp" />
+    <ClCompile Include="ParticlesEmitter.h" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourcesManager2D.cpp" />
     <ClCompile Include="RockyGolem.cpp" />
@@ -178,11 +183,12 @@
     <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="DeadlyBird.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectComposite.h" />
     <ClInclude Include="EffectManager.h" />
+    <ClInclude Include="EffectCompositePool.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FallingRock.h" />
     <ClInclude Include="FallingRockPool.h" />
-    <ClInclude Include="Firework.h" />
     <ClInclude Include="FloatingFish.h" />
     <ClInclude Include="BulletPool.h" />
     <ClInclude Include="BulletType.h" />
@@ -193,8 +199,10 @@
     <ClInclude Include="HUDController.h" />
     <ClInclude Include="ItemBody.h" />
     <ClInclude Include="ListenerClass.h" />
+    <ClInclude Include="MaterialParticle2D.h" />
     <ClInclude Include="MaterialText2D.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Particle.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesManager2D.h" />
     <ClInclude Include="RockyGolem.h" />
