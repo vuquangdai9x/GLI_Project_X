@@ -234,6 +234,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	
 	printf("[msg] SceneManager2D: HUD | Init health icon\n");
 
+	position.x = position.y = 0;
+	position.z = -1;
 	fscanf(fIn, "+ HEALTH BAR\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);

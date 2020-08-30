@@ -1,4 +1,8 @@
 #pragma once
 struct Particle {
-	float theta;
+	float angle;
+	float radiusOffset;
+	//float velocityOffset;
+	float sizeOffset;
+	Vector4 colorOffset;
 };

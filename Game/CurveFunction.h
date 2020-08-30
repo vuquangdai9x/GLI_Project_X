@@ -5,6 +5,7 @@
 // Usually use in animation
 // Reference: https://easings.net/
 // 
+typedef float (*CurveFnPtr)(float,float,float);
 class CurveFunction {
 public:
 	static float EaseInOut(float start, float end, float value);
@@ -12,4 +13,5 @@ public:
 	static float EaseOutCirc(float start, float end, float value);
 	static float EaseOutQuint(float start, float end, float value);
 	static float GetColorFromGradient(unsigned int v1, unsigned int v2, float value);
+	static CurveFnPtr GetFunctionPtr(char name[]);
 };

@@ -4,22 +4,22 @@ class MaterialParticle2D{
 protected:
 	int m_id;
 	Shaders* m_shader;
-	//Texture* m_mainTexure;
-	GLint m_u_mainTextureLocation = -1;
-	//GLint m_a_uvLocation = -1;
-	GLint m_u_wvpLocation = -1;
+	GLint m_u_mainTextureLocation;
+	GLint m_u_wvpLocation;
 
-	//GLint m_u_sizeLocation = -1;
-	//GLint m_u_offsetLocation = -1;
+	GLint m_a_angleLocation;
+	GLint m_a_radiusOffsetLocation;
+	GLint m_a_colorOffsetLocation;
+	GLint m_a_sizeOffsetLocation;
+	//GLint m_a_velocityOffsetLocation;
 
-	GLint m_u_colorLocation = -1;
-	GLint m_u_pointSizeLocation = -1;
-
-	GLint m_u_KLocation = -1;
-	GLint m_a_thetaLocation = -1;
+	GLint m_u_radiusLocation;
+	GLint m_u_colorLocation;
+	GLint m_u_sizeLocation;
+	//GLint m_u_velocityLocation;
 public:
 	MaterialParticle2D(int id);
 	int GetId();
 	virtual bool Init(Shaders* shader);
-	virtual void PrepareShader(Matrix& WVP, float k, float pointSize, Texture* texture, Vector4* color);
+	virtual void PrepareShader(Matrix& WVP, Texture* texture, float radius, float size,Vector4* color);
 };

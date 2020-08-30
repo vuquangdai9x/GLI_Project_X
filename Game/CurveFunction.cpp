@@ -29,3 +29,22 @@ float CurveFunction::EaseOutQuint(float start, float end, float value) {
 	float t = 1 - pow(1 - value, 5);
 	return (t*(end - start) + start);
 }
+
+CurveFnPtr CurveFunction::GetFunctionPtr(char curveName[]) {
+	if (strcmp("Linear", curveName) == 0) {
+		return CurveFunction::Linear;
+	}
+	else if (strcmp("EaseInOut", curveName) == 0) {
+		return CurveFunction::EaseInOut;
+	}
+	else if (strcmp("EaseOutCirc", curveName) == 0) {
+		return CurveFunction::EaseOutCirc;
+	}
+	else if (strcmp("EaseOutQuint", curveName) == 0) {
+		return CurveFunction::EaseOutQuint;
+	}
+	else {
+		printf("[ERR] CurveFunction::GetFunctionPtr: Invalid curveNamed : %s\n", curveName);
+		return NULL;
+	}
+}

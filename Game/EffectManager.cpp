@@ -1,6 +1,7 @@
 #include "EffectManager.h"
 #include "ParticlesEmitter.h"
 #include "ResourcesManager2D.h"
+#include "CurveFunction.h"
 
 EffectManager::EffectManager()
 {
@@ -148,26 +149,62 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				int iNumOfParticle;
 				float cycleTime;
 				int iNumOfLoop;
-				float k, size;
-				unsigned int uiHexColor;
-				float alpha;
-				Vector4 color;
 				ParticlesEmitter* emitter;
 				Texture* texture;
+				char curveName[30];
 
 				fscanf(fIn, "\nMATERIAL %d\n", &iMaterialId);
 				fscanf(fIn, "TEXTURE %d\n", &iTextureId);
 				fscanf(fIn, "PARTICLES AMOUNT %d\n", &iNumOfParticle);
 				fscanf(fIn, "CYCLE TIME %f\n", &cycleTime);
 				fscanf(fIn, "LOOP %d\n", &iNumOfLoop);
-				fscanf(fIn, "K %f\n", &k);
-				fscanf(fIn, "SIZE %f\n", &size);
-				fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-				HexColorToVec4(color, uiHexColor, alpha);
-
 				emitter = new ParticlesEmitter(position, scale, rotation);
+
+				float emitAngle, emitAngleRandomRange;
+				ParticlesEmitter::EmitType emitType;
+				char emitTypeName[20];
+				fscanf(fIn, "EMIT ANGLE %f\n", &emitAngle);
+				emitAngle *= (M_PI / 180);
+				fscanf(fIn, "EMIT ANGLE RANDOM %f\n", &emitAngleRandomRange);
+				emitAngleRandomRange *= (M_PI / 180);
+				fscanf(fIn, "EMIT TYPE %s\n", emitTypeName);
+				if (strcmp("PURE_RANDOM", emitTypeName) == 0) {
+					emitType = ParticlesEmitter::EmitType::PureRandom;
+				}
+				else if (strcmp("DISTRIBUTED", emitTypeName) == 0) {
+					emitType = ParticlesEmitter::EmitType::Distributed;
+				}
+				else {
+					printf("[ERR] EffectManager::Init: Emit type invalid : %s\n", emitTypeName);
+				}
+				emitter->SetAngleInfo(emitAngle, emitAngleRandomRange, emitType);
+
+				float initValue, endValue, offsetRandomValue;
+				fscanf(fIn, "RADIUS INIT %f\n", &initValue);
+				fscanf(fIn, "RADIUS END %f\n", &endValue);
+				fscanf(fIn, "RADIUS RANDOM %f\n", &offsetRandomValue);
+				fscanf(fIn, "RADIUS CURVE %s\n", curveName);
+				emitter->SetRadiusInfo(initValue, endValue, offsetRandomValue, CurveFunction::GetFunctionPtr(curveName));
+				
+				fscanf(fIn, "SIZE INIT %f\n", &initValue);
+				fscanf(fIn, "SIZE END %f\n", &endValue);
+				fscanf(fIn, "SIZE RANDOM %f\n", &offsetRandomValue);
+				fscanf(fIn, "SIZE CURVE %s\n", curveName);
+				emitter->SetSizeInfo(initValue, endValue, offsetRandomValue, CurveFunction::GetFunctionPtr(curveName));
+				
+				unsigned int uiHexColorInit, uiHexColorEnd, uiHexColorOffsetRandom;
+				fscanf(fIn, "COLOR INIT %x\n", &uiHexColorInit, &initValue);
+				fscanf(fIn, "COLOR END %x\n", &uiHexColorEnd, &endValue);
+				fscanf(fIn, "COLOR RANDOM %x\n", &uiHexColorOffsetRandom, &offsetRandomValue);
+				fscanf(fIn, "SIZE CURVE %s\n", curveName);
+				Vector4 colorInit, colorEnd, colorOffsetRandom;
+				HexColorToVec4(colorInit, uiHexColorInit, initValue);
+				HexColorToVec4(colorEnd, uiHexColorEnd, endValue);
+				HexColorToVec4(colorOffsetRandom, uiHexColorOffsetRandom, offsetRandomValue);
+				emitter->SetColorInfo(colorInit, colorEnd, colorOffsetRandom, CurveFunction::GetFunctionPtr(curveName));
+				
 				texture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iTextureId);
-				if (emitter->Init(GetMaterial(iMaterialId), texture, iNumOfParticle, k, size, color, cycleTime, iNumOfLoop)) {
+				if (emitter->Init(GetMaterial(iMaterialId), texture, iNumOfParticle, cycleTime, iNumOfLoop)) {
 					templateEffComp->AddEffect(emitter);
 					iEffectValidCount++;
 					printf("[msg] EffectManager::Init: Done Init Emitter %d : %s\n", j, effectType);

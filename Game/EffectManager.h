@@ -17,7 +17,6 @@ private:
 	void HexColorToVec4(Vector4& color, unsigned uiHexColor, float alpha);
 	MaterialParticle2D* GetMaterial(int iMaterialId);
 	Shaders* GetShader(int iShaderId);
-
 public:
 	ParticlesEmitter* m_emitter = NULL;
 
