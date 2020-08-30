@@ -3,7 +3,8 @@
 class SpriteLoopTexture : public Sprite {
 protected:
 	Vector2 m_originPos;
-	int m_iRenderLoopAmount;
+	int m_iLoopHorizontalAmount, m_iLoopVerticalAmount;
+	Matrix m_loopScaleMatrix;
 public:
 	SpriteLoopTexture(int id);
 	virtual ~SpriteLoopTexture();
@@ -12,7 +13,5 @@ public:
 	virtual void Init(Sprite& sprite);
 	void SetOriginPos(Vector2 newPos);
 	Vector2 GetOriginPos();
-
-	void SetLoopAmount(int value);
-	int GetLoopAmount();
+	void SetLoopAmount(int iHorizontalAmount, int iVerticalAmount);
 };

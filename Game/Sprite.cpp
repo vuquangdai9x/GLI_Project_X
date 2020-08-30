@@ -58,6 +58,8 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	SetUseAnimation(sprite.m_isUseAnimation);
 }
 
+Vector2 Sprite::GetOriginSize() { return m_originSize; }
+
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
 {
 	// Transformation vectors

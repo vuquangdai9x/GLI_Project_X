@@ -4,7 +4,7 @@
 #include "Player.h"
 class MapBorder: public SpriteLoopTexture {
 private:
-	ItemBody* m_obstacleBody;
+	ItemBody* m_physicsBody;
 	Player* m_player;
 	float m_damage;
 public:

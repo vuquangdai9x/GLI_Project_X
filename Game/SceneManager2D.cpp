@@ -153,7 +153,9 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	printf("[msg] SceneManager2D: Init player\n");
 
 	// set up backgrounds
+	int iLoopVertical, iLoopHorizontal;
 	int iNumOfBackground;
+	float scaleFactor;
 	fscanf(fIn, "#BACKGROUNDS %d\n", &iNumOfBackground);
 	for (int i = 0;i < iNumOfBackground;i++) {
 		fscanf(fIn, "ID %d\n", &iObjectId);
@@ -161,17 +163,20 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
 
 		int iNumOfAnimations;
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 
-		Player* player = new Player(iObjectId);
-		player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-		player->createBox2D();
-		AddObject(player);
-		m_currentPlayer = player;
+		MapBorder* bgr = new MapBorder(iObjectId,player,0);
+		position.x = player->GetPosition().x;
+		bgr->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		bgr->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+		AddObject(bgr);
+		LoadAnimation(fIn, bgr);
 
-		LoadAnimation(fIn, player);
+		scaleFactor = mapWidth / bgr->GetOriginSize().x / 2;
+		bgr->SetScale(bgr->GetScale() * scaleFactor);
 
 		printf("[msg] SceneManager2D: Load background %d\n", iObjectId);
 	}
@@ -186,13 +191,15 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
 	MapBorder* borderLeft = new MapBorder(iObjectId, player, borderDamage);
-	position.y = player->GetPosition().y;
 	position.x = player->GetPosition().x - mapWidth / 2;
-	borderLeft->Init(position, 0, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderLeft->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
 	borderLeft->createCollider();
 	AddObject(borderLeft);
 	LoadAnimation(fIn, borderLeft);
+	borderLeft->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+	printf("[msg] SceneManager2D: Loaded Border Left %d\n", iObjectId);
 
 	// border right
 	fscanf(fIn, "#BORDER RIGHT\n");
@@ -202,13 +209,15 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
 	MapBorder* borderRight = new MapBorder(iObjectId, player, borderDamage);
-	position.y = player->GetPosition().y;
 	position.x = player->GetPosition().x + mapWidth / 2;
-	borderRight->Init(position, 0, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderRight->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
 	borderRight->createCollider();
 	AddObject(borderRight);
 	LoadAnimation(fIn, borderRight);
+	borderRight->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+	printf("[msg] SceneManager2D: Loaded Border Right %d\n", iObjectId);
 
 	// set up HUD
 	fscanf(fIn, "\n#HUD\n", &iObjectId);

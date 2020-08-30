@@ -162,6 +162,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Datas\effects.txt" />
+    <Text Include="..\Resources\Datas\map1-1.txt" />
+    <Text Include="..\Resources\Datas\map1-2.txt" />
     <Text Include="..\Resources\Datas\resourcesMainMenu.txt" />
     <Text Include="..\Resources\Datas\resources2d.txt" />
     <Text Include="..\Resources\Datas\scene2d.txt" />

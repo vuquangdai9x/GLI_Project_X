@@ -3,7 +3,8 @@
 SpriteLoopTexture::SpriteLoopTexture(int id):Sprite(id)
 {
 	m_originPos = Vector2(0, 0);
-	m_iRenderLoopAmount = 1;
+	m_iLoopVerticalAmount = m_iLoopHorizontalAmount = 1;
+	m_loopScaleMatrix.SetScale(m_iLoopHorizontalAmount, m_iLoopVerticalAmount, 1);
 }
 
 SpriteLoopTexture::~SpriteLoopTexture()
@@ -13,6 +14,8 @@ SpriteLoopTexture::~SpriteLoopTexture()
 void SpriteLoopTexture::Render(Camera2D* mainCamera)
 {
 	if (m_material2d == NULL || m_model == NULL) return;
+
+
 	m_WVP = m_transformMat * mainCamera->GetViewMatrix() * mainCamera->GetProjectionMatrix();
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_model->m_vboId);
@@ -25,9 +28,10 @@ void SpriteLoopTexture::Render(Camera2D* mainCamera)
 		offset.y = (m_position.y - m_originPos.y) / m_animationController.m_frameHeight / m_scale.y * 2;
 
 		m_material2d->SetMainTexture(m_animationController.GetTexture());
-		m_material2d->PrepareShader(m_WVP,
-			m_animationController.m_frameWidth,
-			m_animationController.m_frameHeight,
+		m_material2d->PrepareShader(
+			m_WVP,
+			m_animationController.m_frameWidth * m_iLoopHorizontalAmount,
+			m_animationController.m_frameHeight * m_iLoopVerticalAmount,
 			offset.x,
 			offset.y,
 			m_animationController.m_subWidth,
@@ -39,7 +43,16 @@ void SpriteLoopTexture::Render(Camera2D* mainCamera)
 		offset.x = (m_position.x - m_originPos.x) / m_originSize.x / m_scale.x / 2;
 		offset.y = (m_position.y - m_originPos.y) / m_originSize.y / m_scale.y / 2;
 		m_material2d->SetMainTexture(m_mainTexture);
-		m_material2d->PrepareShader(m_WVP, m_originSize.x, m_originSize.y, offset.x, offset.y, 1, 1, &m_color);
+		m_material2d->PrepareShader(
+			m_WVP,
+			m_originSize.x * m_iLoopHorizontalAmount,
+			m_originSize.y * m_iLoopVerticalAmount,
+			offset.x, 
+			offset.y, 
+			m_iLoopHorizontalAmount,
+			m_iLoopVerticalAmount,
+			&m_color
+		);
 	}
 
 	glDrawElements(GL_TRIANGLES, m_model->m_iNumOfIndice, GL_UNSIGNED_INT, 0);
@@ -71,7 +84,9 @@ Vector2 SpriteLoopTexture::GetOriginPos()
 	return m_originPos;
 }
 
-void SpriteLoopTexture::SetLoopAmount(int value) {
-	m_iRenderLoopAmount = value;
+void SpriteLoopTexture::SetLoopAmount(int iHorizontalAmount, int iVerticalAmount)
+{
+	m_iLoopHorizontalAmount = iHorizontalAmount;
+	m_iLoopVerticalAmount = iVerticalAmount;
+	m_loopScaleMatrix.SetScale(m_iLoopHorizontalAmount, m_iLoopVerticalAmount, 1);
 }
-int SpriteLoopTexture::GetLoopAmount() { return m_iRenderLoopAmount; }
