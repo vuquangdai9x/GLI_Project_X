@@ -17,6 +17,7 @@ Sprite::Sprite(int id)
 	m_mainTexture = NULL;
 }
 Sprite::~Sprite() {}
+
 void Sprite::Update(float deltaTime) {
 	if (m_isUseAnimation) m_animationController.UpdateAnim(deltaTime);
 }

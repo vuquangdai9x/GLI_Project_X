@@ -149,6 +149,7 @@
     <ClCompile Include="ItemBody.cpp" />
     <ClCompile Include="ListenerClass.cpp" />
     <ClCompile Include="main_game.cpp" />
+    <ClCompile Include="MapBorder.cpp" />
     <ClCompile Include="MaterialParticle2D.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="SceneManager2D.cpp" />
     <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteLoopTexture.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
     <ClCompile Include="State\GS_MainMenu.cpp" />
     <ClCompile Include="State\GS_PauseState.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="HUDController.h" />
     <ClInclude Include="ItemBody.h" />
     <ClInclude Include="ListenerClass.h" />
+    <ClInclude Include="MapBorder.h" />
+    <ClInclude Include="SpriteLoopTexture.h" />
     <ClInclude Include="MaterialParticle2D.h" />
     <ClInclude Include="MaterialText2D.h" />
     <ClInclude Include="Obstacle.h" />

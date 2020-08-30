@@ -24,6 +24,8 @@
 
 #include "EffectManager.h"
 
+#include "MapBorder.h"
+
 SceneManager2D::SceneManager2D()
 {
 	m_mainCamera = NULL;
@@ -124,6 +126,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	float alpha;
 	char shapeType[10];
 
+	// set up map 
+	char mapName[256];
+	float mapWidth;
+	fscanf(fIn, "#MAP %s\n", mapName);
+	fscanf(fIn, "WIDTH %f\n", &mapWidth);
+
 	// Set up player
 	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -139,10 +147,68 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->createBox2D();
 	AddObject(player);
 	m_currentPlayer = player;
-	
+
 	LoadAnimation(fIn, player);
-	
+
 	printf("[msg] SceneManager2D: Init player\n");
+
+	// set up backgrounds
+	int iNumOfBackground;
+	fscanf(fIn, "#BACKGROUNDS %d\n", &iNumOfBackground);
+	for (int i = 0;i < iNumOfBackground;i++) {
+		fscanf(fIn, "ID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+
+		int iNumOfAnimations;
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+
+		Player* player = new Player(iObjectId);
+		player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		player->createBox2D();
+		AddObject(player);
+		m_currentPlayer = player;
+
+		LoadAnimation(fIn, player);
+
+		printf("[msg] SceneManager2D: Load background %d\n", iObjectId);
+	}
+
+	// Set up map border
+	// border left
+	float borderDamage;
+	fscanf(fIn, "#BORDER LEFT\n");
+	fscanf(fIn, "ID %d\n", &iObjectId);
+	fscanf(fIn, "DAMAGE %f\n", &borderDamage);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	MapBorder* borderLeft = new MapBorder(iObjectId, player, borderDamage);
+	position.y = player->GetPosition().y;
+	position.x = player->GetPosition().x - mapWidth / 2;
+	borderLeft->Init(position, 0, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderLeft->createCollider();
+	AddObject(borderLeft);
+	LoadAnimation(fIn, borderLeft);
+
+	// border right
+	fscanf(fIn, "#BORDER RIGHT\n");
+	fscanf(fIn, "ID %d\n", &iObjectId);
+	fscanf(fIn, "DAMAGE %f\n", &borderDamage);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	MapBorder* borderRight = new MapBorder(iObjectId, player, borderDamage);
+	position.y = player->GetPosition().y;
+	position.x = player->GetPosition().x + mapWidth / 2;
+	borderRight->Init(position, 0, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderRight->createCollider();
+	AddObject(borderRight);
+	LoadAnimation(fIn, borderRight);
 
 	// set up HUD
 	fscanf(fIn, "\n#HUD\n", &iObjectId);

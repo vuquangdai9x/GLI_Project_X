@@ -207,6 +207,12 @@
     <ClInclude Include="EffectComposite.h">
       <Filter>Header Files\effect</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteLoopTexture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBorder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -349,6 +355,12 @@
     </ClCompile>
     <ClCompile Include="EffectCompositePool.cpp">
       <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteLoopTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MapBorder.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

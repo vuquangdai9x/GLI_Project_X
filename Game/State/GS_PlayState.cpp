@@ -13,8 +13,8 @@ GS_PlayState::GS_PlayState()
 {
     printf("GS_PlayState\n");
 	// 2D
-	//char sceneFile[50] = "Datas/scene2d.txt";
-	char sceneFile[50] = "Datas/map1-2.txt";
+	char sceneFile[50] = "Datas/scene2d.txt";
+	//char sceneFile[50] = "Datas/map1-2.txt";
 	char resourcesFile[50] = "Datas/resources2d.txt";
 	char effectFile[50] = "Datas/effects.txt";
 

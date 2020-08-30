@@ -32,11 +32,14 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 {
 	ItemBody *tmp=new ItemBody(type, x, y);
 	b2BodyDef bodyDef;
-	if (type != OBSTACLE) {
-		bodyDef.type = b2_dynamicBody;
+	if (type == OBSTACLE) {
+		bodyDef.type = b2_staticBody;
+	}
+	else if (type == MAP_BORDER) {
+		bodyDef.type = b2_kinematicBody;
 	}
 	else {
-		bodyDef.type = b2_staticBody;
+		bodyDef.type = b2_dynamicBody;
 	}
 	
 	bodyDef.position.Set(x, y);
@@ -55,7 +58,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	switch (type)
 	{
 	case PLAYER:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET)|(1 << SPECIAL_ENEMY);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
 		break;
 	case ENEMY:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
@@ -67,10 +70,13 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY)  | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET|1<<SPECIAL_ENEMY);
+		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
 		break;
 	case ENEMYBULLET:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << MAP_BORDER);
+		break;
+	case MAP_BORDER:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	}
 
