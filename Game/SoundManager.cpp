@@ -48,10 +48,10 @@ void SoundManager::Fire(int index)
 
 void SoundManager::Enemy(int state)
 {
-	if (state == P_GETITEM) {
+	if (state == E_INJUIRED) {
 		m_soloud.play(m_enemy[0]);
 	}
-	else if (state == P_CHANGE) {
+	else if (state == E_DIED) {
 		m_soloud.play(m_enemy[1]);
 	}
 }
