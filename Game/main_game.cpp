@@ -1,7 +1,22 @@
 //TrainingFramework.cpp : Defines the entry point for the console application.
 #pragma warning(disable: 4996)
 
+
 #include "stdafx.h"
+
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+// Replace _NORMAL_BLOCK with _CLIENT_BLOCK if you want the
+// allocations to be of _CLIENT_BLOCK type
+#else
+#define DBG_NEW new
+#endif
+#define new DBG_NEW
+
+
 #include "../Utilities/utilities.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "Box2D/Box2D.h"
@@ -88,6 +103,8 @@ void CleanUp()
 
 int _tmain(int argc, _TCHAR * argv[])
 {
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_FILE);
+	_CrtSetReportFile(_CRT_WARN, _CRTDBG_FILE_STDOUT);
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
 	ESContext esContext;
@@ -121,6 +138,7 @@ int _tmain(int argc, _TCHAR * argv[])
 	//MemoryDump();
 	printf("Press any key...\n");
 	_getch();
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
 

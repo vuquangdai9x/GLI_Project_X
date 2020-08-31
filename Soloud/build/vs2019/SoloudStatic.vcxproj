@@ -66,7 +66,8 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader></PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -78,9 +79,9 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;DEBUG;WITH_WINMM;WITH_NULL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\audiosource;..\..\src\backend;..\..\src\core;..\..\src\c_api;..\..\src\filter;..\..\src\tools;..\..\src\audiosource\monotone;..\..\src\audiosource\openmpt;..\..\src\audiosource\sfxr;..\..\src\audiosource\speech;..\..\src\audiosource\tedsid;..\..\src\audiosource\vic;..\..\src\audiosource\vizsn;..\..\src\audiosource\wav;..\..\src\backend\alsa;..\..\src\backend\coreaudio;..\..\src\backend\null;..\..\src\backend\openal;..\..\src\backend\opensles;..\..\src\backend\oss;..\..\src\backend\portaudio;..\..\src\backend\sdl;..\..\src\backend\sdl2_static;..\..\src\backend\sdl_static;..\..\src\backend\vita_homebrew;..\..\src\backend\wasapi;..\..\src\backend\winmm;..\..\src\backend\xaudio2;..\..\src\tools\codegen;..\..\src\tools\lutgen;..\..\src\tools\resamplerlab;..\..\src\tools\sanity;..\..\src\tools\tedsid2dump;..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-  <Lib>
-    <OutputFile>$(OutDir)soloud_static.lib</OutputFile>
-  </Lib>
+    <Lib>
+      <OutputFile>$(OutDir)soloud_static.lib</OutputFile>
+    </Lib>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -98,20 +99,22 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PrecompiledHeader></PrecompiledHeader>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
-      <DebugInformationFormat></DebugInformationFormat>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;WITH_WINMM;WITH_NULL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\audiosource;..\..\src\backend;..\..\src\core;..\..\src\c_api;..\..\src\filter;..\..\src\tools;..\..\src\audiosource\monotone;..\..\src\audiosource\openmpt;..\..\src\audiosource\sfxr;..\..\src\audiosource\speech;..\..\src\audiosource\tedsid;..\..\src\audiosource\vic;..\..\src\audiosource\vizsn;..\..\src\audiosource\wav;..\..\src\backend\alsa;..\..\src\backend\coreaudio;..\..\src\backend\null;..\..\src\backend\openal;..\..\src\backend\opensles;..\..\src\backend\oss;..\..\src\backend\portaudio;..\..\src\backend\sdl;..\..\src\backend\sdl2_static;..\..\src\backend\sdl_static;..\..\src\backend\vita_homebrew;..\..\src\backend\wasapi;..\..\src\backend\winmm;..\..\src\backend\xaudio2;..\..\src\tools\codegen;..\..\src\tools\lutgen;..\..\src\tools\resamplerlab;..\..\src\tools\sanity;..\..\src\tools\tedsid2dump;..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
-  <Lib>
-    <OutputFile>$(OutDir)soloud_static.lib</OutputFile>
-  </Lib>
+    <Lib>
+      <OutputFile>$(OutDir)soloud_static.lib</OutputFile>
+    </Lib>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
