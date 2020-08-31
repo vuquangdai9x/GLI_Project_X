@@ -32,7 +32,7 @@ void Player::setFlyState(FlyState fly)
 		m_desireFlySpeed = 5.0f + this->m_flySpeed;
 		break;
 	case SLow:
-		m_desireFlySpeed = -5.0f + this->m_flySpeed;
+		m_desireFlySpeed = 1.0f + this->m_flySpeed;
 		break;
 	case Static:
 		m_desireFlySpeed = 0.0f;

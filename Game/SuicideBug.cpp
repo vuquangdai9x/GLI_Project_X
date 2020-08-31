@@ -5,7 +5,7 @@
 #include<math.h>
 SuicideBug::SuicideBug(int id) :Enemy(id)
 {
-	this->m_maxHP = this->m_HP = 50;
+	this->m_maxHP = this->m_HP = 20;
 	this->m_damage = 50;
 }
 

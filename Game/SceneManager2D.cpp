@@ -412,8 +412,11 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		if (strcmp(shapeType, "RECT") == 0) {
 			obs->createBox2D();
 		}
-		else {
+		else if (strcmp(shapeType, "TRIANGLE") == 0) {
 			obs->createTriangle2D();
+		}
+		else {
+
 		}
 		AddObject(obs);
 		printf("[msg] SceneManager: Loaded Obstacle %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
@@ -1043,6 +1046,11 @@ void SceneManager2D::CleanUp()
 	for (int i = 0;i < m_listObject.size();i++) {
 		delete m_listObject[i];
 	}
+	m_listObject.clear();
+	for (int i = 0;i < m_listUIComponent.size();i++) {
+		delete m_listUIComponent[i];
+	}
+	m_listUIComponent.clear();
 }
 
 void SceneManager2D::Update(float frameTime, int listObjet) {

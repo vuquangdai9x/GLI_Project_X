@@ -22,7 +22,7 @@ VampireBat::VampireBat(int id, Vector2 centerPos, float m_range) : Enemy(id)
 	this->m_active = false;
 
 	this->m_damage = 1;
-	this->m_maxHP = this->m_HP = 50;
+	this->m_maxHP = this->m_HP = 15;
 }
 
 VampireBat::~VampireBat()

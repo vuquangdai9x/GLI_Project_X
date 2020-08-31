@@ -6,7 +6,7 @@
 DeadlyBird::DeadlyBird(int id):Enemy(id)
 {
 	this->m_maxHP = this->m_HP = 100;
-	this->m_damage = 100;
+	this->m_damage = 90;
 }
 DeadlyBird::~DeadlyBird()
 {

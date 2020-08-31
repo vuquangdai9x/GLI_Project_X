@@ -46,6 +46,7 @@ void RockyGolem::createBox2D()
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
 	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMY, x, y, width, height, 200);
+	enemyBody->SetGravityScale(1.0);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
 	user->m_damage = this->m_damage;
 }
