@@ -15,8 +15,12 @@
 #include "EffectManager.h"
 #include "SoundManager.h"
 
+#include <stdlib.h> 
+#include <time.h>
+
 int Init(ESContext* esContext)
 {
+	srand(time(NULL));
 	Singleton<EffectManager>::CreateInstance();
 	Singleton<SoundManager>::CreateInstance();
 	Singleton<InputManager>::CreateInstance();

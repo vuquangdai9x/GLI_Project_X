@@ -184,13 +184,13 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				fscanf(fIn, "RADIUS END %f\n", &endValue);
 				fscanf(fIn, "RADIUS RANDOM %f\n", &offsetRandomValue);
 				fscanf(fIn, "RADIUS CURVE %s\n", curveName);
-				emitter->SetRadiusInfo(initValue, endValue, offsetRandomValue, CurveFunction::GetFunctionPtr(curveName));
+				emitter->SetRadiusInfo(initValue, offsetRandomValue, endValue, CurveFunction::GetFunctionPtr(curveName));
 				
 				fscanf(fIn, "SIZE INIT %f\n", &initValue);
 				fscanf(fIn, "SIZE END %f\n", &endValue);
 				fscanf(fIn, "SIZE RANDOM %f\n", &offsetRandomValue);
 				fscanf(fIn, "SIZE CURVE %s\n", curveName);
-				emitter->SetSizeInfo(initValue, endValue, offsetRandomValue, CurveFunction::GetFunctionPtr(curveName));
+				emitter->SetSizeInfo(initValue, offsetRandomValue, endValue, CurveFunction::GetFunctionPtr(curveName));
 				
 				unsigned int uiHexColorInit, uiHexColorEnd, uiHexColorOffsetRandom;
 				fscanf(fIn, "COLOR INIT %x\n", &uiHexColorInit, &initValue);
@@ -201,7 +201,7 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				HexColorToVec4(colorInit, uiHexColorInit, initValue);
 				HexColorToVec4(colorEnd, uiHexColorEnd, endValue);
 				HexColorToVec4(colorOffsetRandom, uiHexColorOffsetRandom, offsetRandomValue);
-				emitter->SetColorInfo(colorInit, colorEnd, colorOffsetRandom, CurveFunction::GetFunctionPtr(curveName));
+				emitter->SetColorInfo(colorInit, colorOffsetRandom, colorEnd, CurveFunction::GetFunctionPtr(curveName));
 				
 				texture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iTextureId);
 				if (emitter->Init(GetMaterial(iMaterialId), texture, iNumOfParticle, cycleTime, iNumOfLoop)) {

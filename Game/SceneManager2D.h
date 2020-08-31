@@ -28,6 +28,7 @@ private:
 	Vector3 return3D;
 	std::vector<Sprite*> m_listObject,m_menuObject,m_mapObject;
 	std::vector<Sprite*> m_pauseObject,m_gameoverObject;
+	std::vector<UIComponent*> m_listUIComponent;
 	Camera2D* m_mainCamera,*m_menuCamera,*m_mapCamera;
 	Player* m_currentPlayer;
 	CombatController* m_combatController = NULL;

@@ -8,6 +8,7 @@
 #include "GunBullet.h"
 #include"UserData.h"
 #include"State/GameStateManager.h"
+#include "EffectManager.h"
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -154,7 +155,7 @@ void Player::Update(float deltaTime)
 				Singleton<GameStateManager>::GetInstance()->Pop();
 				Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
 			}
-			
+			Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_position, 10000);
 		}
 		this->SetColor(m_color[(++m_currentColor) % 2], 1);
 	}

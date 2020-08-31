@@ -84,7 +84,6 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 	}
 	if (!isSuccess) return false;
 	
-	srand(time(NULL));
 	m_iNumOfParticles = iNumOfParticles;
 	Particle* aParticles = new Particle[m_iNumOfParticles];
 

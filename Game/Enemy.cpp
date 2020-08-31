@@ -2,6 +2,7 @@
 #include "UserData.h"
 #include"Singleton.h"
 #include"SceneManager2D.h"
+#include "EffectManager.h"
 Enemy::Enemy(int id):Sprite(id)
 {
 

@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
+#include "EffectManager.h"
 
 Bullet::Bullet(int id): Sprite(id), m_player(NULL), m_bulletBody(NULL)
 {}
@@ -13,6 +14,9 @@ void Bullet::SetActiveBullet(bool value)
 {
 	m_bulletBody->setActive(value);
 	SetActiveSprite(value);
+	if (value == false) {
+		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_position, 10000);
+	}
 }
 
 void Bullet::Update(float deltaTime)

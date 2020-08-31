@@ -41,6 +41,10 @@ SceneManager2D::~SceneManager2D()
 		m_listObject[i]->OnDestroy();
 		delete m_listObject[i];
 	}
+	for (int i = 0; i < m_listUIComponent.size(); i++) {
+		m_listUIComponent[i]->OnDestroy();
+		delete m_listUIComponent[i];
+	}
 	if (m_mainCamera != NULL) delete m_mainCamera;
 	if (m_menuCamera!= NULL) delete m_menuCamera;
 	if (m_combatController != NULL) delete m_combatController;
@@ -1049,12 +1053,14 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
+		for (int i = 0; i < m_listUIComponent.size(); i++) {
+			if (m_listUIComponent[i]->CheckIsActiveSprite())
+				m_listUIComponent[i]->Update(frameTime);
+		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
 		Singleton<EffectManager>::GetInstance()->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
-
-		//printf("y = %f\n", m_mainCamera->GetPosition().y);
 	}
 	else if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -1082,6 +1088,12 @@ void SceneManager2D::Render(int listObjet) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}
+		glDisable(GL_DEPTH_TEST);
+		for (int i = 0; i < m_listUIComponent.size(); i++) {
+			if (m_listUIComponent[i]->CheckIsActiveSprite())
+				m_listUIComponent[i]->Render(m_mainCamera);
+		}
+		glEnable(GL_DEPTH_TEST);
 		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
 	}
 	else  if (listObjet == MENU_OBJECT) {
@@ -1107,6 +1119,12 @@ void SceneManager2D::Render(int listObjet) {
 }
 void SceneManager2D::AddObject(Sprite* object,int listObject) {
 	if (listObject == PLAY_OBJECT) {
+		UIComponent* ui = dynamic_cast<UIComponent*>(object);
+		if (ui != NULL) {
+			m_listUIComponent.push_back(ui);
+			return;
+		}
+
 		if (m_listObject.size() == 0) {
 			m_listObject.push_back(object);
 			return;
