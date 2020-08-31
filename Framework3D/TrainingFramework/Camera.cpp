@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Camera.h"
-#include "CurveFunction.h"
 
 void Camera::UpdateViewMatrix()
 {

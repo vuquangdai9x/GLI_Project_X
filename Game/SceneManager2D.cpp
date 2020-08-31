@@ -22,6 +22,19 @@
 #include "UIComponent.h"
 #include "UIText.h"
 
+#include "EffectManager.h"
+
+#include "MapBorder.h"
+
+SceneManager2D::SceneManager2D()
+{
+	m_mainCamera = NULL;
+	m_menuCamera = NULL;
+	m_currentPlayer = NULL;
+	m_combatController = NULL;
+	m_time = 0;
+}
+
 SceneManager2D::~SceneManager2D()
 {
 	for (int i = 0; i < m_listObject.size(); i++) {
@@ -113,6 +126,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	float alpha;
 	char shapeType[10];
 
+	// set up map 
+	char mapName[256];
+	float mapWidth;
+	fscanf(fIn, "#MAP %s\n", mapName);
+	fscanf(fIn, "WIDTH %f\n", &mapWidth);
+
 	// Set up player
 	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -127,11 +146,78 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
 	AddObject(player);
-	m_curent = player;
-	
+	m_currentPlayer = player;
+
 	LoadAnimation(fIn, player);
-	
+
 	printf("[msg] SceneManager2D: Init player\n");
+
+	// set up backgrounds
+	int iLoopVertical, iLoopHorizontal;
+	int iNumOfBackground;
+	float scaleFactor;
+	fscanf(fIn, "#BACKGROUNDS %d\n", &iNumOfBackground);
+	for (int i = 0;i < iNumOfBackground;i++) {
+		fscanf(fIn, "ID %d\n", &iObjectId);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
+
+		int iNumOfAnimations;
+		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+
+		MapBorder* bgr = new MapBorder(iObjectId,player,0);
+		position.x = player->GetPosition().x;
+		bgr->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		bgr->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+		AddObject(bgr);
+		LoadAnimation(fIn, bgr);
+
+		scaleFactor = mapWidth / bgr->GetOriginSize().x / 2;
+		bgr->SetScale(bgr->GetScale() * scaleFactor);
+
+		printf("[msg] SceneManager2D: Load background %d\n", iObjectId);
+	}
+
+	// Set up map border
+	// border left
+	float borderDamage;
+	fscanf(fIn, "#BORDER LEFT\n");
+	fscanf(fIn, "ID %d\n", &iObjectId);
+	fscanf(fIn, "DAMAGE %f\n", &borderDamage);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
+	MapBorder* borderLeft = new MapBorder(iObjectId, player, borderDamage);
+	position.x = player->GetPosition().x - mapWidth / 2;
+	borderLeft->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderLeft->createCollider();
+	AddObject(borderLeft);
+	LoadAnimation(fIn, borderLeft);
+	borderLeft->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+	printf("[msg] SceneManager2D: Loaded Border Left %d\n", iObjectId);
+
+	// border right
+	fscanf(fIn, "#BORDER RIGHT\n");
+	fscanf(fIn, "ID %d\n", &iObjectId);
+	fscanf(fIn, "DAMAGE %f\n", &borderDamage);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
+	MapBorder* borderRight = new MapBorder(iObjectId, player, borderDamage);
+	position.x = player->GetPosition().x + mapWidth / 2;
+	borderRight->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
+	borderRight->createCollider();
+	AddObject(borderRight);
+	LoadAnimation(fIn, borderRight);
+	borderRight->SetLoopAmount(iLoopHorizontal, iLoopVertical);
+	printf("[msg] SceneManager2D: Loaded Border Right %d\n", iObjectId);
 
 	// set up HUD
 	fscanf(fIn, "\n#HUD\n", &iObjectId);
@@ -148,6 +234,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	
 	printf("[msg] SceneManager2D: HUD | Init health icon\n");
 
+	position.x = position.y = 0;
+	position.z = -1;
 	fscanf(fIn, "+ HEALTH BAR\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
@@ -868,7 +956,7 @@ std::vector<Button*> SceneManager2D::LoadGameOverScene(char* dataSceneFile)
 	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	score->SetFont(iFontId);
 	char scoreText[20];
-	snprintf(scoreText, sizeof(scoreText), "Score: %d", m_curent->getScore());
+	snprintf(scoreText, sizeof(scoreText), "Score: %d", m_currentPlayer->getScore());
 	score->SetText(scoreText);
 	score->SetBound(top, bot, left, right);
 	score->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
@@ -946,12 +1034,16 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
+		Singleton<EffectManager>::GetInstance()->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
+
+		printf("y = %f\n", m_mainCamera->GetPosition().y);
 	}
 	else if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -975,9 +1067,11 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 void SceneManager2D::Render(int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		for (int i = 0; i < m_listObject.size(); i++) {
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}
+		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
 	}
 	else  if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -1126,7 +1220,7 @@ std::vector<Sprite*>& SceneManager2D::GetListObject() {
 
 void SceneManager2D::getPlayerPos(Vector3 &pos)
 {
-	pos= m_curent->GetPosition();
+	pos= m_currentPlayer->GetPosition();
 }
 
 Vector2& SceneManager2D::get2Dpos(float x, float y, float z, int listObjet)

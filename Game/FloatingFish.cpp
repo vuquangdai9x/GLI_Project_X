@@ -93,6 +93,10 @@ void FloatingFish::Update(float deltaTime)
 		}
 	}
 
+	if (this->enemyBody->body->GetLinearVelocity().x * m_scale.x < 0) {
+		SetScale(Vector2(m_scale.x * -1, m_scale.y));
+	}
+
 	Enemy::takeDamage();
 	//printf("%d\n", this->m_HP);
 }

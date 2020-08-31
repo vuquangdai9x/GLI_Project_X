@@ -97,7 +97,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera2D.cpp" />
-    <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -136,7 +135,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +142,8 @@
     <None Include="..\Resources\Shaders\CubeShaderVS.vs" />
     <None Include="..\Resources\Shaders\FireShaderFS.fs" />
     <None Include="..\Resources\Shaders\FireShaderVS.vs" />
+    <None Include="..\Resources\Shaders\ParticlesShaderFS.fs" />
+    <None Include="..\Resources\Shaders\ParticlesShaderVS.vs" />
     <None Include="..\Resources\Shaders\Sprite2DShaderFS.fs" />
     <None Include="..\Resources\Shaders\Sprite2DShaderVS.vs" />
     <None Include="..\Resources\Shaders\TerrainShaderFS.fs" />
@@ -161,6 +161,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="..\Resources\Datas\effects.txt" />
+    <Text Include="..\Resources\Datas\map1-1.txt" />
+    <Text Include="..\Resources\Datas\map1-2.txt" />
     <Text Include="..\Resources\Datas\resourcesMainMenu.txt" />
     <Text Include="..\Resources\Datas\resources2d.txt" />
     <Text Include="..\Resources\Datas\scene2d.txt" />

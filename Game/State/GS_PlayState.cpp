@@ -7,16 +7,19 @@
 #include "../SceneManager2D.h"
 #include "../GunBullet.h"
 #include "../FloatingFish.h"
+#include "../EffectManager.h"
 
 GS_PlayState::GS_PlayState()
 {
     printf("GS_PlayState\n");
 	// 2D
-	char sceneFile[50] = "Datas/scene2d.txt";
+	//char sceneFile[50] = "Datas/scene2d.txt";
+	char sceneFile[50] = "Datas/map1-2.txt";
 	char resourcesFile[50] = "Datas/resources2d.txt";
+	char effectFile[50] = "Datas/effects.txt";
 
 	//Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
-
+	Singleton<EffectManager>::GetInstance()->LoadEffect(effectFile);
 	if (!Singleton<SceneManager2D>::GetInstance()->LoadScene(sceneFile)) {
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
@@ -43,6 +46,7 @@ void GS_PlayState::Render()
 void GS_PlayState::Update(float deltaTime)
 {
 	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
+
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Q), deltaTime);
 	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);

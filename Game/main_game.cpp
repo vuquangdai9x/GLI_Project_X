@@ -12,10 +12,12 @@
 #include "SceneManager2D.h"
 #include "State/GameStateManager.h"
 #include "WorldManager.h"
+#include "EffectManager.h"
 
 
 int Init(ESContext* esContext)
 {
+	Singleton<EffectManager>::CreateInstance();
 	Singleton<InputManager>::CreateInstance();
 	Singleton<ResourceManager2D>::CreateInstance();
 	Singleton<SceneManager2D>::CreateInstance();

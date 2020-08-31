@@ -17,6 +17,7 @@ Sprite::Sprite(int id)
 	m_mainTexture = NULL;
 }
 Sprite::~Sprite() {}
+
 void Sprite::Update(float deltaTime) {
 	if (m_isUseAnimation) m_animationController.UpdateAnim(deltaTime);
 }
@@ -56,6 +57,8 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	m_animationController.Clone(sprite.GetAnimationController());
 	SetUseAnimation(sprite.m_isUseAnimation);
 }
+
+Vector2 Sprite::GetOriginSize() { return m_originSize; }
 
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)
 {

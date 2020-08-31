@@ -3,9 +3,10 @@
 #define PLAYER 0
 #define OBSTACLE 1
 #define ENEMY 2
-#define SPECIAL_ENEMY 5
 #define PLAYERBULLET 3
 #define ENEMYBULLET 4
+#define SPECIAL_ENEMY 5
+#define MAP_BORDER 6
 
 #define DEFAULT_MASS 5.0f
 #define GRAVITY 10.0f
