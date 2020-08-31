@@ -46,6 +46,16 @@ void SoundManager::Fire(int index)
 	} 
 }
 
+void SoundManager::Enemy(int state)
+{
+	if (state == P_GETITEM) {
+		m_soloud.play(m_enemy[0]);
+	}
+	else if (state == P_CHANGE) {
+		m_soloud.play(m_enemy[1]);
+	}
+}
+
 
 void SoundManager::Init()
 {
