@@ -67,7 +67,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYERBULLET)| (1 << PLAYER);
 		break;
 	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY)  | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET) | (1 << ITEM);
 		break;
 	case PLAYERBULLET:
 		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER) | (1 << ITEM);
@@ -135,7 +135,7 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
 		break;
 	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET) | (1 << ITEM);
 		break;
 	case PLAYERBULLET:
 		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
@@ -237,6 +237,7 @@ void WorldManager::Update(float deltaTime)
 
 void WorldManager::CleanUp()
 {
-	for (int i = 0;i < listObject.size();i++)
-		delete listObject[i];
+	std::vector<ItemBody*> empty;
+	empty.swap(listObject);
+	
 }

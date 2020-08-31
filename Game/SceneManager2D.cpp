@@ -1043,14 +1043,12 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 
 void SceneManager2D::CleanUp()
 {
-	for (int i = 0;i < m_listObject.size();i++) {
-		delete m_listObject[i];
-	}
-	m_listObject.clear();
-	for (int i = 0;i < m_listUIComponent.size();i++) {
-		delete m_listUIComponent[i];
-	}
-	m_listUIComponent.clear();
+	std::vector<Sprite*> empty;
+	empty.swap(m_listObject);
+	std::vector<UIComponent*> emptyUI;
+	emptyUI.swap(m_listUIComponent);
+	std::vector<Sprite*> empty1;
+	empty1.swap(m_gameoverObject);
 }
 
 void SceneManager2D::Update(float frameTime, int listObjet) {

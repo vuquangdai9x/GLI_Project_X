@@ -9,6 +9,7 @@
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
 #include"../SoundManager.h"
+#include "../WorldManager.h"
 
 GameStateManager::GameStateManager()
 {
@@ -49,8 +50,8 @@ void GameStateManager::Push(int state)
 
 void GameStateManager::Pop()
 {
-	Singleton<SceneManager2D>::GetInstance()->GetListObject().clear();
-	Singleton<SceneManager2D>::GetInstance()->GetGameOverObject().clear();
+	Singleton<SceneManager2D>::GetInstance()->CleanUp();
+	Singleton<WorldManager>::GetInstance()->CleanUp();
 	this->states.pop();
 }
 
