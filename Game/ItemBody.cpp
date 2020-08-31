@@ -10,6 +10,7 @@ ItemBody::ItemBody(int type, float x, float y): m_gravityScale(0.0)
 
 ItemBody::~ItemBody()
 {
+	this->body->GetWorld()->DestroyBody(body);
 }
 
 void ItemBody::Update(float deltaTime)

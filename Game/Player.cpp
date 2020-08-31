@@ -140,19 +140,28 @@ void Player::Update(float deltaTime)
 	camera.SetPosition(camPos);
 
 	UserData* user = (UserData*)this->playerBody->body->GetUserData();
+	DWORD start;
+	start = GetTickCount();
 	if (user->IsCollison > 0) {
-		this->SetColor(0xffafff, 1);
-		this->m_HP -= user->m_receiveDamage;
-		this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
-		if (this->m_HP <= 0) {
-			//m_HP = 0;
-			Singleton<GameStateManager>::GetInstance()->Pop();
-			Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
+		if (start - m_TakeDameTime > m_immortalTime) {
+			m_TakeDameTime = GetTickCount();
+			this->m_HP -= user->m_receiveDamage;
+			this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
+			if (this->m_HP <= 0) {
+				//m_HP = 0;
+				Singleton<GameStateManager>::GetInstance()->Pop();
+				Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
+			}
+			
 		}
+		this->SetColor(m_color[(++m_currentColor) % 2], 1);
 	}
 
 	else {
-	     this->SetColor(0xffffff, 1);
+		if (start - m_TakeDameTime > m_immortalTime) this->SetColor(0xffffff, 1);
+		else {
+			this->SetColor(m_color[(++m_currentColor) % 2], 1);
+		}
 	}
 	m_score = playerPos.y;
 	this->m_HUDController->UpdateScore(m_score);

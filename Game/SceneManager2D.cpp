@@ -1034,6 +1034,13 @@ Camera2D& SceneManager2D::GetMainCamera(int listObjet)
 	return *m_menuCamera;
 }
 
+void SceneManager2D::CleanUp()
+{
+	for (int i = 0;i < m_listObject.size();i++) {
+		delete m_listObject[i];
+	}
+}
+
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;

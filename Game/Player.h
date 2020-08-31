@@ -17,6 +17,11 @@ private:
 
 	float m_flyMulti, m_moveMulti;
 
+	DWORD m_TakeDameTime = 0;
+	int m_immortalTime = 2000;
+	int m_currentColor = 0;
+	int m_color[2] = { 0xffafff, 0x4863A0 };
+
 	int m_HP, m_maxHP;
 	int m_damage;
 	float m_moveSpeed;

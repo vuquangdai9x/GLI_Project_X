@@ -5,7 +5,7 @@
 #include"GameStateManager.h"
 #include "../ResourcesManager2D.h"
 #include "../SceneManager2D.h"
-
+#include"../WorldManager.h"
 GS_PauseState::GS_PauseState()
 {
 	printf("GS_PauseState");

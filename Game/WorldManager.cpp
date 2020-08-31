@@ -228,3 +228,9 @@ void WorldManager::Update(float deltaTime)
 	}
 	m_world->Step(deltaTime, m_velocityIterations, m_positionIterations);
 }
+
+void WorldManager::CleanUp()
+{
+	for (int i = 0;i < listObject.size();i++)
+		delete listObject[i];
+}

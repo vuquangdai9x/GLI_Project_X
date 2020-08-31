@@ -36,6 +36,7 @@ private:
 public:
 	float m_time;
 
+	void CleanUp();
 	void Update(float frameTime, int listObjet = PLAY_OBJECT);
 	void Render(int listObjet = PLAY_OBJECT);
 	void AddObject(Sprite* object,int listObjet = PLAY_OBJECT);
