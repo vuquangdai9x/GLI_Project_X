@@ -5,9 +5,8 @@
 #include"GameStateManager.h"
 #include "../ResourcesManager2D.h"
 #include "../SceneManager2D.h"
-#include "../GunBullet.h"
-#include "../FloatingFish.h"
 #include "../EffectManager.h"
+#include "../BrokenBalloon.h"
 
 GS_PlayState::GS_PlayState()
 {
@@ -24,6 +23,8 @@ GS_PlayState::GS_PlayState()
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
 	}
+
+	
 }
 
 GS_PlayState::~GS_PlayState()
@@ -46,7 +47,14 @@ void GS_PlayState::Render()
 void GS_PlayState::Update(float deltaTime)
 {
 	Singleton<SceneManager2D>::GetInstance()->Update(deltaTime);
-
+	time++;
+	if (time % 1000 == 0) {
+		int type = rand() % 3;
+		int size = rand() % 3 + 1;
+		BrokenBalloon* balloon = new BrokenBalloon(-1, type, size);
+		Singleton<SceneManager2D>::GetInstance()->AddObject(balloon);
+	}
+	
 	Camera2D& camera = Singleton<SceneManager2D>::GetInstance()->GetMainCamera();
 	camera.Dutch(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::E) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Q), deltaTime);
 	camera.Zoom(Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::X) - Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::Z), deltaTime);

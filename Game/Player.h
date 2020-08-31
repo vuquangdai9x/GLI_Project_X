@@ -24,14 +24,17 @@ private:
 
 	int m_HP, m_maxHP;
 	int m_damage;
-	float m_moveSpeed;
+	float m_moveSpeed, m_flySpeed;
 	int m_score;
-
+	
 	ItemBody* playerBody;
 	Vector2 m_cameraOffset;
 	HUDController* m_HUDController;
 	int time = 0;
 	DWORD m_timeEnd = 0;
+
+	float durationDamage;
+	float durationSpeed;
 
 public:
 	Player(int id);
@@ -44,10 +47,18 @@ public:
 	void updateMoveState();
 	void setHP(int hp) { this->m_HP = hp; }
 	int getHP() { return this->m_HP; }
+	int getMaxHP() { return this->m_maxHP; }
 	void setDamage(int dmg) { this->m_damage = dmg; }
 	int getDamage() { return this->m_damage; }
-	void setScore(int hp) { this->m_score = m_score; }
+	void setScore(int score) { this->m_score = score; }
 	int getScore() { return this->m_score; }
+	void setMoveSpeed(float moveSpeed) { this->m_moveSpeed = moveSpeed; }
+	float getMoveSpeed() { return this->m_moveSpeed; }
+	void setFlySpeed(float flySpeed) { this->m_flySpeed = flySpeed; }
+	float getFlySpeed() { return this->m_flySpeed; }
+	void setDurationSpeed(float duration) { this->durationSpeed = duration; }
+	void setDurationDamage(float duration) { this->durationDamage = duration; }
+
 	void setHUDController(HUDController* hud) { this->m_HUDController = hud; }
 	HUDController* getHUDController() { return this->m_HUDController; }
 };

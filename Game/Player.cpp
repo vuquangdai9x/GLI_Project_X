@@ -17,8 +17,6 @@ void Player::createBox2D()
 	m_currentMoveSpeed = 0.0f;m_desireMoveSpeed = 0.0f;
 	m_currentFlySpeed = Y_FORCE;m_desireFlySpeed = Y_FORCE;
 	playerBody = Singleton<WorldManager>::GetInstance()->createRectagle(PLAYER, x, y, width, height);
-	m_HP = m_maxHP = 100;
-	this->m_damage = 0;
 
 	//playerBody->body->ApplyForceToCenter(b2Vec2(0.0f, GRAVITY * DEFAULT_MASS), false);
 }
@@ -27,13 +25,13 @@ void Player::setFlyState(FlyState fly)
 	switch (fly)
 	{
 	case Fast:
-		m_desireFlySpeed = 10.0f;
+		m_desireFlySpeed = 10.0f + this->m_flySpeed;
 		break;
 	case Normal:
-		m_desireFlySpeed = 5.0f;
+		m_desireFlySpeed = 5.0f + this->m_flySpeed;
 		break;
 	case SLow:
-		m_desireFlySpeed = -5.0f;
+		m_desireFlySpeed = -5.0f + this->m_flySpeed;
 		break;
 	case Static:
 		m_desireFlySpeed = 0.0f;
@@ -57,10 +55,10 @@ void Player::setMoveState(MoveState move)
 	switch (move)
 	{
 	case Left:
-		m_desireMoveSpeed = -5.0;
+		m_desireMoveSpeed = -5.0 - this->m_moveSpeed;
 		break;
 	case Right:
-		m_desireMoveSpeed = 5.0;
+		m_desireMoveSpeed = 5.0 + this->m_moveSpeed;
 		break;
 	case NonMove:
 		m_desireMoveSpeed = 0.0;
@@ -82,10 +80,14 @@ void Player::updateMoveState()
 
 Player::Player(int id): Sprite(id)
 {
-	this->m_moveSpeed = 5;
+	this->m_moveSpeed = 0;
+	this->m_flySpeed = 0;
 
 	m_cameraOffset.x = 0;
 	m_cameraOffset.y = 0;
+
+	m_HP = m_maxHP = 100;
+	this->m_damage = 0;
 }
 
 Player::~Player()
@@ -146,7 +148,7 @@ void Player::Update(float deltaTime)
 		if (start - m_TakeDameTime > m_immortalTime) {
 			m_TakeDameTime = GetTickCount();
 			this->m_HP -= user->m_receiveDamage;
-			this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
+
 			if (this->m_HP <= 0) {
 				//m_HP = 0;
 				Singleton<GameStateManager>::GetInstance()->Pop();
@@ -165,7 +167,20 @@ void Player::Update(float deltaTime)
 	}
 	m_score = playerPos.y;
 	this->m_HUDController->UpdateScore(m_score);
+	this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
 
+	if (durationDamage > 0) {
+		durationDamage -= deltaTime;
+		if (durationDamage <= 0) m_damage = 0;
+	}
+
+	if (durationSpeed > 0) {
+		durationSpeed -= deltaTime;
+		if (durationSpeed <= 0) {
+			m_moveSpeed = 0;
+			m_flySpeed = 0;
+		}
+	}
 
 	//printf("%f \n", getFireAngle());
 	//if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();

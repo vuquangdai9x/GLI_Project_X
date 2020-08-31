@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 45
+#2D Textures: 48
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -34,11 +34,11 @@ FILE "Textures/png/enemy/suicide-bug-idle-01.png" CLAMP
 ID 30203
 FILE "Textures/png/enemy/suicide-bug-fly-animation.png" CLAMP
 ID 30301
-FILE "Textures/png/enemy/monster-01.png" CLAMP
+FILE "Textures/png/enemy/rocky-golem-01.png" CLAMP
 ID 30401
 FILE "Textures/png/enemy/monster-02.png" CLAMP
 ID 30501
-FILE "Textures/png/enemy/monster-03.png" CLAMP
+FILE "Textures/png/enemy/deadly-butterfly-fly.png" CLAMP
 ID 30601
 FILE "Textures/png/enemy/vampire-bat-01.png" CLAMP
 ID 30602
@@ -95,6 +95,12 @@ ID 70201
 FILE "Textures/png/border-left-cliff-01.png" REPEAT
 ID 70202
 FILE "Textures/png/border-right-cliff-01.png" REPEAT
+ID 80101
+FILE "Textures/png/Item/broken-balloon-medic.png" CLAMP
+ID 80102
+FILE "Textures/png/Item/broken-balloon-military.png" CLAMP
+ID 80103
+FILE "Textures/png/Item/broken-balloon-science.png" CLAMP
 
 #Shaders: 2
 ID 0

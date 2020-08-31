@@ -7,6 +7,7 @@
 #define ENEMYBULLET 4
 #define SPECIAL_ENEMY 5
 #define MAP_BORDER 6
+#define ITEM 7
 
 #define DEFAULT_MASS 5.0f
 #define GRAVITY 10.0f

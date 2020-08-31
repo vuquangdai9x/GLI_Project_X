@@ -51,7 +51,10 @@ public:
 	void SetMainCamera(Camera2D * camera, int listObjet = PLAY_OBJECT);
 	Camera2D& GetMainCamera(int listObjet = PLAY_OBJECT);
 	std::vector<Sprite*>& GetListObject();
+	std::vector<Sprite*>& GetGameOverObject();
+	CombatController* getCombatController() { return this->m_combatController; }
 
+	Player* getPlayer() { return this->m_currentPlayer; }
 	void getPlayerPos(Vector3& pos);
 	Vector2& get2Dpos(float x, float y, float z, int listObjet = PLAY_OBJECT);
 	Vector3& get3Dpos(float x, float y, int listObjet = PLAY_OBJECT);

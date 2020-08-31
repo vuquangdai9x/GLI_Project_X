@@ -128,6 +128,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp" />
     <ClCompile Include="AutoGun.cpp" />
+    <ClCompile Include="BrokenBalloon.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CurveFunction.cpp" />
@@ -146,7 +147,12 @@
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
     <ClCompile Include="HUDController.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemAmoGun.cpp" />
     <ClCompile Include="ItemBody.cpp" />
+    <ClCompile Include="ItemBuffDamage.cpp" />
+    <ClCompile Include="ItemBuffSpeed.cpp" />
+    <ClCompile Include="ItemHeal.cpp" />
     <ClCompile Include="ListenerClass.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="MapBorder.cpp" />
@@ -184,6 +190,7 @@
     <ClInclude Include="..\FreeType\include\ft2build.h" />
     <ClInclude Include="AnimationController.h" />
     <ClInclude Include="AutoGun.h" />
+    <ClInclude Include="BrokenBalloon.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="CurveFunction.h" />
@@ -203,7 +210,12 @@
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />
     <ClInclude Include="HUDController.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemAmoGun.h" />
     <ClInclude Include="ItemBody.h" />
+    <ClInclude Include="ItemBuffDamage.h" />
+    <ClInclude Include="ItemBuffSpeed.h" />
+    <ClInclude Include="ItemHeal.h" />
     <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MapBorder.h" />
     <ClInclude Include="SoundManager.h" />

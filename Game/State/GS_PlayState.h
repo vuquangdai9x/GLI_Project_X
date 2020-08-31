@@ -4,8 +4,7 @@
 class GS_PlayState: public StateBase
 {
 private:
-	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
-	//
+	int time = 0;
 
 public:
 	GS_PlayState();

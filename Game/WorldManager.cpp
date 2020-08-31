@@ -70,13 +70,16 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY)  | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
 		break;
 	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
+		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER) | (1 << ITEM);
 		break;
 	case ENEMYBULLET:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << MAP_BORDER);
 		break;
 	case MAP_BORDER:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		break;
+	case ITEM:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
 		break;
 	}
 
@@ -139,6 +142,9 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 		break;
 	case ENEMYBULLET:
 		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	case ITEM:
+		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET);
 		break;
 	}
 

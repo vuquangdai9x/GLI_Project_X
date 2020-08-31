@@ -1054,7 +1054,7 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		Singleton<EffectManager>::GetInstance()->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 
-		printf("y = %f\n", m_mainCamera->GetPosition().y);
+		//printf("y = %f\n", m_mainCamera->GetPosition().y);
 	}
 	else if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
@@ -1227,6 +1227,11 @@ void SceneManager2D::RemoveMapObject(Sprite* object)
 
 std::vector<Sprite*>& SceneManager2D::GetListObject() {
 	return m_listObject;
+}
+
+std::vector<Sprite*>& SceneManager2D::GetGameOverObject()
+{
+	return m_gameoverObject;
 }
 
 void SceneManager2D::getPlayerPos(Vector3 &pos)
