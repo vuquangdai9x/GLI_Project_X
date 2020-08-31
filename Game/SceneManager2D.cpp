@@ -587,6 +587,9 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 void goToPlay() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
+void goToQuit() {
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::QUIT);
+}
 void test1() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MAP);
 }
@@ -659,7 +662,8 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		button->UpdateMember();
 		if (i == 0)
 			button->OnClick(goToPlay);
-		else button->OnClick(test1);
+		else 
+			button->OnClick(test1);
 		AddObject(button, MENU_OBJECT);
 	}
 

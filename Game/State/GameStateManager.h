@@ -25,5 +25,6 @@ public:
 	const static int PLAY = 2;
 	const static int GAMEOVER = 3;
 	const static int MAP = 4;
+	const static int QUIT = 5;
 };
 

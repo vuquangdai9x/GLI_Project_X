@@ -8,6 +8,7 @@
 #include"GS_GameOverState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
+#include"../SoundManager.h"
 
 GameStateManager::GameStateManager()
 {
@@ -31,6 +32,7 @@ void GameStateManager::Push(int state)
 		this->states.push(new GS_MainMenu());
 	}
 	else if (state == PLAY) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_PlayState());
 	}
 	else if (state == GAMEOVER) {
@@ -38,6 +40,10 @@ void GameStateManager::Push(int state)
 	}
 	else if (state == MAP) {
 		this->states.push(new MapEditor());
+	}
+	else if (state == QUIT) {
+		Singleton<SoundManager>::GetInstance()->Click();
+		exit(1);
 	}
 }
 
