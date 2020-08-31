@@ -18,5 +18,6 @@ public:
 	const static int WELCOM = 0;
 	const static int MENU = 1;
 	const static int PLAY = 2;
+	const static int QUIT = 3;
 };
 

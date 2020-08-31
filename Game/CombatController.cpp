@@ -107,7 +107,7 @@ void CombatController::ChangeWeapon(int index)
 {
 	if (index >= m_weapons.size()) return;
 	if (index == m_iCurrentWeaponIndex) return;
-	Singleton<SoundManager>::GetInstance()->ChangeWeapon();
+	Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_CHANGE);
 	printf("[msg] CombatController: Change weapon %d: %s\n", index, m_weapons[index]->GetName());
 	m_iCurrentWeaponIndex = index;
 

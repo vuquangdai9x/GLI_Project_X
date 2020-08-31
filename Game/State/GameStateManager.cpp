@@ -29,7 +29,10 @@ void GameStateManager::Push(int state)
 		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_PlayState());
 	}
-	
+	else if (state == QUIT) {
+		Singleton<SoundManager>::GetInstance()->Click();
+		exit(1);
+	}
 }
 
 void GameStateManager::Pop()

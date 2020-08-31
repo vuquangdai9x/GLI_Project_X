@@ -12,9 +12,20 @@ void SoundManager::Click()
 	m_soloud.play(m_player[0]);
 }
 
-void SoundManager::ChangeWeapon()
+void SoundManager::Player(int state)
 {
-	m_soloud.play(m_player[1]);
+	if (state == P_GETITEM) {
+		m_soloud.play(m_player[0]);
+	}
+	else if (state == P_CHANGE) {
+		m_soloud.play(m_player[1]);
+	}
+	else if (state == P_INJUIRED) {
+		m_soloud.play(m_player[2]);
+	}
+	else if (state == P_DIED) {
+		m_soloud.play(m_player[3]);
+	}
 }
 
 void SoundManager::Fire(int index)
@@ -35,9 +46,6 @@ void SoundManager::Fire(int index)
 	} 
 }
 
-void SoundManager::Collistion()
-{
-}
 
 void SoundManager::Init()
 {

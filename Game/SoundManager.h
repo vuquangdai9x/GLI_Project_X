@@ -22,9 +22,16 @@ public:
 	}
 	void Update(unsigned char key, bool bIsPressed);
 	void Click();
-	void ChangeWeapon();
+	void Player(int state);
 	void Fire(int index);
-	void Collistion();
 	void Init();
+
+	const static int P_GETITEM = 0;
+	const static int P_CHANGE = 1;
+	const static int P_INJUIRED = 2;
+	const static int P_DIED = 3;
+
+	const static int E_INJUIRED = 0;
+	const static int E_DIED = 1;
 };
 
