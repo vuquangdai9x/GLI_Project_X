@@ -5,6 +5,7 @@
 
 #define OBSTACLE_UNIT 0
 #define SUICIDEBUG_UNIT 2
+#define FLOATINGFISH_UNIT 1
 struct UnitInfor {
 	int type;
 	int boxType;

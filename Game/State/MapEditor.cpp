@@ -7,6 +7,7 @@
 #include "../SceneManager2D.h"
 #include "../Obstacle.h"
 #include "../SuicideBug.h"
+#include "../FloatingFish.h"
 void getInfor() {
 	
 }
@@ -231,7 +232,7 @@ void MapEditor::addObject()
 
 		m_suicudeBug.push_back(obs);
 	}
-
+	else if (m_curent->type == FLOATINGFISH_UNIT){}
 }
 
 void MapEditor::KeyPress()
