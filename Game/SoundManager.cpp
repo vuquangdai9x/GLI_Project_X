@@ -9,53 +9,70 @@ void SoundManager::Update(unsigned char key, bool bIsPressed)
 
 void SoundManager::Click()
 {
+	if (SetOnOff == 1) return;
 	m_soloud.play(m_player[0]);
 }
 
 void SoundManager::Player(int state)
 {
+	if (SetOnOff == 1) return;
 	if (state == P_GETITEM) {
-		m_soloud.play(m_player[0]);
+		iHandlePlayer = m_soloud.play(m_player[0]);
 	}
 	else if (state == P_CHANGE) {
-		m_soloud.play(m_player[1]);
+		iHandlePlayer = m_soloud.play(m_player[1]);
 	}
 	else if (state == P_INJUIRED) {
-		m_soloud.play(m_player[2]);
+		iHandlePlayer = m_soloud.play(m_player[2]);
 	}
 	else if (state == P_DIED) {
-		m_soloud.play(m_player[3]);
+		iHandlePlayer = m_soloud.play(m_player[3]);
 	}
 }
 
 void SoundManager::Fire(int index)
 {
+	if (SetOnOff == 1) return;
 	m_soloud.stop(iHandleFire);
 	//m_soloud.setSamplerate(iHandleFire, 0.75f);
-	if (index == 0 | index == 3) {
+	if (index == 0 | index == 3 | index == 4) {
 		iHandleFire = m_soloud.play(m_bullet[0]);
 	}
 	else if (index == 1 | index == 2) {
 		iHandleFire = m_soloud.play(m_bullet[2]);
 	}
-	else if (index == 4) {
+	else if (index == 5) {
 		iHandleFire = m_soloud.play(m_bullet[1]);
 	}
-	else if (index == 5) {
+	else if (index == 6) {
 		iHandleFire = m_soloud.play(m_bullet[3]);
 	} 
 }
 
 void SoundManager::Enemy(int state)
 {
+	if (SetOnOff == 1) return;
 	if (state == E_INJUIRED) {
-		m_soloud.play(m_enemy[0]);
+		iHandleEnemy = m_soloud.play(m_enemy[0]);
 	}
 	else if (state == E_DIED) {
-		m_soloud.play(m_enemy[1]);
+		iHandleEnemy = m_soloud.play(m_enemy[1]);
+	}
+	else if (state == E_BUG) {
+		iHandleEnemy = m_soloud.play(m_enemy[2]);
 	}
 }
 
+void SoundManager::OnOffSound()
+{
+	SetOnOff *= -1;
+	if (SetOnOff == 1) {
+		m_soloud.setVolume(iHandleBackGround, 0.0f);
+	}
+	else if (SetOnOff == -1) {
+		m_soloud.setVolume(iHandleBackGround, 2.0f);
+	}
+}
 
 void SoundManager::Init()
 {
@@ -76,6 +93,8 @@ void SoundManager::Init()
 	m_player[2].load("../Soloud/lib_audio/trung_dan.wav");
 	m_player[3].load("../Soloud/lib_audio/endgame.wav");
 
-	m_enemy[0].load("../Soloud/lib_audio/");
+	m_enemy[0].load("../Soloud/lib_audio/e_injuied.wav");
 	m_enemy[1].load("../Soloud/lib_audio/kill.wav");
+	m_enemy[2].load("../Soloud/lib_audio/bug.wav");
+
 }

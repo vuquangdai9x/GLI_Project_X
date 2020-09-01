@@ -9,6 +9,8 @@
 #include"UserData.h"
 #include"State/GameStateManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
+
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -148,10 +150,13 @@ void Player::Update(float deltaTime)
 	if (user->IsCollison > 0) {
 		if (start - m_TakeDameTime > m_immortalTime) {
 			m_TakeDameTime = GetTickCount();
+			if (user->m_receiveDamage) {
+				Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_INJUIRED);
+			}
 			this->m_HP -= user->m_receiveDamage;
-
 			if (this->m_HP <= 0) {
 				//m_HP = 0;
+				Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_DIED);
 				Singleton<GameStateManager>::GetInstance()->Pop();
 				Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
 			}

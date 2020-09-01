@@ -3,6 +3,7 @@
 #include"Singleton.h"
 #include"SceneManager2D.h"
 #include<math.h>
+#include "SoundManager.h"
 SuicideBug::SuicideBug(int id) :Enemy(id)
 {
 	this->m_maxHP = this->m_HP = 20;
@@ -21,7 +22,8 @@ void SuicideBug::Update(float deltaTime)
 	Vector2 pos2d,playerPos2D(playerPos.x,playerPos.y);
 	pos2d.x = thisPos.x;pos2d.y = thisPos.y;
 	Vector2 tmp = -(pos2d - playerPos2D);
-	if (tmp.Length() < 15.0&&active==0) {
+	if (tmp.Length() < 15.0 && active==0) {
+		Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_BUG);
 		m_target = playerPos2D;
 		active = 1;
 		m_attackVector = b2Vec2((m_target - pos2d).x  , (m_target - pos2d).y );

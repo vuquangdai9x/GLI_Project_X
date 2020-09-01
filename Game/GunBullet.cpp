@@ -3,6 +3,7 @@
 #include "WorldManager.h"
 #include "UserData.h"
 #include "Player.h"
+#include "SoundManager.h"
 
 GunBullet::GunBullet(int id, float mass, float gravityScale, float damage, float initSpeed, float existTime)
 	: Bullet(id), 
@@ -34,8 +35,9 @@ void GunBullet::CreatePhysicsBody()
 	
 }
 
-void GunBullet::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
+void GunBullet::Fire(int index, Sprite* shooter, Vector2 startPosition, Vector2 direction)
 {
+	Singleton<SoundManager>::GetInstance()->Fire(index);
 	Vector2 normDirection = direction.Normalize();
 	// move to startPosition and rotate
 	float rotation = acosf(normDirection.x) * (normDirection.y < 0 ? -1 : 1);

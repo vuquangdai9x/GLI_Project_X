@@ -11,7 +11,7 @@ public:
 	Bullet(int id);
 	virtual ~Bullet();
 	virtual void CreatePhysicsBody() = 0;
-	virtual void Fire(Sprite* shooter, Vector2 startPos, Vector2 direction) = 0;
+	virtual void Fire(int index, Sprite* shooter, Vector2 startPos, Vector2 direction) = 0;
 	virtual void Update(float deltaTime);
 	void SetActiveBullet(bool value);
 };

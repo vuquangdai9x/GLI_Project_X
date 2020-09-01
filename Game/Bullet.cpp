@@ -3,6 +3,7 @@
 #include "SceneManager2D.h"
 #include"WorldManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
 
 Bullet::Bullet(int id): Sprite(id), m_player(NULL), m_bulletBody(NULL)
 {}

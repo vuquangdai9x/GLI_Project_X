@@ -7,7 +7,7 @@
 #include "ItemHeal.h"
 #include "ItemAmoGun.h"
 #include "UserData.h"
-
+#include "SoundManager.h"
 BrokenBalloon::BrokenBalloon(int id,int type,int size):Sprite(id)
 {
 	int iMaterialId = 0;
@@ -71,6 +71,7 @@ void BrokenBalloon::Update(float deltaTime)
 			for (int i = 0; i < items.size(); i++) {
 				items[i]->Use(Singleton<SceneManager2D>::GetInstance()->getPlayer());
 			}
+			Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_GETITEM);
 			Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
 			this->body->setActive(false);
 			delete this;

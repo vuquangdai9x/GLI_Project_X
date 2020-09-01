@@ -1,6 +1,7 @@
 #include "AutoGun.h"
 #include <stdlib.h> 
 #include <time.h>
+#include "SoundManager.h"
 
 AutoGun::AutoGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float shortRechargeTime, float randomAngle, float spreadRandomAngle, int iFireAtOnce, int iFireAmount)
 	:Weapon(id, name, iWeaponTexId, iTargetTexId, iBulletTypeId, oppositeForce),
@@ -17,7 +18,7 @@ AutoGun::AutoGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBu
 	srand(time(NULL));
 }
 
-int AutoGun::Fire(Sprite* shooter, Vector2 direction)
+int AutoGun::Fire(int index, Sprite* shooter, Vector2 direction)
 {
 	int iFireAmount = 0;
 	if (m_timeCounter <= 0) {
@@ -45,6 +46,7 @@ int AutoGun::Fire(Sprite* shooter, Vector2 direction)
 		for (int i = 0; i < m_iFireAtOnce; i++) {
 			Bullet* bullet = m_bulletPool->GetBullet();
 			if (bullet != NULL) {
+				Singleton<SoundManager>::GetInstance()->Fire(index);
 				iFireAmount++;
 
 				randomAngle = maxRandomAngle * (((float)rand() / (float)RAND_MAX + i) / m_iFireAtOnce - 0.5);
@@ -52,7 +54,7 @@ int AutoGun::Fire(Sprite* shooter, Vector2 direction)
 				bulletDirecion.x = direction.x * cosf(randomAngle) - direction.y * sinf(randomAngle);
 				bulletDirecion.y = direction.x * sinf(randomAngle) + direction.y * cosf(randomAngle);
 
-				bullet->Fire(shooter, startPosition, bulletDirecion);
+				bullet->Fire(index, shooter, startPosition, bulletDirecion);
 			}
 		}
 	}

@@ -34,7 +34,7 @@ void FallingRock::CreatePhysicsBody()
 	user->m_damage = 25;
 }
 
-void FallingRock::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
+void FallingRock::Fire(int index, Sprite* shooter, Vector2 startPosition, Vector2 direction)
 {
 	Vector2 normDirection = direction.Normalize();
 	// move to startPosition and rotate

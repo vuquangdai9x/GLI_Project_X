@@ -34,8 +34,7 @@ void CombatController::Fire()
 	Vector2 direction;
 	direction.x = m_targetPos.x - m_pPlayer->GetPosition().x;
 	direction.y = m_targetPos.y - m_pPlayer->GetPosition().y;
-	int iNumBulletFired = m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction);
-	Singleton<SoundManager>::GetInstance()->Fire(m_iCurrentWeaponIndex);
+	int iNumBulletFired = m_weapons[m_iCurrentWeaponIndex]->Fire(m_iCurrentWeaponIndex, m_pPlayer, direction);
 	if (iNumBulletFired) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
