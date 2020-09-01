@@ -9,6 +9,7 @@ protected:
 
 	GLint m_a_angleLocation;
 	GLint m_a_radiusOffsetLocation;
+	GLint m_a_radiusMulLocation;
 	GLint m_a_colorOffsetLocation;
 	GLint m_a_sizeOffsetLocation;
 	//GLint m_a_velocityOffsetLocation;

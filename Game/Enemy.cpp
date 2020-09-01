@@ -32,6 +32,7 @@ void Enemy::takeDamage()
 			this->m_HP -= user->m_receiveDamage;
 			this->SetColor(0xffafff, 1);
 			if (this->m_HP <= 0) {
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
 				this->enemyBody->setActive(false);
 				delete this;
