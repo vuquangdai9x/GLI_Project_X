@@ -26,5 +26,5 @@ public:
 	void Render(Camera2D* mainCamera);
 	void LoadEffect(char* effectFilePath);
 
-	void CreateParticlesSystem(Vector3 position, int effectId);
+	void CreateParticlesSystem(Vector3 position, int effectId, float rotation = 0);
 };

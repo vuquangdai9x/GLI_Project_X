@@ -24,6 +24,7 @@ private:
 	// init radius
 	float m_initRadius;
 	float m_radiusOffsetRandomRange;
+	float m_radiusMulRandomRange;
 	float m_endRadius;
 	float (*m_radiusCurve)(float, float, float);
 
@@ -53,7 +54,7 @@ public:
 	ParticlesEmitter(ParticlesEmitter& ps);
 	virtual ~ParticlesEmitter();
 	void SetAngleInfo(float emitAngle, float randomRange, EmitType emitType);
-	void SetRadiusInfo(float initRadius, float randomRange, float endRadius, float (*curve)(float, float, float));
+	void SetRadiusInfo(float initRadius, float offsetRandomRange, float mulRandomRange, float endRadius, float (*curve)(float, float, float));
 	//void SetVelocityInfo(float initVelocity, float randomRange, float endVelocity, float (*curve)(float, float, float));
 	void SetSizeInfo(float initSize, float randomRange, float endSize, float (*curve)(float, float, float));
 	void SetColorInfo(Vector4 initColor, Vector4 randomRange, Vector4 endColor, float (*curve)(float, float, float));

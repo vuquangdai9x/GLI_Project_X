@@ -34,9 +34,9 @@ void CombatController::Fire()
 	Vector2 direction;
 	direction.x = m_targetPos.x - m_pPlayer->GetPosition().x;
 	direction.y = m_targetPos.y - m_pPlayer->GetPosition().y;
-	int force = m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction);
+	int iNumBulletFired = m_weapons[m_iCurrentWeaponIndex]->Fire(m_pPlayer, direction);
 	Singleton<SoundManager>::GetInstance()->Fire(m_iCurrentWeaponIndex);
-	if (force) {
+	if (iNumBulletFired) {
 		// TODO: add opposite force to player
 		m_weapons[m_iCurrentWeaponIndex]->GetOppositeForce();
 		m_pPlayer->getHUDController()->UpdateBulletStatus(
@@ -45,7 +45,8 @@ void CombatController::Fire()
 		);
 
 		// TODO: add fire effect
-		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_pPlayer->GetPosition(), 10000);
+		float fireAngle = (direction.y > 0 ? 1 : -1) * acosf(direction.x / direction.Length());
+		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_pPlayer->GetPosition(), 11000, fireAngle);
 	}
 }
 

@@ -120,13 +120,12 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 	// Load Particles System
 	//
 	int iNumOfEffectComposite;
-	
+	int iEffectCompositeId;
+	char effectName[256];
+	int iNumOfEffect;
 	fscanf(fIn, "\n#EffectComposites: %d\n", &iNumOfEffectComposite);
 	for (int i = 0; i < iNumOfEffectComposite; i++) {
-		int iEffectCompositeId;
-		char effectName[256];
-		int iNumOfEffect;
-		fscanf(fIn, "ID %d\n", &iEffectCompositeId);
+		fscanf(fIn, "\nID %d\n", &iEffectCompositeId);
 		fscanf(fIn, "NAME %s\n", effectName);
 		fscanf(fIn, "EFFECTS: %d\n", &iNumOfEffect);
 
@@ -179,12 +178,13 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				}
 				emitter->SetAngleInfo(emitAngle, emitAngleRandomRange, emitType);
 
-				float initValue, endValue, offsetRandomValue;
+				float initValue, endValue, offsetRandomValue, mulRandomValue;
 				fscanf(fIn, "RADIUS INIT %f\n", &initValue);
 				fscanf(fIn, "RADIUS END %f\n", &endValue);
-				fscanf(fIn, "RADIUS RANDOM %f\n", &offsetRandomValue);
+				fscanf(fIn, "RADIUS RANDOM OFFSET %f\n", &offsetRandomValue);
+				fscanf(fIn, "RADIUS RANDOM MUL %f\n", &mulRandomValue);
 				fscanf(fIn, "RADIUS CURVE %s\n", curveName);
-				emitter->SetRadiusInfo(initValue, offsetRandomValue, endValue, CurveFunction::GetFunctionPtr(curveName));
+				emitter->SetRadiusInfo(initValue, offsetRandomValue, mulRandomValue, endValue, CurveFunction::GetFunctionPtr(curveName));
 				
 				fscanf(fIn, "SIZE INIT %f\n", &initValue);
 				fscanf(fIn, "SIZE END %f\n", &endValue);
@@ -193,10 +193,10 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				emitter->SetSizeInfo(initValue, offsetRandomValue, endValue, CurveFunction::GetFunctionPtr(curveName));
 				
 				unsigned int uiHexColorInit, uiHexColorEnd, uiHexColorOffsetRandom;
-				fscanf(fIn, "COLOR INIT %x\n", &uiHexColorInit, &initValue);
-				fscanf(fIn, "COLOR END %x\n", &uiHexColorEnd, &endValue);
-				fscanf(fIn, "COLOR RANDOM %x\n", &uiHexColorOffsetRandom, &offsetRandomValue);
-				fscanf(fIn, "SIZE CURVE %s\n", curveName);
+				fscanf(fIn, "COLOR INIT %x %f\n", &uiHexColorInit, &initValue);
+				fscanf(fIn, "COLOR END %x %f\n", &uiHexColorEnd, &endValue);
+				fscanf(fIn, "COLOR RANDOM %x %f\n", &uiHexColorOffsetRandom, &offsetRandomValue);
+				fscanf(fIn, "COLOR CURVE %s\n", curveName);
 				Vector4 colorInit, colorEnd, colorOffsetRandom;
 				HexColorToVec4(colorInit, uiHexColorInit, initValue);
 				HexColorToVec4(colorEnd, uiHexColorEnd, endValue);
@@ -219,7 +219,7 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 			}
 		}
 		if (iEffectValidCount > 0) {
-			m_listEffectCompositePool.push_back(new EffectCompositePool(iEffectCompositeId, 5, templateEffComp));
+			m_listEffectCompositePool.push_back(new EffectCompositePool(iEffectCompositeId, 1, templateEffComp));
 			printf("[msg] EffectManager::Init: Loaded EffectComposite %d: %s\n", iEffectCompositeId, effectName);
 		}
 		else {
@@ -257,10 +257,10 @@ Shaders* EffectManager::GetShader(int iShaderId)
 	}
 	return NULL;
 }
-void EffectManager::CreateParticlesSystem(Vector3 position, int effectId) {
+void EffectManager::CreateParticlesSystem(Vector3 position, int effectId, float rotation) {
 	for (int i = 0;i < m_listEffectCompositePool.size();i++) {
 		if (m_listEffectCompositePool[i]->GetId() == effectId) {
-			m_listEffectCompositePool[i]->GetCompositeEffect()->Play(position);
+			m_listEffectCompositePool[i]->GetCompositeEffect()->Play(position, rotation);
 			break;
 		}
 	}

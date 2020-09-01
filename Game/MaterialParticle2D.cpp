@@ -29,6 +29,7 @@ bool MaterialParticle2D::Init(Shaders* shader)
 
 	m_a_angleLocation = glGetAttribLocation(m_shader->program, "a_angle");
 	m_a_radiusOffsetLocation = glGetAttribLocation(m_shader->program, "a_radiusOffset");
+	m_a_radiusMulLocation = glGetAttribLocation(m_shader->program, "a_radiusMul");
 	m_a_sizeOffsetLocation = glGetAttribLocation(m_shader->program, "a_sizeOffset");
 	m_a_colorOffsetLocation = glGetAttribLocation(m_shader->program, "a_colorOffset");
 
@@ -47,6 +48,11 @@ void MaterialParticle2D::PrepareShader(Matrix& WVP, Texture* texture, float radi
 	{
 		glEnableVertexAttribArray(m_a_radiusOffsetLocation);
 		glVertexAttribPointer(m_a_radiusOffsetLocation, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, radiusOffset));
+	}
+	if (m_a_radiusMulLocation != -1)
+	{
+		glEnableVertexAttribArray(m_a_radiusMulLocation);
+		glVertexAttribPointer(m_a_radiusMulLocation, 1, GL_FLOAT, GL_FALSE, sizeof(Particle), (GLvoid*)offsetof(Particle, radiusMultiplier));
 	}
 	if (m_a_sizeOffsetLocation != -1)
 	{

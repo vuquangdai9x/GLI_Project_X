@@ -21,7 +21,7 @@ ParticlesEmitter::ParticlesEmitter(ParticlesEmitter& ps) : Effect(ps)
 {
 	m_timeCounter = 0;
 	SetAngleInfo(ps.m_emitAngle, ps.m_emitAngleRandomRange, ps.m_emitType);
-	SetRadiusInfo(ps.m_initRadius, ps.m_radiusOffsetRandomRange, ps.m_endRadius, ps.m_radiusCurve);
+	SetRadiusInfo(ps.m_initRadius, ps.m_radiusOffsetRandomRange, ps.m_radiusMulRandomRange, ps.m_endRadius, ps.m_radiusCurve);
 	//SetVelocityInfo(ps.m_initVelocity, ps.m_velocityOffsetRandomRange, ps.m_endVelocity, ps.m_velocityCurve);
 	SetSizeInfo(ps.m_initSize, ps.m_sizeOffsetRandomRange, ps.m_endSize, ps.m_sizeCurve);
 	SetColorInfo(ps.m_initColor, ps.m_colorOffsetRandomRange, ps.m_endColor, ps.m_colorCurve);
@@ -38,9 +38,10 @@ void ParticlesEmitter::SetAngleInfo(float emitAngle, float randomRange, EmitType
 	m_emitAngleRandomRange = randomRange;
 	m_emitType = emitType;
 }
-void ParticlesEmitter::SetRadiusInfo(float initRadius, float randomRange, float endRadius, float (*curve)(float, float, float)) {
+void ParticlesEmitter::SetRadiusInfo(float initRadius, float offsetRandomRange, float mulRandomRange, float endRadius, float (*curve)(float, float, float)) {
 	m_initRadius = initRadius;
-	m_radiusOffsetRandomRange = randomRange;
+	m_radiusOffsetRandomRange = offsetRandomRange;
+	m_radiusMulRandomRange = mulRandomRange;
 	m_endRadius = endRadius;
 	m_radiusCurve = curve;
 }
@@ -109,14 +110,17 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 	}
 	
 	// set up other info
+	float randomColor;
 	for (int i = 0;i < m_iNumOfParticles; i++) {
 		aParticles[i].radiusOffset = (float)rand() / (float)RAND_MAX * m_radiusOffsetRandomRange;
+		aParticles[i].radiusMultiplier = 1 + ((float)rand() / (float)RAND_MAX * 2 - 1) * m_radiusMulRandomRange;
 		//aParticles[i].velocityOffset = (float)rand() / (float)RAND_MAX * m_velocityOffsetRandomRange;
-		aParticles[i].sizeOffset = (float)rand() / (float)RAND_MAX * m_sizeOffsetRandomRange;
-		aParticles[i].colorOffset.x = (float)rand() / (float)RAND_MAX * m_colorOffsetRandomRange.x;
-		aParticles[i].colorOffset.y = (float)rand() / (float)RAND_MAX * m_colorOffsetRandomRange.y;
-		aParticles[i].colorOffset.z = (float)rand() / (float)RAND_MAX * m_colorOffsetRandomRange.z;
-		aParticles[i].colorOffset.w = (float)rand() / (float)RAND_MAX * m_colorOffsetRandomRange.w;
+		aParticles[i].sizeOffset = ((float)rand() / (float)RAND_MAX * 2 - 1) * m_sizeOffsetRandomRange;
+		randomColor = (float)rand() / (float)RAND_MAX * 2 - 1;
+		aParticles[i].colorOffset.x = randomColor * m_colorOffsetRandomRange.x;
+		aParticles[i].colorOffset.y = randomColor * m_colorOffsetRandomRange.y;
+		aParticles[i].colorOffset.z = randomColor * m_colorOffsetRandomRange.z;
+		aParticles[i].colorOffset.w = ((float)rand() / (float)RAND_MAX * 2 - 1) * m_colorOffsetRandomRange.w;
 	}
 
 	// load to buffer

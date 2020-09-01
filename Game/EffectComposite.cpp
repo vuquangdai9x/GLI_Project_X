@@ -37,13 +37,13 @@ bool EffectComposite::AddEffect(Effect* effect)
 	return true;
 }
 
-void EffectComposite::Play(Vector3 position)
+void EffectComposite::Play(Vector3 position, float rotation)
 {
 	Vector3 deltaPos = position - m_position;
 	m_position = position;
 	for (int i = 0;i < m_listEffect.size();i++) {
 		m_listEffect[i]->SetPosition(m_listEffect[i]->GetPosition() + deltaPos);
-		//m_listEffect[i]->SetPosition(position);
+		m_listEffect[i]->SetRotation(rotation);
 		m_listEffect[i]->Play();
 	}
 	SetActive(true);

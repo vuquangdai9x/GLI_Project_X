@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 48
+#2D Textures: 53
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -101,6 +101,16 @@ ID 80102
 FILE "Textures/png/Item/broken-balloon-military.png" CLAMP
 ID 80103
 FILE "Textures/png/Item/broken-balloon-science.png" CLAMP
+ID 90101
+FILE "Textures/png/effect/particle-circle.png" CLAMP
+ID 90102
+FILE "Textures/png/effect/particle-lozenge.png" CLAMP
+ID 90103
+FILE "Textures/png/effect/particle-polygon-concave-01.png" CLAMP
+ID 90104
+FILE "Textures/png/effect/particle-triangle.png" CLAMP
+ID 90105
+FILE "Textures/png/effect/particle-star.png" CLAMP
 
 #Shaders: 2
 ID 0
