@@ -600,6 +600,9 @@ void goToQuit() {
 void test1() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::MAP);
 }
+void goToTutorial() {
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::TUTORIAL);
+}
 bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 {
 	const char* resourceDir = Globals::resourceDir;
@@ -669,8 +672,11 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 		button->UpdateMember();
 		if (i == 0)
 			button->OnClick(goToPlay);
-		else 
+		else if (i == 1)
+			button->OnClick(goToTutorial);
+		else {
 			button->OnClick(test1);
+		}
 		AddObject(button, MENU_OBJECT);
 	}
 

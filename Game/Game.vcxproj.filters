@@ -249,6 +249,9 @@
     <ClInclude Include="BrokenBalloon.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="State\GS_TutorialState.h">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -427,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="BrokenBalloon.cpp">
       <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="State\GS_TutorialState.cpp">
+      <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

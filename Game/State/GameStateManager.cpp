@@ -6,6 +6,7 @@
 #include"GS_PauseState.h"
 #include "MapEditor.h"
 #include"GS_GameOverState.h"
+#include"GS_TutorialState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
 #include"../SoundManager.h"
@@ -45,6 +46,9 @@ void GameStateManager::Push(int state)
 	else if (state == QUIT) {
 		Singleton<SoundManager>::GetInstance()->Click();
 		exit(1);
+	}
+	else if (state == TUTORIAL) {
+		this->states.push(new GS_TutorialState());
 	}
 }
 

@@ -4,15 +4,21 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 4
-ID 12
+#2D Textures: 7
+ID 1
 FILE "Textures/png/UI/game-name.png" CLAMP
-ID 13
+ID 2
 FILE "Textures/png/UI/play-button.png" CLAMP
-ID 14
+ID 3
 FILE "Textures/png/UI/quit-button.png" CLAMP
-ID 15
+ID 4
+FILE "Textures/png/UI/option-button.png" CLAMP
+ID 5
 FILE "Textures/png/background-01.png" CLAMP
+ID 6
+FILE "Textures/png/tutorial-control.png" CLAMP
+ID 7
+FILE "Textures/png/tutorial-intro.png" CLAMP
 
 #Shaders: 2
 ID 0
