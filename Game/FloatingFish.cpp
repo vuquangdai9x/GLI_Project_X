@@ -18,6 +18,10 @@ FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 	this->m_maxHP = this->m_HP = 100;
 }
 
+FloatingFish::FloatingFish(int id):Enemy(id)
+{
+}
+
 FloatingFish::~FloatingFish()
 {
 }

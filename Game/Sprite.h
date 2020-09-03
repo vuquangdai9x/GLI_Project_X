@@ -54,7 +54,7 @@ public:
 	bool CheckIsActiveSprite();
 	void SetMainTexture(int iMainTexId);
 	Vector2 GetOriginSize();
-
+	int GetMainTexId() { return m_mainTexture->GetId(); }
 	AnimationController& GetAnimationController();
 	void SetUseAnimation(bool isUseAnimation);
 	bool CheckUseAnimation();

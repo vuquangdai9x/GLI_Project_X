@@ -7,15 +7,15 @@ void UnitButton::setInformation(UnitInfor infor)
 	m_infor = infor;
 }
 
-void UnitButton::setBuffer(UnitInfor **buf)
+void UnitButton::setBuffer(UnitInfor** buf)
 {
 	buffer = buf;
 }
 
 void UnitButton::Update(float deltaTime)
 {
-	
-	if(checkMouse()) {
+
+	if (checkMouse()) {
 		if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) {
 			DWORD start = GetTickCount();
 			if (start - m_click > 200) {
@@ -29,16 +29,16 @@ void UnitButton::Update(float deltaTime)
 		}
 	}
 	else {
-	this->SetColor(0xffffff, 1);
+		this->SetColor(0xffffff, 1);
 	}
 }
 
-UnitButton::UnitButton(int id):Button(id)
+UnitButton::UnitButton(int id) :Button(id)
 {
 
 }
 
 void UnitButton::getInformation()
 {
-	*buffer =& m_infor;
+	*buffer = &m_infor;
 }

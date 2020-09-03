@@ -918,6 +918,91 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 		listButton.push_back(button);
 	}
 
+	fscanf(fIn, "#ROCKYGOLEM\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	RockyGolem templateGolem(-1);
+	LoadAnimation(fIn, &templateGolem);
+	{
+		infor.type = ROCKY_UNIT;
+		fscanf(fIn, "\nID %d\n", &infor.id);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		UnitButton* button = new UnitButton(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+		infor.mainTex = iMainTexId;
+		button->GetAnimationController().Clone(templateGolem.GetAnimationController());
+		button->SetUseAnimation(templateGolem.CheckUseAnimation());
+		button->setInformation(infor);
+		AddObject(button, MAP_OBJECT);
+		listButton.push_back(button);
+	}
+
+	fscanf(fIn, "#DEADLYBIRD\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	DeadlyBird templateBird(-1);
+	LoadAnimation(fIn, &templateBird);
+
+	{
+		infor.type = DEADLYBIRD_UNIT;
+		fscanf(fIn, "\nID %d\n", &infor.id);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		UnitButton* button = new UnitButton(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+		infor.mainTex = iMainTexId;
+		button->GetAnimationController().Clone(templateBird.GetAnimationController());
+		button->SetUseAnimation(templateBird.CheckUseAnimation());
+		button->setInformation(infor);
+		AddObject(button, MAP_OBJECT);
+		listButton.push_back(button);
+	}
+
+	fscanf(fIn, "#VAMPIREBAT\n");
+	// use template fish for reduce animation writing for each object in scene.txt
+	VampireBat templateBat(-1, Vector2(0, 0), 1);
+	LoadAnimation(fIn, &templateBat);
+
+	{
+		infor.type = BAT_UNINT;
+		fscanf(fIn, "\nID %d\n", &infor.id);
+		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+		fscanf(fIn, "ROTATION %f\n", &rotation);
+		rotation = rotation * 2 * M_PI / 360;
+		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
+		UnitButton* button = new UnitButton(iObjectId);
+		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+		button->SetBound(top, bot, left, right);
+		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		button->SetRenderType(UIComponent::RenderType::FitHeight);
+		infor.mainTex = iMainTexId;
+		button->GetAnimationController().Clone(templateBat.GetAnimationController());
+		button->SetUseAnimation(templateBat.CheckUseAnimation());
+		button->setInformation(infor);
+		AddObject(button, MAP_OBJECT);
+		listButton.push_back(button);
+	}
 	float nearPlane, farPlane, zoom;
 
 	fscanf(fIn, "#CAMERA\n");
