@@ -56,7 +56,9 @@ void GameStateManager::Pop()
 {
 	Singleton<SceneManager2D>::GetInstance()->CleanUp();
 	Singleton<WorldManager>::GetInstance()->CleanUp();
+	StateBase* state = this->states.top();
 	this->states.pop();
+	delete state;
 }
 
 void GameStateManager::render()

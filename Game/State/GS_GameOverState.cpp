@@ -5,7 +5,15 @@
 #include"GameStateManager.h"
 #include "../ResourcesManager2D.h"
 #include "../SceneManager2D.h"
-
+void BackToMenu1()
+{
+	Singleton<GameStateManager>::GetInstance()->Pop();
+}
+void Reload1()
+{
+	Singleton<GameStateManager>::GetInstance()->Pop();
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+}
 GS_GameOverState::GS_GameOverState()
 {
 	printf("GS_PauseState");
@@ -18,20 +26,20 @@ GS_GameOverState::GS_GameOverState()
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->UpdateMember();
 	}
+	for (int i = 0; i < this->button.size(); i++) {
+		if (i == 0) {
+			button[i]->OnClick(BackToMenu1);
+		}
+		else if (i == 1) {
+			button[i]->OnClick(Reload1);
+		}
+	}
 }
 
 GS_GameOverState::~GS_GameOverState()
 {
 }
-void BackToMenu1()
-{
-	Singleton<GameStateManager>::GetInstance()->Pop();
-}
-void Reload1()
-{
-	Singleton<GameStateManager>::GetInstance()->Pop();
-	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
-}
+
 bool GS_GameOverState::Create()
 {
     return false;
@@ -51,12 +59,6 @@ void GS_GameOverState::Update(float deltaTime)
 {
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->Update(deltaTime);
-		if (i == 0) {
-			button[i]->OnClick(BackToMenu1);
-		}
-		else if (i == 1) {
-			button[i]->OnClick(Reload1);
-		}
 	}
 	Singleton<InputManager>::GetInstance()->fixButton();
 }

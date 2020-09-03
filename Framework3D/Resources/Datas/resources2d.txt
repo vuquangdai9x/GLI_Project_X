@@ -132,7 +132,7 @@ SHADER 0
 ID 1 TEXT
 SHADER 1
 
-#Fonts: 3
+#Fonts: 5
 ID 0
 FILE "Fonts/OpenSans-Bold.ttf"
 PIXELSIZE ABSOLUTE
@@ -145,3 +145,11 @@ ID 2
 FILE "Fonts/OpenSans-Regular.ttf"
 PIXELSIZE RELATIVE
 0 0.5
+ID 3
+FILE "Fonts/PTSerif-Regular.ttf"
+PIXELSIZE RELATIVE
+0 0.5
+ID 4
+FILE "Fonts/PTSerif-Bold.ttf"
+PIXELSIZE ABSOLUTE
+0 200
