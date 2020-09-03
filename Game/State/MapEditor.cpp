@@ -805,7 +805,7 @@ void MapEditor::addObject()
 		m_currentSprite = obs;
 		Singleton<SceneManager2D>::GetInstance()->AddObject(obs, MAP_OBJECT);
 
-		m_rockyGolem.push_back(obs);
+		m_vampireBat.push_back(obs);
 	}
 	else if (m_curent->type == DEADLYBIRD_UNIT) {
 		int iNumOfObject, iObjectId;
@@ -842,7 +842,7 @@ void MapEditor::addObject()
 		m_currentSprite = obs;
 		Singleton<SceneManager2D>::GetInstance()->AddObject(obs, MAP_OBJECT);
 
-		m_rockyGolem.push_back(obs);
+		m_deadlyBird.push_back(obs);
 	}
 }
 
