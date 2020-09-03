@@ -48,6 +48,8 @@ SceneManager2D::~SceneManager2D()
 	if (m_mainCamera != NULL) delete m_mainCamera;
 	if (m_menuCamera!= NULL) delete m_menuCamera;
 	if (m_combatController != NULL) delete m_combatController;
+
+	if (m_endlessSectionMng != NULL) delete m_endlessSectionMng;
 }
 
 bool SceneManager2D::LoadAnimation(FILE* fIn, Sprite* sprite) {
@@ -107,54 +109,18 @@ bool SceneManager2D::LoadAnimation(FILE* fIn, Sprite* sprite) {
 	return false;
 }
 
-bool SceneManager2D::LoadScene(char* dataSceneFile) {
-	const char* resourceDir = Globals::resourceDir;
-	char filePath[512];
-	strcpy(filePath, resourceDir);
-	strcat(filePath, dataSceneFile);
-	FILE* fIn = fopen(filePath, "r");
-	if (fIn == nullptr) {
-		printf("Fails to load scene file");
-		return false;
-	}
-
+bool SceneManager2D::LoadBackgroundAndUI(FILE* fIn, Player* player, float mapWidth) {
 	Sprite* obj;
 	int iNumOfObject, iObjectId;
 	int iMaterialId;
 	int iMainTexId;
 	int iFontId;
 	Vector3 position;
-	float rotation;
-	Vector2 scale;
+	float rotation = 0;
+	Vector2 scale(1,1);
 	unsigned int uiHexColor;
 	float alpha;
 	char shapeType[10];
-
-	// set up map 
-	char mapName[256];
-	float mapWidth;
-	fscanf(fIn, "#MAP %s\n", mapName);
-	fscanf(fIn, "WIDTH %f\n", &mapWidth);
-
-	// Set up player
-	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
-	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
-	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
-	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-	fscanf(fIn, "ROTATION %f\n", &rotation);
-	rotation = rotation * 2 * M_PI / 360;
-	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-
-	Player* player = new Player(iObjectId);
-	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	player->createBox2D();
-	AddObject(player);
-	m_currentPlayer = player;
-
-	LoadAnimation(fIn, player);
-
-	printf("[msg] SceneManager2D: Init player\n");
 
 	// set up backgrounds
 	int iLoopVertical, iLoopHorizontal;
@@ -172,7 +138,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		int iNumOfAnimations;
 		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 
-		MapBorder* bgr = new MapBorder(iObjectId,player,0);
+		MapBorder* bgr = new MapBorder(iObjectId, player, 0);
 		position.x = player->GetPosition().x;
 		bgr->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 		bgr->SetLoopAmount(iLoopHorizontal, iLoopVertical);
@@ -235,7 +201,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	healthIcon->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	AddObject(healthIcon);
 	LoadAnimation(fIn, healthIcon);
-	
+
 	printf("[msg] SceneManager2D: HUD | Init health icon\n");
 
 	position.x = position.y = 0;
@@ -376,7 +342,8 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 			m_combatController->AddWeapon(gun);
 
 			printf("[msg] SceneManager2D: Init simple gun %d: %s\n", iWeaponId, weaponName);
-		}else if (strcmp("AUTOGUN", weaponType) == 0) {
+		}
+		else if (strcmp("AUTOGUN", weaponType) == 0) {
 			fscanf(fIn, "SHORT RECHARGE TIME %f\n", &shortRechargeTime);
 			fscanf(fIn, "SPREAD ANGLE %f\n", &spreadRandomAngle);
 			spreadRandomAngle = spreadRandomAngle * M_PI / 180;
@@ -391,7 +358,59 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		}
 	}
 	m_combatController->ChangeWeapon(0);
-	
+	return true;
+}
+
+bool SceneManager2D::LoadScene(char* dataSceneFile) {
+	const char* resourceDir = Globals::resourceDir;
+	char filePath[512];
+	strcpy(filePath, resourceDir);
+	strcat(filePath, dataSceneFile);
+	FILE* fIn = fopen(filePath, "r");
+	if (fIn == nullptr) {
+		printf("Fails to load scene file");
+		return false;
+	}
+
+	Sprite* obj;
+	int iNumOfObject, iObjectId;
+	int iMaterialId;
+	int iMainTexId;
+	int iFontId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+	char shapeType[10];
+
+	// set up map 
+	char mapName[256];
+	float mapWidth;
+	fscanf(fIn, "#MAP %s\n", mapName);
+	fscanf(fIn, "WIDTH %f\n", &mapWidth);
+
+	// Set up player
+	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+
+	Player* player = new Player(iObjectId);
+	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	player->createBox2D();
+	AddObject(player);
+	m_currentPlayer = player;
+
+	LoadAnimation(fIn, player);
+
+	printf("[msg] SceneManager2D: Init player\n");
+
+	LoadBackgroundAndUI(fIn, player, mapWidth);
 	//
 	// set up other object
 	fscanf(fIn, "OBSTACLE_TYPE_0 %d\n", &iNumOfObject);
@@ -588,6 +607,81 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	obj = NULL;
 	camera = NULL;
 
+	fclose(fIn);
+
+	return true;
+}
+
+bool SceneManager2D::LoadEndlessScene(char* dateSceneFile) {
+	const char* resourceDir = Globals::resourceDir;
+	char filePath[512];
+	strcpy(filePath, resourceDir);
+	strcat(filePath, dateSceneFile);
+	FILE* fIn = fopen(filePath, "r");
+	if (fIn == nullptr) {
+		printf("Fails to load scene file");
+		return false;
+	}
+
+	int iNumOfObject, iObjectId;
+	int iMaterialId;
+	int iMainTexId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+
+	// set up map 
+	char mapName[256];
+	float mapWidth;
+	fscanf(fIn, "#MAP %s\n", mapName);
+	fscanf(fIn, "WIDTH %f\n", &mapWidth);
+
+	// Set up player
+	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
+	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
+	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "ROTATION %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
+	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+
+	Player* player = new Player(iObjectId);
+	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	player->createBox2D();
+	AddObject(player);
+	m_currentPlayer = player;
+
+	LoadAnimation(fIn, player);
+
+	printf("[msg] SceneManager2D: Init player\n");
+
+	LoadBackgroundAndUI(fIn, player, mapWidth);
+
+	float nearPlane, farPlane, zoom;
+
+	fscanf(fIn, "\n#CAMERA\n");
+	fscanf(fIn, "NEAR %f\n", &nearPlane);
+	fscanf(fIn, "FAR %f\n", &farPlane);
+	fscanf(fIn, "ZOOM %f\n", &zoom);
+	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
+	fscanf(fIn, "DUTCH %f\n", &rotation);
+	rotation = rotation * 2 * M_PI / 360;
+
+	Camera2D* camera = new Camera2D();
+	camera->Init(position, rotation);
+
+	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
+	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
+	SetMainCamera(camera);
+	printf("[msg] SceneManager: Set up Camera2D\n");
+
+	m_endlessSectionMng = new EndlessSectionManager(player, mapWidth);
+	m_endlessSectionMng->Load(fIn);
+
+	fclose(fIn);
 	return true;
 }
 
@@ -1094,6 +1188,7 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		}
 		m_mainCamera->Update(frameTime);
 		m_combatController->Update(frameTime);
+		if (m_endlessSectionMng != NULL) m_endlessSectionMng->Update(frameTime);
 		Singleton<EffectManager>::GetInstance()->Update(frameTime);
 		Singleton<WorldManager>::GetInstance()->Update(frameTime);
 	}
@@ -1130,6 +1225,7 @@ void SceneManager2D::Render(int listObjet) {
 		}
 		glEnable(GL_DEPTH_TEST);
 		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
+		if (m_endlessSectionMng != NULL) m_endlessSectionMng->Render(m_mainCamera);
 	}
 	else  if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {

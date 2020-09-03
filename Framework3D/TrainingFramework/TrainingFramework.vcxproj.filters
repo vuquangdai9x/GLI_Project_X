@@ -214,5 +214,8 @@
     <Text Include="..\Resources\Datas\map1-2.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
+    <Text Include="..\Resources\Datas\endless_map.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
   </ItemGroup>
 </Project>

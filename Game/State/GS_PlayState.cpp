@@ -19,12 +19,16 @@ GS_PlayState::GS_PlayState()
 
 	//Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 	Singleton<EffectManager>::GetInstance()->LoadEffect(effectFile);
-	if (!Singleton<SceneManager2D>::GetInstance()->LoadScene(sceneFile)) {
+	/*if (!Singleton<SceneManager2D>::GetInstance()->LoadScene(sceneFile)) {
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
-	}
+	}*/
 
-	
+	char endlessSceneFile[50] = "Datas/endless_map.txt";
+	if (!Singleton<SceneManager2D>::GetInstance()->LoadEndlessScene(endlessSceneFile)) {
+		printf("[ERR] Entry point: Failed to init scene");
+		return;
+	}
 }
 
 GS_PlayState::~GS_PlayState()

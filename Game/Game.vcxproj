@@ -133,10 +133,12 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="DeadlyBird.cpp" />
+    <ClCompile Include="DifficultyCurve.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectComposite.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EffectCompositePool.cpp" />
+    <ClCompile Include="EndlessSectionManager.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FallingRock.cpp" />
     <ClCompile Include="FallingRockPool.cpp" />
@@ -165,6 +167,7 @@
     <ClCompile Include="ResourcesManager2D.cpp" />
     <ClCompile Include="RockyGolem.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
+    <ClCompile Include="MapSection.cpp" />
     <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
@@ -195,10 +198,12 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="DeadlyBird.h" />
+    <ClInclude Include="DifficultyCurve.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectComposite.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EffectCompositePool.h" />
+    <ClInclude Include="EndlessSectionManager.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="FallingRock.h" />
     <ClInclude Include="FallingRockPool.h" />
@@ -218,6 +223,7 @@
     <ClInclude Include="ItemHeal.h" />
     <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MapBorder.h" />
+    <ClInclude Include="MapSection.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteLoopTexture.h" />
     <ClInclude Include="MaterialParticle2D.h" />

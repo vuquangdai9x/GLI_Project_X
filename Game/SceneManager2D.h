@@ -7,6 +7,7 @@
 #include "CombatController.h"
 #include "HUDController.h"
 #include "Singleton.h"
+#include "EndlessSectionManager.h"
 
 #include "UIComponent.h"
 #include "Button.h"
@@ -33,7 +34,10 @@ private:
 	Player* m_currentPlayer;
 	CombatController* m_combatController = NULL;
 
+	EndlessSectionManager* m_endlessSectionMng;
+
 	bool LoadAnimation(FILE* fIn, Sprite* sprite);
+	bool LoadBackgroundAndUI(FILE* fIn, Player* player, float mapWidth);
 public:
 	float m_time;
 
@@ -45,6 +49,7 @@ public:
 	void RemoveObject(Sprite* object);
 	void RemoveMapObject(Sprite* object);
 	bool LoadScene(char* dataSceneFile);
+	bool LoadEndlessScene(char* dateSceneFile);
 	bool LoadMenuScene(char* dataSceneFile);
 	std::vector<Button*> LoadPauseScene(char* dataSceneFile);
 	std::vector<UnitButton*> LoadMapScene(char* dataSceneFile);

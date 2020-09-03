@@ -61,6 +61,12 @@
     <Filter Include="Header Files\Item">
       <UniqueIdentifier>{99d01280-f3e2-4428-942a-10e39f2e5567}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\endless">
+      <UniqueIdentifier>{82491f08-62c1-494e-930b-bcf39acd84f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\endless">
+      <UniqueIdentifier>{877bf009-98fe-400d-a55d-47cfa52b7bc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -249,6 +255,15 @@
     <ClInclude Include="BrokenBalloon.h">
       <Filter>Header Files\Item</Filter>
     </ClInclude>
+    <ClInclude Include="EndlessSectionManager.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="DifficultyCurve.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSection.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -427,6 +442,15 @@
     </ClCompile>
     <ClCompile Include="BrokenBalloon.cpp">
       <Filter>Source Files\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="DifficultyCurve.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSection.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="EndlessSectionManager.cpp">
+      <Filter>Source Files\endless</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
