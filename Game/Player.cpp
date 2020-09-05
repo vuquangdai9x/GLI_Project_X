@@ -149,26 +149,43 @@ void Player::Update(float deltaTime)
 		if (start - m_TakeDameTime > m_immortalTime) {
 			m_TakeDameTime = GetTickCount();
 			this->m_HP -= user->m_receiveDamage;
-
+			for (int i = 0; i < 3; i++) {
+				if (this->misson->getListMisson()[i] == 2) {
+					this->misson->setBlood(false);
+				}
+			}
 			if (this->m_HP <= 0) {
 				//m_HP = 0;
-				Singleton<GameStateManager>::GetInstance()->Pop();
-				Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
+                this->m_DieTime = GetTickCount();
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
+				this->playerBody->setActive(false);
+				
 			}
 			Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_position, 10000);
 		}
 		this->SetColor(m_color[(++m_currentColor) % 2], 1);
 	}
-
 	else {
 		if (start - m_TakeDameTime > m_immortalTime) this->SetColor(0xffffff, 1);
 		else {
 			this->SetColor(m_color[(++m_currentColor) % 2], 1);
 		}
 	}
+	if (this->m_HP <= 0 && (start - m_DieTime) >= 1000) {
+		Singleton<GameStateManager>::GetInstance()->Pop();
+		Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::GAMEOVER);
+	}
+	else if (m_HP <= 0) {
+		Vector2 scale = this->GetScale();
+		scale.x -=  deltaTime;
+		scale.y -=  deltaTime;
+		this->SetScale(scale);
+	}
 	m_score = playerPos.y;
 	this->m_HUDController->UpdateScore(m_score);
 	this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
+
+	this->misson->setScore(m_score);
 
 	if (durationDamage > 0) {
 		durationDamage -= deltaTime;
@@ -185,5 +202,9 @@ void Player::Update(float deltaTime)
 
 	//printf("%f \n", getFireAngle());
 	//if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) testCanon();
+}
+void Player::SetMisson(int misson) 
+{
+	this->misson = new Misson(misson);
 }
 

@@ -129,12 +129,14 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	unsigned int uiHexColor;
 	float alpha;
 	char shapeType[10];
+	int iMisson;
 
 	// set up map 
 	char mapName[256];
 	float mapWidth;
 	fscanf(fIn, "#MAP %s\n", mapName);
 	fscanf(fIn, "WIDTH %f\n", &mapWidth);
+	fscanf(fIn, "HEIGHTWIN %d\n", &m_heightWin);
 
 	// Set up player
 	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
@@ -145,10 +147,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
+	fscanf(fIn, "MISSON %d\n", &iMisson);
 
 	Player* player = new Player(iObjectId);
 	player->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	player->createBox2D();
+	player->SetMisson(iMisson);
 	AddObject(player);
 	m_currentPlayer = player;
 

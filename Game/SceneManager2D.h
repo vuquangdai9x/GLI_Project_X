@@ -32,6 +32,7 @@ private:
 	Camera2D* m_mainCamera,*m_menuCamera,*m_mapCamera;
 	Player* m_currentPlayer;
 	CombatController* m_combatController = NULL;
+	int m_heightWin;
 
 	bool LoadAnimation(FILE* fIn, Sprite* sprite);
 public:
@@ -59,4 +60,5 @@ public:
 	void getPlayerPos(Vector3& pos);
 	Vector2& get2Dpos(float x, float y, float z, int listObjet = PLAY_OBJECT);
 	Vector3& get3Dpos(float x, float y, int listObjet = PLAY_OBJECT);
+	int getHeightWin() { return this->m_heightWin; }
 };

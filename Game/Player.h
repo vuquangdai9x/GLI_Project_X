@@ -2,6 +2,7 @@
 #include "Sprite.h"
 #include "ItemBody.h"
 #include "HUDController.h"
+#include "Misson.h"
 enum FlyState { Fast = 1, Normal = 0, SLow = -1, Static = 2 };
 enum MoveState { Left = -1, Right = 1, NonMove = 0 };
 class Player : public Sprite
@@ -18,6 +19,7 @@ private:
 	float m_flyMulti, m_moveMulti;
 
 	DWORD m_TakeDameTime = 0;
+	DWORD m_DieTime = 0;
 	int m_immortalTime = 2000;
 	int m_currentColor = 0;
 	int m_color[2] = { 0xffafff, 0x4863A0 };
@@ -35,6 +37,8 @@ private:
 
 	float durationDamage;
 	float durationSpeed;
+
+	Misson* misson;
 
 public:
 	Player(int id);
@@ -61,5 +65,8 @@ public:
 
 	void setHUDController(HUDController* hud) { this->m_HUDController = hud; }
 	HUDController* getHUDController() { return this->m_HUDController; }
+	void setMisson(Misson* misson) { this->misson = misson; }
+	void SetMisson(int misson);
+	Misson* getMisson() { return this->misson; }
 };
 

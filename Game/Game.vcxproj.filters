@@ -252,6 +252,12 @@
     <ClInclude Include="State\GS_TutorialState.h">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
+    <ClInclude Include="Misson.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="State\GS_PassLevelState.h">
+      <Filter>Header Files\GameState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -432,6 +438,12 @@
       <Filter>Source Files\Item</Filter>
     </ClCompile>
     <ClCompile Include="State\GS_TutorialState.cpp">
+      <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Misson.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="State\GS_PassLevelState.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
   </ItemGroup>

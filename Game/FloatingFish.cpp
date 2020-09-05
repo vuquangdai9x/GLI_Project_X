@@ -2,6 +2,8 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
+#include "EffectManager.h"
+#include "Misson.h"
 FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 {
 	this->numOfTarget = numOfTarget;
@@ -101,8 +103,34 @@ void FloatingFish::Update(float deltaTime)
 		SetScale(Vector2(m_scale.x * -1, m_scale.y));
 	}
 
-	Enemy::takeDamage();
+	//Enemy::takeDamage();
 	//printf("%d\n", this->m_HP);
+	DWORD start;
+	start = GetTickCount();
+	UserData* user = (UserData*)enemyBody->body->GetUserData();
+	if (user->IsCollison > 0) {
+		if (user->m_typeB == PLAYERBULLET) {
+			m_TakeDameTime = GetTickCount();
+			this->m_HP -= user->m_receiveDamage;
+			this->SetColor(0xffafff, 1);
+			if (this->m_HP <= 0) {
+				Misson* misson = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getMisson();
+				for (int i = 0; i < 3; i++) {
+					if (misson->getListMisson()[i] == 1 && misson->getEnemyType() == 0) {
+						misson->countKill();
+					}
+				}
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
+				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				this->enemyBody->setActive(false);
+				delete this;
+			}
+		}
+		else {
+			if (start - m_TakeDameTime > m_animationTime)this->SetColor(0xffffff, 1);
+		}
+	}
+	else if (start - m_TakeDameTime > m_animationTime) this->SetColor(0xffffff, 1);
 }
 
 void FloatingFish::createBox2D()

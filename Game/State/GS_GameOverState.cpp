@@ -5,6 +5,7 @@
 #include"GameStateManager.h"
 #include "../ResourcesManager2D.h"
 #include "../SceneManager2D.h"
+#include "../WorldManager.h"
 void BackToMenu1()
 {
 	Singleton<GameStateManager>::GetInstance()->Pop();
@@ -12,13 +13,14 @@ void BackToMenu1()
 void Reload1()
 {
 	Singleton<GameStateManager>::GetInstance()->Pop();
+
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
 GS_GameOverState::GS_GameOverState()
 {
 	printf("GS_PauseState");
 	char sceneFile[50] = "Datas/scene2d-gameover.txt";
-	char resourcesFile[60] = "Datas/resources2d.txt";
+	//char resourcesFile[60] = "Datas/resources2d.txt";
 
 	//Singleton<ResourceManager2D>::GetInstance()->LoadResources(resourcesFile);
 
@@ -57,10 +59,13 @@ void GS_GameOverState::Render()
 
 void GS_GameOverState::Update(float deltaTime)
 {
-	for (int i = 0; i < this->button.size(); i++) {
-		button[i]->Update(deltaTime);
+	if (!this->button.empty()) {
+		for (int i = 0; i < this->button.size(); i++) {
+			button[i]->Update(deltaTime);
+		}
+		Singleton<InputManager>::GetInstance()->fixButton();
 	}
-	Singleton<InputManager>::GetInstance()->fixButton();
+	
 }
 
 void GS_GameOverState::KeyPress()

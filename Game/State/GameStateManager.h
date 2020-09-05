@@ -19,6 +19,7 @@ public:
 	void update(float deltaTime);
 	void KeyPress();
 	void setPaused(bool p) { this->paused = p; }
+	GS_PauseState* getPauseState() { return this->pauseState; }
 
 	const static int WELCOM = 0;
 	const static int MENU = 1;
@@ -27,5 +28,6 @@ public:
 	const static int MAP = 4;
 	const static int QUIT = 5;
 	const static int TUTORIAL = 6;
+	const static int PASSLEVEL = 7;
 };
 

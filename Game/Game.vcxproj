@@ -158,6 +158,7 @@
     <ClCompile Include="MapBorder.cpp" />
     <ClCompile Include="MaterialParticle2D.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
+    <ClCompile Include="Misson.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParticlesEmitter.cpp" />
     <ClCompile Include="ParticlesEmitter.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="State\GameStateManager.cpp" />
     <ClCompile Include="State\GS_GameOverState.cpp" />
     <ClCompile Include="State\GS_MainMenu.cpp" />
+    <ClCompile Include="State\GS_PassLevelState.cpp" />
     <ClCompile Include="State\GS_PauseState.cpp" />
     <ClCompile Include="State\GS_PlayState.cpp" />
     <ClCompile Include="State\GS_TutorialState.cpp" />
@@ -219,6 +221,7 @@
     <ClInclude Include="ItemHeal.h" />
     <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MapBorder.h" />
+    <ClInclude Include="Misson.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteLoopTexture.h" />
     <ClInclude Include="MaterialParticle2D.h" />
@@ -235,6 +238,7 @@
     <ClInclude Include="State\GameStateManager.h" />
     <ClInclude Include="State\GS_GameOverState.h" />
     <ClInclude Include="State\GS_MainMenu.h" />
+    <ClInclude Include="State\GS_PassLevelState.h" />
     <ClInclude Include="State\GS_PauseState.h" />
     <ClInclude Include="State\GS_PlayState.h" />
     <ClInclude Include="State\GS_TutorialState.h" />

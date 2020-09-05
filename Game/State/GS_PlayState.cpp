@@ -13,6 +13,7 @@ GS_PlayState::GS_PlayState()
     printf("GS_PlayState\n");
 	// 2D
 	//char sceneFile[50] = "Datas/scene2d.txt";
+	this->map = 1;
 	char sceneFile[50] = "Datas/map1-2.txt";
 	char resourcesFile[50] = "Datas/resources2d.txt";
 	char effectFile[50] = "Datas/effects.txt";
@@ -23,7 +24,6 @@ GS_PlayState::GS_PlayState()
 		printf("[ERR] Entry point: Failed to init scene");
 		return ;
 	}
-
 	
 }
 
@@ -61,6 +61,17 @@ void GS_PlayState::Update(float deltaTime)
 
 	// NOTE: for debug purpose. Player/HotAirBalloon must inherit from Sprite and be loaded from SceneManager2D
 	//
+	Vector3 playerPos;
+	Singleton<SceneManager2D>::GetInstance()->getPlayerPos(playerPos);
+	DWORD start = GetTickCount();
+	if (playerPos.y > Singleton<SceneManager2D>::GetInstance()->getHeightWin()) {
+		if (this->m_PassTime == 0) this->m_PassTime = GetTickCount();
+		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(playerPos, 12100);
+	}
+	if (m_PassTime != 0 && (start - m_PassTime) > 2000) {
+		Singleton<GameStateManager>::GetInstance()->Pop();
+		Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PASSLEVEL);
+	}
 }
 
 
@@ -68,6 +79,9 @@ void GS_PlayState::KeyPress()
 {
 	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::ESCAPE)) {
 		Singleton<GameStateManager>::GetInstance()->setPaused(true);
+		//Singleton<GameStateManager>::GetInstance()->getPauseState()->SetMisson(this->misson);
+		Singleton<GameStateManager>::GetInstance()->getPauseState()->SetMisson(Singleton<SceneManager2D>::GetInstance()->getPlayer()->getMisson());
 	}
 }
+
 

@@ -18,6 +18,7 @@ GS_PauseState::GS_PauseState()
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->UpdateMember();
 	}
+	this->misson = NULL;
 }
 
 GS_PauseState::~GS_PauseState()
@@ -53,6 +54,9 @@ void GS_PauseState::Render()
 {
 	Singleton<SceneManager2D>::GetInstance()->Render();
 	Singleton<SceneManager2D>::GetInstance()->Render(PAUSE_OBJECT);
+	if (this->misson != NULL) {
+		this->misson->Render();
+	}
 }
 
 void GS_PauseState::Update(float deltaTime)
@@ -78,4 +82,5 @@ void GS_PauseState::KeyPress()
 		Singleton<GameStateManager>::GetInstance()->setPaused(false);
 	}
 }
+
 

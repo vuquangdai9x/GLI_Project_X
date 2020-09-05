@@ -7,6 +7,7 @@
 #include "MapEditor.h"
 #include"GS_GameOverState.h"
 #include"GS_TutorialState.h"
+#include"GS_PassLevelState.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
 #include"../SoundManager.h"
@@ -50,15 +51,20 @@ void GameStateManager::Push(int state)
 	else if (state == TUTORIAL) {
 		this->states.push(new GS_TutorialState());
 	}
+	else if (state == PASSLEVEL) {
+		this->states.push(new GS_PassLevelState());
+	}
 }
 
 void GameStateManager::Pop()
 {
-	Singleton<SceneManager2D>::GetInstance()->CleanUp();
-	Singleton<WorldManager>::GetInstance()->CleanUp();
+	
 	StateBase* state = this->states.top();
 	this->states.pop();
-	delete state;
+	
+	//delete state;
+	Singleton<SceneManager2D>::GetInstance()->CleanUp();
+	Singleton<WorldManager>::GetInstance()->CleanUp();
 }
 
 void GameStateManager::render()

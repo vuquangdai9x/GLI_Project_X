@@ -1,0 +1,10 @@
+1: Pass the level
+2: Destroy 5 floating fish
+3: Achieve a minium of 200 points
+
+ID 0
+ID 1
+ENEMYTYPE 0
+KILL 2
+ID 3
+SCORE 200 
