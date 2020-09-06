@@ -165,7 +165,7 @@ bool SceneManager2D::LoadBackgroundAndUI(FILE* fIn, Player* player, float mapWid
 	MapBorder* borderLeft = new MapBorder(iObjectId, player, borderDamage);
 	position.x = player->GetPosition().x - mapWidth / 2;
 	borderLeft->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
-	borderLeft->createCollider();
+	borderLeft->createPhysicsBody();
 	AddObject(borderLeft);
 	LoadAnimation(fIn, borderLeft);
 	borderLeft->SetLoopAmount(iLoopHorizontal, iLoopVertical);
@@ -183,7 +183,7 @@ bool SceneManager2D::LoadBackgroundAndUI(FILE* fIn, Player* player, float mapWid
 	MapBorder* borderRight = new MapBorder(iObjectId, player, borderDamage);
 	position.x = player->GetPosition().x + mapWidth / 2;
 	borderRight->Init(position, 0, scale * scaleFactor, uiHexColor, alpha, iMaterialId, iMainTexId);
-	borderRight->createCollider();
+	borderRight->createPhysicsBody();
 	AddObject(borderRight);
 	LoadAnimation(fIn, borderRight);
 	borderRight->SetLoopAmount(iLoopHorizontal, iLoopVertical);

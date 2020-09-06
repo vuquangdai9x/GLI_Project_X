@@ -67,14 +67,11 @@
     <Filter Include="Source Files\endless">
       <UniqueIdentifier>{877bf009-98fe-400d-a55d-47cfa52b7bc2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{9a0d6c83-178f-47bd-99db-574ee2500199}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="State\GameStateManager.h">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
@@ -89,27 +86,6 @@
     </ClInclude>
     <ClInclude Include="State\StateBase.h">
       <Filter>Header Files\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourcesManager2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ItemBody.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Header Files\Combat\Bullet</Filter>
@@ -147,9 +123,6 @@
     <ClInclude Include="State\GS_PauseState.h">
       <Filter>Header Files\GameState</Filter>
     </ClInclude>
-    <ClInclude Include="..\FreeType\include\ft2build.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UIComponent.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
@@ -186,23 +159,11 @@
     <ClInclude Include="Button.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ListenerClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UserData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HUDController.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="State\GS_GameOverState.h">
       <Filter>Header Files\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="UnitButton.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="State\MapEditor.h">
       <Filter>Header Files\GameState</Filter>
@@ -227,15 +188,6 @@
     </ClInclude>
     <ClInclude Include="Particle.h">
       <Filter>Header Files\effect</Filter>
-    </ClInclude>
-    <ClInclude Include="MapBorder.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SpriteLoopTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SoundManager.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Header Files\Item</Filter>
@@ -262,6 +214,72 @@
       <Filter>Header Files\endless</Filter>
     </ClInclude>
     <ClInclude Include="MapSection.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="MapElement.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="AtomMapElement.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FreeType\include\ft2build.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemBody.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ListenerClass.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBorder.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcesManager2D.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager2D.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteLoopTexture.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitButton.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="UserData.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldManager.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectPool.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="MapElementManager.h">
+      <Filter>Header Files\endless</Filter>
+    </ClInclude>
+    <ClInclude Include="CompositeMapElement.h">
       <Filter>Header Files\endless</Filter>
     </ClInclude>
   </ItemGroup>
@@ -450,6 +468,18 @@
       <Filter>Source Files\endless</Filter>
     </ClCompile>
     <ClCompile Include="EndlessSectionManager.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="AtomMapElement.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectPool.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="MapElementManager.cpp">
+      <Filter>Source Files\endless</Filter>
+    </ClCompile>
+    <ClCompile Include="MapElement.cpp">
       <Filter>Source Files\endless</Filter>
     </ClCompile>
   </ItemGroup>

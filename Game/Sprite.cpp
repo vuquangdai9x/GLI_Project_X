@@ -58,6 +58,13 @@ void Sprite::Init(Sprite& sprite) // init same as another sprite
 	SetUseAnimation(sprite.m_isUseAnimation);
 }
 
+Sprite* Sprite::CreateClone(int iNewId)
+{
+	Sprite* clone = new Sprite(iNewId);
+	clone->Init(*this);
+	return clone;
+}
+
 Vector2 Sprite::GetOriginSize() { return m_originSize; }
 
 int glhProjectf(float objx, float objy, float objz, Matrix modelview, Matrix projection, int* viewport, float* windowCoordinate)

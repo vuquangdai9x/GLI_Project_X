@@ -51,7 +51,7 @@ void MapSection::Generate(int id, float difficulty, float bottom, float top, flo
 		unsigned int color = rand() % 0xFFFFFF;
 		Obstacle * obs = new Obstacle(0, 0);
 		obs->Init(Vector3((routeLeft+routeLength/2), (top+bottom)/2, 14), 0, Vector2(1, 1), color, 1.0, 0, 20501);
-		obs->createTriangle2D();
+		obs->CreatePhysicsBody(Obstacle::ObstacleType::Island);
 		m_listObject.push_back(obs);
 
 		routeLeft += routeLength;

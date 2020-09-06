@@ -1,5 +1,6 @@
 #include "EndlessSectionManager.h"
 #include "Obstacle.h"
+#include "MapElementManager.h"
 
 EndlessSectionManager::EndlessSectionManager(Player* player, float leftBound, float rightBound)
 {
@@ -7,6 +8,7 @@ EndlessSectionManager::EndlessSectionManager(Player* player, float leftBound, fl
 	m_player = player;
 	m_leftBound = leftBound;
 	m_rightBound = rightBound;
+	Singleton<MapElementManager>::CreateInstance();
 }
 
 EndlessSectionManager::~EndlessSectionManager()
@@ -39,10 +41,42 @@ void EndlessSectionManager::Load(FILE* fIn)
 
 	// load map elements
 	// ...
+	Vector3 pos(0, 0, 5);
+	Vector2 scale(1, 1);
+	Obstacle* piece = new Obstacle(202000, OBSTACLE);
+	piece->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20201);
+	piece->CreatePhysicsBody(Obstacle::ObstacleType::Piece, 3);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(piece); // small piece
+
+	piece = new Obstacle(203000, OBSTACLE);
+	piece->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20301);
+	piece->CreatePhysicsBody(Obstacle::ObstacleType::Piece, 5);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(piece); // large piece
+
+	Obstacle* island = new Obstacle(204000, OBSTACLE);
+	island->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20401);
+	island->CreatePhysicsBody(Obstacle::ObstacleType::Island, 3);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(island); // tiny island
+
+	island = new Obstacle(205000, OBSTACLE);
+	island->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20501);
+	island->CreatePhysicsBody(Obstacle::ObstacleType::Island, 3);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(island); // small island
+
+	island = new Obstacle(206000, OBSTACLE);
+	island->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20601);
+	island->CreatePhysicsBody(Obstacle::ObstacleType::Island, 3);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(island); // medium island
+
+	island = new Obstacle(207000, OBSTACLE);
+	island->Init(pos, 0, scale, 0xFFFFFF, 1.0, 0, 20602);
+	island->CreatePhysicsBody(Obstacle::ObstacleType::Cliff, 3);
+	Singleton<MapElementManager>::GetInstance()->AddObjectType(island); // medium cliff
+
 
 	// generate starting section, player at y=0, current section start from 0
 	printf("Generate current section as starting section\n");
-
+	
 	// generate obstacles
 	m_listMapSection[m_iCurrSectionIndex]->GenerateVoid(0, 0, 20, m_leftBound, m_rightBound);
 	Obstacle* startingGround = new Obstacle(0, 0);

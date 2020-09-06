@@ -18,8 +18,16 @@ void MapBorder::Update(float deltaTime) {
 	if (m_physicsBody != NULL)
 		m_physicsBody->body->SetTransform(b2Vec2(position.x, position.y), 0);
 }
-void MapBorder::createCollider() {
-	m_physicsBody = Singleton<WorldManager>::GetInstance()->createRectagle(MAP_BORDER, m_position.x, m_position.y, 0.85 * m_originSize.x * this->GetScale().x, m_originSize.y * this->GetScale().y);
+void MapBorder::createPhysicsBody() {
+	m_physicsBody = Singleton<WorldManager>::GetInstance()->createRectagle(
+		MAP_BORDER, 
+		m_position.x, 
+		m_position.y, 
+		0.85 * m_originSize.x * this->GetScale().x, 
+		m_originSize.y * this->GetScale().y,
+		5, 
+		WorldManager::BodyType::Kinematic
+	);
 	UserData* user = (UserData*)m_physicsBody->body->GetUserData();
 	user->m_damage = m_damage;
 }

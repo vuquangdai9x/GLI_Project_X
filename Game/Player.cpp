@@ -44,7 +44,8 @@ void Player::setFlyState(FlyState fly)
 }
 void Player::updateFlyState()
 {
-	m_flyForce = m_desireFlySpeed - this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).y;
+	float currentFlySpeed = this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).y;
+	m_flyForce = m_desireFlySpeed - currentFlySpeed;
 	if (abs(m_flyForce) > maxForce) {
 		if (m_flyForce > 0) m_flyForce = maxForce;
 		else m_flyForce = -maxForce;
@@ -71,12 +72,16 @@ void Player::setMoveState(MoveState move)
 }
 void Player::updateMoveState()
 {
-	m_moveForce = m_desireMoveSpeed - this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).x;
+	float currentHSpeed = this->playerBody->body->GetLinearVelocityFromWorldPoint(playerBody->body->GetWorldCenter()).x;
+	m_moveForce = m_desireMoveSpeed - currentHSpeed;
 	if (abs(m_moveForce) > maxForce) {
 		if (m_moveForce > 0) m_moveForce = maxForce;
 		else m_moveForce = -maxForce;
 	}
 	playerBody->body->ApplyLinearImpulseToCenter(b2Vec2(m_moveForce * playerBody->body->GetMass(), 0.0), false);
+
+	// effect when move horizontally: rotate balloon
+	SetRotation(-currentHSpeed / 5 * 5 * M_PI / 180);
 }
 
 Player::Player(int id): Sprite(id)

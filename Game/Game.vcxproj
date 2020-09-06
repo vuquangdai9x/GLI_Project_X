@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp" />
+    <ClCompile Include="AtomMapElement.cpp" />
     <ClCompile Include="AutoGun.cpp" />
     <ClCompile Include="BrokenBalloon.cpp" />
     <ClCompile Include="Bullet.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="BulletPool.cpp" />
     <ClCompile Include="CombatController.cpp" />
     <ClCompile Include="FontFace.cpp" />
+    <ClCompile Include="GameObjectPool.cpp" />
     <ClCompile Include="GunBullet.cpp" />
     <ClCompile Include="GunBulletPool.cpp" />
     <ClCompile Include="HUDController.cpp" />
@@ -158,6 +160,8 @@
     <ClCompile Include="ListenerClass.cpp" />
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="MapBorder.cpp" />
+    <ClCompile Include="MapElement.cpp" />
+    <ClCompile Include="MapElementManager.cpp" />
     <ClCompile Include="MaterialParticle2D.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Obstacle.cpp" />
@@ -192,10 +196,12 @@
   <ItemGroup>
     <ClInclude Include="..\FreeType\include\ft2build.h" />
     <ClInclude Include="AnimationController.h" />
+    <ClInclude Include="AtomMapElement.h" />
     <ClInclude Include="AutoGun.h" />
     <ClInclude Include="BrokenBalloon.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CompositeMapElement.h" />
     <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="DeadlyBird.h" />
     <ClInclude Include="DifficultyCurve.h" />
@@ -212,6 +218,7 @@
     <ClInclude Include="BulletType.h" />
     <ClInclude Include="CombatController.h" />
     <ClInclude Include="FontFace.h" />
+    <ClInclude Include="GameObjectPool.h" />
     <ClInclude Include="GunBullet.h" />
     <ClInclude Include="GunBulletPool.h" />
     <ClInclude Include="HUDController.h" />
@@ -223,6 +230,8 @@
     <ClInclude Include="ItemHeal.h" />
     <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MapBorder.h" />
+    <ClInclude Include="MapElement.h" />
+    <ClInclude Include="MapElementManager.h" />
     <ClInclude Include="MapSection.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteLoopTexture.h" />

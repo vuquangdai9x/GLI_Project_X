@@ -18,7 +18,7 @@ Camera2D::Camera2D()
 
 	m_dutchSpeed = 30 * 2 * M_PI / 360;
 	m_moveSpeed = Vector3(5,5,0);
-	m_zoomSpeed = 2;
+	m_zoomSpeed = 25;
 }
 
 void Camera2D::Init(Vector3 position, float dutchAngle)

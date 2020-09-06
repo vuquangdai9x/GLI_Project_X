@@ -13,6 +13,7 @@ public:
 	int GetId();
 	virtual void Init(Vector3 position, float rotation, Vector2 scale, unsigned int hexColor, float alpha, int iMaterialId, int iMainTexId);
 	virtual void Init(Sprite& sprite);
+	virtual Sprite* CreateClone(int iNewId);
 	//void SetSpriteAnimation(int iTextureId, int iNumOfCols, int iNumOfRows, float interval);
 	virtual void Update(float deltaTime);
 	virtual void Render(Camera2D* mainCamera);

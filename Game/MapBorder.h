@@ -11,5 +11,5 @@ public:
 	MapBorder(int id, Player* player, float damage);
 	~MapBorder();
 	void Update(float deltaTime);
-	void createCollider();
+	void createPhysicsBody();
 };
