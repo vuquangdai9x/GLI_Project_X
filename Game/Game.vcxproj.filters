@@ -404,9 +404,6 @@
     <ClCompile Include="MaterialParticle2D.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
-    <ClCompile Include="ParticlesEmitter.cpp">
-      <Filter>Source Files\effect</Filter>
-    </ClCompile>
     <ClCompile Include="ParticlesEmitter.h">
       <Filter>Header Files\effect</Filter>
     </ClCompile>
@@ -445,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="State\GS_PassLevelState.cpp">
       <Filter>Source Files\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlesEmitter.cpp">
+      <Filter>Source Files\effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

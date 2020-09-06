@@ -12,7 +12,7 @@
 //{
 //	
 //}
-ParticlesEmitter::ParticlesEmitter(Vector3 position, Vector2 scale, float rotation): Effect(position,scale,rotation)
+ParticlesEmitter::ParticlesEmitter(Vector3 position, Vector2 scale, float rotation) : Effect(position, scale, rotation)
 {
 	m_timeCounter = 0;
 	m_isBufferInitiated = false;
@@ -38,7 +38,7 @@ void ParticlesEmitter::SetAngleInfo(float emitAngle, float randomRange, EmitType
 	m_emitAngleRandomRange = randomRange;
 	m_emitType = emitType;
 }
-void ParticlesEmitter::SetRadiusInfo(float initRadius, float offsetRandomRange, float mulRandomRange, float endRadius, float (*curve)(float, float, float)) {
+void ParticlesEmitter::SetRadiusInfo(float initRadius, float offsetRandomRange, float mulRandomRange, float endRadius, float(*curve)(float, float, float)) {
 	m_initRadius = initRadius;
 	m_radiusOffsetRandomRange = offsetRandomRange;
 	m_radiusMulRandomRange = mulRandomRange;
@@ -51,13 +51,13 @@ void ParticlesEmitter::SetRadiusInfo(float initRadius, float offsetRandomRange, 
 //	m_endVelocity = endVelocity;
 //	m_velocityCurve = curve;
 //}
-void ParticlesEmitter::SetSizeInfo(float initSize, float randomRange, float endSize, float (*curve)(float, float, float)) {
+void ParticlesEmitter::SetSizeInfo(float initSize, float randomRange, float endSize, float(*curve)(float, float, float)) {
 	m_initSize = initSize;
 	m_sizeOffsetRandomRange = randomRange;
 	m_endSize = endSize;
 	m_sizeCurve = curve;
 }
-void ParticlesEmitter::SetColorInfo(Vector4 initColor, Vector4 randomRange, Vector4 endColor, float (*curve)(float, float, float)) {
+void ParticlesEmitter::SetColorInfo(Vector4 initColor, Vector4 randomRange, Vector4 endColor, float(*curve)(float, float, float)) {
 	m_initColor = initColor;
 	m_colorOffsetRandomRange = randomRange;
 	m_endColor = endColor;
@@ -84,7 +84,7 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 		isSuccess = false;
 	}
 	if (!isSuccess) return false;
-	
+
 	m_iNumOfParticles = iNumOfParticles;
 	Particle* aParticles = new Particle[m_iNumOfParticles];
 
@@ -108,7 +108,7 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 		}
 		break;
 	}
-	
+
 	// set up other info
 	float randomColor;
 	for (int i = 0;i < m_iNumOfParticles; i++) {
@@ -148,7 +148,7 @@ void ParticlesEmitter::Update(float deltaTime)
 	if (m_timeCounter / m_cycleTime >= m_iNumOfLoop) {
 		SetActive(false);
 	}
-		
+
 }
 
 void ParticlesEmitter::Render(Camera2D* mainCamera)
@@ -164,9 +164,9 @@ void ParticlesEmitter::Render(Camera2D* mainCamera)
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_particleBufferHandle);
 	m_material->PrepareShader(
-		m_WVP, 
-		m_texture, 
-		m_radiusCurve(m_initRadius, m_endRadius, fractpart), 
+		m_WVP,
+		m_texture,
+		m_radiusCurve(m_initRadius, m_endRadius, fractpart),
 		m_sizeCurve(m_initSize, m_endSize, fractpart),
 		&color
 	);

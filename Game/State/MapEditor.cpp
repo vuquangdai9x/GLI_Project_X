@@ -39,6 +39,30 @@ MapEditor::~MapEditor()
 {
 	delete m_play;
 	delete bgr, borderLeft, borderRight;
+	for (int i = 0;i < m_Obstacle.size();i++) {
+		delete m_Obstacle[i];
+	}
+	for (int i = 0;i < m_floatingFish.size();i++) {
+		delete m_floatingFish[i];
+	}
+	for (int i = 0;i < m_suicudeBug.size();i++) {
+		delete m_suicudeBug[i];
+	}
+	for (int i = 0;i < m_deadlyBird.size();i++) {
+		delete m_deadlyBird[i];
+	}
+	for (int i = 0;i < m_rockyGolem.size();i++) {
+		delete m_rockyGolem[i];
+	}
+	for (int i = 0;i < m_vampireBat.size();i++) {
+		delete m_vampireBat[i];
+	}
+	for (int i = 0;i < m_fLoatingFishMove.size();i++) {
+		delete m_fLoatingFishMove[i];
+	}
+	for (int i = 0;i < button.size();i++) {
+		delete button[i];
+	}
 }
 
 bool MapEditor::Create()

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{40064F81-ACC6-CAB7-7501-1435E1800F94}</ProjectGuid>
     <RootNamespace>SoloudDynamic</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
