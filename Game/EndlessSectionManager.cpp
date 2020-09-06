@@ -1,11 +1,12 @@
 #include "EndlessSectionManager.h"
 #include "Obstacle.h"
 
-EndlessSectionManager::EndlessSectionManager(Player* player, float mapWidth)
+EndlessSectionManager::EndlessSectionManager(Player* player, float leftBound, float rightBound)
 {
 	m_iSectionIdCount = 0;
 	m_player = player;
-	m_mapWidth = mapWidth;
+	m_leftBound = leftBound;
+	m_rightBound = rightBound;
 }
 
 EndlessSectionManager::~EndlessSectionManager()
@@ -43,6 +44,7 @@ void EndlessSectionManager::Load(FILE* fIn)
 	printf("Generate current section as starting section\n");
 
 	// generate obstacles
+	m_listMapSection[m_iCurrSectionIndex]->GenerateVoid(0, 0, 20, m_leftBound, m_rightBound);
 	Obstacle* startingGround = new Obstacle(0, 0);
 	startingGround->Init(Vector3(0,-1.5,14), 0, Vector2(1,1), 0xFFFFFF, 1.0, 0, 20101);
 	m_listMapSection[m_iCurrSectionIndex]->AddObject(startingGround);
@@ -51,14 +53,14 @@ void EndlessSectionManager::Load(FILE* fIn)
 	obs->createTriangle2D();
 	m_listMapSection[m_iCurrSectionIndex]->AddObject(obs);
 
-	m_currStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetStartHeight();
-	m_currEndHeight = m_listMapSection[m_iCurrSectionIndex]->GetEndHeight();
+	m_currStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetBottom();
+	m_currEndHeight = m_listMapSection[m_iCurrSectionIndex]->GetTop();
 
 	// generate tutorials
 	// ...
 
 	// generate next sections
-	m_genStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetEndHeight();
+	m_genStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetTop();
 	for (int i = m_iCurrSectionIndex+1; i < m_iCurrSectionIndex + m_iNextOffset; i++) {
 		m_iSectionIdCount++;
 
@@ -68,7 +70,11 @@ void EndlessSectionManager::Load(FILE* fIn)
 			m_iSectionIdCount,
 			m_difficultyCurve(m_genStartHeight),
 			m_genStartHeight,
-			m_genStartHeight + sectionHeight
+			m_genStartHeight + sectionHeight,
+			m_leftBound, 
+			m_rightBound,
+			rand() % 3+2,
+			rand()%3
 		);
 		m_genStartHeight += sectionHeight;
 	}
@@ -83,8 +89,8 @@ void EndlessSectionManager::Update(float deltaTime)
 	if (playerHeight > m_currEndHeight) {
 		m_iCurrSectionIndex = (m_iCurrSectionIndex + 1) % m_listMapSection.size();
 		m_isDelPrev = m_isGenNext = false;
-		m_currStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetStartHeight();
-		m_currEndHeight = m_listMapSection[m_iCurrSectionIndex]->GetEndHeight();
+		m_currStartHeight = m_listMapSection[m_iCurrSectionIndex]->GetBottom();
+		m_currEndHeight = m_listMapSection[m_iCurrSectionIndex]->GetTop();
 	}
 	if (!m_isDelPrev && playerHeight > m_currStartHeight + m_triggerDelPrevOffset) {
 		//printf("Clear secIndex = %d | ", m_iPrevSectionIndex);
@@ -104,7 +110,11 @@ void EndlessSectionManager::Update(float deltaTime)
 			m_iSectionIdCount,
 			m_difficultyCurve(m_genStartHeight),
 			m_genStartHeight,
-			m_genStartHeight + sectionHeight
+			m_genStartHeight + sectionHeight,
+			m_leftBound,
+			m_rightBound,
+			rand() % 3 + 2,
+			rand() % 3
 		);
 		m_genStartHeight += sectionHeight;
 		m_iNextSectionIndex = (m_iNextSectionIndex + 1) % m_listMapSection.size();

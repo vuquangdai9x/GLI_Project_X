@@ -678,7 +678,8 @@ bool SceneManager2D::LoadEndlessScene(char* dateSceneFile) {
 	SetMainCamera(camera);
 	printf("[msg] SceneManager: Set up Camera2D\n");
 
-	m_endlessSectionMng = new EndlessSectionManager(player, mapWidth);
+	// TODO: calculate left and right bound of EndlessSectionManager
+	m_endlessSectionMng = new EndlessSectionManager(player, -mapWidth / 2 + 3, mapWidth / 2 - 3);
 	m_endlessSectionMng->Load(fIn);
 
 	fclose(fIn);
@@ -1178,7 +1179,7 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
-			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
+			//if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
@@ -1214,7 +1215,7 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 void SceneManager2D::Render(int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		for (int i = 0; i < m_listObject.size(); i++) {
-			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
+			//if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}

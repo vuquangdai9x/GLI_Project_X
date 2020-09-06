@@ -16,11 +16,11 @@ private:
 
 	Player* m_player;
 	DifficultyCurveFnPtr m_difficultyCurve;
-	float m_mapWidth;
+	float m_leftBound, m_rightBound;
 	
 	float m_currStartHeight, m_currEndHeight, m_genStartHeight;
 public:
-	EndlessSectionManager(Player* player, float mapWidth);
+	EndlessSectionManager(Player* player, float leftBound, float rightBound);
 	~EndlessSectionManager();
 	void Load(FILE* fIn);
 	void Update(float deltaTime);
