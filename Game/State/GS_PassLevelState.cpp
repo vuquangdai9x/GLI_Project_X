@@ -2,6 +2,7 @@
 #include "../Singleton.h"
 #include "../SceneManager2D.h"
 #include "GameStateManager.h"
+#include"../WorldManager.h"
 
 void BackToMenu2()
 {
@@ -10,6 +11,16 @@ void BackToMenu2()
 void Reload2()
 {
 	Singleton<GameStateManager>::GetInstance()->Pop();
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+}
+void NextLever()
+{
+	Singleton<GameStateManager>::GetInstance()->Pop();
+	int map = Singleton<GameStateManager>::GetInstance()->getMap()+1;
+	if (map == 3) return;
+	WorldManager *test=Singleton<WorldManager>::GetInstance();
+
+	Singleton<GameStateManager>::GetInstance()->setMap(map);
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
 GS_PassLevelState::GS_PassLevelState()
@@ -24,6 +35,9 @@ GS_PassLevelState::GS_PassLevelState()
 		if (i == 0) {
 			buttons[i]->OnClick(BackToMenu2);
 		}
+		else if (i == 1) {
+			buttons[i]->OnClick(NextLever);
+		}
 		else if (i == 2) {
 			buttons[i]->OnClick(Reload2);
 		}
@@ -32,6 +46,16 @@ GS_PassLevelState::GS_PassLevelState()
 
 GS_PassLevelState::~GS_PassLevelState()
 {
+	delete background;
+	for (int i = 0; i < buttons.size(); i++) {
+		delete buttons[i];
+	}
+	std::vector<Button*>().swap(buttons);
+	for (int i = 0; i < stars.size(); i++) {
+		delete stars[i];
+	}
+	std::vector<UIComponent*>().swap(stars);
+	delete level;
 }
 
 bool GS_PassLevelState::Create()
@@ -59,9 +83,12 @@ void GS_PassLevelState::Render()
 void GS_PassLevelState::Update(float deltaTime)
 {
 	for (int i = 0; i < this->buttons.size(); i++) {
-		buttons[i]->Update(deltaTime);
+		if (buttons[i]->Update()) {
+			Singleton<InputManager>::GetInstance()->fixButton();
+			return;
+		}
 	}
-	Singleton<InputManager>::GetInstance()->fixButton();
+	//Singleton<InputManager>::GetInstance()->fixButton();
 }
 
 void GS_PassLevelState::KeyPress()

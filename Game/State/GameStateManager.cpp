@@ -8,10 +8,12 @@
 #include"GS_GameOverState.h"
 #include"GS_TutorialState.h"
 #include"GS_PassLevelState.h"
+#include"GS_SelectLevel.h"
 #include"../Singleton.h"
 #include"../SceneManager2D.h"
 #include"../SoundManager.h"
 #include "../WorldManager.h"
+#include "../PostProcessingManager.h"
 
 GameStateManager::GameStateManager()
 {
@@ -28,6 +30,7 @@ GameStateManager::~GameStateManager()
 
 void GameStateManager::Push(int state)
 {
+	
 	if (state == WELCOM) {
 		this->states.push(new GS_WelcomScreen());
 	}
@@ -35,6 +38,7 @@ void GameStateManager::Push(int state)
 		this->states.push(new GS_MainMenu());
 	}
 	else if (state == PLAY) {
+		
 		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_PlayState());
 	}
@@ -54,21 +58,60 @@ void GameStateManager::Push(int state)
 	else if (state == PASSLEVEL) {
 		this->states.push(new GS_PassLevelState());
 	}
+	else if (state == SELECTLEVEL) {
+		this->states.push(new GS_SelectLevel());
+	}
 }
 
 void GameStateManager::Pop()
 {
-	
-	StateBase* state = this->states.top();
+	StateBase *state = this->states.top();
 	this->states.pop();
-	
-	//delete state;
+	if (dynamic_cast<GS_MainMenu*>(state)) {
+		GS_MainMenu* del = dynamic_cast<GS_MainMenu*>(state);
+		delete del;
+	} 
+	else if (dynamic_cast<GS_PlayState*>(state)) {
+		GS_PlayState* del = dynamic_cast<GS_PlayState*>(state);
+		ShowCursor(true);
+		delete del;
+	}
+	else if (dynamic_cast<GS_PauseState*>(state)) {
+		GS_PauseState* del = dynamic_cast<GS_PauseState*>(state);
+		delete del;
+	}
+	else if (dynamic_cast<GS_PassLevelState*>(state)) {
+		GS_PassLevelState* del = dynamic_cast<GS_PassLevelState*>(state);
+		delete del;
+	}
+	else if (dynamic_cast<GS_SelectLevel*>(state)) {
+		GS_SelectLevel* del = dynamic_cast<GS_SelectLevel*>(state);
+		delete del;
+	}
+	else if (dynamic_cast<GS_GameOverState*>(state)) {
+		GS_GameOverState* del = dynamic_cast<GS_GameOverState*>(state);
+		delete del;
+	}
+	else if (dynamic_cast<GS_TutorialState*>(state)) {
+		GS_TutorialState* del = dynamic_cast<GS_TutorialState*>(state);
+		delete del;
+	}
+
 	Singleton<SceneManager2D>::GetInstance()->CleanUp();
 	Singleton<WorldManager>::GetInstance()->CleanUp();
 }
 
+void GameStateManager::DeleteMap()
+{
+
+	MapEditor *state = dynamic_cast<MapEditor*> (this->states.top());
+	this->states.pop();
+	delete state;
+}
+
 void GameStateManager::render()
 {
+	Singleton<PostProcessingManager>::GetInstance()->Prepare();
 	if (paused) {
 		pauseState->Render();
 	}
@@ -77,6 +120,7 @@ void GameStateManager::render()
 			this->states.top()->Render();
 		}
 	}	
+	Singleton<PostProcessingManager>::GetInstance()->Render();
 }
 
 void GameStateManager::update(float deltaTime)

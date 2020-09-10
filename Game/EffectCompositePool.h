@@ -15,4 +15,5 @@ public:
 	EffectComposite* GetCompositeEffect();
 	void Update(float deltaTime);
 	void Render(Camera2D* mainCamera);
+	void DisableAll();
 };

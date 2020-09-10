@@ -2,7 +2,7 @@
 #include "Singleton.h"
 #include "SceneManager2D.h"
 #include"WorldManager.h"
-
+#include"EffectManager.h"
 VampireBat::VampireBat(int id, Vector2 centerPos, float m_range) : Enemy(id)
 {
 	this->centerPos = centerPos;
@@ -23,6 +23,7 @@ VampireBat::VampireBat(int id, Vector2 centerPos, float m_range) : Enemy(id)
 
 	this->m_damage = 1;
 	this->m_maxHP = this->m_HP = 15;
+	this->m_score = 13;
 }
 
 VampireBat::~VampireBat()
@@ -69,7 +70,28 @@ void VampireBat::Update(float deltaTime)
 	this->SetPosition(vampireBatPos);
 
 	
-	Enemy::takeDamage();
+	DWORD start;
+	start = GetTickCount();
+//	UserData* user = (UserData*)enemyBody->body->GetUserData();
+	if (user->IsCollison > 0) {
+		if (user->m_typeB == PLAYERBULLET) {
+			m_TakeDameTime = GetTickCount();
+			this->m_HP -= user->m_receiveDamage;
+			this->SetColor(0xffafff, 1);
+			if (this->m_HP <= 0) {
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12300);
+				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
+				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
+				this->enemyBody->setActive(false);
+				delete this;
+			}
+		}
+		else {
+			if (start - m_TakeDameTime> m_animationTime)this->SetColor(0xffffff, 1);
+		}
+	}
+	else if (start - m_TakeDameTime > m_animationTime) this->SetColor(0xffffff, 1);
 }
 
 void VampireBat::createBox2D()

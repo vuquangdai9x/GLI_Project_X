@@ -2,11 +2,13 @@
 #include"WorldManager.h"
 #include"Singleton.h"
 #include"SceneManager2D.h"
+#include"EffectManager.h"
 #include<math.h>
 DeadlyBird::DeadlyBird(int id):Enemy(id)
 {
-	this->m_maxHP = this->m_HP = 100;
+	this->m_maxHP = this->m_HP = 50;
 	this->m_damage = 90;
+	this->m_score = 9;
 }
 DeadlyBird::~DeadlyBird()
 {
@@ -33,13 +35,34 @@ void DeadlyBird::Update(float deltaTime)
 		tmp.Normalize();
 		tmp *= 2;
 		Seek(tmp, vInVec2);
-		enemyBody->body->ApplyLinearImpulseToCenter(m_attackVector, false);
+		enemyBody->body->ApplyLinearImpulseToCenter(m_attackVector, true);
 	}
 	thisPos.x = enemyBody->body->GetPosition().x;
 	thisPos.y = enemyBody->body->GetPosition().y;
 	this->SetPosition(thisPos);
 
-	Enemy::takeDamage();
+	DWORD start;
+	start = GetTickCount();
+	UserData* user = (UserData*)enemyBody->body->GetUserData();
+	if (user->IsCollison > 0) {
+		if (user->m_typeB == PLAYERBULLET) {
+			m_TakeDameTime = GetTickCount();
+			this->m_HP -= user->m_receiveDamage;
+			this->SetColor(0xffafff, 1);
+			if (this->m_HP <= 0) {
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12200);
+				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
+				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
+				this->enemyBody->setActive(false);
+				delete this;
+			}
+		}
+		else {
+			if (start - m_TakeDameTime> m_animationTime)this->SetColor(0xffffff, 1);
+		}
+	}
+	else if (start - m_TakeDameTime > m_animationTime) this->SetColor(0xffffff, 1);
 }
 void DeadlyBird::Seek(Vector2 target, Vector2 currentV)
 {

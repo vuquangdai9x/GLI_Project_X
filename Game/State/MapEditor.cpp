@@ -16,7 +16,7 @@ void getInfor() {
 }
 MapEditor::MapEditor()
 {
-	printf("GS_PauseState");
+	
 	char sceneFile[50] = "Datas/scene2d-map.txt";
 	char resourcesFile[60] = "Datas/resources2d.txt";
 	m_play = new Player(0);
@@ -25,6 +25,28 @@ MapEditor::MapEditor()
 	m_curent = NULL;
 	m_currentSprite = NULL;
 	button = Singleton<SceneManager2D>::GetInstance()->LoadMapScene(sceneFile);
+	{m_victoryPoint = new Sprite(0);
+	int iNumOfObject, iObjectId;
+	int iMaterialId;
+	int iMainTexId;
+	int iFontId;
+	Vector3 position;
+	float rotation;
+	Vector2 scale;
+	unsigned int uiHexColor;
+	float alpha;
+	iMaterialId = 0;
+	iMainTexId = 60401;
+	rotation = 0;
+	scale.x = 1;
+	scale.y = 1;
+	uiHexColor = 0xffff00;
+	alpha = 1;
+	position.x = 0;
+	position.y = 17;
+	position.z = 9;
+	m_victoryPoint->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
+	Singleton<SceneManager2D>::GetInstance()->AddObject(m_victoryPoint, MAP_OBJECT); }
 	loadMap("Datas/map-load.txt");
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->UpdateMember();
@@ -33,34 +55,49 @@ MapEditor::MapEditor()
 			pushBackBoxType(button[i]->m_infor.mainTex, button[i]->m_infor.boxType);
 		}
 	}
+	
 }
 
 MapEditor::~MapEditor()
 {
 	delete m_play;
 	delete bgr, borderLeft, borderRight;
+	delete m_victoryPoint;
+	Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_victoryPoint);
+	Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(bgr);
+	Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(borderLeft);
+	Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(borderRight);
+	Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_play);
 	for (int i = 0;i < m_Obstacle.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_Obstacle[i]);
 		delete m_Obstacle[i];
 	}
 	for (int i = 0;i < m_floatingFish.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_floatingFish[i]);
 		delete m_floatingFish[i];
 	}
 	for (int i = 0;i < m_suicudeBug.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_suicudeBug[i]);
 		delete m_suicudeBug[i];
 	}
 	for (int i = 0;i < m_deadlyBird.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_deadlyBird[i]);
 		delete m_deadlyBird[i];
 	}
 	for (int i = 0;i < m_rockyGolem.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_rockyGolem[i]);
 		delete m_rockyGolem[i];
 	}
 	for (int i = 0;i < m_vampireBat.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_vampireBat[i]);
 		delete m_vampireBat[i];
 	}
 	for (int i = 0;i < m_fLoatingFishMove.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_fLoatingFishMove[i]);
 		delete m_fLoatingFishMove[i];
 	}
 	for (int i = 0;i < button.size();i++) {
+		Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(button[i]);
 		delete button[i];
 	}
 }
@@ -102,9 +139,13 @@ void MapEditor::loadMap(char* dataSceneFile)
 	// set up map 
 	char mapName[256];
 	float mapWidth;
+	int height;
 	fscanf(fIn, "#MAP %s\n", mapName);
 	fscanf(fIn, "WIDTH %f\n", &mapWidth);
-
+	fscanf(fIn, "HEIGHTWIN %d\n", &height);
+	Vector3 vicPos = m_victoryPoint->GetPosition();
+	vicPos.y = (float)height;
+	m_victoryPoint->SetPosition(vicPos);
 	// Set up player
 	fscanf(fIn, "#PLAYER %d\n", &iObjectId);
 	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
@@ -114,7 +155,7 @@ void MapEditor::loadMap(char* dataSceneFile)
 	rotation = rotation * 2 * M_PI / 360;
 	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
 	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "ANIMATIONS 0\n");
+	fscanf(fIn, "MISSON %*d\n");
 	int iLoopVertical, iLoopHorizontal;
 	int iNumOfBackground;
 	float scaleFactor;
@@ -453,6 +494,8 @@ void MapEditor::Update(float deltaTime)
 
 	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::ESCAPE)) {
 		saveFile("Datas/map-out.txt");
+		Singleton<GameStateManager>::GetInstance()->DeleteMap();
+		return;
 	}
 	if (m_curent != NULL) {
 		addObject();
@@ -501,10 +544,13 @@ void MapEditor::Update(float deltaTime)
 			}
 
 			if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE) || !checkMaxMove) {
-				m_floatingCreated = false;
-				Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_currentSprite);
-				delete m_currentSprite;
-				m_currentSprite = NULL;
+				if(m_currentSprite==m_victoryPoint){}
+				else {
+					m_floatingCreated = false;
+					Singleton<SceneManager2D>::GetInstance()->RemoveMapObject(m_currentSprite);
+					delete m_currentSprite;
+					m_currentSprite = NULL;
+				}
 			}
 		}
 		else if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK && m_currentSprite != NULL) {
@@ -530,9 +576,9 @@ void MapEditor::Update(float deltaTime)
 
 	if (!m_floatingFishMoveNum.empty()) {
 		for (int i = 0;i < m_floatingFishMoveNum.size();i++) {
-			printf("%d ", m_floatingFishMoveNum[i]);
+			//printf("%d ", m_floatingFishMoveNum[i]);
 		}
-		printf("%d  \n", m_fLoatingFishMove.size());
+	//	printf("%d  \n", m_fLoatingFishMove.size());
 	}
 	int checkChoose = Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::LSHIFT);
 	if (m_currentSprite != NULL && (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_MOVE || Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_RELEASE) && !checkChoose) {
@@ -556,6 +602,7 @@ void MapEditor::Update(float deltaTime)
 			m_activeList[i]->SetPosition(tmpPos);
 		}
 		if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::SPACE)) {
+			if (m_currentSprite == m_victoryPoint) return;
 			deleteSprite(m_currentSprite);
 			if (!m_activeList.empty()) {
 				for (int i = 0;i < m_activeList.size();i++) {
@@ -568,6 +615,7 @@ void MapEditor::Update(float deltaTime)
 			m_currentSprite = NULL;
 		}
 		else if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::TAB)) {
+			if (m_currentSprite == m_victoryPoint) return;
 			Sprite* tmp = cloneSprite(m_currentSprite);
 			m_currentSprite->SetColor(m_norColor, 1);
 			m_currentSprite = tmp;
@@ -971,6 +1019,13 @@ Sprite* MapEditor::checkInside(float x, float y)
 		if (x< pos3d.x + width / 2 && x > pos3d.x - width / 2 && y< pos3d.y + height / 2 && y > pos3d.y - height / 2)
 			return m_deadlyBird[i];
 	}
+	{
+		Vector3 pos3d = m_victoryPoint->GetPosition();
+		float width = m_victoryPoint->GetOrgSize().x * m_victoryPoint->GetScale().x;
+		float height = m_victoryPoint->GetOrgSize().y * m_victoryPoint->GetScale().y;
+		if (x< pos3d.x + width / 2 && x > pos3d.x - width / 2 && y< pos3d.y + height / 2 && y > pos3d.y - height / 2)
+			return m_victoryPoint;
+	}
 	return nullptr;
 }
 
@@ -1074,6 +1129,7 @@ void MapEditor::saveFile(char* dataSceneFile)
 	FILE* fIn = fopen(filePath, "w");
 	{fprintf(fIn, "#MAP Abyss\n");
 	fprintf(fIn, "WIDTH 120\n");
+	fprintf(fIn, "HEIGHTWIN %d\n",(int)m_victoryPoint->GetPosition().y);
 	fprintf(fIn, "\n");
 	fprintf(fIn, "#PLAYER 0\n");
 	fprintf(fIn, "MATERIAL 0\n");
@@ -1082,7 +1138,7 @@ void MapEditor::saveFile(char* dataSceneFile)
 	fprintf(fIn, "ROTATION 0\n");
 	fprintf(fIn, "SCALE 1 1\n");
 	fprintf(fIn, "COLOR ffffff 1\n");
-	fprintf(fIn, "ANIMATIONS 0\n");
+	fprintf(fIn, "MISSON 1\n");
 	fprintf(fIn, "\n");
 	fprintf(fIn, "#BACKGROUNDS 1\n");
 	fprintf(fIn, "ID 1\n");
@@ -1325,7 +1381,7 @@ void MapEditor::saveFile(char* dataSceneFile)
 		fprintf(fIn, "CYCLE TIME 0.24\n");
 		fprintf(fIn, "TEXTURE 30203\n");
 		fprintf(fIn, "SPLITXY 12 1\n");}
-	fprintf(fIn, "COUNT %d", m_suicudeBug.size());
+	fprintf(fIn, "COUNT %d\n", m_suicudeBug.size());
 	for (int i = 0;i < m_suicudeBug.size();i++) {
 		fprintf(fIn, "ID %d\n", i);
 		fprintf(fIn, "MATERIAL 0\n");
@@ -1339,7 +1395,7 @@ void MapEditor::saveFile(char* dataSceneFile)
 	fprintf(fIn, "#ROCKYGOLEM\n");
 	fprintf(fIn, "ANIMATIONS 0\n");
 
-	fprintf(fIn, "COUNT %d", m_rockyGolem.size());
+	fprintf(fIn, "COUNT %d\n", m_rockyGolem.size());
 	for (int i = 0;i < m_rockyGolem.size();i++) {
 		fprintf(fIn, "ID %d\n", i);
 		fprintf(fIn, "MATERIAL 0\n");
@@ -1352,9 +1408,15 @@ void MapEditor::saveFile(char* dataSceneFile)
 	}
 
 	fprintf(fIn, "#DEADLYBIRD\n");
-	fprintf(fIn, "ANIMATIONS 0\n");
-
-	fprintf(fIn, "COUNT %d", m_deadlyBird.size());
+	{
+		fprintf(fIn, "ANIMATIONS 1\n");
+		fprintf(fIn, "DEFAULT 0\n");
+		fprintf(fIn, "ANIM 0\n");
+		fprintf(fIn, "TYPE SPLIT\n");
+		fprintf(fIn, "CYCLE TIME 0.6\n");
+		fprintf(fIn, "TEXTURE 30503\n");
+		fprintf(fIn, "SPLITXY 17 1\n"); }
+	fprintf(fIn, "COUNT %d\n", m_deadlyBird.size());
 	for (int i = 0;i < m_deadlyBird.size();i++) {
 		fprintf(fIn, "ID %d\n", i);
 		fprintf(fIn, "MATERIAL 0\n");
@@ -1391,7 +1453,7 @@ void MapEditor::saveFile(char* dataSceneFile)
 	fprintf(fIn, "#CAMERA\n");
 	fprintf(fIn, "NEAR 0.1\n");
 	fprintf(fIn, "FAR 120\n");
-	fprintf(fIn, "ZOOM 50\n");
+	fprintf(fIn, "ZOOM 40\n");
 	fprintf(fIn, "POSITION 0 0 -20\n");
 	fprintf(fIn, "DUTCH \n");
 

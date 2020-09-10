@@ -194,6 +194,21 @@
     <None Include="..\Resources\Shaders\ParticlesShaderFS.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\ParticlesBoxShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\ParticlesBoxShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\PostProcessingShaderVS.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\PostProcessingShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\PostProcessShaderFS_ColorCorrection.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Datas\scene2d.txt">
@@ -212,6 +227,12 @@
       <Filter>Resources\Datas</Filter>
     </Text>
     <Text Include="..\Resources\Datas\map1-2.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
+    <Text Include="..\Resources\Datas\post-processing.txt">
+      <Filter>Resources\Datas</Filter>
+    </Text>
+    <Text Include="..\Resources\Datas\decorate-object.txt">
       <Filter>Resources\Datas</Filter>
     </Text>
   </ItemGroup>

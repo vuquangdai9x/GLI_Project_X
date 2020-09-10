@@ -11,7 +11,7 @@ protected:
 	DWORD m_TakeDameTime = 0;
 	int m_animationTime = 200;
 	int m_HP, m_maxHP;
-	int m_damage;
+	int m_damage, m_score;
 	float m_moveSpeed;
 	ItemBody* enemyBody;
 public:

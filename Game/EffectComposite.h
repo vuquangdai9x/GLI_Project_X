@@ -14,7 +14,7 @@ public:
 	int GetId();
 	bool AddEffect(Effect* effect);
 
-	void Play(Vector3 position, float rotation);
+	void Play(Vector3 position, Vector2 scale, float rotation);
 
 	void Update(float deltaTime);
 	void Render(Camera2D* camera);

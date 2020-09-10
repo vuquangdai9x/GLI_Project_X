@@ -41,6 +41,7 @@ void GunBullet::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction)
 	float rotation = acosf(normDirection.x) * (normDirection.y < 0 ? -1 : 1);
 	m_bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
 	SetActiveBullet(true);
+	SetPosition(Vector3(startPosition.x, startPosition.y,m_position.z));
 	// set velocity
 	m_bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));
 	Player* player = dynamic_cast<Player*>(shooter);
@@ -61,7 +62,12 @@ void GunBullet::Update(float deltaTime)
 	}
 	UserData* user = (UserData*) m_bulletBody->body->GetUserData();
 	if (user->IsCollison>0) {
-		SetActiveBullet(false);
+		if (user->m_typeB == DECORATE_OBJ) {
+
+		}
+		else {
+			SetActiveBullet(false); 
+		}
 	
 	}
 }

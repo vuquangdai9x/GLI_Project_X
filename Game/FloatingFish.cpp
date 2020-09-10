@@ -18,10 +18,13 @@ FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 	this->direction = true;
 	this->m_damage = 25;
 	this->m_maxHP = this->m_HP = 100;
+	this->m_score = 7;
+
 }
 
 FloatingFish::FloatingFish(int id):Enemy(id)
 {
+	delete target;
 }
 
 FloatingFish::~FloatingFish()
@@ -120,8 +123,10 @@ void FloatingFish::Update(float deltaTime)
 						misson->countKill();
 					}
 				}
-				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12000);
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
+				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
 				this->enemyBody->setActive(false);
 				delete this;
 			}

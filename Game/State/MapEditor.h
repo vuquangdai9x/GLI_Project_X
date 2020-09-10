@@ -47,7 +47,7 @@ private:
 	int m_chooseColor = 0xffafff;
 	Player* m_play;
 	MapBorder* bgr, * borderLeft, * borderRight;
-
+	Sprite *m_victoryPoint=NULL;
 	std::vector<Sprite*> m_Obstacle, m_suicudeBug, m_floatingFish, m_rockyGolem, m_vampireBat, m_deadlyBird;
 	bool m_floatingCreated = false;
 	std::vector<int> m_floatingFishMoveNum;

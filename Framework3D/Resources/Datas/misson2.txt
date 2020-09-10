@@ -1,0 +1,8 @@
+1: Pass the level
+2: No blood loss
+3: Achieve a minium of 200 points
+
+ID 0
+ID 2
+ID 3
+SCORE 200 

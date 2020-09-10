@@ -15,7 +15,8 @@ ItemBody::~ItemBody()
 
 void ItemBody::Update(float deltaTime)
 {
-	body->ApplyForce(b2Vec2(0.0f, -GRAVITY * m_gravityScale * body->GetMass()), body->GetWorldCenter(), true);
+	if (m_gravityScale != 0)
+		body->ApplyForce(b2Vec2(0.0f, -GRAVITY * m_gravityScale * body->GetMass()), body->GetWorldCenter(), true);
 }
 
 void ItemBody::SetGravityScale(float value)

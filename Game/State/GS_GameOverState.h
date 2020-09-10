@@ -2,13 +2,18 @@
 
 #include"StateBase.h"
 #include"../Button.h"
+#include"../Sprite.h"
+#include"../UIText.h"
 class GS_GameOverState : public StateBase
 {
 private:
-	std::vector<Button*> button;
+	std::vector<Button*> buttons;
+	Sprite* background;
+	UIText *gameover;
+	UIText *score;
 public:
-	GS_GameOverState();
-	~GS_GameOverState();
+	GS_GameOverState() ;
+	~GS_GameOverState() ;
 	bool Create();
 	bool Release();
 
@@ -16,4 +21,5 @@ public:
 	void Update(float deltaTime);
 
 	void KeyPress();
+	void loadGameOver(char* dataSceneFile);
 };

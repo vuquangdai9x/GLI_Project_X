@@ -6,7 +6,6 @@ class GS_PlayState: public StateBase
 {
 private:
 	int time = 0;
-	int map;
 	DWORD m_PassTime = 0;
 public:
 	GS_PlayState();

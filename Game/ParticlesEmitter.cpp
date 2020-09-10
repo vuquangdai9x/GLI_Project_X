@@ -4,14 +4,6 @@
 #include <stdlib.h> 
 #include <time.h>
 
-//ParticlesEmitter::ParticlesEmitter(int id): Effect(id)
-//{
-//	m_timeCounter = 0;
-//}
-//ParticlesEmitter::ParticlesEmitter(int id, ParticlesEmitter& ps) : Effect(id, ps) 
-//{
-//	
-//}
 ParticlesEmitter::ParticlesEmitter(Vector3 position, Vector2 scale, float rotation) : Effect(position, scale, rotation)
 {
 	m_timeCounter = 0;
@@ -45,12 +37,6 @@ void ParticlesEmitter::SetRadiusInfo(float initRadius, float offsetRandomRange, 
 	m_endRadius = endRadius;
 	m_radiusCurve = curve;
 }
-//void ParticlesEmitter::SetVelocityInfo(float initVelocity, float randomRange, float endVelocity, float (*curve)(float, float, float)) {
-//	m_initVelocity = initVelocity;
-//	m_velocityOffsetRandomRange = randomRange;
-//	m_endVelocity = endVelocity;
-//	m_velocityCurve = curve;
-//}
 void ParticlesEmitter::SetSizeInfo(float initSize, float randomRange, float endSize, float(*curve)(float, float, float)) {
 	m_initSize = initSize;
 	m_sizeOffsetRandomRange = randomRange;
@@ -97,13 +83,13 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 	switch (m_emitType)
 	{
 	case EmitType::PureRandom:
-		for (int i = 0;i < m_iNumOfParticles; i++) {
+		for (int i = 0; i < m_iNumOfParticles; i++) {
 			aParticles[i].angle = m_emitAngle + ((float)rand() / (float)RAND_MAX * 2 - 1) * m_emitAngleRandomRange;
 		}
 		break;
 	case EmitType::Distributed:
 	default:
-		for (int i = 0;i < m_iNumOfParticles; i++) {
+		for (int i = 0; i < m_iNumOfParticles; i++) {
 			aParticles[i].angle = m_emitAngle + (((float)rand() / (float)RAND_MAX + i) / m_iNumOfParticles - 0.5) * m_emitAngleRandomRange;
 		}
 		break;
@@ -111,7 +97,7 @@ bool ParticlesEmitter::Init(MaterialParticle2D* material, Texture* texture, int 
 
 	// set up other info
 	float randomColor;
-	for (int i = 0;i < m_iNumOfParticles; i++) {
+	for (int i = 0; i < m_iNumOfParticles; i++) {
 		aParticles[i].radiusOffset = (float)rand() / (float)RAND_MAX * m_radiusOffsetRandomRange;
 		aParticles[i].radiusMultiplier = 1 + ((float)rand() / (float)RAND_MAX * 2 - 1) * m_radiusMulRandomRange;
 		//aParticles[i].velocityOffset = (float)rand() / (float)RAND_MAX * m_velocityOffsetRandomRange;
@@ -167,7 +153,7 @@ void ParticlesEmitter::Render(Camera2D* mainCamera)
 		m_WVP,
 		m_texture,
 		m_radiusCurve(m_initRadius, m_endRadius, fractpart),
-		m_sizeCurve(m_initSize, m_endSize, fractpart),
+		m_sizeCurve(m_initSize, m_endSize, fractpart) * m_texture->GetHeight(),
 		&color
 	);
 

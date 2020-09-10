@@ -12,6 +12,7 @@ public:
 	ItemBody* createFloating(int type, float x, float y, float w, float h, float massD = DEFAULT_MASS);
 	void Update(float deltaTime);
 	void CleanUp();
+	uint16 GetMaskBits(int type);
 private:
 	b2World* m_world;
 	int m_numberOfObject = 0;

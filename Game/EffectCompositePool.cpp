@@ -40,3 +40,10 @@ void EffectCompositePool::Render(Camera2D* mainCamera) {
 		m_listCompositeEffect[i]->Render(mainCamera);
 	}
 }
+
+void EffectCompositePool::DisableAll()
+{
+	for (int i = 0; i < m_listCompositeEffect.size(); i++) {
+		m_listCompositeEffect[i]->SetActive(false);
+	}
+}

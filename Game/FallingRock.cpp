@@ -40,6 +40,7 @@ void FallingRock::Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction
 	// move to startPosition and rotate
 	float rotation = acosf(normDirection.x) * (normDirection.y < 0 ? -1 : 1);
 	m_bulletBody->body->SetTransform(b2Vec2(startPosition.x, startPosition.y), rotation);
+	SetPosition(Vector3(startPosition.x, startPosition.y, m_position.z));
 	SetActiveBullet(true);
 	// set velocity
 	m_bulletBody->body->SetLinearVelocity(b2Vec2(m_initSpeed * direction.x, m_initSpeed * direction.y));

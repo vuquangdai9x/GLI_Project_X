@@ -34,6 +34,8 @@ void Enemy::takeDamage()
 			if (this->m_HP <= 0) {
 				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
+				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
 				this->enemyBody->setActive(false);
 				delete this;
 			}

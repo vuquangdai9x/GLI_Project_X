@@ -1,5 +1,6 @@
 #include "EffectComposite.h"
 #include "ParticlesEmitter.h"
+#include "ParticlesEmitterBox.h"
 
 EffectComposite::EffectComposite(int id): m_id(id)
 {
@@ -10,8 +11,12 @@ EffectComposite::EffectComposite(int id): m_id(id)
 EffectComposite::EffectComposite(int id, EffectComposite& ec) :m_id(id) {
 	for (int i = 0;i < ec.m_listEffect.size();i++) {
 		ParticlesEmitter* templateEmitter;
+		ParticlesEmitterBox* templateEmitterBox;
 		if (templateEmitter = dynamic_cast<ParticlesEmitter*>(ec.m_listEffect[i])) {
 			AddEffect(new ParticlesEmitter(*templateEmitter));
+		}
+		else if (templateEmitterBox = dynamic_cast<ParticlesEmitterBox*>(ec.m_listEffect[i])) {
+			AddEffect(new ParticlesEmitterBox(*templateEmitterBox));
 		}
 		else {
 
@@ -37,13 +42,14 @@ bool EffectComposite::AddEffect(Effect* effect)
 	return true;
 }
 
-void EffectComposite::Play(Vector3 position, float rotation)
+void EffectComposite::Play(Vector3 position, Vector2 scale, float rotation)
 {
 	Vector3 deltaPos = position - m_position;
 	m_position = position;
 	for (int i = 0;i < m_listEffect.size();i++) {
 		m_listEffect[i]->SetPosition(m_listEffect[i]->GetPosition() + deltaPos);
 		m_listEffect[i]->SetRotation(rotation);
+		m_listEffect[i]->SetScale(scale);
 		m_listEffect[i]->Play();
 	}
 	SetActive(true);

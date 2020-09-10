@@ -24,6 +24,7 @@ void Obstacle::createBox2D()
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
 	obstacleBody = Singleton<WorldManager>::GetInstance()->createRectagle(OBSTACLE, x, y, width, height);
+	obstacleBody->body->GetFixtureList()[0].SetFriction(100.0);
 	UserData* user = (UserData*)this->obstacleBody->body->GetUserData();
 	user->m_damage = 0;
 }

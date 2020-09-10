@@ -4,6 +4,7 @@
 #include"WorldManager.h"
 #include "FallingRockPool.h"
 #include "SimpleGun.h"
+#include "EffectManager.h"
 
 RockyGolem::RockyGolem(int id) :Enemy(id)
 {
@@ -11,10 +12,13 @@ RockyGolem::RockyGolem(int id) :Enemy(id)
 
 	this->m_maxHP = this->m_HP = 100;
 	this->m_damage = 25;
+	this->m_score = 11;
+
 }
 
 RockyGolem::~RockyGolem()
 {
+	delete rockyGolemGun;
 }
 
 void RockyGolem::Update(float deltaTime)
@@ -36,7 +40,29 @@ void RockyGolem::Update(float deltaTime)
 	rockyGolemPos.y = this->enemyBody->body->GetPosition().y;
 	this->SetPosition(rockyGolemPos);
 
-	Enemy::takeDamage();
+	//Enemy::takeDamage();
+	DWORD start;
+	start = GetTickCount();
+	UserData* user = (UserData*)enemyBody->body->GetUserData();
+	if (user->IsCollison > 0) {
+		if (user->m_typeB == PLAYERBULLET) {
+			m_TakeDameTime = GetTickCount();
+			this->m_HP -= user->m_receiveDamage;
+			this->SetColor(0xffafff, 1);
+			if (this->m_HP <= 0) {
+				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12400);
+				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
+				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
+				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
+				this->enemyBody->setActive(false);
+				delete this;
+			}
+		}
+		else {
+			if (start - m_TakeDameTime> m_animationTime)this->SetColor(0xffffff, 1);
+		}
+	}
+	else if (start - m_TakeDameTime > m_animationTime) this->SetColor(0xffffff, 1);
 }
 
 void RockyGolem::createBox2D()
@@ -45,8 +71,9 @@ void RockyGolem::createBox2D()
 	y = m_position.y;
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
-	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(ENEMY, x, y, width, height, 200);
-	enemyBody->SetGravityScale(1.0);
+	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width, height, 200);
+	enemyBody->SetGravityScale(0.0);
+	enemyBody->body->GetFixtureList()[0].SetFriction(10.0);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
 	user->m_damage = this->m_damage;
 }

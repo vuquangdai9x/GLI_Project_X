@@ -22,13 +22,13 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{2A3452CB-D689-4D76-A103-3E8ED2D53471}</ProjectGuid>
     <RootNamespace>Game</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -103,11 +103,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Box2D;$(SolutionDir)\Framework3D\Include;$(SolutionDir)\FreeType\include;$(SolutionDir)\Soloud\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>freetype.lib;libEGL.lib;libGLESv2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -133,6 +136,8 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="CurveFunction.cpp" />
     <ClCompile Include="DeadlyBird.cpp" />
+    <ClCompile Include="DecorateObject.cpp" />
+    <ClCompile Include="DecorateObjectManager.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectComposite.cpp" />
     <ClCompile Include="EffectManager.cpp" />
@@ -157,11 +162,16 @@
     <ClCompile Include="main_game.cpp" />
     <ClCompile Include="MapBorder.cpp" />
     <ClCompile Include="MaterialParticle2D.cpp" />
+    <ClCompile Include="MaterialParticleBox.cpp" />
+    <ClCompile Include="MaterialPostProcess.cpp" />
+    <ClCompile Include="MaterialPPColorCorrection.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
     <ClCompile Include="Misson.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="ParticlesEmitter.h" />
+    <ClCompile Include="ParticlesEmitterBox.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PostProcessingManager.cpp" />
     <ClCompile Include="ResourcesManager2D.cpp" />
     <ClCompile Include="RockyGolem.cpp" />
     <ClCompile Include="SceneManager2D.cpp" />
@@ -176,6 +186,7 @@
     <ClCompile Include="State\GS_PassLevelState.cpp" />
     <ClCompile Include="State\GS_PauseState.cpp" />
     <ClCompile Include="State\GS_PlayState.cpp" />
+    <ClCompile Include="State\GS_SelectLevel.cpp" />
     <ClCompile Include="State\GS_TutorialState.cpp" />
     <ClCompile Include="State\GS_WelcomScreen.cpp" />
     <ClCompile Include="State\MapEditor.cpp" />
@@ -198,6 +209,8 @@
     <ClInclude Include="Button.h" />
     <ClInclude Include="CurveFunction.h" />
     <ClInclude Include="DeadlyBird.h" />
+    <ClInclude Include="DecorateObject.h" />
+    <ClInclude Include="DecorateObjectManager.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectComposite.h" />
     <ClInclude Include="EffectManager.h" />
@@ -221,7 +234,12 @@
     <ClInclude Include="ItemHeal.h" />
     <ClInclude Include="ListenerClass.h" />
     <ClInclude Include="MapBorder.h" />
+    <ClInclude Include="MaterialParticleBox.h" />
+    <ClInclude Include="MaterialPostProcess.h" />
+    <ClInclude Include="MaterialPPColorCorrection.h" />
     <ClInclude Include="Misson.h" />
+    <ClInclude Include="ParticlesEmitterBox.h" />
+    <ClInclude Include="PostProcessingManager.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SpriteLoopTexture.h" />
     <ClInclude Include="MaterialParticle2D.h" />
@@ -241,6 +259,7 @@
     <ClInclude Include="State\GS_PassLevelState.h" />
     <ClInclude Include="State\GS_PauseState.h" />
     <ClInclude Include="State\GS_PlayState.h" />
+    <ClInclude Include="State\GS_SelectLevel.h" />
     <ClInclude Include="State\GS_TutorialState.h" />
     <ClInclude Include="State\GS_WelcomScreen.h" />
     <ClInclude Include="State\MapEditor.h" />

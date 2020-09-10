@@ -27,7 +27,9 @@ void ListenerClass::BeginContact(b2Contact* contact)
 			b2Vec2 pos1 = b1->GetPosition();
 			b2Vec2 pos2 = b2->GetPosition();
 			b2Vec2 rs = pos1 - pos2;
-			rs *= 10;
+			rs.Normalize();
+			rs *= 50;
+			
 			b1->ApplyLinearImpulseToCenter(rs, true);
 		}
 		else if (user2->m_type == PLAYER) { 
@@ -35,7 +37,8 @@ void ListenerClass::BeginContact(b2Contact* contact)
 			b2Vec2 pos1 = b1->GetPosition();
 			b2Vec2 pos2 = b2->GetPosition();
 			b2Vec2 rs = pos2 - pos1;
-			rs *= 10;
+			rs.Normalize();
+			rs *= 50;
 			b2->ApplyLinearImpulseToCenter(rs, true);
 		}
 	}

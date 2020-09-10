@@ -49,7 +49,6 @@ public:
 	bool LoadMenuScene(char* dataSceneFile);
 	std::vector<Button*> LoadPauseScene(char* dataSceneFile);
 	std::vector<UnitButton*> LoadMapScene(char* dataSceneFile);
-	std::vector<Button*> LoadGameOverScene(char* dataSceneFile);
 	void SetMainCamera(Camera2D * camera, int listObjet = PLAY_OBJECT);
 	Camera2D& GetMainCamera(int listObjet = PLAY_OBJECT);
 	std::vector<Sprite*>& GetListObject();

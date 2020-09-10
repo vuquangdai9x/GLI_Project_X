@@ -23,6 +23,11 @@ GS_PauseState::GS_PauseState()
 
 GS_PauseState::~GS_PauseState()
 {
+	for (int i = 0; i < button.size(); i++) {
+		delete button[i];
+	}
+	std::vector<Button*>().swap(button);
+	delete misson;
 }
 
 void BackToMenu()

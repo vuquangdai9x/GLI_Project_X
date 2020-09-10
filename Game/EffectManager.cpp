@@ -1,5 +1,6 @@
 #include "EffectManager.h"
 #include "ParticlesEmitter.h"
+#include "ParticlesEmitterBox.h"
 #include "ResourcesManager2D.h"
 #include "CurveFunction.h"
 
@@ -111,6 +112,20 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 				delete pMaterial;
 			}
 		}
+		else if (strcmp("PARTICLES_BOX", materialType) == 0) {
+			MaterialParticleBox* pMaterial;
+			int iShaderId;
+			pMaterial = new MaterialParticleBox(iMaterialId);
+			fscanf(fIn, "SHADER %d\n", &iShaderId);
+			if (pMaterial->Init(GetShader(iShaderId))) {
+				m_listMaterialParticleBox.push_back(pMaterial);
+				printf("[msg] EffectManager::Init: Loaded Particles Box Material %d : Shader = %d\n", iMaterialId, iShaderId);
+			}
+			else {
+				printf("[ERR] EffectManager::Init: Failed to load Particles Box Material %d : Shader = %d\n", iMaterialId, iShaderId);
+				delete pMaterial;
+			}
+		}
 		else {
 			printf("[ERR] EffectManager::Init: Material type invalid\n");
 		}
@@ -213,6 +228,104 @@ void EffectManager::LoadEffect(char* effectFilePath) {
 					delete emitter;
 					printf("[ERR] EffectManager::Init: Failed to init Emitter %d : %s\n", j, effectType);
 				}
+			}else if (strcmp("PARTICLES_EMITTER_BOX", effectType) == 0) {
+				int iMaterialId, iTextureId;
+				int iNumOfParticle;
+				float cycleTime;
+				int iNumOfLoop;
+				ParticlesEmitterBox *emitter;
+				Texture* texture;
+				char curveName[30];
+
+				fscanf(fIn, "\nMATERIAL %d\n", &iMaterialId);
+				fscanf(fIn, "TEXTURE %d\n", &iTextureId);
+				fscanf(fIn, "PARTICLES AMOUNT %d\n", &iNumOfParticle);
+				fscanf(fIn, "CYCLE TIME %f\n", &cycleTime);
+				fscanf(fIn, "LOOP %d\n", &iNumOfLoop);
+				emitter = new ParticlesEmitterBox(position, scale, rotation);
+
+				Vector2 emitRange;
+				ParticlesEmitterBox::EmitType emitType;
+				char emitTypeName[20];
+				fscanf(fIn, "EMIT RANGE %f %f\n", &emitRange.x, &emitRange.y);
+				fscanf(fIn, "EMIT TYPE %s\n", emitTypeName);
+				if (strcmp("RANDOM", emitTypeName) == 0) {
+					emitType = ParticlesEmitterBox::EmitType::PureRandom;
+				}
+				else if (strcmp("ACCUMULATIVE", emitTypeName) == 0) {
+					emitType = ParticlesEmitterBox::EmitType::AccumulativeCenter;
+				}
+				else {
+					printf("[ERR] EffectManager::Init: Emit type invalid : %s\n", emitTypeName);
+				}
+				emitter->SetEmitInfo(emitRange, emitType);
+
+				/*
+				SIZE INIT 10
+				SIZE RANDOM 2
+				COLOR INIT 75596F 1.0
+				COLOR END E3CFE3 0.0
+				COLOR RANDOM 010101 0.1
+				COLOR CURVE EaseOutCirc*/
+				
+				Vector2 velocity, velocityRandomOffset;
+				float velocityRandomMul;
+				fscanf(fIn, "VELOCITY %f %f\n", &velocity.x, &velocity.y);
+				fscanf(fIn, "VELOCITY RANDOM OFFSET %f %f\n", &velocityRandomOffset.x, &velocityRandomOffset.y);
+				fscanf(fIn, "VELOCITY RANDOM MUL %f\n", &velocityRandomMul);
+				emitter->SetVelocityInfo(velocityRandomOffset, velocityRandomMul);
+				emitter->SetVelocity(velocity);
+
+				float timeRandomOffset;
+				float initValue, endValue, offsetRandomValue;
+				fscanf(fIn, "TIME RANDOM OFFSET %f\n", &timeRandomOffset);
+				fscanf(fIn, "TIME LIFE %f\n", &initValue);
+				fscanf(fIn, "TIME LIFE RANDOM %f\n", &offsetRandomValue);
+				emitter->SetTimeInfo(timeRandomOffset, initValue, offsetRandomValue);
+
+				fscanf(fIn, "SIZE INIT %f\n", &initValue);
+				fscanf(fIn, "SIZE RANDOM %f\n", &offsetRandomValue);
+				emitter->SetSizeInfo(initValue, offsetRandomValue);
+
+				unsigned int uiHexColorInit, uiHexColorEnd, uiHexColorOffsetRandom;
+				fscanf(fIn, "COLOR INIT %x %f\n", &uiHexColorInit, &initValue);
+				fscanf(fIn, "COLOR END %x %f\n", &uiHexColorEnd, &endValue);
+				fscanf(fIn, "COLOR RANDOM %x %f\n", &uiHexColorOffsetRandom, &offsetRandomValue);
+				fscanf(fIn, "COLOR CURVE %s\n", curveName);
+				Vector4 colorInit, colorEnd, colorOffsetRandom;
+				HexColorToVec4(colorInit, uiHexColorInit, initValue);
+				HexColorToVec4(colorEnd, uiHexColorEnd, endValue);
+				HexColorToVec4(colorOffsetRandom, uiHexColorOffsetRandom, offsetRandomValue);
+				emitter->SetColorInfo(colorInit, colorOffsetRandom, colorEnd, CurveFunction::GetFunctionPtr(curveName));
+
+				texture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iTextureId);
+				if (emitter->Init(GetMaterialParticleBox(iMaterialId), texture, iNumOfParticle, cycleTime, iNumOfLoop)) {
+					templateEffComp->AddEffect(emitter);
+					iEffectValidCount++;
+					printf("[msg] EffectManager::Init: Done Init Emitter %d : %s\n", j, effectType);
+				}
+				else {
+					delete emitter;
+					printf("[ERR] EffectManager::Init: Failed to init Emitter %d : %s\n", j, effectType);
+				}
+
+				int iNumOfSubTex;
+				fscanf(fIn, "SUB TEXTURES %d:", &iNumOfSubTex);
+				ParticlesEmitterBox* subEmitter;
+				for (int subTexId = 0; subTexId < iNumOfSubTex; subTexId++) {
+					subEmitter = new ParticlesEmitterBox(*emitter);
+					fscanf(fIn, " %d", &iTextureId);
+					texture = Singleton<ResourceManager2D>::GetInstance()->GetTexture(iTextureId);
+					if (subEmitter->Init(GetMaterialParticleBox(iMaterialId), texture, iNumOfParticle, cycleTime, iNumOfLoop)) {
+						templateEffComp->AddEffect(subEmitter);
+						printf("[msg] EffectManager::Init: Done Init Sub Texture %d Of Emitter %d : %s\n", iTextureId, j, effectType);
+					}
+					else {
+						delete subEmitter;
+						printf("[ERR] EffectManager::Init: Failed to init Sub Texture %d Of Emitter %d : %s\n", iTextureId, j, effectType);
+					}
+				}
+				fscanf(fIn, "\n");
 			}
 			else {
 				printf("[ERR] EffectManager::Init: Invalid EffectType %d : %s\n", j, effectType);
@@ -248,6 +361,15 @@ MaterialParticle2D* EffectManager::GetMaterial(int iMaterialId) {
 	}
 	return NULL;
 }
+MaterialParticleBox * EffectManager::GetMaterialParticleBox(int iMaterialId)
+{
+	for (int i = 0; i < m_listMaterialParticleBox.size(); i++) {
+		if (m_listMaterialParticleBox[i]->GetId() == iMaterialId) {
+			return m_listMaterialParticleBox[i];
+		}
+	}
+	return NULL;
+}
 Shaders* EffectManager::GetShader(int iShaderId)
 {
 	for (int i = 0;i < m_listShader.size();i++) {
@@ -257,11 +379,18 @@ Shaders* EffectManager::GetShader(int iShaderId)
 	}
 	return NULL;
 }
-void EffectManager::CreateParticlesSystem(Vector3 position, int effectId, float rotation) {
+void EffectManager::CreateParticlesSystem(Vector3 position, int effectId, Vector2 scale, float rotation) {
 	for (int i = 0;i < m_listEffectCompositePool.size();i++) {
 		if (m_listEffectCompositePool[i]->GetId() == effectId) {
-			m_listEffectCompositePool[i]->GetCompositeEffect()->Play(position, rotation);
+			m_listEffectCompositePool[i]->GetCompositeEffect()->Play(position, scale, rotation);
 			break;
 		}
+	}
+}
+
+void EffectManager::DisableAll()
+{
+	for (int i = 0; i < m_listEffectCompositePool.size(); i++) {
+		m_listEffectCompositePool[i]->DisableAll();
 	}
 }

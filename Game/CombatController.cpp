@@ -46,7 +46,7 @@ void CombatController::Fire()
 
 		// TODO: add fire effect
 		float fireAngle = (direction.y > 0 ? 1 : -1) * acosf(direction.x / direction.Length());
-		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_pPlayer->GetPosition(), 11000, fireAngle);
+		Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_pPlayer->GetPosition(), 11000, Vector2(1,1), fireAngle);
 	}
 }
 

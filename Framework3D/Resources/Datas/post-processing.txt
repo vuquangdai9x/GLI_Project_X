@@ -1,0 +1,22 @@
+#Model 0
+
+#Shaders: 2
+ID 0
+VS: "Shaders/PostProcessingShaderVS.vs"
+FS: "Shaders/PostProcessingShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+ID 1
+VS: "Shaders/PostProcessingShaderVS.vs"
+FS: "Shaders/PostProcessShaderFS_ColorCorrection.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+
+#ColorCorrection
+SHADER 1
+
+#Materials: 1
+ID 0 DEFAULT
+SHADER 0

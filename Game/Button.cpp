@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include"SceneManager2D.h"
+
 void doNothing() {
 }
 Button::Button(int id):UIComponent(id)
@@ -37,6 +38,27 @@ void Button::Update(float deltaTime)
 	else {
 		this->SetColor(0xffffff, 1);
 	}
+}
+
+bool Button::Update()
+{
+	if (checkMouse()) {
+		if (Singleton<InputManager>::GetInstance()->getMouseEvent() == MOUSE_CLICK) {
+			DWORD start = GetTickCount();
+			if (start - m_click > 200) {
+				this->Click();
+				m_click = start;
+				return true;
+			}
+		}
+		else {
+			this->SetColor(0xffafff, 1);
+		}
+	}
+	else {
+		this->SetColor(0xffffff, 1);
+	}
+	return false;
 }
 
 void __cdecl Button::OnClick(void(__cdecl* Click)())

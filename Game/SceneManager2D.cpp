@@ -26,6 +26,8 @@
 
 #include "MapBorder.h"
 
+#include "DecorateObjectManager.h"
+
 SceneManager2D::SceneManager2D()
 {
 	m_mainCamera = NULL;
@@ -108,6 +110,7 @@ bool SceneManager2D::LoadAnimation(FILE* fIn, Sprite* sprite) {
 }
 
 bool SceneManager2D::LoadScene(char* dataSceneFile) {
+	ShowCursor(false);
 	const char* resourceDir = Globals::resourceDir;
 	char filePath[512];
 	strcpy(filePath, resourceDir);
@@ -156,7 +159,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	AddObject(player);
 	m_currentPlayer = player;
 
-	LoadAnimation(fIn, player);
+	//LoadAnimation(fIn, player);
 
 	printf("[msg] SceneManager2D: Init player\n");
 
@@ -174,7 +177,7 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		fscanf(fIn, "LOOP %d %d\n", &iLoopHorizontal, &iLoopVertical);
 
 		int iNumOfAnimations;
-		fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
+	//	fscanf(fIn, "ANIMATIONS %d\n", &iNumOfAnimations);
 
 		MapBorder* bgr = new MapBorder(iObjectId,player,0);
 		position.x = player->GetPosition().x;
@@ -424,6 +427,23 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		}
 		AddObject(obs);
 		printf("[msg] SceneManager: Loaded Obstacle %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
+
+		/*DecorateObject* decor = Singleton<DecorateObjectManager>::GetInstance()->CreateObject(
+			0,
+			DecorateObjectManager::Pivot::Bottom,
+			Vector2(obs->GetPosition().x, obs->GetPosition().y + obs->GetOriginSize().y / 2)
+		);
+		AddObject(decor);*/
+		int iNumOfTrees = obs->GetOriginSize().x / 1.5;
+		for (int i = 0; i < iNumOfTrees; i++) {
+			AddObject(
+				Singleton<DecorateObjectManager>::GetInstance()->CreateRandomObject(
+					Vector2(obs->GetPosition().x + 0.8 * obs->GetOriginSize().x * ((float)rand()/(float)RAND_MAX*2-1),
+						obs->GetPosition().y + obs->GetOriginSize().y * obs->GetScale().y)
+				)
+			);
+		}
+		
 	}
 	int numOfTarget;
 	b2Vec2 Target[10];
@@ -592,11 +612,26 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	obj = NULL;
 	camera = NULL;
 
+	Singleton<EffectManager>::GetInstance()->DisableAll();
+
+	Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(
+		Vector3(0, m_heightWin / 2, 0),
+		13200, 
+		Vector2(mapWidth/2,m_heightWin/2)
+	);
+
+	Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(
+		Vector3(0, m_heightWin / 2, 0),
+		13100,
+		Vector2(mapWidth / 2, m_heightWin / 2)
+	);
+
 	return true;
 }
 
 void goToPlay() {
-	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+	//Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::SELECTLEVEL);
 }
 void goToQuit() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::QUIT);
@@ -787,6 +822,12 @@ std::vector<Button*> SceneManager2D::LoadPauseScene(char* dataSceneFile)
 
 std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 {
+	int x = m_mapObject.size();
+	for (int i = 0; i <x; i++) {
+		if (m_mapObject[i])
+			delete m_mapObject[i];
+	}
+	this->m_mapObject.clear();
 	const char* resourceDir = Globals::resourceDir;
 	char filePath[512];
 	strcpy(filePath, resourceDir);
@@ -1016,128 +1057,14 @@ std::vector<UnitButton*> SceneManager2D::LoadMapScene(char* dataSceneFile)
 	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
 	fscanf(fIn, "DUTCH %f\n", &rotation);
 	rotation = rotation * 2 * M_PI / 360;
+	if (m_mapCamera == NULL) {
+		Camera2D* camera = new Camera2D();
+		camera->Init(position, rotation);
 
-	Camera2D* camera = new Camera2D();
-	camera->Init(position, rotation);
-
-	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
-	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
-	SetMainCamera(camera, MAP_OBJECT);
-	printf("[msg] SceneManager: Set up Camera2D\n");
-
-	return listButton;
-}
-
-std::vector<Button*> SceneManager2D::LoadGameOverScene(char* dataSceneFile)
-{
-	const char* resourceDir = Globals::resourceDir;
-	char filePath[512];
-	strcpy(filePath, resourceDir);
-	strcat(filePath, dataSceneFile);
-	FILE* fIn = fopen(filePath, "r");
-	if (fIn == nullptr) {
-		printf("Fails to load scene file");
-		return std::vector<Button*>();
+		float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
+		camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
+		SetMainCamera(camera, MAP_OBJECT);
 	}
-
-	int iNumOfObject, iObjectId = 0;
-	int iMaterialId;
-	int iMainTexId;
-	Vector3 position;
-	float rotation;
-	Vector2 scale;
-	unsigned int uiHexColor;
-	float alpha;
-	float top, bot, left, right;
-
-	fscanf(fIn, "BACKGROUND %d\n", &iObjectId);
-	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
-	fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
-	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-	fscanf(fIn, "ROTATION %f\n", &rotation);
-	rotation = rotation * 2 * M_PI / 360;
-	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-
-	Sprite* backGround = new Sprite(iObjectId);
-	backGround->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	AddObject(backGround, GAMEOVER_OBJECT);
-
-	int iFontId;
-	position = Vector3(0, 0, -1);
-	fscanf(fIn, "GAMEOVER\n", &iObjectId);
-	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
-	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "FONT %d\n", &iFontId);
-	fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
-	UIText* gameover = new UIText(-1);
-	gameover->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	gameover->SetFont(iFontId);
-	gameover->SetText("GAMEOVER");
-	gameover->SetBound(top, bot, left, right);
-	gameover->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	gameover->SetRenderType(UIComponent::RenderType::FitHeight);
-	AddObject(gameover,GAMEOVER_OBJECT);
-	
-
-	fscanf(fIn, "SCORE\n", &iObjectId);
-	fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
-	fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-	fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-	fscanf(fIn, "FONT %d\n", &iFontId);
-	fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
-	UIText* score = new UIText(-1);
-	score->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-	score->SetFont(iFontId);
-	char scoreText[20];
-	snprintf(scoreText, sizeof(scoreText), "Score: %d", m_currentPlayer->getScore());
-	score->SetText(scoreText);
-	score->SetBound(top, bot, left, right);
-	score->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-	score->SetRenderType(UIComponent::RenderType::FitHeight);
-	AddObject(score,GAMEOVER_OBJECT);
-	
-
-	fscanf(fIn, "BUTTON %d\n", &iNumOfObject);
-	std::vector<Button*> listButton;
-
-	for (int i = 0; i < iNumOfObject; i++) {
-		fscanf(fIn, "\nID %d\n", &iObjectId);
-		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
-		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
-		fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-		fscanf(fIn, "ROTATION %f\n", &rotation);
-		rotation = rotation * 2 * M_PI / 360;
-		fscanf(fIn, "SCALE %f %f\n", &(scale.x), &(scale.y));
-		fscanf(fIn, "COLOR %x %f\n", &uiHexColor, &alpha);
-		fscanf(fIn, "BOUND %f %f %f %f\n", &top, &bot, &left, &right);
-		Button* button = new Button(iObjectId);
-		button->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
-		button->SetBound(top, bot, left, right);
-		button->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
-		button->SetRenderType(UIComponent::RenderType::FitHeight);
-
-		AddObject(button,GAMEOVER_OBJECT);
-		listButton.push_back(button);
-	}
-
-	float nearPlane, farPlane, zoom;
-
-	fscanf(fIn, "#CAMERA\n");
-	fscanf(fIn, "NEAR %f\n", &nearPlane);
-	fscanf(fIn, "FAR %f\n", &farPlane);
-	fscanf(fIn, "ZOOM %f\n", &zoom);
-	fscanf(fIn, "POSITION %f %f %f\n", &(position.x), &(position.y), &(position.z));
-	fscanf(fIn, "DUTCH %f\n", &rotation);
-	rotation = rotation * 2 * M_PI / 360;
-
-	Camera2D* camera = new Camera2D();
-	camera->Init(position, rotation);
-
-	float aspectRatio = Globals::screenWidth / (float)Globals::screenHeight;
-	camera->SetOrthorgraphic(zoom, aspectRatio, nearPlane, farPlane);
-	SetMainCamera(camera, MENU_OBJECT);
 	printf("[msg] SceneManager: Set up Camera2D\n");
 
 	return listButton;
@@ -1171,15 +1098,14 @@ void SceneManager2D::CleanUp()
 	empty.swap(m_listObject);
 	std::vector<UIComponent*> emptyUI;
 	emptyUI.swap(m_listUIComponent);
-	std::vector<Sprite*> empty1;
-	empty1.swap(m_gameoverObject);
+	std::vector<Sprite*>().swap(m_gameoverObject);
 }
 
 void SceneManager2D::Update(float frameTime, int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		m_time += frameTime;
 		for (int i = 0; i < m_listObject.size(); i++) {
-			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 30) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Update(frameTime);
 		}
@@ -1204,17 +1130,11 @@ void SceneManager2D::Update(float frameTime, int listObjet) {
 		}
 		m_menuCamera->Update(frameTime);
 	}
-	//else {
-	//	for (int i = 0; i < m_gameoverObject.size(); i++) {
-	//		m_gameoverObject[i]->Update(frameTime);
-	//	}
-	//	m_menuCamera->Update(frameTime);
-	//}
 }
 void SceneManager2D::Render(int listObjet) {
 	if (listObjet == PLAY_OBJECT) {
 		for (int i = 0; i < m_listObject.size(); i++) {
-			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 100) continue;
+			if (fabs(m_listObject[i]->GetPosition().y - m_mainCamera->GetPosition().y) > 30) continue;
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}
@@ -1239,11 +1159,6 @@ void SceneManager2D::Render(int listObjet) {
 	else  if (listObjet == MAP_OBJECT) {
 		for (int i = 0; i < m_mapObject.size(); i++) {
 			m_mapObject[i]->Render(m_mapCamera);
-		}
-	}
-	else {
-		for (int i = 0; i < m_gameoverObject.size(); i++) {
-			m_gameoverObject[i]->Render(m_menuCamera);
 		}
 	}
 }
@@ -1325,24 +1240,6 @@ void SceneManager2D::AddObject(Sprite* object,int listObject) {
 			}
 		}
 		m_pauseObject.push_back(object);
-	}
-	else {
-		if (m_gameoverObject.size() == 0) {
-			m_gameoverObject.push_back(object);
-			return;
-		}
-		float zPos = object->GetPosition().z;
-		if (zPos >= m_gameoverObject[0]->GetPosition().z) {
-			m_gameoverObject.insert(m_gameoverObject.begin(), object);
-			return;
-		}
-		for (int i = 1; i < m_gameoverObject.size(); i++) {
-			if (m_gameoverObject[i - 1]->GetPosition().z >= zPos && zPos >= m_gameoverObject[i]->GetPosition().z) {
-				m_gameoverObject.insert(m_gameoverObject.begin() + i, object);
-				return;
-			}
-		}
-		m_gameoverObject.push_back(object);
 	}
 }
 Sprite& SceneManager2D::GetObjectByID(int id)

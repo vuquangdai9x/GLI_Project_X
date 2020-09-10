@@ -26,10 +26,10 @@ void Player::setFlyState(FlyState fly)
 	switch (fly)
 	{
 	case Fast:
-		m_desireFlySpeed = 10.0f + this->m_flySpeed;
+		m_desireFlySpeed = 8.0f + this->m_flySpeed;
 		break;
 	case Normal:
-		m_desireFlySpeed = 5.0f + this->m_flySpeed;
+		m_desireFlySpeed = 4.0f + this->m_flySpeed;
 		break;
 	case SLow:
 		m_desireFlySpeed = 1.0f + this->m_flySpeed;
@@ -56,10 +56,10 @@ void Player::setMoveState(MoveState move)
 	switch (move)
 	{
 	case Left:
-		m_desireMoveSpeed = -5.0 - this->m_moveSpeed;
+		m_desireMoveSpeed = -4.0 - this->m_moveSpeed;
 		break;
 	case Right:
-		m_desireMoveSpeed = 5.0 + this->m_moveSpeed;
+		m_desireMoveSpeed = 4.0 + this->m_moveSpeed;
 		break;
 	case NonMove:
 		m_desireMoveSpeed = 0.0;
@@ -145,7 +145,9 @@ void Player::Update(float deltaTime)
 	UserData* user = (UserData*)this->playerBody->body->GetUserData();
 	DWORD start;
 	start = GetTickCount();
+	
 	if (user->IsCollison > 0) {
+		//printf("%d \n", user->m_typeB);
 		if (start - m_TakeDameTime > m_immortalTime) {
 			m_TakeDameTime = GetTickCount();
 			this->m_HP -= user->m_receiveDamage;
@@ -181,11 +183,10 @@ void Player::Update(float deltaTime)
 		scale.y -=  deltaTime;
 		this->SetScale(scale);
 	}
-	m_score = playerPos.y;
-	this->m_HUDController->UpdateScore(m_score);
+	this->m_HUDController->UpdateScore(m_score + playerPos.y);
 	this->m_HUDController->UpdateHealthBar(this->m_HP, this->m_maxHP);
 
-	this->misson->setScore(m_score);
+	this->misson->setScore(m_score + playerPos.y);
 
 	if (durationDamage > 0) {
 		durationDamage -= deltaTime;

@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 54
+#2D Textures: 110
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -39,6 +39,10 @@ ID 30401
 FILE "Textures/png/enemy/monster-02.png" CLAMP
 ID 30501
 FILE "Textures/png/enemy/deadly-butterfly-fly.png" CLAMP
+ID 30502
+FILE "Textures/png/enemy/deadly-butterfly-idle.png" CLAMP
+ID 30503
+FILE "Textures/png/enemy/deadly-butterfly-animation.png" CLAMP
 ID 30601
 FILE "Textures/png/enemy/vampire-bat-01.png" CLAMP
 ID 30602
@@ -87,6 +91,10 @@ ID 60304
 FILE "Textures/png/UI/button_rank_hover.png" CLAMP
 ID 60401
 FILE "Textures/png/UI/star-01.png" CLAMP
+ID 60501
+FILE "Textures/png/UI/button.png" CLAMP
+ID 60502
+FILE "Textures/png/UI/locked.png" CLAMP
 ID 16
 FILE "Textures/png/background-02.png" CLAMP
 ID 70101
@@ -113,6 +121,110 @@ ID 90104
 FILE "Textures/png/effect/particle-triangle.png" CLAMP
 ID 90105
 FILE "Textures/png/effect/particle-star.png" CLAMP
+ID 90201
+FILE "Textures/png/effect/cloud/cloud-01.png" CLAMP
+ID 90202
+FILE "Textures/png/effect/cloud/cloud-02.png" CLAMP
+ID 90203
+FILE "Textures/png/effect/cloud/cloud-03.png" CLAMP
+ID 90204
+FILE "Textures/png/effect/cloud/cloud-04.png" CLAMP
+ID 90205
+FILE "Textures/png/effect/cloud/cloud-05.png" CLAMP
+ID 90206
+FILE "Textures/png/effect/cloud/cloud-06.png" CLAMP
+ID 90207
+FILE "Textures/png/effect/cloud/cloud-07.png" CLAMP
+ID 90208
+FILE "Textures/png/effect/cloud/cloud-08.png" CLAMP
+ID 90209
+FILE "Textures/png/effect/cloud/cloud-09.png" CLAMP
+ID 90210
+FILE "Textures/png/effect/cloud/cloud-10.png" CLAMP
+ID 90211
+FILE "Textures/png/effect/cloud/cloud-11.png" CLAMP
+ID 90212
+FILE "Textures/png/effect/cloud/cloud-12.png" CLAMP
+ID 90213
+FILE "Textures/png/effect/cloud/cloud-13.png" CLAMP
+ID 90214
+FILE "Textures/png/effect/cloud/cloud-14.png" CLAMP
+ID 90215
+FILE "Textures/png/effect/cloud/cloud-15.png" CLAMP
+ID 90216
+FILE "Textures/png/effect/cloud/cloud-16.png" CLAMP
+ID 90301
+FILE "Textures/png/effect/snow/snow-01.png" CLAMP
+ID 90302
+FILE "Textures/png/effect/snow/snow-02.png" CLAMP
+ID 90303
+FILE "Textures/png/effect/snow/snow-03.png" CLAMP
+ID 90304
+FILE "Textures/png/effect/snow/snow-04.png" CLAMP
+ID 90305
+FILE "Textures/png/effect/snow/snow-05.png" CLAMP
+ID 90306
+FILE "Textures/png/effect/snow/snow-06.png" CLAMP
+ID 90307
+FILE "Textures/png/effect/snow/snow-07.png" CLAMP
+ID 90308
+FILE "Textures/png/effect/snow/snow-08.png" CLAMP
+ID 90309
+FILE "Textures/png/effect/snow/snow-09.png" CLAMP
+ID 100101
+FILE "Textures/png/tree/tree-small-bush-white-01.png" CLAMP
+ID 100102
+FILE "Textures/png/tree/tree-small-bush-white-02.png" CLAMP
+ID 100201
+FILE "Textures/png/tree/tree-small-white-01.png" CLAMP
+ID 100202
+FILE "Textures/png/tree/tree-small-white-02.png" CLAMP
+ID 100203
+FILE "Textures/png/tree/tree-small-white-03.png" CLAMP
+ID 100204
+FILE "Textures/png/tree/tree-small-white-04.png" CLAMP
+ID 100205
+FILE "Textures/png/tree/tree-small-white-05.png" CLAMP
+ID 100301
+FILE "Textures/png/tree/tree-medium-white-01.png" CLAMP
+ID 100302
+FILE "Textures/png/tree/tree-medium-white-02.png" CLAMP
+ID 105001
+FILE "Textures/png/tree/broken-tree-medium-01.png" CLAMP
+ID 105002
+FILE "Textures/png/tree/broken-tree-high-01.png" CLAMP
+ID 105003
+FILE "Textures/png/tree/broken-tree-high-02.png" CLAMP
+ID 105004
+FILE "Textures/png/tree/broken-tree-high-03.png" CLAMP
+ID 105101
+FILE "Textures/png/tree/tree-small-bush-yellow-01.png" CLAMP
+ID 105102
+FILE "Textures/png/tree/tree-small-bush-yellow-02.png" CLAMP
+ID 105201
+FILE "Textures/png/tree/tree-small-yellow-01.png" CLAMP
+ID 105202
+FILE "Textures/png/tree/tree-small-yellow-02.png" CLAMP
+ID 105301
+FILE "Textures/png/tree/tree-medium-yellow-01.png" CLAMP
+ID 105302
+FILE "Textures/png/tree/tree-medium-yellow-02.png" CLAMP
+ID 105303
+FILE "Textures/png/tree/tree-medium-yellow-03.png" CLAMP
+ID 105401
+FILE "Textures/png/tree/tree-high-yellow-01.png" CLAMP
+ID 105402
+FILE "Textures/png/tree/tree-high-yellow-02.png" CLAMP
+ID 105403
+FILE "Textures/png/tree/tree-high-yellow-03.png" CLAMP
+ID 105404
+FILE "Textures/png/tree/tree-high-yellow-04.png" CLAMP
+ID 105405
+FILE "Textures/png/tree/tree-high-yellow-05.png" CLAMP
+ID 105406
+FILE "Textures/png/tree/tree-high-yellow-06.png" CLAMP
+ID 105407
+FILE "Textures/png/tree/tree-high-yellow-07.png" CLAMP
 
 #Shaders: 2
 ID 0

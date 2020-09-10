@@ -71,6 +71,13 @@ GS_TutorialState::GS_TutorialState()
 
 GS_TutorialState::~GS_TutorialState()
 {
+	delete background;
+	for (int i = 0; i < data.size(); i++) {
+		delete data[i];
+	}
+	std::vector<UIComponent*>().swap(data);
+	
+	delete text;
 }
 
 bool GS_TutorialState::Create()
@@ -111,9 +118,6 @@ void GS_TutorialState::KeyPress()
 
 
 	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::ESCAPE)) {
-		delete this->background;
-		std::vector<UIComponent*> empty;
-		empty.swap(data);
 		Singleton<GameStateManager>::GetInstance()->Pop();
 	}
 }

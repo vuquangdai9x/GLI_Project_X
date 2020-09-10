@@ -1,6 +1,42 @@
 #include "WorldManager.h"
 #include "ListenerClass.h"
 #include "UserData.h"
+
+uint16 WorldManager::GetMaskBits(int type) {
+	uint16 mask = 0;
+	switch (type)
+	{
+	case PLAYER:
+		mask = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
+		break;
+	case ENEMY:
+		mask = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
+		break;
+	case SPECIAL_ENEMY:
+		mask = (1 << PLAYERBULLET) | (1 << PLAYER);
+		break;
+	case OBSTACLE:
+		mask = (1 << PLAYER) | (1 << OBSTACLE) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET) | (1 << ITEM);
+		break;
+	case PLAYERBULLET:
+		mask = (1 << DECORATE_OBJ) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER) | (1 << ITEM);
+		break;
+	case ENEMYBULLET:
+		mask = (1 << DECORATE_OBJ) | (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << MAP_BORDER);
+		break;
+	case MAP_BORDER:
+		mask = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		break;
+	case ITEM:
+		mask = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
+		break;
+	case DECORATE_OBJ:
+		mask = (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
+		break;
+	}
+	return mask;
+}
+
 WorldManager::WorldManager()
 {
 	
@@ -32,7 +68,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 {
 	ItemBody *tmp=new ItemBody(type, x, y);
 	b2BodyDef bodyDef;
-	if (type == OBSTACLE) {
+	if (type == OBSTACLE || type == DECORATE_OBJ) {
 		bodyDef.type = b2_staticBody;
 	}
 	else if (type == MAP_BORDER) {
@@ -52,36 +88,10 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
 	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
+	else if (type == DECORATE_OBJ) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
-	
-	switch (type)
-	{
-	case PLAYER:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
-		break;
-	case ENEMY:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
-		break;
-	case SPECIAL_ENEMY:
-		fixtureDef.filter.maskBits = (1 << PLAYERBULLET)| (1 << PLAYER);
-		break;
-	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET) | (1 << ITEM);
-		break;
-	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER) | (1 << ITEM);
-		break;
-	case ENEMYBULLET:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET) | (1 << MAP_BORDER);
-		break;
-	case MAP_BORDER:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
-		break;
-	case ITEM:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << SPECIAL_ENEMY) | (1 << MAP_BORDER);
-		break;
-	}
+	fixtureDef.filter.maskBits = GetMaskBits(type);
 
 	tmp->body->CreateFixture(&fixtureDef);
 
@@ -102,11 +112,14 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 {
 	ItemBody* tmp = new ItemBody(type, x, y);
 	b2BodyDef bodyDef;
-	if (type != OBSTACLE) {
-		bodyDef.type = b2_dynamicBody;
+	if (type == OBSTACLE || type == DECORATE_OBJ) {
+		bodyDef.type = b2_staticBody;
+	}
+	else if (type == MAP_BORDER) {
+		bodyDef.type = b2_kinematicBody;
 	}
 	else {
-		bodyDef.type = b2_staticBody;
+		bodyDef.type = b2_dynamicBody;
 	}
 
 	bodyDef.position.Set(x, y);
@@ -123,30 +136,10 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicPolygon;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
-
+	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
-	switch (type)
-	{
-	case PLAYER:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
-		break;
-	case ENEMY:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
-		break;
-	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET) | (1 << ITEM);
-		break;
-	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET);
-		break;
-	case ENEMYBULLET:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
-		break;
-	case ITEM:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << PLAYERBULLET);
-		break;
-	}
+	fixtureDef.filter.maskBits = GetMaskBits(type);
 
 	tmp->body->CreateFixture(&fixtureDef);
 	b2MassData mass;
@@ -165,11 +158,14 @@ ItemBody* WorldManager::createFloating(int type, float x, float y, float w, floa
 {
 	ItemBody* tmp = new ItemBody(type, x, y);
 	b2BodyDef bodyDef;
-	if (type != OBSTACLE) {
-		bodyDef.type = b2_dynamicBody;
+	if (type == OBSTACLE || type == DECORATE_OBJ) {
+		bodyDef.type = b2_staticBody;
+	}
+	else if (type == MAP_BORDER) {
+		bodyDef.type = b2_kinematicBody;
 	}
 	else {
-		bodyDef.type = b2_staticBody;
+		bodyDef.type = b2_dynamicBody;
 	}
 
 	bodyDef.position.Set(x, y);
@@ -188,28 +184,7 @@ ItemBody* WorldManager::createFloating(int type, float x, float y, float w, floa
 	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
-
-	switch (type)
-	{
-	case PLAYER:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET) | (1 << SPECIAL_ENEMY);
-		break;
-	case ENEMY:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
-		break;
-	case SPECIAL_ENEMY:
-		fixtureDef.filter.maskBits = (1 << PLAYERBULLET) | (1 << PLAYER);
-		break;
-	case OBSTACLE:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << ENEMY) | (1 << PLAYERBULLET) | (1 << ENEMYBULLET);
-		break;
-	case PLAYERBULLET:
-		fixtureDef.filter.maskBits = (1 << ENEMY) | (1 << OBSTACLE) | (1 << ENEMYBULLET | 1 << SPECIAL_ENEMY);
-		break;
-	case ENEMYBULLET:
-		fixtureDef.filter.maskBits = (1 << PLAYER) | (1 << OBSTACLE) | (1 << PLAYERBULLET);
-		break;
-	}
+	fixtureDef.filter.maskBits = GetMaskBits(type);
 
 	tmp->body->CreateFixture(&fixtureDef);
 
@@ -237,6 +212,9 @@ void WorldManager::Update(float deltaTime)
 
 void WorldManager::CleanUp()
 {
+	for (int i = 0; i < listObject.size(); i++) {
+		listObject[i]->body->GetWorld()->DestroyBody(listObject[i]->body);
+	}
 	std::vector<ItemBody*> empty;
 	empty.swap(listObject);
 	

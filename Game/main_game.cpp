@@ -18,6 +18,8 @@
 #include "WorldManager.h"
 #include "EffectManager.h"
 #include "SoundManager.h"
+#include "PostProcessingManager.h"
+#include "DecorateObjectManager.h"
 
 #include <stdlib.h> 
 #include <time.h>
@@ -32,9 +34,16 @@ int Init(ESContext* esContext)
 	Singleton<SceneManager2D>::CreateInstance();
 	Singleton<WorldManager>::CreateInstance();
 	Singleton<GameStateManager>::CreateInstance();
+	Singleton<PostProcessingManager>::CreateInstance();
+	Singleton<DecorateObjectManager>::CreateInstance();
+
+	Singleton<PostProcessingManager>::GetInstance()->Load("Datas/post-processing.txt");
+	Singleton<PostProcessingManager>::GetInstance()->SetMaterial(0);
+	Singleton<DecorateObjectManager>::GetInstance()->Load("Datas/decorate-object.txt");
 	
 	glClearColor(1.0f, 0.8f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LEQUAL);
 	//glDisable(GL_DEPTH_TEST);
 	glEnable(GL_STENCIL_TEST);
 	glEnable(GL_BLEND);
@@ -62,14 +71,17 @@ void Draw(ESContext* esContext)
 
 	//end = GetTickCount();
 	//DWORD deltaTime = end - start;
+	//if(deltaTime!=0.0f)
+	
 	//if (deltaTime < 1000.0 / 60.0)
-		//Sleep(1000 / 60.0 - deltaTime);
+	//Sleep(1000 / 60.0 - deltaTime);
 }
 
 void Update(ESContext * esContext, float deltaTime)
 {
+	//printf("%f \n", deltaTime);
 	Singleton<GameStateManager>::GetInstance()->update(deltaTime);
-	
+	//printf("%f \n", 1 / deltaTime);
 }
 
 void Key(ESContext * esContext, unsigned char key, bool bIsPressed)
@@ -98,7 +110,6 @@ int _tmain(int argc, _TCHAR * argv[])
 	ESContext esContext;
 
 	esInitContext(&esContext);
-
 	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
 
 	int iInitResult;
@@ -122,6 +133,9 @@ int _tmain(int argc, _TCHAR * argv[])
 	Singleton<InputManager>::DestroyInstance();
 	Singleton<WorldManager>::DestroyInstance();
 	Singleton<SoundManager>::DestroyInstance();
+	Singleton<PostProcessingManager>::DestroyInstance();
+	Singleton<EffectManager>::DestroyInstance();
+	Singleton<DecorateObjectManager>::DestroyInstance();
 	//identifying memory leaks
 	//MemoryDump();
 	printf("Press any key...\n");
