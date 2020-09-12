@@ -2,6 +2,7 @@
 #include "ResourcesManager2D.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
 #include "MaterialPostProcess.h"
+#include "MaterialVignette.h"
 #include "MaterialPPColorCorrection.h"
 #include "Singleton.h"
 #include <vector>
@@ -19,6 +20,7 @@ private:
 	GLuint m_textureHandle;
 	bool m_isEnabled, m_canRun;
 	MaterialPostProcess* m_material;
+	MaterialVignette* m_materialVignette;
 	MaterialPPColorCorrection* m_materialColorCorrection;
 	Model3D* m_model;
 
@@ -38,11 +40,16 @@ private:
 	UIComponent* m_hue_UIBar, *m_hue_UIHandle;
 	UIComponent* m_temperature_UIBar, *m_temperature_UIHandle;
 	UIComponent* m_unsharpMask_UIBar, *m_unsharpMask_UIHandle;
+	UIComponent* m_vignetteIntensify_UIBar, * m_vignetteIntensify_UIHandle;
+	UIComponent* m_vignetteExtend_UIBar, * m_vignetteExtend_UIHandle;
+	UIComponent* m_vignetteBrightness_UIBar, * m_vignetteBrightness_UIHandle;
+	UIComponent* m_vignetteOpacity_UIBar, * m_vignetteOpacity_UIHandle;
 	std::vector<UIText*> m_listText;
 	Camera2D* m_camera;
 
 	float m_colorBlendUI_top, m_colorBlendUI_bottom, m_colorBlendUI_left, m_colorBlendUI_right;
 	float m_colorCorrectionUI_top, m_colorCorrectionUI_bottom, m_colorCorrectionUI_left, m_colorCorrectionUI_right;
+	float m_vignetteUI_top, m_vignetteUI_bottom, m_vignetteUI_left, m_vignetteUI_right;
 	void CreateUI();
 
 	bool m_isUseUI;
@@ -56,6 +63,7 @@ public:
 	void SetMaterial(int iMaterialId);
 	void Prepare();
 	void Render();
+	void RenderVignette();
 	void Update(float deltaTime);
 	void SetShowUI(bool value);
 	bool CheckIsShowUI();

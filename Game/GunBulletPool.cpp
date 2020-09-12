@@ -8,7 +8,7 @@ void GunBulletPool::CreateNewBullet()
 	bullet->SetActiveBullet(false);
 	m_listBullet.push_back(bullet);
 	Singleton<SceneManager2D>::GetInstance()->AddObject(bullet);
-	printf("[msg] GunBulletPool: Created and add a bullet to pool\n");
+	//printf("[msg] GunBulletPool: Created and add a bullet to pool\n");
 }
 
 GunBulletPool::GunBulletPool(int id, int iCapacity, int iInitPoolAmount, GunBullet* templateBullet) 

@@ -1,9 +1,6 @@
 #include "ParticlesEmitter.h"
 #include "CurveFunction.h"
 
-#include <stdlib.h> 
-#include <time.h>
-
 ParticlesEmitter::ParticlesEmitter(Vector3 position, Vector2 scale, float rotation) : Effect(position, scale, rotation)
 {
 	m_timeCounter = 0;

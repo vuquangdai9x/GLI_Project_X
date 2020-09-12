@@ -1,5 +1,5 @@
 #include "CurveFunction.h"
-
+#include "stdafx.h"
 float CurveFunction::EaseInOut(float start, float end, float value) {
 	float t = (value < 0.5) ? (8 * value * value * value * value) : (1 - pow(-2 * value + 2, 4) / 2);
 	return (t*(end - start) + start);

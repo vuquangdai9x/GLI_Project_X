@@ -104,12 +104,6 @@ void main()
 	
 	// three way color corrector
 	v = pow(max(vec3(0.0), v * (1.0 + uGain - uLift) + uLift + uOffset), max(vec3(0.0), 1.0 - uGamma));
-
-	// vignette
-	//uv *=  vec2(1.0)- uv.yx; //-> 1.-u.yx; Thanks FabriceNeyret !
-    //float vignette = uv.x*uv.y * 15.0; // multiply with sth for intensity
-    //vignette = pow(vignette, 0.25); // change pow for modifying the extend of the  vignette
-	//v *= vignette;
 	
 	// convert to gamma space
     //v = LinearToSRGB(v);

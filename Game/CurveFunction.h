@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 
 // Class contain functions to get interpolated value between start & end. The input value must be in range [0,1]
 // Usually use in animation

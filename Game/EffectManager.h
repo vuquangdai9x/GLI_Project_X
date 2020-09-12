@@ -7,8 +7,6 @@
 #include "MaterialParticleBox.h"
 #include "EffectCompositePool.h"
 
-#include "ParticlesEmitter.h"
-
 class EffectManager {
 private:
 	std::vector<Shaders*> m_listShader;
@@ -21,8 +19,6 @@ private:
 	MaterialParticleBox* GetMaterialParticleBox(int iMaterialId);
 	Shaders* GetShader(int iShaderId);
 public:
-	ParticlesEmitter* m_emitter = NULL;
-
 	EffectManager();
 	~EffectManager();
 	void Update(float deltaTime);

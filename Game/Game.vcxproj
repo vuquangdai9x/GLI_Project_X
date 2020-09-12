@@ -166,9 +166,10 @@
     <ClCompile Include="MaterialPostProcess.cpp" />
     <ClCompile Include="MaterialPPColorCorrection.cpp" />
     <ClCompile Include="MaterialText2D.cpp" />
+    <ClCompile Include="MaterialVignette.cpp" />
     <ClCompile Include="Misson.cpp" />
     <ClCompile Include="Obstacle.cpp" />
-    <ClCompile Include="ParticlesEmitter.h" />
+    <ClCompile Include="ParticlesEmitter.cpp" />
     <ClCompile Include="ParticlesEmitterBox.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PostProcessingManager.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="SceneManager2D.cpp" />
     <ClCompile Include="SimpleGun.cpp" />
     <ClCompile Include="SoundManager.cpp" />
-    <ClCompile Include="ParticlesEmitter.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteLoopTexture.cpp" />
     <ClCompile Include="State\GameStateManager.cpp" />
@@ -237,7 +237,9 @@
     <ClInclude Include="MaterialParticleBox.h" />
     <ClInclude Include="MaterialPostProcess.h" />
     <ClInclude Include="MaterialPPColorCorrection.h" />
+    <ClInclude Include="MaterialVignette.h" />
     <ClInclude Include="Misson.h" />
+    <ClInclude Include="ParticlesEmitter.h" />
     <ClInclude Include="ParticlesEmitterBox.h" />
     <ClInclude Include="PostProcessingManager.h" />
     <ClInclude Include="SoundManager.h" />

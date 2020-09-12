@@ -1,6 +1,6 @@
 #Model 0
 
-#Shaders: 2
+#Shaders: 3
 ID 0
 VS: "Shaders/PostProcessingShaderVS.vs"
 FS: "Shaders/PostProcessingShaderFS.fs"
@@ -13,6 +13,15 @@ FS: "Shaders/PostProcessShaderFS_ColorCorrection.fs"
 STATES 2
 STATE CULLING
 STATE DEPTH_TEST
+ID 2
+VS: "Shaders/PostProcessingShaderVS.vs"
+FS: "Shaders/VignetteShaderFS.fs"
+STATES 2
+STATE CULLING
+STATE DEPTH_TEST
+
+#Vignette
+SHADER 2
 
 #ColorCorrection
 SHADER 1

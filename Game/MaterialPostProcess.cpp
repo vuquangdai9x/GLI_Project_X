@@ -13,7 +13,7 @@ bool MaterialPostProcess::Init(Shaders * shader)
 {
 	m_shader = shader;
 	
-	m_u_mainTextureLocation = glGetUniformLocation(m_shader->program, "u_mainTexture");
+ 	m_u_mainTextureLocation = glGetUniformLocation(m_shader->program, "u_mainTexture");
 	m_a_positionLocation = glGetAttribLocation(m_shader->program, "a_posL");
 	m_a_uvLocation = glGetAttribLocation(m_shader->program, "a_uv");
 	

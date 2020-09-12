@@ -282,6 +282,12 @@
     <ClInclude Include="DecorateObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MaterialVignette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticlesEmitter.h">
+      <Filter>Header Files\effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_game.cpp">
@@ -428,9 +434,6 @@
     <ClCompile Include="MaterialParticle2D.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
-    <ClCompile Include="ParticlesEmitter.h">
-      <Filter>Header Files\effect</Filter>
-    </ClCompile>
     <ClCompile Include="MapBorder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -467,9 +470,6 @@
     <ClCompile Include="State\GS_PassLevelState.cpp">
       <Filter>Source Files\GameState</Filter>
     </ClCompile>
-    <ClCompile Include="ParticlesEmitter.cpp">
-      <Filter>Source Files\effect</Filter>
-    </ClCompile>
     <ClCompile Include="MaterialParticleBox.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
@@ -492,6 +492,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MaterialPPColorCorrection.cpp">
+      <Filter>Source Files\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialVignette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticlesEmitter.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
   </ItemGroup>

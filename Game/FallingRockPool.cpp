@@ -8,7 +8,7 @@ void FallingRockPool::CreateNewBullet()
 	bullet->SetActiveBullet(false);
 	m_listBullet.push_back(bullet);
 	Singleton<SceneManager2D>::GetInstance()->AddObject(bullet);
-	printf("[msg] FallingRockPool: Created and add a bullet to pool\n");
+	//printf("[msg] FallingRockPool: Created and add a bullet to pool\n");
 }
 
 FallingRockPool::FallingRockPool(int id, int iCapacity, int iInitPoolAmount, FallingRock* templateBullet)

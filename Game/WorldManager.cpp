@@ -87,8 +87,7 @@ ItemBody* WorldManager::createRectagle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicBox;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
-	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
-	else if (type == DECORATE_OBJ) fixtureDef.isSensor = true;
+	if (type == SPECIAL_ENEMY || type == DECORATE_OBJ) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
 	fixtureDef.filter.maskBits = GetMaskBits(type);
@@ -135,7 +134,7 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicPolygon;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
-	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
+	if (type == SPECIAL_ENEMY || type == DECORATE_OBJ) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
 	fixtureDef.filter.maskBits = GetMaskBits(type);
@@ -180,7 +179,7 @@ ItemBody* WorldManager::createFloating(int type, float x, float y, float w, floa
 	fixtureDef.shape = &dynamicPolygon;
 	fixtureDef.density = 5.0f;
 	fixtureDef.friction = 0.0f;
-	if (type == SPECIAL_ENEMY) fixtureDef.isSensor = true;
+	if (type == SPECIAL_ENEMY || type == DECORATE_OBJ) fixtureDef.isSensor = true;
 	// set filter
 	fixtureDef.filter.categoryBits = (short)(1 << type);
 	fixtureDef.filter.maskBits = GetMaskBits(type);

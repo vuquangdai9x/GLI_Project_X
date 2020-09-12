@@ -25,15 +25,11 @@ void EffectManager::Update(float deltaTime) {
 	for (int i = 0;i < m_listEffectCompositePool.size();i++) {
 		m_listEffectCompositePool[i]->Update(deltaTime);
 	}
-	if (m_emitter != NULL)
-	m_emitter->Update(deltaTime);
 }
 void EffectManager::Render(Camera2D* mainCamera) {
 	for (int i = 0;i < m_listEffectCompositePool.size();i++) {
 		m_listEffectCompositePool[i]->Render(mainCamera);
 	}
-	if (m_emitter != NULL)
-	m_emitter->Render(mainCamera);
 }
 void EffectManager::LoadEffect(char* effectFilePath) {
 	const char* resourceDir = Globals::resourceDir;

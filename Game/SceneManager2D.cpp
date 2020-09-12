@@ -27,6 +27,7 @@
 #include "MapBorder.h"
 
 #include "DecorateObjectManager.h"
+#include "PostProcessingManager.h"
 
 SceneManager2D::SceneManager2D()
 {
@@ -1145,13 +1146,14 @@ void SceneManager2D::Render(int listObjet) {
 			if (m_listObject[i]->CheckIsActiveSprite())
 				m_listObject[i]->Render(m_mainCamera);
 		}
+		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
 		glDisable(GL_DEPTH_TEST);
+		Singleton<PostProcessingManager>::GetInstance()->RenderVignette();
 		for (int i = 0; i < m_listUIComponent.size(); i++) {
 			if (m_listUIComponent[i]->CheckIsActiveSprite())
 				m_listUIComponent[i]->Render(m_mainCamera);
 		}
 		glEnable(GL_DEPTH_TEST);
-		Singleton<EffectManager>::GetInstance()->Render(m_mainCamera);
 	}
 	else  if (listObjet == MENU_OBJECT) {
 		for (int i = 0; i < m_menuObject.size(); i++) {
