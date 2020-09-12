@@ -11,11 +11,15 @@ private:
 	SoLoud::WavStream m_backGround;
 	SoLoud::Wav m_bullet[4]; //Pistol, Canon, Shotgun, Supercannon;
 	SoLoud::Wav m_player[4]; //GetItem, ChangeWeapon, Injured, Died;
-	SoLoud::Wav m_enemy[2]; //Injured, Died; 
+	SoLoud::Wav m_enemy[3]; //Injured, Died, Bug; 
 
 	int iHandleBackGround;
 	int iHandleFire;
-public:	
+	int iHandlePlayer;
+	int iHandleEnemy;
+
+	int SetOnOff = -1;
+public:
 	SoundManager() {}
 	~SoundManager() {
 		m_soloud.deinit();
@@ -25,6 +29,7 @@ public:
 	void Player(int state);
 	void Enemy(int state);
 	void Fire(int index);
+	void OnOffSound();
 	void Init();
 
 	const static int P_GETITEM = 0;
@@ -34,5 +39,7 @@ public:
 
 	const static int E_INJUIRED = 0;
 	const static int E_DIED = 1;
+	const static int E_BUG = 2;
+
 };
 

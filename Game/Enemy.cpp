@@ -3,6 +3,8 @@
 #include"Singleton.h"
 #include"SceneManager2D.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
+
 Enemy::Enemy(int id):Sprite(id)
 {
 
@@ -29,9 +31,11 @@ void Enemy::takeDamage()
 	if (user->IsCollison > 0) {
 		if (user->m_typeB == PLAYERBULLET) {
 			m_TakeDameTime = GetTickCount();
+			Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_INJUIRED);
 			this->m_HP -= user->m_receiveDamage;
 			this->SetColor(0xffafff, 1);
 			if (this->m_HP <= 0) {
+				Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_DIED);
 				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
 				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();

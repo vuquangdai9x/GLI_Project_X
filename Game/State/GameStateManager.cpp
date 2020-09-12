@@ -35,10 +35,10 @@ void GameStateManager::Push(int state)
 		this->states.push(new GS_WelcomScreen());
 	}
 	else if (state == MENU) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_MainMenu());
 	}
 	else if (state == PLAY) {
-		
 		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_PlayState());
 	}
@@ -46,19 +46,23 @@ void GameStateManager::Push(int state)
 		this->states.push(new GS_GameOverState());
 	}
 	else if (state == MAP) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new MapEditor());
 	}
 	else if (state == QUIT) {
 		Singleton<SoundManager>::GetInstance()->Click();
+		Singleton<SoundManager>::GetInstance()->Click();
 		exit(1);
 	}
 	else if (state == TUTORIAL) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_TutorialState());
 	}
 	else if (state == PASSLEVEL) {
 		this->states.push(new GS_PassLevelState());
 	}
 	else if (state == SELECTLEVEL) {
+		Singleton<SoundManager>::GetInstance()->Click();
 		this->states.push(new GS_SelectLevel());
 	}
 }
@@ -125,6 +129,8 @@ void GameStateManager::render()
 
 void GameStateManager::update(float deltaTime)
 {
+	Singleton<PostProcessingManager>::GetInstance()->Update(deltaTime);
+	if (Singleton<PostProcessingManager>::GetInstance()->CheckIsShowUI()) return;
 	if (paused) {
 		pauseState->Update(deltaTime);
 	}

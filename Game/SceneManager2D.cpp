@@ -163,6 +163,15 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 
 	printf("[msg] SceneManager2D: Init player\n");
 
+	/*for (int i = 0; i < 23; i++) {
+		AddObject(
+			Singleton<DecorateObjectManager>::GetInstance()->CreateObjectByIndex(
+				i,
+				Vector2(mapWidth/3*(-1 + i/23.0*2.0),0)
+			)
+		);
+	}*/
+
 	// set up backgrounds
 	int iLoopVertical, iLoopHorizontal;
 	int iNumOfBackground;
@@ -428,18 +437,12 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 		AddObject(obs);
 		printf("[msg] SceneManager: Loaded Obstacle %d | Material: %d | Main Texture: %d\n", iObjectId, iMaterialId, iMainTexId);
 
-		/*DecorateObject* decor = Singleton<DecorateObjectManager>::GetInstance()->CreateObject(
-			0,
-			DecorateObjectManager::Pivot::Bottom,
-			Vector2(obs->GetPosition().x, obs->GetPosition().y + obs->GetOriginSize().y / 2)
-		);
-		AddObject(decor);*/
 		int iNumOfTrees = obs->GetOriginSize().x / 1.5;
 		for (int i = 0; i < iNumOfTrees; i++) {
 			AddObject(
 				Singleton<DecorateObjectManager>::GetInstance()->CreateRandomObject(
 					Vector2(obs->GetPosition().x + 0.8 * obs->GetOriginSize().x * ((float)rand()/(float)RAND_MAX*2-1),
-						obs->GetPosition().y + obs->GetOriginSize().y * obs->GetScale().y)
+						obs->GetPosition().y + 0.95 * obs->GetOriginSize().y * obs->GetScale().y)
 				)
 			);
 		}
@@ -456,8 +459,9 @@ bool SceneManager2D::LoadScene(char* dataSceneFile) {
 	LoadAnimation(fIn, &templateFish);
 
 	fscanf(fIn, "COUNT %d\n", &iNumOfObject);
+	printf("Load %d fish\n", iNumOfObject);
 	for (int i = 0; i < iNumOfObject; i++) {
-		fscanf(fIn, "\nID %d\n", &iObjectId);
+		fscanf(fIn, "ID %d\n", &iObjectId);
 		fscanf(fIn, "MATERIAL %d\n", &iMaterialId);
 		fscanf(fIn, "MAINTEX %d\n", &iMainTexId);
 		fscanf(fIn, "NUM OF TARGET %d\n", &numOfTarget);
@@ -713,8 +717,11 @@ bool SceneManager2D::LoadMenuScene(char* dataSceneFile)
 			button->OnClick(goToPlay);
 		else if (i == 1)
 			button->OnClick(goToTutorial);
-		else {
+		else if (i == 2) {
 			button->OnClick(test1);
+		}
+		else if (i == 3) {
+			button->OnClick(goToQuit);
 		}
 		AddObject(button, MENU_OBJECT);
 	}

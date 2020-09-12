@@ -8,9 +8,11 @@
 InputManager::InputManager()
 {
 	m_mask = 0;
+	m_isLocked = false;
 }
 
 int InputManager::GetBit(Key key) {
+	if (m_isLocked)	return 0;
 	return (m_mask >> key) & 0x01;
 }
 
@@ -29,6 +31,7 @@ int InputManager::getMouseButton()
 
 int InputManager::getMouseEvent()
 {
+	if (m_isLocked)	return MOUSE_MOVE;
 	return m_mouseEvent;
 }
 
@@ -134,6 +137,14 @@ void InputManager::KeyPressed(unsigned char key, bool isKeyPressed)
 		break;
 	case VK_ESCAPE:
 		keyMapped = Key::ESCAPE;
+		break;
+	case 'P':
+	case 'p':
+		keyMapped = Key::P;
+		break;
+	case 'O':
+	case 'o':
+		keyMapped = Key::O;
 		break;
 	default:
 		keyMapped = Key::NONE;

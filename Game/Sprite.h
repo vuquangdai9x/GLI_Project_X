@@ -1,9 +1,6 @@
 #pragma once
 #include "stdafx.h"
-#include "../Framework3D/TrainingFramework/Material2D.h"
-#include "../Framework3D/TrainingFramework/Camera2D.h"
-#include "../Framework3D/TrainingFramework/Model3D.h"
-#include "../Framework3D/TrainingFramework/Texture.h"
+#include "../Framework3D/TrainingFramework/framework3d.h"
 #include "AnimationController.h"
 
 class Sprite{

@@ -9,6 +9,7 @@
 #include"UserData.h"
 #include"State/GameStateManager.h"
 #include "EffectManager.h"
+#include "SoundManager.h"
 void Player::createBox2D()
 {
 	x = m_position.x;
@@ -32,7 +33,7 @@ void Player::setFlyState(FlyState fly)
 		m_desireFlySpeed = 4.0f + this->m_flySpeed;
 		break;
 	case SLow:
-		m_desireFlySpeed = 1.0f + this->m_flySpeed;
+		m_desireFlySpeed = 1.0f ;
 		break;
 	case Static:
 		m_desireFlySpeed = 0.0f;
@@ -150,18 +151,23 @@ void Player::Update(float deltaTime)
 		//printf("%d \n", user->m_typeB);
 		if (start - m_TakeDameTime > m_immortalTime) {
 			m_TakeDameTime = GetTickCount();
+			if (user->m_receiveDamage) {
+				Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_INJUIRED);
+			}
 			this->m_HP -= user->m_receiveDamage;
-			for (int i = 0; i < 3; i++) {
-				if (this->misson->getListMisson()[i] == 2) {
-					this->misson->setBlood(false);
+			if (user->m_receiveDamage > 0) {
+				for (int i = 0; i < 3; i++) {
+					if (this->misson->getListMisson()[i] == 2) {
+						this->misson->setBlood(false);
+					}
 				}
 			}
 			if (this->m_HP <= 0) {
 				//m_HP = 0;
                 this->m_DieTime = GetTickCount();
+				Singleton<SoundManager>::GetInstance()->Player(SoundManager::P_DIED);
 				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12100);
 				this->playerBody->setActive(false);
-				
 			}
 			Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(m_position, 10000);
 		}

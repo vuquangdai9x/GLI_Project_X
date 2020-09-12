@@ -12,7 +12,8 @@ private:
 	int m_mouseEvent;
 	int x, y, button;
 public:
-	enum Key { NONE, A, D, W, S, LSHIFT, SPACE, UP, DOWN, LEFT, RIGHT, N1, N2, N3, N4, N5, N6, N7, N8, N9, N0, Q, E, TAB, Z, X, C, ESCAPE };
+	bool m_isLocked;
+	enum Key { NONE, A, D, W, S, LSHIFT, SPACE, UP, DOWN, LEFT, RIGHT, N1, N2, N3, N4, N5, N6, N7, N8, N9, N0, Q, E, TAB, Z, X, C, ESCAPE, P, O };
 	void KeyPressed(unsigned char key, bool isKeyPressed);
 	int GetBit(Key key);
 	void MouseEvent(int typeOfService, int button, int x, int y);

@@ -75,7 +75,7 @@ void DeadlyBird::createBox2D()
 	y = m_position.y;
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
-	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width, height, 8);
+	enemyBody = Singleton<WorldManager>::GetInstance()->createRectagle(SPECIAL_ENEMY, x, y, width * 0.7, height * 0.8, 8);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
 	user->m_damage = this->m_damage;
 }

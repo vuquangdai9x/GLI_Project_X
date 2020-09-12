@@ -4,7 +4,7 @@ FILE "Models/Quad.nfg"
 ID 1
 FILE "Models/Quad-reverse.nfg"
 
-#2D Textures: 110
+#2D Textures: 111
 ID 10101
 FILE "Textures/png/hot-air-balloon-01.png" CLAMP
 ID 20101
@@ -95,6 +95,8 @@ ID 60501
 FILE "Textures/png/UI/button.png" CLAMP
 ID 60502
 FILE "Textures/png/UI/locked.png" CLAMP
+ID 60601
+FILE "Textures/png/UI/color-wheel.png" CLAMP
 ID 16
 FILE "Textures/png/background-02.png" CLAMP
 ID 70101

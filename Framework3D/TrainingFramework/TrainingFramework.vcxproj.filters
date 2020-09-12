@@ -209,6 +209,9 @@
     <None Include="..\Resources\Shaders\PostProcessShaderFS_ColorCorrection.fs">
       <Filter>Resources\Shaders</Filter>
     </None>
+    <None Include="..\Resources\Shaders\VignetteShaderFS.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\Datas\scene2d.txt">

@@ -10,6 +10,6 @@ protected:
 	int m_iShotCounter;
 public:
 	AutoGun(int id, char* name, int iWeaponTexId, int iTargetTexId, int iBulletTypeId, float oppositeForce, float rechargeTime, float shortRechargeTime, float randomAngle, float spreadRandomAngle, int iFireAtOnce, int iFireAmount);
-	int Fire(Sprite* shooter, Vector2 direction);
+	int Fire(int index, Sprite* shooter, Vector2 direction);
 	void UpdateGunStatus(float deltaTime);
 };

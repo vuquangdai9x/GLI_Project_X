@@ -16,7 +16,7 @@ public:
 	FallingRock(int id, FallingRock& templateBullet);
 	virtual ~FallingRock();
 	void CreatePhysicsBody();
-	void Fire(Sprite* shooter, Vector2 startPosition, Vector2 direction);
+	void Fire(int index, Sprite* shooter, Vector2 startPosition, Vector2 direction);
 	void Update(float deltaTime);
 	int time = 0;
 };

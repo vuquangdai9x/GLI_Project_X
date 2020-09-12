@@ -11,13 +11,31 @@
 #include "../DeadlyBird.h"
 #include"../RockyGolem.h"
 #include"../VampireBat.h"
+#include"GameStateManager.h"
 void getInfor() {
+	dynamic_cast<MapEditor*> (Singleton<GameStateManager>::GetInstance()->getTop())->saveCheck = 1;
+}
 
+int DisplayConfirmSaveAsMessageBox()
+{
+	int msgboxID = MessageBox(
+		NULL,
+		"Do you want to save change",
+		"WARNING",
+		MB_YESNOCANCEL| MB_ICONQUESTION
+	);
+
+	if (msgboxID == IDYES)
+	{
+		dynamic_cast<MapEditor*> (Singleton<GameStateManager>::GetInstance()->getTop())->saveCheck = 1;
+	}
+
+	return msgboxID;
 }
 MapEditor::MapEditor()
 {
 	
-	char sceneFile[50] = "Datas/scene2d-map.txt";
+	char sceneFile[50] = "Datas/scene2d-map.txt"; 
 	char resourcesFile[60] = "Datas/resources2d.txt";
 	m_play = new Player(0);
 	m_play->SetPosition(Vector3(0, 0, 8));
@@ -47,7 +65,7 @@ MapEditor::MapEditor()
 	position.z = 9;
 	m_victoryPoint->Init(position, rotation, scale, uiHexColor, alpha, iMaterialId, iMainTexId);
 	Singleton<SceneManager2D>::GetInstance()->AddObject(m_victoryPoint, MAP_OBJECT); }
-	loadMap("Datas/map-load.txt");
+	loadMap("Datas/map1-100.txt");
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->UpdateMember();
 		button[i]->setBuffer(&m_curent);
@@ -55,7 +73,18 @@ MapEditor::MapEditor()
 			pushBackBoxType(button[i]->m_infor.mainTex, button[i]->m_infor.boxType);
 		}
 	}
-	
+	{
+		saveButton = new Button(9);
+		saveButton->Init(Vector3(0,0,-1), 0.0, Vector2(2.0,2.0), 0xffffff, 1.0, 0, 60304);
+		saveButton->SetBound(0.95, 0.9, 0.7, 0.8);
+		saveButton->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+		saveButton->SetRenderType(UIComponent::RenderType::FitHeight);
+		saveButton->UpdateMember();
+		saveButton->OnClick(getInfor);
+		Singleton<SceneManager2D>::GetInstance()->AddObject(saveButton, MAP_OBJECT);
+		
+	}
+
 }
 
 MapEditor::~MapEditor()
@@ -491,10 +520,23 @@ void MapEditor::Render()
 
 void MapEditor::Update(float deltaTime)
 {
-
+	if (saveCheck == 1) {
+		saveFile("Datas/map1-100.txt");
+		saveCheck = 0;
+	}
 	if (Singleton<InputManager>::GetInstance()->GetBit(InputManager::Key::ESCAPE)) {
-		saveFile("Datas/map-out.txt");
+		int x=DisplayConfirmSaveAsMessageBox();
+		if (saveCheck == 1) {
+			saveFile("Datas/map1-100.txt");
+			saveCheck = 0;
+		}
+		if (x == IDCANCEL) {
+			Singleton<InputManager>::GetInstance()->KeyPressed(InputManager::Key::ESCAPE, false);
+			return;
+		}
 		Singleton<GameStateManager>::GetInstance()->DeleteMap();
+		Singleton<InputManager>::GetInstance()->KeyPressed(InputManager::Key::ESCAPE, false);
+		
 		return;
 	}
 	if (m_curent != NULL) {
@@ -504,12 +546,14 @@ void MapEditor::Update(float deltaTime)
 
 
 	}
+	
 	for (int i = 0; i < this->button.size(); i++) {
 		button[i]->Update(deltaTime);
 	}
 	for (int i = 0;i < this->m_fLoatingFishMove.size();i++) {
 		m_fLoatingFishMove[i]->Update(deltaTime);
 	}
+	saveButton->Update(deltaTime);
 	{
 
 	}
@@ -533,6 +577,7 @@ void MapEditor::Update(float deltaTime)
 			int iMousePosX, iMousePosY, pre_x, pre_y;
 			Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
 			Vector3 pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(iMousePosX, iMousePosY, MAP_OBJECT);
+			if (pos3D.y < 0 || pos3D.x>60 || pos3D.x<-60) return;
 			Vector3 Pos = m_currentSprite->GetPosition();
 			Pos.x = pos3D.x;
 			Pos.y = pos3D.y;
@@ -585,6 +630,7 @@ void MapEditor::Update(float deltaTime)
 		int iMousePosX, iMousePosY, pre_x, pre_y;
 		Singleton<InputManager>::GetInstance()->getXY(iMousePosX, iMousePosY);
 		Vector3 pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(iMousePosX, iMousePosY, MAP_OBJECT);
+		if (pos3D.y < 0 || pos3D.x>60 || pos3D.x<-60) return;
 		Vector3 Pos = m_currentSprite->GetPosition();
 		Pos.x = pos3D.x;
 		Pos.y = pos3D.y;
@@ -949,6 +995,7 @@ void MapEditor::deleteSprite(Sprite* pointer)
 			}
 
 			m_floatingFish.erase(m_floatingFish.begin() + i);
+			if(m_floatingFish.size()+1==m_floatingFishMoveNum.size())
 			m_floatingFishMoveNum.erase(m_floatingFishMoveNum.begin() + i);
 			break;
 		}

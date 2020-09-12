@@ -55,6 +55,7 @@ LRESULT WINAPI ESWindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_MBUTTONDOWN:
 		butnum = 2;
+		//SendMessage(((ESContext*)(LONG_PTR)GetWindowLongPtr(hWnd, GWL_USERDATA))->hWnd, WM_QUIT, 0, 0);
 		mev = MOUSE_CLICK;
 		break;
 	case WM_RBUTTONDOWN:

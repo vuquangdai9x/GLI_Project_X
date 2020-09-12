@@ -485,14 +485,14 @@
     <ClCompile Include="MaterialPostProcess.cpp">
       <Filter>Source Files\effect</Filter>
     </ClCompile>
-    <ClCompile Include="MaterialPPColorCorrection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DecorateObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="DecorateObjectManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MaterialPPColorCorrection.cpp">
+      <Filter>Source Files\effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

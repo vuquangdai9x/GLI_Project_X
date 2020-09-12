@@ -28,7 +28,6 @@ DecorateObject * DecorateObject::CreateClone(int id)
 
 void DecorateObject::CreatePhysicsBody()
 {
-	printf("%f %f \n",m_originSize.x * this->GetScale().x * m_colliderRatio.x, m_originSize.y * this->GetScale().y * m_colliderRatio.y);
 	m_physicsBody = Singleton<WorldManager>::GetInstance()->createRectagle(
 		DECORATE_OBJ,
 		m_position.x, m_position.y,
@@ -59,12 +58,12 @@ void DecorateObject::Update(float deltaTime)
 				delete this;
 			}
 			else {
-				float prevFrameHeight = m_animationController.m_frameHeight;
-				float prevFrameWidth = m_animationController.m_frameWidth;
+				float prevHeight = m_animationController.m_frameHeight;
+				float prevWidth = m_animationController.m_frameWidth;
 				m_animationController.RunAnimState(0, -1);
 				SetPosition(Vector3(
-					m_position.x + 2 * m_pivot.x * (prevFrameWidth - m_animationController.m_frameWidth) * m_scale.x,
-					m_position.y + 2 * m_pivot.y * (prevFrameHeight - m_animationController.m_frameHeight) * m_scale.y,
+					m_position.x + m_pivot.x * prevWidth * m_scale.x,
+					m_position.y + m_pivot.y * prevHeight * m_scale.y,
 					m_position.z
 				));
 			}
@@ -75,9 +74,11 @@ void DecorateObject::Update(float deltaTime)
 
 void DecorateObject::SetPosition(Vector3 position)
 {
+	float width = m_isUseAnimation ? m_animationController.m_frameWidth : m_originSize.x;
+	float height = m_isUseAnimation ? m_animationController.m_frameHeight : m_originSize.y;
 	Vector3 realPosition(
-		position.x - m_pivot.x * m_animationController.m_frameWidth * m_scale.x,
-		position.y - m_pivot.y * m_animationController.m_frameHeight * m_scale.y,
+		position.x - m_pivot.x * width * m_scale.x,
+		position.y - m_pivot.y * height * m_scale.y,
 		position.z
 	);
 	Sprite::SetPosition(realPosition);

@@ -32,6 +32,7 @@ public:
 	void Update(float deltaTime);
 	void addObject();
 	void KeyPress();
+	int saveCheck=0;
 	void deleteSprite(Sprite* pointer);
 	Sprite* checkInside(float x, float y);
 	void pushSprite(Sprite* pointer);
@@ -46,6 +47,7 @@ private:
 	int m_norColor = 0xffffff;
 	int m_chooseColor = 0xffafff;
 	Player* m_play;
+	Button *saveButton;
 	MapBorder* bgr, * borderLeft, * borderRight;
 	Sprite *m_victoryPoint=NULL;
 	std::vector<Sprite*> m_Obstacle, m_suicudeBug, m_floatingFish, m_rockyGolem, m_vampireBat, m_deadlyBird;

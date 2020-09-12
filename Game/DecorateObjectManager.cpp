@@ -158,3 +158,13 @@ DecorateObject * DecorateObjectManager::CreateRandomObject(Vector2 position)
 	obj->SetPosition(placePos);
 	return obj;
 }
+
+DecorateObject * DecorateObjectManager::CreateObjectByIndex(int iObjIndex, Vector2 position)
+{
+	iObjIndex %= m_listTemplateObject.size();
+	m_iObjIdCount++;
+	DecorateObject* obj = m_listTemplateObject[iObjIndex]->CreateClone(m_iObjIdCount);
+	Vector3 placePos(position.x, position.y, m_listTemplateObject[iObjIndex]->GetPosition().z);
+	obj->SetPosition(placePos);
+	return obj;
+}

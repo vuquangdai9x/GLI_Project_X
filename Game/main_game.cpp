@@ -1,13 +1,8 @@
 //TrainingFramework.cpp : Defines the entry point for the console application.
 #pragma warning(disable: 4996)
 
-
-#include "stdafx.h"
-
-
-
-#include "../Utilities/utilities.h"
 #include "../Framework3D/TrainingFramework/framework3d.h"
+#include "../Utilities/utilities.h"
 #include "Box2D/Box2D.h"
 #include <conio.h>
 #include <stddef.h>
@@ -23,6 +18,8 @@
 
 #include <stdlib.h> 
 #include <time.h>
+
+ESContext esContext;
 
 int Init(ESContext* esContext)
 {
@@ -97,7 +94,7 @@ void Mouse(ESContext* esContext, int typeOfService, int button, int x, int y) {
 	pos3D = Singleton<SceneManager2D>::GetInstance()->get3Dpos(xx, yy);
 	printf("3D pos: %f %f \n", pos3D.x, pos3D.y);*/
 }
-void CleanUp()
+void CleanUp() 
 {
 
 }
@@ -107,7 +104,6 @@ int _tmain(int argc, _TCHAR * argv[])
 	
 	B2_NOT_USED(argc);
 	B2_NOT_USED(argv);
-	ESContext esContext;
 
 	esInitContext(&esContext);
 	esCreateWindow(&esContext, "Hello Triangle", Globals::screenWidth, Globals::screenHeight, ES_WINDOW_RGB | ES_WINDOW_DEPTH);
@@ -123,6 +119,7 @@ int _tmain(int argc, _TCHAR * argv[])
 		esRegisterKeyFunc(&esContext, Key);
 		esRegisterMouseFunc(&esContext, Mouse);
 		esMainLoop(&esContext);
+		
 	}
 
 	//releasing OpenGL resources

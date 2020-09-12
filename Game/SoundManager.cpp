@@ -46,6 +46,17 @@ void SoundManager::Fire(int index)
 	} 
 }
 
+void SoundManager::OnOffSound()
+{
+	SetOnOff *= -1;
+	if (SetOnOff == 1) {
+		m_soloud.setVolume(iHandleBackGround, 0.0f);
+	}
+	else if (SetOnOff == -1) {
+		m_soloud.setVolume(iHandleBackGround, 2.0f);
+	}
+}
+
 void SoundManager::Enemy(int state)
 {
 	if (state == E_INJUIRED) {
@@ -53,6 +64,9 @@ void SoundManager::Enemy(int state)
 	}
 	else if (state == E_DIED) {
 		m_soloud.play(m_enemy[1]);
+	}
+	else if (state == E_BUG) {
+		iHandleEnemy = m_soloud.play(m_enemy[2]);
 	}
 }
 
@@ -76,6 +90,8 @@ void SoundManager::Init()
 	m_player[2].load("../Soloud/lib_audio/trung_dan.wav");
 	m_player[3].load("../Soloud/lib_audio/endgame.wav");
 
-	m_enemy[0].load("../Soloud/lib_audio/");
+	m_enemy[0].load("../Soloud/lib_audio/e_injuied.wav");
 	m_enemy[1].load("../Soloud/lib_audio/kill.wav");
+	m_enemy[2].load("../Soloud/lib_audio/bug.wav");
+
 }

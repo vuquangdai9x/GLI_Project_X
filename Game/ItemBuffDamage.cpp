@@ -3,7 +3,7 @@
 ItemBuffDamage::ItemBuffDamage(float damage)
 {
 	this->damage = damage;
-	this->duration = 30;
+	this->duration = 15;
 }
 
 ItemBuffDamage::~ItemBuffDamage()

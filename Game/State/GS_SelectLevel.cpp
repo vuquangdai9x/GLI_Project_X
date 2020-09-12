@@ -31,6 +31,14 @@ void SelectLevel3() {
 	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
 }
 
+void SelectMapEdit() {
+	Singleton<GameStateManager>::GetInstance()->Pop();
+	//if (map == 2) return;
+	//WorldManager *test = Singleton<WorldManager>::GetInstance();
+
+	Singleton<GameStateManager>::GetInstance()->setMap(100);
+	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+}
 GS_SelectLevel::GS_SelectLevel()
 {
 	char sceneFile[50] = "Datas/scene2d-selectlevel.txt";
@@ -50,6 +58,8 @@ GS_SelectLevel::GS_SelectLevel()
 			buttons[i]->OnClick(SelectLevel3);
 		}
 	}
+	this->bt->UpdateMember();
+	this->bt->OnClick(SelectMapEdit);
 }
 
 GS_SelectLevel::~GS_SelectLevel()
@@ -68,6 +78,8 @@ GS_SelectLevel::~GS_SelectLevel()
 	}
 	std::vector<UIComponent*>().swap(lock);
 	delete level;
+	delete bt;
+	delete star;
 }
 
 bool GS_SelectLevel::Create()
@@ -93,6 +105,9 @@ void GS_SelectLevel::Render()
 	for (int i = 0; i < this->lock.size(); i++) {
 		this->lock[i]->Render(&Singleton<SceneManager2D>::GetInstance()->GetMainCamera(MENU_OBJECT));
 	}
+	this->bt->Render(&Singleton<SceneManager2D>::GetInstance()->GetMainCamera(MENU_OBJECT));
+	this->star->Render(&Singleton<SceneManager2D>::GetInstance()->GetMainCamera(MENU_OBJECT));
+	
 }
 
 void GS_SelectLevel::Update(float deltaTime)
@@ -103,7 +118,9 @@ void GS_SelectLevel::Update(float deltaTime)
 			return;
 		}
 	}
-	
+	if (this->bt->Update()) {
+		Singleton<InputManager>::GetInstance()->fixButton();
+	}
 }
 
 void GS_SelectLevel::KeyPress()
@@ -232,4 +249,15 @@ void GS_SelectLevel::LoadScene(char * dataScene)
 
 		this->lock.push_back(locked);
 	}
+	this->bt = new Button(-1);
+	this->bt->Init(Vector3(0, 0, -1), 0, Vector2(2, 2), 0xffffff, 1, 0, 60501);
+	bt->SetBound(-0.65, -0.75, -0.05, 0.05);
+	bt->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+	bt->SetRenderType(UIComponent::RenderType::FitHeight);
+
+	this->star = new UIComponent(-1);
+	this->star->Init(Vector3(0, 0, -1), 0, Vector2(1.5, 1.5), 0xfaf38e, 1, 0, 60401);
+	star->SetBound(-0.65, -0.75, -0.05 , 0.05);
+	star->SetAlignHorizontal(UIComponent::AlignHorizontal::Left);
+	star->SetRenderType(UIComponent::RenderType::FitHeight);
 }

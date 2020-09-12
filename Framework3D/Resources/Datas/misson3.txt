@@ -1,0 +1,7 @@
+1: Pass the level
+2: No blood loss
+3: No collision into rock
+
+ID 0
+ID 2
+ID 4

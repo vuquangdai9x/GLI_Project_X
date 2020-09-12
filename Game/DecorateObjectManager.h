@@ -18,5 +18,6 @@ public:
 	void AddTemplateObject(DecorateObject* obj);
 	DecorateObject* CreateObject(int iObjId, Vector2 position);
 	DecorateObject* CreateRandomObject(Vector2 position);
+	DecorateObject* CreateObjectByIndex(int iObjIndex, Vector2 position);
 };
 

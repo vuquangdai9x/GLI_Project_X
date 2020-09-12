@@ -4,7 +4,7 @@ ItemBuffSpeed::ItemBuffSpeed(float moveSpeed, float flySpeed)
 {
 	this->moveSpeed = moveSpeed;
 	this->flySpeed = flySpeed;
-	this->duration = 30;
+	this->duration = 15;
 }
 
 ItemBuffSpeed::~ItemBuffSpeed()

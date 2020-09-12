@@ -59,3 +59,4 @@ ID 0: pass the level
 ID 1: Destroy n monsters of type X
 ID 2: no blood loss
 ID 3: Achieve a minimum of X points
+ID 4: No collision into rock

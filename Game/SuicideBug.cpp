@@ -4,6 +4,8 @@
 #include"SceneManager2D.h"
 #include"EffectManager.h"
 #include<math.h>
+#include "SoundManager.h"
+
 SuicideBug::SuicideBug(int id) :Enemy(id)
 {
 	this->m_maxHP = this->m_HP = 20;
@@ -46,6 +48,7 @@ void SuicideBug::Update(float deltaTime)
 	}
 	m_activeTime += deltaTime* active;
 	if (m_activeTime > 0.5&& active==1) {
+		Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_BUG);
 		m_target = playerPos2D;
 		active = 2;
 		m_attackVector = b2Vec2((m_target - pos2d).x, (m_target - pos2d).y);

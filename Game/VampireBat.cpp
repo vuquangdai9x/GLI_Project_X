@@ -3,6 +3,8 @@
 #include "SceneManager2D.h"
 #include"WorldManager.h"
 #include"EffectManager.h"
+#include "SoundManager.h"
+
 VampireBat::VampireBat(int id, Vector2 centerPos, float m_range) : Enemy(id)
 {
 	this->centerPos = centerPos;
@@ -76,9 +78,11 @@ void VampireBat::Update(float deltaTime)
 	if (user->IsCollison > 0) {
 		if (user->m_typeB == PLAYERBULLET) {
 			m_TakeDameTime = GetTickCount();
+			Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_INJUIRED);
 			this->m_HP -= user->m_receiveDamage;
 			this->SetColor(0xffafff, 1);
 			if (this->m_HP <= 0) {
+				Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_DIED);
 				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12300);
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
 				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();

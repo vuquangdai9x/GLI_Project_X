@@ -228,8 +228,10 @@ bool UIComponent::CheckMouseInside() {
 
 	Vector4 bottomLeft(-1, -1, 0, 1);
 	Vector4 topRight(1, 1, 0, 1);
-	bottomLeft = m_WVP * bottomLeft;
-	topRight = m_WVP * topRight;
+	bottomLeft = bottomLeft * m_WVP;
+	topRight = topRight * m_WVP;
+
+	//printf("Top: %f | Bottom: %f | Left: %f | Right: %f | Mouse: %f %f\n", topRight.y, bottomLeft.y, bottomLeft.x, topRight.x, mousePosX, mousePosY);
 
 	return ((bottomLeft.x < mousePosX && mousePosX < topRight.x) && (bottomLeft.y < mousePosY && mousePosY < topRight.y));
 }

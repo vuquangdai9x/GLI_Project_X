@@ -32,7 +32,7 @@ void RockyGolem::Update(float deltaTime)
 	target.y = (playerPos.y - 1) + scale * 2;
 	time++;
 	if (time % 200 == 0) {
-		this->rockyGolemGun->Fire(this, target);
+		this->rockyGolemGun->Fire(0, this, target);
 	}
 
 	Vector3 rockyGolemPos = this->GetPosition();

@@ -13,6 +13,9 @@ private:
 	std::vector<UIComponent*> lock;
 	UIText* level;
 	int numberOfLevel;
+
+	Button* bt;
+	UIComponent* star;
 public:
 	GS_SelectLevel();
 	~GS_SelectLevel();

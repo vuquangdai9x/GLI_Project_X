@@ -4,12 +4,16 @@
 #include"WorldManager.h"
 #include "EffectManager.h"
 #include "Misson.h"
+#include "SoundManager.h"
+
 FloatingFish::FloatingFish(int id, int numOfTarget, b2Vec2 target[]):Enemy(id)
 {
 	this->numOfTarget = numOfTarget;
 	this->target = new b2Vec2[this->numOfTarget];
+	printf("Num of Target: %d\n", numOfTarget);
 	for (int i = 0; i < numOfTarget; i++) {
 		this->target[i] = target[i];
+		printf("Target %d: %f %f\n", i, target[i].x, target[i].y);
 	}
 	this->currentTarget = 0;
 	this->m_moveSpeed = 4;
@@ -114,6 +118,7 @@ void FloatingFish::Update(float deltaTime)
 	if (user->IsCollison > 0) {
 		if (user->m_typeB == PLAYERBULLET) {
 			m_TakeDameTime = GetTickCount();
+			Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_INJUIRED);
 			this->m_HP -= user->m_receiveDamage;
 			this->SetColor(0xffafff, 1);
 			if (this->m_HP <= 0) {
@@ -123,7 +128,12 @@ void FloatingFish::Update(float deltaTime)
 						misson->countKill();
 					}
 				}
+
+				printf("Fish death \n");
+
+				Singleton<SoundManager>::GetInstance()->Enemy(SoundManager::E_DIED);
 				Singleton<EffectManager>::GetInstance()->CreateParticlesSystem(GetPosition(), 12000);
+
 				Singleton<SceneManager2D>::GetInstance()->RemoveObject(this);
 				int score = Singleton<SceneManager2D>::GetInstance()->getPlayer()->getScore();
 				Singleton<SceneManager2D>::GetInstance()->getPlayer()->setScore(score + this->m_score);
@@ -144,7 +154,7 @@ void FloatingFish::createBox2D()
 	y = m_position.y;
 	width = m_originSize.x * this->GetScale().x;
 	height = m_originSize.y * this->GetScale().y;
-	enemyBody = Singleton<WorldManager>::GetInstance()->createFloating(ENEMY, x, y, width, height,8);
+	enemyBody = Singleton<WorldManager>::GetInstance()->createFloating(ENEMY, x, y, width, height,20);
 	UserData* user = (UserData*)this->enemyBody->body->GetUserData();
 	user->m_damage = this->m_damage;
 }

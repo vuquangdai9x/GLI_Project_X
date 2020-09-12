@@ -16,12 +16,14 @@ void Reload2()
 void NextLever()
 {
 	Singleton<GameStateManager>::GetInstance()->Pop();
-	int map = Singleton<GameStateManager>::GetInstance()->getMap()+1;
-	if (map == 3) return;
-	WorldManager *test=Singleton<WorldManager>::GetInstance();
-
-	Singleton<GameStateManager>::GetInstance()->setMap(map);
-	Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+	int map = Singleton<GameStateManager>::GetInstance()->getMap();
+	if (map >= 3) {
+		//		Singleton<GameStateManager>::GetInstance()->Pop();
+	}
+	else {
+		Singleton<GameStateManager>::GetInstance()->setMap(map + 1);
+		Singleton<GameStateManager>::GetInstance()->Push(GameStateManager::PLAY);
+	}
 }
 GS_PassLevelState::GS_PassLevelState()
 {

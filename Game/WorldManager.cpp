@@ -124,7 +124,6 @@ ItemBody* WorldManager::createTriangle(int type, float x, float y, float w, floa
 
 	bodyDef.position.Set(x, y);
 	tmp->body = m_world->CreateBody(&bodyDef);
-	//printf("%f %f %f %f \n", x, y, w, h);
 	b2PolygonShape dynamicPolygon;
 	b2Vec2 vertices[3];
 	vertices[0].Set(0,- h);
@@ -219,3 +218,4 @@ void WorldManager::CleanUp()
 	empty.swap(listObject);
 	
 }
+ 

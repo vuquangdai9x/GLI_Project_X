@@ -68,5 +68,6 @@ public:
 	void setMisson(Misson* misson) { this->misson = misson; }
 	void SetMisson(int misson);
 	Misson* getMisson() { return this->misson; }
+	ItemBody* getBody() { return this->playerBody; }
 };
 
